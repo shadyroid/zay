@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/order_track/controller.dart';
+import 'package:hedma/presentation/screens/order_track/widgets/order_track_item.dart';
 
 class OrderTrackScreen extends GetView<OrderTrackController> {
   const OrderTrackScreen({super.key});
@@ -18,14 +19,11 @@ class OrderTrackScreen extends GetView<OrderTrackController> {
         () => ListView.builder(
           padding: const EdgeInsets.all(24),
           itemCount: controller.steps.length,
-          itemBuilder: (_, i) {
-            final isActive = i <= 2;
-            return ListTile(
-              leading: Icon(
-                isActive ? Icons.check_circle : Icons.radio_button_unchecked,
-                color: isActive ? AppColors.secondary : Colors.grey,
-              ),
-              title: Text(controller.steps[i]),
+          itemBuilder: (context, index) {
+            final isActive = index <= 2;
+            return OrderTrackItem(
+              title: controller.steps[index],
+              isActive: isActive,
             );
           },
         ),

@@ -1,0 +1,76 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hedma/app/utils/app_icons.dart';
+import 'package:hedma/domain/models/beans/shop_bean.dart';
+
+class ShopBannerHeader extends StatelessWidget {
+  const ShopBannerHeader({super.key, required this.shop});
+
+  final ShopBean shop;
+
+  @override
+  Widget build(BuildContext context) {
+    final bannerUrl = shop.bannerUrl ?? shop.imageUrl;
+    final logoUrl = shop.logoUrl ?? shop.imageUrl;
+
+    return SizedBox(
+      height: 200,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          Positioned.fill(
+            child: bannerUrl != null && bannerUrl.isNotEmpty
+                ? Image.network(
+                    bannerUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const ColoredBox(color: Color(0xFFE8E8E8)),
+                  )
+                : const ColoredBox(color: Color(0xFFE8E8E8)),
+          ),
+          Positioned(
+            bottom: -36,
+            child: Container(
+              width: 88,
+              height: 88,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFE8E8E8)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(11),
+                child: logoUrl != null && logoUrl.isNotEmpty
+                    ? Image.network(
+                        logoUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            _logoPlaceholder(),
+                      )
+                    : _logoPlaceholder(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _logoPlaceholder() {
+    return Center(
+      child: SvgPicture.asset(
+        AppIcons.productPlaceholder,
+        width: 48,
+        height: 48,
+      ),
+    );
+  }
+}

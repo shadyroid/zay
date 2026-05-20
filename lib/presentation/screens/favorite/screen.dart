@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hedma/app/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/favorite/controller.dart';
-import 'package:hedma/presentation/widgets/empty_state.dart';
+import 'package:hedma/presentation/screens/favorite/widgets/favorite_empty_state.dart';
+import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
+import 'package:hedma/presentation/widgets/product_grid_item.dart';
 
 class FavoriteScreen extends GetView<FavoriteController> {
   const FavoriteScreen({super.key});
@@ -10,32 +11,40 @@ class FavoriteScreen extends GetView<FavoriteController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('favorite'.tr),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+      backgroundColor: Colors.white,
+      appBar: AppBackAppBar(
+        onBack: controller.goBack,
+        title: 'favoriteTitle'.tr,
+        showDivider: true,
       ),
       body: Obx(
-        () => controller.favorites.isEmpty
-            ? EmptyState(message: 'emptyFavorites'.tr, icon: Icons.favorite_border)
-            : ListView.separated(
-                padding: const EdgeInsets.all(16),
-                itemCount: controller.favorites.length,
-                separatorBuilder: (context, index) => const Divider(),
-                itemBuilder: (_, i) {
-                  final p = controller.favorites[i];
-                  return ListTile(
-                    leading: const Icon(Icons.favorite, color: Colors.red),
-                    title: Text(p.name),
-                    subtitle: Text('\$${p.price}'),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => controller.removeFavorite(p),
-                    ),
-                    onTap: () => controller.navigateToProductDetails(p),
-                  );
-                },
-              ),
+        () {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (controller.favorites.isEmpty) {
+            return const FavoriteEmptyState();
+          }
+          return GridView.builder(
+            padding: const EdgeInsets.all(16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 0.72,
+            ),
+            itemCount: controller.favorites.length,
+            itemBuilder: (context, index) {
+              final product = controller.favorites[index];
+              return ProductGridItem(
+                product: product,
+                isFavorite: true,
+                onTap: () => controller.navigateToProductDetails(product),
+                onFavoriteTap: () => controller.removeFavorite(product),
+              );
+            },
+          );
+        },
       ),
     );
   }

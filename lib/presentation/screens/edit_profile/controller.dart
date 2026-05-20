@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/domain/models/beans/user_bean.dart';
+import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class EditProfileController extends BaseController {
@@ -15,6 +16,7 @@ class EditProfileController extends BaseController {
   final weightController = TextEditingController();
   final locationController = TextEditingController();
   final displayName = ''.obs;
+  final profileImagePath = RxnString();
   final isProfileLoading = true.obs;
 
   @override
@@ -56,8 +58,10 @@ class EditProfileController extends BaseController {
     displayName.value = profile.name ?? '';
   }
 
-  void onEditPhoto() {
-    Get.rawSnackbar(message: 'photoPickerComingSoon'.tr);
+  Future<void> onEditPhoto() async {
+    final file = await ImagePickerHelper.pickFromBottomSheet();
+    if (file == null) return;
+    profileImagePath.value = file.path;
   }
 
   Future<void> onLocationTap() async {

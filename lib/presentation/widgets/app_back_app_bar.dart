@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
+import 'package:hedma/app/utils/app_icons.dart';
 
 class AppBackAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AppBackAppBar({
@@ -7,11 +9,13 @@ class AppBackAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.onBack,
     this.title,
     this.showDivider = false,
+    this.actions,
   });
 
   final VoidCallback onBack;
   final String? title;
   final bool showDivider;
+  final List<Widget>? actions;
 
   @override
   Size get preferredSize =>
@@ -25,10 +29,10 @@ class AppBackAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       centerTitle: true,
       leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back_ios_new,
-          color: AppColors.textPrimary,
-          size: 20,
+        icon: SvgPicture.asset(
+          AppIcons.back,
+          width: 20,
+          height: 20,
         ),
         onPressed: onBack,
       ),
@@ -41,6 +45,7 @@ class AppBackAppBar extends StatelessWidget implements PreferredSizeWidget {
                     fontWeight: FontWeight.w700,
                   ),
             ),
+      actions: actions,
       bottom: showDivider
           ? const PreferredSize(
               preferredSize: Size.fromHeight(1),

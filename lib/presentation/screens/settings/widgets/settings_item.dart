@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hedma/app/utils/app_colors.dart';
+import 'package:hedma/app/utils/app_icons.dart';
+
+class SettingsItem extends StatelessWidget {
+  const SettingsItem({
+    super.key,
+    required this.iconPath,
+    required this.title,
+    required this.onTap,
+    this.showDivider = true,
+  });
+
+  final String iconPath;
+  final String title;
+  final VoidCallback onTap;
+  final bool showDivider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+          leading: SvgPicture.asset(
+            iconPath,
+            width: 22,
+            height: 22,
+          ),
+          title: Text(
+            title,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: AppColors.textPrimary,
+                ),
+          ),
+          trailing: SvgPicture.asset(
+            AppIcons.chevronRight,
+            width: 20,
+            height: 20,
+          ),
+          onTap: onTap,
+        ),
+        if (showDivider)
+          const Divider(
+            height: 1,
+            thickness: 1,
+            indent: 16,
+            endIndent: 16,
+            color: AppColors.border,
+          ),
+      ],
+    );
+  }
+}

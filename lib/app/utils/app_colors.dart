@@ -10,6 +10,8 @@ abstract final class AppColors {
   static const Color hint = Color(0xFFB0B0B0);
   static const Color logoLetter = Color(0xFFB8B8B8);
   static const Color screenBackground = Color(0xFFF8F8F8);
+  static const Color sheetHeaderBackground = Color(0xFFF3F3F3);
+  static const Color selectedCheck = Color(0xFF1B6B3A);
 
   static const LinearGradient backgroundGradient = LinearGradient(
     begin: Alignment.topCenter,

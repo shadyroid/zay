@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class OrderDetailRow extends StatelessWidget {
-  const OrderDetailRow({
+class OrderDetailItem extends StatelessWidget {
+  const OrderDetailItem({
     super.key,
     required this.label,
     required this.value,

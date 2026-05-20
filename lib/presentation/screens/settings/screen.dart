@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hedma/app/utils/app_colors.dart';
 import 'package:get/get.dart';
+import 'package:hedma/app/utils/app_colors.dart';
+import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/settings/controller.dart';
-import 'package:hedma/presentation/screens/settings/widgets/settings_tile.dart';
+import 'package:hedma/presentation/screens/settings/widgets/clear_account_button.dart';
+import 'package:hedma/presentation/screens/settings/widgets/settings_app_bar.dart';
+import 'package:hedma/presentation/screens/settings/widgets/settings_menu_card.dart';
+import 'package:hedma/presentation/screens/settings/widgets/settings_profile_header.dart';
+import 'package:hedma/presentation/screens/settings/widgets/settings_item.dart';
 import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
 
 class SettingsScreen extends GetView<SettingsController> {
@@ -11,55 +16,83 @@ class SettingsScreen extends GetView<SettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('settings'.tr),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+      backgroundColor: Colors.white,
+      appBar: SettingsAppBar(
+        onBack: controller.goBack,
       ),
-      body: ListView(
-        children: [
-          SettingsTile(
-            icon: Icons.person_outline,
-            title: 'editProfile'.tr,
-            onTap: controller.navigateToEditProfile,
+      body: Container(
+        decoration: const BoxDecoration(
+          color: AppColors.screenBackground,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.only(top: 24, bottom: 24),
+          child: Column(
+            children: [
+              Obx(
+                () => SettingsProfileHeader(name: controller.displayName.value),
+              ),
+              const SizedBox(height: 24),
+              SettingsMenuCard(
+                children: [
+                  SettingsItem(
+                    iconPath: AppIcons.editProfile,
+                    title: 'editProfile'.tr,
+                    onTap: controller.navigateToEditProfile,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.favorite,
+                    title: 'favorite'.tr,
+                    onTap: controller.navigateToFavorite,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.orders,
+                    title: 'myOrders'.tr,
+                    onTap: controller.navigateToOrders,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.connectUs,
+                    title: 'contactUs'.tr,
+                    onTap: controller.navigateToContactUs,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.language,
+                    title: 'language'.tr,
+                    onTap: controller.onLanguage,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.aboutUs,
+                    title: 'aboutUs'.tr,
+                    onTap: controller.navigateToAboutUs,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.terms,
+                    title: 'terms'.tr,
+                    onTap: controller.navigateToTerms,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.privacy,
+                    title: 'privacy'.tr,
+                    onTap: controller.navigateToPrivacy,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.share,
+                    title: 'shareApp'.tr,
+                    onTap: controller.onShareApp,
+                  ),
+                  SettingsItem(
+                    iconPath: AppIcons.logout,
+                    title: 'logout'.tr,
+                    onTap: controller.requestLogout,
+                    showDivider: false,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              ClearAccountButton(onPressed: controller.onClearAccount),
+            ],
           ),
-          SettingsTile(
-            icon: Icons.favorite_outline,
-            title: 'favorite'.tr,
-            onTap: controller.navigateToFavorite,
-          ),
-          SettingsTile(
-            icon: Icons.receipt_long_outlined,
-            title: 'orders'.tr,
-            onTap: controller.navigateToOrders,
-          ),
-          SettingsTile(
-            icon: Icons.mail_outline,
-            title: 'contactUs'.tr,
-            onTap: controller.navigateToContactUs,
-          ),
-          SettingsTile(
-            icon: Icons.info_outline,
-            title: 'aboutUs'.tr,
-            onTap: controller.navigateToAboutUs,
-          ),
-          SettingsTile(
-            icon: Icons.description_outlined,
-            title: 'terms'.tr,
-            onTap: controller.navigateToTerms,
-          ),
-          SettingsTile(
-            icon: Icons.privacy_tip_outlined,
-            title: 'privacy'.tr,
-            onTap: controller.navigateToPrivacy,
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.logout, color: Colors.red),
-            title: Text('logout'.tr, style: const TextStyle(color: Colors.red)),
-            onTap: controller.requestLogout,
-          ),
-        ],
+        ),
       ),
       bottomNavigationBar: const MainBottomNav(currentIndex: 3),
     );

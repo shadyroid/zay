@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hedma/app/utils/app_colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hedma/app/utils/app_colors.dart';
+import 'package:hedma/app/utils/app_icons.dart';
+import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/presentation/screens/products/controller.dart';
+import 'package:hedma/presentation/screens/products/widgets/category_chip.dart';
+import 'package:hedma/presentation/screens/products/widgets/products_action_bar.dart';
+import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
+import 'package:hedma/presentation/widgets/product_grid_item.dart';
 
 class ProductsScreen extends GetView<ProductsController> {
   const ProductsScreen({super.key});
@@ -9,30 +16,102 @@ class ProductsScreen extends GetView<ProductsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('products'.tr),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+      backgroundColor: Colors.white,
+      appBar: AppBackAppBar(
+        onBack: controller.goBack,
+        title: 'products'.tr,
+        showDivider: false,
+        actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              AppIcons.search,
+              width: 22,
+              height: 22,
+            ),
+            onPressed: controller.onSearch,
+          ),
+        ],
       ),
       body: Obx(
-        () => ListView.separated(
-          padding: const EdgeInsets.all(16),
-          itemCount: controller.products.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 8),
-          itemBuilder: (_, i) {
-            final p = controller.products[i];
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.grey.shade200,
-                child: const Icon(Icons.shopping_bag_outlined),
+        () {
+          if (controller.isLoading.value && controller.products.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: 48,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: controller.categories.length,
+                      itemBuilder: (context, index) {
+                        final category = controller.categories[index];
+                        return CategoryChip(
+                          category: category,
+                          isSelected:
+                              controller.selectedCategoryId.value == category.id,
+                          onTap: () => controller.selectCategory(category),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                    child: Text(
+                      '${controller.totalCount.value} ${'items'.tr}',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: AppColors.textPrimary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GridView.builder(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        childAspectRatio: 0.72,
+                      ),
+                      itemCount: controller.products.length,
+                      itemBuilder: (context, index) {
+                        final product = controller.products[index];
+                        final favorites = Get.find<FavoriteProductsService>();
+                        return Obx(
+                          () => ProductGridItem(
+                            product: product,
+                            isFavorite: favorites.isFavoriteProduct(product),
+                            onTap: () =>
+                                controller.navigateToProductDetails(product),
+                            onFavoriteTap: () async {
+                              await controller.toggleFavorite(product);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-              title: Text(p.name),
-              subtitle: Text('\$${p.price}'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => controller.navigateToProductDetails(p),
-            );
-          },
-        ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 16,
+                child: ProductsActionBar(
+                  onFilters: controller.onFilters,
+                  onSort: controller.onSort,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:get/get.dart';
+import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/presentation/screens/home/controller.dart';
-import 'package:hedma/presentation/screens/home/widgets/product_card.dart';
 import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
+import 'package:hedma/presentation/widgets/product_grid_item.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
@@ -34,17 +35,25 @@ class HomeScreen extends GetView<HomeController> {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.75,
+                childAspectRatio: 0.72,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
               ),
               itemCount: controller.products.length,
-              itemBuilder: (context, index) => ProductCard(
-                product: controller.products[index],
-                onTap: () => controller.navigateToProductDetails(
-                  controller.products[index],
-                ),
-              ),
+              itemBuilder: (context, index) {
+                final product = controller.products[index];
+                final favorites = Get.find<FavoriteProductsService>();
+                return Obx(
+                  () => ProductGridItem(
+                    product: product,
+                    isFavorite: favorites.isFavoriteProduct(product),
+                    onTap: () => controller.navigateToProductDetails(product),
+                    onFavoriteTap: () async {
+                      await controller.toggleFavorite(product);
+                    },
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 16),
             OutlinedButton(

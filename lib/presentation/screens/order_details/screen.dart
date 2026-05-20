@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/order_details/controller.dart';
-import 'package:hedma/presentation/screens/order_details/widgets/order_detail_row.dart';
+import 'package:hedma/presentation/screens/order_details/widgets/order_detail_item.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
 
 class OrderDetailsScreen extends GetView<OrderDetailsController> {
@@ -29,13 +29,13 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                OrderDetailRow(label: 'orderStatus'.tr, value: order.status),
-                OrderDetailRow(label: 'orderDate'.tr, value: order.date),
-                OrderDetailRow(
+                OrderDetailItem(label: 'orderStatus'.tr, value: order.status),
+                OrderDetailItem(label: 'orderDate'.tr, value: order.date),
+                OrderDetailItem(
                   label: 'orderItems'.tr,
                   value: '${order.itemCount}',
                 ),
-                OrderDetailRow(
+                OrderDetailItem(
                   label: 'orderTotal'.tr,
                   value: '\$${order.total}',
                 ),

@@ -39,6 +39,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         Obx(
                           () => ProfileAvatarHeader(
                             name: controller.displayName.value,
+                            imagePath: controller.profileImagePath.value,
                             onEditPhoto: controller.onEditPhoto,
                           ),
                         ),

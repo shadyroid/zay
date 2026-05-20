@@ -13,8 +13,38 @@ abstract final class AppIcons {
   static const String timer = 'assets/icons/ic_timer.svg';
   static const String location = 'assets/icons/ic_location.svg';
   static const String camera = 'assets/icons/ic_camera.svg';
+  static const String cameraOutline = 'assets/icons/ic_camera_outline.svg';
+  static const String galleryAdd = 'assets/icons/ic_gallery_add.svg';
   static const String contactChat = 'assets/icons/ic_contact_chat.svg';
   static const String whatsapp = 'assets/icons/ic_whatsapp.svg';
   static const String facebook = 'assets/icons/ic_facebook.svg';
   static const String twitter = 'assets/icons/ic_twitter.svg';
+
+  static const String back = 'assets/icons/ic_back.svg';
+  static const String close = 'assets/icons/ic_close.svg';
+  static const String check = 'assets/icons/ic_check.svg';
+  static const String search = 'assets/icons/ic_search.svg';
+  static const String chevronRight = 'assets/icons/ic_chevron_right.svg';
+  static const String notifications = 'assets/icons/ic_notifications.svg';
+  static const String editProfile = 'assets/icons/ic_edit_profile.svg';
+  static const String favorite = 'assets/icons/ic_favorite.svg';
+  static const String filter = 'assets/icons/ic_filter.svg';
+  static const String sort = 'assets/icons/ic_sort.svg';
+  static const String categoryAll = 'assets/icons/ic_category_all.svg';
+  static const String heartFilled = 'assets/icons/ic_heart_filled.svg';
+  static const String star = 'assets/icons/ic_star.svg';
+  static const String productPlaceholder = 'assets/icons/ic_product_placeholder.svg';
+  static const String orders = 'assets/icons/ic_orders.svg';
+  static const String connectUs = 'assets/icons/ic_connect_us.svg';
+  static const String language = 'assets/icons/ic_language.svg';
+  static const String aboutUs = 'assets/icons/ic_about_us.svg';
+  static const String terms = 'assets/icons/ic_terms.svg';
+  static const String privacy = 'assets/icons/ic_privacy.svg';
+  static const String share = 'assets/icons/ic_share.svg';
+  static const String logout = 'assets/icons/ic_logout.svg';
+
+  static const String navHome = 'assets/icons/ic_nav_home.svg';
+  static const String navCart = 'assets/icons/ic_nav_cart.svg';
+  static const String navShops = 'assets/icons/ic_nav_shops.svg';
+  static const String navSettings = 'assets/icons/ic_nav_settings.svg';
 }

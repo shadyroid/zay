@@ -3,16 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
+import 'package:hedma/presentation/widgets/profile_avatar.dart';
 
 class ProfileAvatarHeader extends StatelessWidget {
   const ProfileAvatarHeader({
     super.key,
     required this.name,
     required this.onEditPhoto,
+    this.imagePath,
   });
 
   final String name;
   final VoidCallback onEditPhoto;
+  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +24,7 @@ class ProfileAvatarHeader extends StatelessWidget {
         Stack(
           clipBehavior: Clip.none,
           children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.person,
-                size: 52,
-                color: Colors.white70,
-              ),
-            ),
+            ProfileAvatar(size: 100, imagePath: imagePath),
             PositionedDirectional(
               end: 0,
               bottom: 0,

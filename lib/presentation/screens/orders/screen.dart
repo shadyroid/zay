@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/orders/controller.dart';
+import 'package:hedma/presentation/screens/orders/widgets/order_item.dart';
 import 'package:hedma/presentation/widgets/empty_state.dart';
 
 class OrdersScreen extends GetView<OrdersController> {
@@ -22,18 +23,11 @@ class OrdersScreen extends GetView<OrdersController> {
                 padding: const EdgeInsets.all(16),
                 itemCount: controller.orders.length,
                 separatorBuilder: (context, index) => const SizedBox(height: 8),
-                itemBuilder: (_, i) {
-                  final order = controller.orders[i];
-                  return Card(
-                    child: ListTile(
-                      title: Text('${'order'.tr} #${order.id}'),
-                      subtitle: Text('${order.status} • ${order.date}'),
-                      trailing: Text('\$${order.total}',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.secondary)),
-                      onTap: () => controller.navigateToOrderDetails(order),
-                    ),
+                itemBuilder: (context, index) {
+                  final order = controller.orders[index];
+                  return OrderItem(
+                    order: order,
+                    onTap: () => controller.navigateToOrderDetails(order),
                   );
                 },
               ),

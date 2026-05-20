@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hedma/app/utils/app_colors.dart';
+
+abstract final class AppTheme {
+  static ThemeData light() {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      primary: AppColors.primary,
+      secondary: AppColors.secondary,
+    );
+    final base = ThemeData(
+      useMaterial3: true,
+      colorScheme: colorScheme,
+    );
+
+    return base.copyWith(
+      textTheme: GoogleFonts.cairoTextTheme(base.textTheme),
+      primaryTextTheme: GoogleFonts.cairoTextTheme(base.primaryTextTheme),
+      appBarTheme: base.appBarTheme.copyWith(
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        titleTextStyle: GoogleFonts.cairo(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+      ),
+      navigationBarTheme: base.navigationBarTheme.copyWith(
+        indicatorColor: AppColors.secondary.withValues(alpha: 0.25),
+        labelTextStyle: WidgetStatePropertyAll(
+          GoogleFonts.cairo(fontSize: 12),
+        ),
+      ),
+    );
+  }
+}

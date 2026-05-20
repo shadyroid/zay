@@ -15,12 +15,16 @@ class Constants {
   static const String logoutPath = '/auth/logout';
 
   static const String productsPath = '/catalog/products';
+  static const String categoriesPath = '/catalog/categories';
+  static const String sizesPath = '/catalog/sizes';
   static const String featuredProductsPath = '/catalog/featuredProducts';
   static const String productDetailsPath = '/catalog/productDetails';
   static const String shopsPath = '/catalog/shops';
   static const String shopDetailsPath = '/catalog/shopDetails';
   static const String shopProductsPath = '/catalog/shopProducts';
   static const String favoritesPath = '/catalog/favorites';
+  static const String favoritePath = '/catalog/favorite';
+  static const String unfavoritePath = '/catalog/unfavorite';
 
   static const String cartPath = '/cart';
   static const String removeFromCartPath = '/cart/remove';

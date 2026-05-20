@@ -35,6 +35,11 @@ lib/
     repositories/        # abstract {Domain}Repository
   presentation/
     base/base_controller.dart
+    bottom_sheets/       # modal bottom sheets (not tied to one screen)
+      {name}/            # one folder per bottom sheet
+        {name}_bottom_sheet.dart
+        controller.dart  # optional, when needed
+        widgets/         # widgets used only by this bottom sheet
     screens/{feature}/
       controller.dart
       screen.dart
@@ -55,7 +60,10 @@ lib/
 | Data source | `{domain}_data_source.dart` | `AuthDataSource` |
 | Entity model | `{entity}_bean.dart` / `{Entity}Bean` | `GarageBean` |
 | API model | `{entity}_response.dart` / `{Entity}Response` | `GaragesResponse` |
-| Screen widget file | `widgets/{name}.dart` / `{Name}` | `home/widgets/product_card.dart` → `ProductCard` |
+| Screen widget file | `widgets/{name}.dart` / `{Name}` | `settings/widgets/settings_menu_card.dart` → `SettingsMenuCard` |
+| List / grid item widget | `widgets/{entity}_item.dart` / `{Entity}Item` | `shops/widgets/shop_item.dart` → `ShopItem` |
+| Bottom sheet | `bottom_sheets/{name}/{name}_bottom_sheet.dart` / `{Name}BottomSheet` | `bottom_sheets/languages/languages_bottom_sheet.dart` → `LanguagesBottomSheet` |
+| Image picking | `app/utils/image_picker_helper.dart` | `ImagePickerHelper.pickFromBottomSheet()` → `XFile?` |
 | Route constant | camelCase path | `static const String signIn = "/signIn";` |
 | API methods | `request` prefix | `requestProfile()`, `requestGarages()` |
 | Private fields | `_camelCase` | `final AuthUseCase _authUseCase` |
@@ -190,12 +198,31 @@ presentation/screens/home/
   screen.dart
   controller.dart
   widgets/
-    product_card.dart   → ProductCard
+    favorite_product_item.dart   → FavoriteProductItem
 ```
 
 - Import with `package:{app_name}/presentation/screens/{feature}/widgets/{file}.dart`.
 - Reusable across multiple screens → `presentation/widgets/` instead.
 - `screen.dart` should mostly compose child widgets and bind to the controller.
+
+### List & grid item widgets
+
+Widgets that render a **single cell** in a `ListView`, `GridView`, or similar scrollable list/grid must use the **`_item`** suffix:
+
+- File: `{entity}_item.dart` (e.g. `shop_item.dart`, `favorite_product_item.dart` — not `shop_list_tile.dart`, `favorite_product_card.dart`, or `*_row.dart`)
+- Class: `{Entity}Item` (e.g. `ShopItem`, `FavoriteProductItem`)
+
+Container/wrapper widgets (e.g. `settings_menu_card.dart`) are not list/grid cells and may keep other suffixes like `_card`.
+
+### Bottom sheets
+
+- **Do not** put bottom sheets under `screens/{feature}/widgets/`.
+- Place each bottom sheet in its own folder: `presentation/bottom_sheets/{name}/` with `{name}_bottom_sheet.dart` and class `{Name}BottomSheet`.
+- Expose a static `show(...)` that calls `Get.bottomSheet` (or `showModalBottomSheet`) and accepts callbacks / data from the calling screen controller.
+- Widgets used only by one bottom sheet live in `presentation/bottom_sheets/{name}/widgets/` (e.g. `languages/widgets/language_item.dart` → `LanguageItem`).
+- Controllers used only by one bottom sheet live alongside the sheet (e.g. `filter/filter_bottom_sheet_controller.dart`).
+- Import with `package:{app_name}/presentation/bottom_sheets/{name}/{name}_bottom_sheet.dart`.
+- For camera/gallery flows, use **`ImagePickerHelper.pickFromBottomSheet()`** (wraps `image_sources/image_sources_bottom_sheet.dart` + `image_picker`). Call from any screen controller that needs a photo.
 
 ### Design assets & icons
 

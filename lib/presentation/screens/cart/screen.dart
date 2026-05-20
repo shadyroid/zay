@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/cart/controller.dart';
+import 'package:hedma/presentation/screens/cart/widgets/cart_item.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
 import 'package:hedma/presentation/widgets/empty_state.dart';
 import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
@@ -27,15 +28,11 @@ class CartScreen extends GetView<CartController> {
                       padding: const EdgeInsets.all(16),
                       itemCount: controller.items.length,
                       separatorBuilder: (context, index) => const Divider(),
-                      itemBuilder: (_, i) {
-                        final item = controller.items[i];
-                        return ListTile(
-                          title: Text(item.name),
-                          subtitle: Text('\$${item.price}'),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete_outline),
-                            onPressed: () => controller.removeItem(item),
-                          ),
+                      itemBuilder: (context, index) {
+                        final item = controller.items[index];
+                        return CartItem(
+                          product: item,
+                          onRemove: () => controller.removeItem(item),
                         );
                       },
                     ),
