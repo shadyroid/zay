@@ -1,0 +1,215 @@
+---
+description: Flutter + GetX clean architecture, naming, and coding patterns (Sayes-style)
+globs: **/*.dart
+alwaysApply: false
+---
+
+# Flutter + GetX Architecture (Sayes-style)
+
+Use this stack: **Flutter**, **GetX** (routing, DI, state), **Dio** (HTTP), **shared_preferences**. Follow clean layering and the conventions below.
+
+## Folder layout
+
+```
+lib/
+  main.dart
+  app/
+    bindings/          # {Feature}Binding — registers controllers
+    routes/routes.dart # Routes constants + GetPage list
+    use_cases/         # {Domain}UseCase — orchestrates repositories
+    translations/      # AppTranslations extends Translations
+    utils/constants.dart
+  data/
+    preferences/       # PrefsManager — static prefs helpers
+    remote/
+      dio_client.dart    # GetxService, single Dio instance
+      dummy/             # dummy JSON + RemotePost helper (DataSource layer only)
+        dummy_json.dart
+        remote_post.dart
+      data_sources/      # {Domain}DataSource — HTTP or dummy JSON
+    repositories/        # {Domain}RepositoryImpl — parse JSON only
+  domain/
+    models/
+      beans/             # {Entity}Bean — domain/DTO models
+      responses/         # {Entity}Response extends BaseResponse
+    repositories/        # abstract {Domain}Repository
+  presentation/
+    base/base_controller.dart
+    screens/{feature}/
+      controller.dart
+      screen.dart
+      widgets/           # screen-specific widgets (not shared across screens)
+    widgets/             # shared UI (e.g. AppButton)
+```
+
+## Naming
+
+| Kind | Pattern | Example |
+|------|---------|---------|
+| Screen file/class | `screen.dart` / `{Feature}Screen` | `welcome/screen.dart` → `WelcomeScreen` |
+| Controller | `controller.dart` / `{Feature}Controller` | `WelcomeController` |
+| Binding | `{feature}_binding.dart` / `{Feature}Binding` | `WelcomeBinding` |
+| Use case | `{domain}_use_case.dart` / `{Domain}UseCase` | `AuthUseCase`, `ProductsUseCase`, `ShopsUseCase` |
+| Repository (abstract) | `{domain}_repository.dart` | `AuthRepository` |
+| Repository impl | `{domain}_repository_impl.dart` | `AuthRepositoryImpl` |
+| Data source | `{domain}_data_source.dart` | `AuthDataSource` |
+| Entity model | `{entity}_bean.dart` / `{Entity}Bean` | `GarageBean` |
+| API model | `{entity}_response.dart` / `{Entity}Response` | `GaragesResponse` |
+| Screen widget file | `widgets/{name}.dart` / `{Name}` | `home/widgets/product_card.dart` → `ProductCard` |
+| Route constant | camelCase path | `static const String signIn = "/signIn";` |
+| API methods | `request` prefix | `requestProfile()`, `requestGarages()` |
+| Private fields | `_camelCase` | `final AuthUseCase _authUseCase` |
+
+Use `package:{app_name}/...` imports (replace `{app_name}` with the pubspec `name`).
+
+## Dependency injection (GetX)
+
+- **main**: `Get.put(DioClient(), permanent: true)` after `PrefsManager.init()`.
+- **Binding**: `Get.lazyPut(() => FeatureController())` in `dependencies()`.
+- **Use case**: `Get.put(RepositoryImpl())` on the repository field.
+- **Controller**: `Get.put(UseCase())` on use-case fields; extend `BaseController`.
+- **Data source**: `Get.find<DioClient>()` (hide Get's `Response` when importing Dio).
+
+## Data flow
+
+```
+Controller → UseCase → Repository (abstract) → RepositoryImpl → DataSource → DioClient
+```
+
+- **DataSource**: `post(path, variables: map)` → return `response.data` as `Map<String, dynamic>`.
+- **RepositoryImpl**: call data source, `return XxxResponse.fromJson(json)`.
+- **UseCase**: thin delegate — one-liner `=> _repository.requestXxx(...)`.
+- **Controller**: never call repository or Dio directly. Never import dummy JSON helpers outside the data layer.
+
+## Dummy JSON (until real endpoints)
+
+Use dummy API-shaped JSON in the **DataSource** layer until backend endpoints are provided.
+
+- **`Constants.useRemoteApi`**: `false` (default) → DataSource returns dummy JSON from `DummyJson`. Set to `true` when endpoints are ready.
+- **`lib/data/remote/dummy/dummy_json.dart`**: static maps matching real API shape (`statusCode`, `data`, `message`).
+- **`RemotePost`**: wraps `DioClient.post`; when `useRemoteApi` is `false` returns `dummyJson`; when `true` calls Dio and falls back to `dummyJson` on failure.
+- **DataSource** methods pass `dummyJson: DummyJson.xxx()` into `RemotePost.post(...)`.
+- **RepositoryImpl**: only `fromJson` — no dummy/fallback logic.
+
+```dart
+// products_data_source.dart
+Future<Map<String, dynamic>> requestProducts() => _remote.post(
+  Constants.productsPath,
+  dummyJson: DummyJson.products(),
+);
+
+// products_repository_impl.dart
+Future<ProductsResponse> requestProducts() async {
+  final json = await _productsDataSource.requestProducts();
+  return ProductsResponse.fromJson(json);
+}
+```
+
+When endpoints are ready: set `Constants.useRemoteApi = true` and update paths in `Constants` if needed. Controllers and repositories stay unchanged.
+
+## Domain modules
+
+Group use cases, repositories, and data sources by domain. Prefer fewer, cohesive modules:
+
+| Module | Repository / DataSource | UseCase | Responsibility |
+|--------|----------------------|---------|----------------|
+| **Auth** | `AuthRepository`, `AuthDataSource` | `AuthUseCase` | Sign in/up, password reset, verification, logout, **profile** |
+| **Products** | `ProductsRepository`, `ProductsDataSource` | `ProductsUseCase` | Products list, featured, details, favorites |
+| **Shops** | `ShopsRepository`, `ShopsDataSource` | `ShopsUseCase` | Shops list, shop details, shop products |
+| **Cart** | `CartRepository`, `CartDataSource` | `CartUseCase` | Cart, checkout |
+| **Order** | `OrderRepository`, `OrderDataSource` | `OrderUseCase` | Orders, details, track, return |
+| **Settings** | `SettingsRepository`, `SettingsDataSource` | `SettingsUseCase` | About us, terms, contact us |
+
+Do **not** create separate Profile, Catalog, Content, Contact, or App modules — fold them into the modules above.
+
+## Screen ↔ UseCase mapping
+
+Every screen controller with data or actions must wire to a suitable use case:
+
+| UseCase | Screens |
+|---------|---------|
+| `AuthUseCase` | Sign In, Sign Up, Forget Password, Verification, Reset Password, Edit Profile, Settings (logout) |
+| `ProductsUseCase` | Home, Products, Product Details, Favorites |
+| `ShopsUseCase` | Shops, Shop Details |
+| `CartUseCase` | Cart |
+| `OrderUseCase` | Orders, Order Details, Order Track, Order Return |
+| `SettingsUseCase` | About Us, Terms, Contact Us |
+
+Navigation-only screens (e.g. Splash, No Internet, Server Error) may omit a use case.
+
+## BaseController & API calls
+
+Every controller extends `BaseController`. Use shared loading and error handling:
+
+```dart
+Future<void> requestProfile() async {
+  isLoading.value = true;
+  final response = await _authUseCase.requestProfile();
+  isLoading.value = false;
+  if (!isSuccess(response)) return;
+  // handle success
+}
+```
+
+- `isSuccess(response)` checks `statusCode == 200`; failures go through `onApiError`.
+- `statusCode == -1` → navigate to no-internet route; `-2` → server-error route.
+- Other errors → `Get.rawSnackbar` with `response.message` or `'warning'.tr`.
+
+Load initial data in `onInit()` → `super.onInit()` then call `request*()` methods.
+
+## Models
+
+- **BaseResponse**: `message`, `statusCode`, `isSuccess` (`statusCode == 200`), `fromJson` factory.
+- **Responses** extend `BaseResponse`, pass `json` to `super`, parse `data` in `fromJson`.
+- **Beans**: immutable-style fields, `const` constructor, `factory fromJson`.
+
+## Routing
+
+- All routes in `Routes` class + `List<GetPage> routes` in `app/routes/routes.dart`.
+- Each `GetPage`: `name`, `page: () => const XxxScreen()`, `binding: XxxBinding()`.
+- Navigation: `Get.toNamed`, `Get.offNamed` (replace stack). Pass retry context via `arguments` map keys `"currentRoute"` and `"arguments"`.
+
+## UI
+
+- Screens: `class XxxScreen extends GetView<XxxController>` with `const` constructor and `super.key`.
+- Access controller via `controller` (from `GetView`) — e.g. `controller.navigate`.
+- User-visible strings: **`.tr`** keys in `AppTranslations` (`en` / `ar`).
+- Primary actions: reuse **`AppButton`** (`text`, `onPressed`, optional `isLoading`, `gradient`).
+- Full-width buttons, gradient defaults, uppercase label text.
+- Common layout: `Scaffold` → `SafeArea` / `Container` with `DecorationImage` background → `Padding(24)`.
+- Prefer `const` widgets where possible; `StatelessWidget` for shared widgets.
+
+### Screen-specific widgets
+
+- **Do not** define private widget classes (`_Foo`) or widget-builder methods (`Widget _buildFoo()`) inside `screen.dart`.
+- Any widget used only by one screen lives in that screen's `widgets/` folder:
+
+```
+presentation/screens/home/
+  screen.dart
+  controller.dart
+  widgets/
+    product_card.dart   → ProductCard
+```
+
+- Import with `package:{app_name}/presentation/screens/{feature}/widgets/{file}.dart`.
+- Reusable across multiple screens → `presentation/widgets/` instead.
+- `screen.dart` should mostly compose child widgets and bind to the controller.
+
+## HTTP (DioClient)
+
+- Single `DioClient extends GetxService`; all endpoints use **`post`** (even reads).
+- `validateStatus: (_) => true`; map connection failures to `statusCode: -1`, other errors to `-2`.
+- Request body key: `variables` in `post(query, variables: {...})`.
+
+## Preferences
+
+- `PrefsManager` static API: `init()`, getters/setters using `Constants` keys, `clear()` on logout.
+
+## Style
+
+- `flutter_lints` defaults; no unnecessary comments.
+- Empty controllers are only acceptable for pure navigation screens (no data, no API).
+- Match existing file naming: **snake_case** files, **PascalCase** types.
+- Do not introduce new state libraries (Bloc, Riverpod, Provider) unless asked.
+- Keep screens thin; business logic and API calls live in controllers and below.

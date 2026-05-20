@@ -1,0 +1,29 @@
+import 'package:get/get.dart';
+import 'package:hedma/app/routes/routes.dart';
+import 'package:hedma/app/use_cases/shops_use_case.dart';
+import 'package:hedma/domain/models/beans/shop_bean.dart';
+import 'package:hedma/presentation/base/base_controller.dart';
+
+class ShopsController extends BaseController {
+  final ShopsUseCase _shopsUseCase = Get.put(ShopsUseCase());
+
+  final shops = <ShopBean>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    requestShops();
+  }
+
+  Future<void> requestShops() async {
+    isLoading.value = true;
+    final response = await _shopsUseCase.requestShops();
+    isLoading.value = false;
+    if (!isSuccess(response)) return;
+    shops.assignAll(response.data ?? []);
+  }
+
+  void navigateToShopDetails(ShopBean shop) {
+    Get.toNamed(Routes.shopDetails, arguments: {'shopId': shop.id, 'shop': shop});
+  }
+}
