@@ -19,6 +19,12 @@ class SettingsRepositoryImpl implements SettingsRepository {
   }
 
   @override
+  Future<ContentResponse> requestPrivacy() async {
+    final json = await _settingsDataSource.requestPrivacy();
+    return ContentResponse.fromJson(json);
+  }
+
+  @override
   Future<BaseResponse> requestSendMessage({
     required String name,
     required String email,

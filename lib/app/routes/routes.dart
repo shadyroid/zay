@@ -21,6 +21,7 @@ import 'package:hedma/app/bindings/shops_binding.dart';
 import 'package:hedma/app/bindings/sign_in_binding.dart';
 import 'package:hedma/app/bindings/sign_up_binding.dart';
 import 'package:hedma/app/bindings/splash_binding.dart';
+import 'package:hedma/app/bindings/privacy_binding.dart';
 import 'package:hedma/app/bindings/terms_binding.dart';
 import 'package:hedma/app/bindings/verification_binding.dart';
 import 'package:hedma/presentation/screens/about_us/screen.dart';
@@ -45,6 +46,7 @@ import 'package:hedma/presentation/screens/shops/screen.dart';
 import 'package:hedma/presentation/screens/sign_in/screen.dart';
 import 'package:hedma/presentation/screens/sign_up/screen.dart';
 import 'package:hedma/presentation/screens/splash/screen.dart';
+import 'package:hedma/presentation/screens/privacy/screen.dart';
 import 'package:hedma/presentation/screens/terms/screen.dart';
 import 'package:hedma/presentation/screens/verification/screen.dart';
 
@@ -67,6 +69,7 @@ class Routes {
   static const String contactUs = '/contactUs';
   static const String aboutUs = '/aboutUs';
   static const String terms = '/terms';
+  static const String privacy = '/privacy';
   static const String orders = '/orders';
   static const String orderDetails = '/orderDetails';
   static const String orderTrack = '/orderTrack';
@@ -121,6 +124,11 @@ class Routes {
     ),
     GetPage(name: aboutUs, page: () => const AboutUsScreen(), binding: AboutUsBinding()),
     GetPage(name: terms, page: () => const TermsScreen(), binding: TermsBinding()),
+    GetPage(
+      name: privacy,
+      page: () => const PrivacyScreen(),
+      binding: PrivacyBinding(),
+    ),
     GetPage(name: orders, page: () => const OrdersScreen(), binding: OrdersBinding()),
     GetPage(
       name: orderDetails,

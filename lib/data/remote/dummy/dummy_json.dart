@@ -1,3 +1,5 @@
+import 'package:hedma/data/remote/dummy/dummy_html_content.dart';
+
 class DummyJson {
   DummyJson._();
 
@@ -106,9 +108,12 @@ class DummyJson {
 
   static Map<String, dynamic> profile() => _success(
         data: {
-          'name': 'John Doe',
-          'email': 'john@example.com',
-          'phone': '+1234567890',
+          'name': 'Ahmed Ali',
+          'email': 'ahmed@ali.com',
+          'phone': '',
+          'height': '',
+          'weight': '',
+          'location': '',
         },
       );
 
@@ -184,9 +189,12 @@ class DummyJson {
       _success(message: 'returnSubmitted');
 
   static Map<String, dynamic> aboutUs() =>
-      _success(data: 'aboutUsContent');
+      _success(data: DummyHtmlContent.aboutUs);
 
-  static Map<String, dynamic> terms() => _success(data: 'termsContent');
+  static Map<String, dynamic> terms() => _success(data: DummyHtmlContent.terms);
+
+  static Map<String, dynamic> privacy() =>
+      _success(data: DummyHtmlContent.privacy);
 
   static Map<String, dynamic> sendMessage() =>
       _success(message: 'messageSent');

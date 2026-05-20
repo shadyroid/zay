@@ -27,7 +27,6 @@ class OrderReturnScreen extends GetView<OrderReturnController> {
               const SizedBox(height: 24),
               AppTextField(
                 controller: controller.reasonController,
-                label: 'returnReason'.tr,
                 hint: 'returnReasonHint'.tr,
                 maxLines: 4,
                 validator: (v) =>

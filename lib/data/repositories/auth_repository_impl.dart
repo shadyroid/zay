@@ -26,11 +26,17 @@ class AuthRepositoryImpl implements AuthRepository {
     required String name,
     required String email,
     required String password,
+    String? phone,
+    String? height,
+    String? weight,
   }) async {
     final json = await _authDataSource.requestSignUp(
       name: name,
       email: email,
       password: password,
+      phone: phone,
+      height: height,
+      weight: weight,
     );
     return SignInResponse.fromJson(json);
   }

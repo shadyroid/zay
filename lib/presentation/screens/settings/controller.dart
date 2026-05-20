@@ -18,6 +18,8 @@ class SettingsController extends BaseController {
 
   void navigateToTerms() => Get.toNamed(Routes.terms);
 
+  void navigateToPrivacy() => Get.toNamed(Routes.privacy);
+
   Future<void> requestLogout() async {
     isLoading.value = true;
     final response = await _authUseCase.requestLogout();

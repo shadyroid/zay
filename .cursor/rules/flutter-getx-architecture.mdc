@@ -174,8 +174,9 @@ Load initial data in `onInit()` → `super.onInit()` then call `request*()` meth
 - Screens: `class XxxScreen extends GetView<XxxController>` with `const` constructor and `super.key`.
 - Access controller via `controller` (from `GetView`) — e.g. `controller.navigate`.
 - User-visible strings: **`.tr`** keys in `AppTranslations` (`en` / `ar`).
-- Primary actions: reuse **`AppButton`** (`text`, `onPressed`, optional `isLoading`, `gradient`).
-- Full-width buttons, gradient defaults, uppercase label text.
+- Primary actions: reuse **`AppButton`** (`text`, `onPressed`, optional `isLoading`, optional `gradient` / `backgroundColor`).
+- Full-width pill buttons (`borderRadius: 32`, height 56), solid `AppColors.primary` by default.
+- Text fields: reuse **`AppTextField`** (`hint`, optional `prefixIconPath` for SVG icons, `suffixIcon`).
 - Common layout: `Scaffold` → `SafeArea` / `Container` with `DecorationImage` background → `Padding(24)`.
 - Prefer `const` widgets where possible; `StatelessWidget` for shared widgets.
 
@@ -195,6 +196,17 @@ presentation/screens/home/
 - Import with `package:{app_name}/presentation/screens/{feature}/widgets/{file}.dart`.
 - Reusable across multiple screens → `presentation/widgets/` instead.
 - `screen.dart` should mostly compose child widgets and bind to the controller.
+
+### Design assets & icons
+
+When implementing UI from a design (Figma, screenshot, etc.):
+
+- Match layout, spacing, colors (`AppColors`), and typography as closely as possible.
+- If a screen uses a **custom icon** (logo, branded glyph, etc.) that cannot be reproduced accurately with Flutter `Icons` or simple shapes, add a placeholder **SVG** under `assets/icons/` (e.g. `ic_logo.svg`, `ic_email.svg`).
+- Register assets in `pubspec.yaml` (`assets/icons/`). Load with `flutter_svg` and reference paths from `AppIcons` in `lib/app/utils/app_icons.dart`.
+- Add a short comment in the SVG file: `<!-- Placeholder: replace from Figma export -->`.
+- **Tell the user** which SVG files need to be replaced with exact exports from Figma.
+- Do not embed one-off icons inline in `screen.dart`; keep them as assets or screen `widgets/`.
 
 ## HTTP (DioClient)
 

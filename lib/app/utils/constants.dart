@@ -36,6 +36,7 @@ class Constants {
 
   static const String aboutUsPath = '/content/aboutUs';
   static const String termsPath = '/content/terms';
+  static const String privacyPath = '/content/privacy';
   static const String contactUsPath = '/contact/send';
 
   static const int splashDelaySeconds = 2;

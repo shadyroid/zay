@@ -13,6 +13,9 @@ abstract class AuthRepository {
     required String name,
     required String email,
     required String password,
+    String? phone,
+    String? height,
+    String? weight,
   });
 
   Future<BaseResponse> requestForgetPassword({required String email});

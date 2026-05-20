@@ -15,6 +15,11 @@ class SettingsDataSource {
         dummyJson: DummyJson.terms(),
       );
 
+  Future<Map<String, dynamic>> requestPrivacy() => _remote.post(
+        Constants.privacyPath,
+        dummyJson: DummyJson.privacy(),
+      );
+
   Future<Map<String, dynamic>> requestSendMessage({
     required String name,
     required String email,

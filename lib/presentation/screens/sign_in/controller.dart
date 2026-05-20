@@ -46,4 +46,6 @@ class SignInController extends BaseController {
   void navigateToSignUp() => Get.toNamed(Routes.signUp);
 
   void navigateToForgetPassword() => Get.toNamed(Routes.forgetPassword);
+
+  void continueAsGuest() => Get.offNamed(Routes.home);
 }

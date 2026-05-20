@@ -20,12 +20,25 @@ class AuthDataSource {
     required String name,
     required String email,
     required String password,
-  }) =>
-      _remote.post(
-        Constants.signUpPath,
-        variables: {'name': name, 'email': email, 'password': password},
-        dummyJson: DummyJson.signUp(),
-      );
+    String? phone,
+    String? height,
+    String? weight,
+  }) {
+    final variables = <String, dynamic>{
+      'name': name,
+      'email': email,
+      'password': password,
+    };
+    if (phone != null) variables['phone'] = phone;
+    if (height != null) variables['height'] = height;
+    if (weight != null) variables['weight'] = weight;
+
+    return _remote.post(
+      Constants.signUpPath,
+      variables: variables,
+      dummyJson: DummyJson.signUp(),
+    );
+  }
 
   Future<Map<String, dynamic>> requestForgetPassword({
     required String email,

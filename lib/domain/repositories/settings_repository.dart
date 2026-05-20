@@ -6,6 +6,8 @@ abstract class SettingsRepository {
 
   Future<ContentResponse> requestTerms();
 
+  Future<ContentResponse> requestPrivacy();
+
   Future<BaseResponse> requestSendMessage({
     required String name,
     required String email,

@@ -48,6 +48,11 @@ class SettingsScreen extends GetView<SettingsController> {
             title: 'terms'.tr,
             onTap: controller.navigateToTerms,
           ),
+          SettingsTile(
+            icon: Icons.privacy_tip_outlined,
+            title: 'privacy'.tr,
+            onTap: controller.navigateToPrivacy,
+          ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),

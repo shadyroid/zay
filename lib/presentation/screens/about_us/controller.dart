@@ -18,6 +18,8 @@ class AboutUsController extends BaseController {
     final response = await _settingsUseCase.requestAboutUs();
     isLoading.value = false;
     if (!isSuccess(response)) return;
-    content.value = response.data?.tr ?? '';
+    content.value = response.data ?? '';
   }
+
+  void goBack() => Get.back();
 }

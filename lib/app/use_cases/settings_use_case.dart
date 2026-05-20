@@ -13,6 +13,9 @@ class SettingsUseCase {
 
   Future<ContentResponse> requestTerms() => _settingsRepository.requestTerms();
 
+  Future<ContentResponse> requestPrivacy() =>
+      _settingsRepository.requestPrivacy();
+
   Future<BaseResponse> requestSendMessage({
     required String name,
     required String email,

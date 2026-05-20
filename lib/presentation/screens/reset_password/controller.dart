@@ -48,4 +48,6 @@ class ResetPasswordController extends BaseController {
     Get.offAllNamed(Routes.signIn);
     Get.rawSnackbar(message: 'resetPasswordSuccess'.tr);
   }
+
+  void goBack() => Get.back();
 }

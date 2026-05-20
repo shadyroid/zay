@@ -19,11 +19,17 @@ class AuthUseCase {
     required String name,
     required String email,
     required String password,
+    String? phone,
+    String? height,
+    String? weight,
   }) =>
       _authRepository.requestSignUp(
         name: name,
         email: email,
         password: password,
+        phone: phone,
+        height: height,
+        weight: weight,
       );
 
   Future<BaseResponse> requestForgetPassword({required String email}) =>

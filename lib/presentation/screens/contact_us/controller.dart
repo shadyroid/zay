@@ -34,4 +34,12 @@ class ContactUsController extends BaseController {
     Get.back();
     Get.rawSnackbar(message: response.message?.tr ?? 'messageSent'.tr);
   }
+
+  void goBack() => Get.back();
+
+  void openWhatsApp() => Get.rawSnackbar(message: 'socialLinkComingSoon'.tr);
+
+  void openFacebook() => Get.rawSnackbar(message: 'socialLinkComingSoon'.tr);
+
+  void openTwitter() => Get.rawSnackbar(message: 'socialLinkComingSoon'.tr);
 }
