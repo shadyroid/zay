@@ -1,15 +1,30 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
+import 'package:hedma/app/use_cases/reviews_use_case.dart';
+import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
+import 'package:hedma/domain/models/beans/review_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class ProductDetailsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
+  final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
   final FavoriteProductsService _favorites = Get.find<FavoriteProductsService>();
 
+  final scrollController = ScrollController();
+  final sizeGuideKey = GlobalKey();
+
   final product = Rxn<ProductBean>();
+  final reviews = <ReviewBean>[].obs;
+  final similarProducts = <ProductBean>[].obs;
+  final quantity = 1.obs;
+  final selectedSizeId = RxnString();
+  final isDescriptionExpanded = false.obs;
+  final imageIndex = 0.obs;
+
   late final String productId;
 
   @override
@@ -20,22 +35,69 @@ class ProductDetailsController extends BaseController {
     productId = args['productId'] as String? ?? passed?.id ?? '';
     if (passed != null) {
       product.value = passed;
+      _initSelectedSize(passed);
     }
-    requestProductDetails();
+    _loadScreen();
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
+
+  Future<void> _loadScreen() async {
+    await _favorites.ensureLoaded();
+    await Future.wait([
+      requestProductDetails(),
+      requestReviews(),
+      requestSimilarProducts(),
+    ]);
+  }
+
+  void _initSelectedSize(ProductBean p) {
+    if (p.sizes.isEmpty) return;
+    final match = p.sizeId != null
+        ? p.sizes.where((s) => s.id == p.sizeId).firstOrNull
+        : null;
+    selectedSizeId.value = match?.id ?? p.sizes.first.id;
   }
 
   Future<void> requestProductDetails() async {
     if (productId.isEmpty) return;
     isLoading.value = true;
-    await _favorites.ensureLoaded();
     final response =
         await _productsUseCase.requestProductDetails(productId: productId);
     isLoading.value = false;
     if (!isSuccess(response)) return;
     product.value = response.data;
-    if (response.data?.isFavorite == true) {
-      _favorites.favoriteIds.add(productId);
+    if (response.data != null) {
+      _initSelectedSize(response.data!);
+      if (response.data!.isFavorite) {
+        _favorites.favoriteIds.add(productId);
+      }
     }
+  }
+
+  Future<void> requestReviews() async {
+    if (productId.isEmpty) return;
+    final response = await _reviewsUseCase.requestReviews(productId: productId);
+    if (!isSuccess(response)) return;
+    reviews.assignAll(response.data ?? []);
+  }
+
+  Future<void> requestSimilarProducts() async {
+    final categoryId = product.value?.categoryId;
+    final response = await _productsUseCase.requestProducts(
+      categoryId: categoryId,
+    );
+    if (!isSuccess(response)) return;
+    similarProducts.assignAll(
+      (response.data ?? [])
+          .where((p) => p.id != productId)
+          .take(6)
+          .toList(),
+    );
   }
 
   bool get isFavorite {
@@ -47,8 +109,59 @@ class ProductDetailsController extends BaseController {
   Future<void> toggleFavorite() async {
     final p = product.value;
     if (p == null) return;
-    await _favorites.toggleFavorite(p);
+    await toggleFavoriteFor(p);
     product.refresh();
+  }
+
+  Future<void> toggleFavoriteFor(ProductBean item) =>
+      _favorites.toggleFavorite(item);
+
+  void incrementQuantity() => quantity.value++;
+
+  void decrementQuantity() {
+    if (quantity.value > 1) quantity.value--;
+  }
+
+  void selectSize(String sizeId) => selectedSizeId.value = sizeId;
+
+  void toggleDescription() =>
+      isDescriptionExpanded.value = !isDescriptionExpanded.value;
+
+  void onImageChanged(int index) => imageIndex.value = index;
+
+  void scrollToSizeGuide() {
+    final context = sizeGuideKey.currentContext;
+    if (context == null) return;
+    Scrollable.ensureVisible(
+      context,
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  Future<void> onTryOn() async {
+    final file = await ImagePickerHelper.pickFromBottomSheet();
+    if (file == null || productId.isEmpty) return;
+
+    isLoading.value = true;
+    final response = await _productsUseCase.requestTryProduct(
+      productId: productId,
+      imagePath: file.path,
+    );
+    isLoading.value = false;
+    if (!isSuccess(response)) return;
+    final imageUrl = response.imageUrl;
+    if (imageUrl == null || imageUrl.isEmpty) return;
+
+    Get.toNamed(
+      Routes.tryOn,
+      arguments: {
+        'imageUrl': imageUrl,
+        'productId': productId,
+        'productPrice': product.value?.price,
+        'productName': product.value?.name,
+      },
+    );
   }
 
   void addToCart() {
@@ -60,6 +173,21 @@ class ProductDetailsController extends BaseController {
     final shopId = product.value?.shopId;
     if (shopId == null) return;
     Get.toNamed(Routes.shopDetails, arguments: {'shopId': shopId});
+  }
+
+  void navigateToProduct(ProductBean item) {
+    Get.toNamed(
+      Routes.productDetails,
+      arguments: {'productId': item.id, 'product': item},
+    );
+  }
+
+  void onShare() {
+    Get.rawSnackbar(message: 'shareComingSoon'.tr);
+  }
+
+  void onSeeAllReviews() {
+    Get.rawSnackbar(message: 'seeAllReviewsComingSoon'.tr);
   }
 
   void goBack() => Get.back();

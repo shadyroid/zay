@@ -4,6 +4,15 @@ import 'package:hedma/domain/models/responses/order_track_response.dart';
 import 'package:hedma/domain/models/responses/orders_response.dart';
 
 abstract class OrderRepository {
+  Future<OrderResponse> requestCreateOrder({
+    required String address,
+    required double latitude,
+    required double longitude,
+    required String mobileNumber,
+    required String paymentMethod,
+    required List<Map<String, dynamic>> items,
+  });
+
   Future<OrdersResponse> requestOrders();
 
   Future<OrderResponse> requestOrderDetails({required String orderId});

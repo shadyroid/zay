@@ -54,4 +54,14 @@ class ProductsDataSource {
         variables: {'productId': productId},
         dummyJson: DummyJson.unfavorite(productId),
       );
+
+  Future<Map<String, dynamic>> requestTryProduct({
+    required String productId,
+    required String imagePath,
+  }) =>
+      _remote.post(
+        Constants.tryProductPath,
+        variables: {'productId': productId, 'imagePath': imagePath},
+        dummyJson: DummyJson.tryProduct(productId),
+      );
 }

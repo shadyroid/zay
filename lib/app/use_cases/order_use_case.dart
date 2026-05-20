@@ -9,6 +9,23 @@ import 'package:hedma/domain/repositories/order_repository.dart';
 class OrderUseCase {
   final OrderRepository _orderRepository = Get.put(OrderRepositoryImpl());
 
+  Future<OrderResponse> requestCreateOrder({
+    required String address,
+    required double latitude,
+    required double longitude,
+    required String mobileNumber,
+    required String paymentMethod,
+    required List<Map<String, dynamic>> items,
+  }) =>
+      _orderRepository.requestCreateOrder(
+        address: address,
+        latitude: latitude,
+        longitude: longitude,
+        mobileNumber: mobileNumber,
+        paymentMethod: paymentMethod,
+        items: items,
+      );
+
   Future<OrdersResponse> requestOrders() => _orderRepository.requestOrders();
 
   Future<OrderResponse> requestOrderDetails({required String orderId}) =>

@@ -1,108 +1,108 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/services/favorite_products_service.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/product_details/controller.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_description_section.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_details_app_bar.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_details_bottom_bar.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_details_header.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_image_carousel.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_reviews_section.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_seller_banner.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_size_guide_table.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/product_size_section.dart';
+import 'package:hedma/presentation/screens/product_details/widgets/similar_products_section.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
   const ProductDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final favorites = Get.find<FavoriteProductsService>();
-
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBackAppBar(
+      appBar: ProductDetailsAppBar(
         onBack: controller.goBack,
-        title: 'productDetails'.tr,
-        showDivider: true,
-        actions: [
-          Obx(
-            () {
-              final product = controller.product.value;
-              if (product == null) return const SizedBox.shrink();
-              final isFavorite = favorites.isFavoriteProduct(product);
-              return IconButton(
-                icon: SvgPicture.asset(
-                  isFavorite ? AppIcons.heartFilled : AppIcons.favorite,
-                  width: 22,
-                  height: 22,
-                ),
-                onPressed: controller.toggleFavorite,
-              );
-            },
-          ),
-        ],
+        onShare: controller.onShare,
       ),
-      body: Obx(
-        () {
-          final product = controller.product.value;
-          if (controller.isLoading.value && product == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (product == null) {
-            return const SizedBox.shrink();
-          }
-          return Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: product.imageUrl != null && product.imageUrl!.isNotEmpty
-                      ? Image.network(
-                          product.imageUrl!,
-                          height: 280,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          height: 280,
-                          color: AppColors.screenBackground,
-                          child: Center(
-                            child: SvgPicture.asset(
-                              AppIcons.productPlaceholder,
-                              width: 80,
-                              height: 80,
-                            ),
-                          ),
-                        ),
+      body: Obx(() {
+        final product = controller.product.value;
+        if (controller.isLoading.value && product == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (product == null) return const SizedBox.shrink();
+
+        final favorites = Get.find<FavoriteProductsService>();
+        final favoriteIds = favorites.favoriteIds;
+        final isFavorite =
+            favoriteIds.contains(product.id) || product.isFavorite;
+
+        return Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                controller: controller.scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ProductImageCarousel(
+                      images: product.galleryImages,
+                      currentIndex: controller.imageIndex.value,
+                      isFavorite: isFavorite,
+                      onFavoriteTap: controller.toggleFavorite,
+                      onPageChanged: controller.onImageChanged,
+                    ),
+                    ProductDetailsHeader(
+                      name: product.name,
+                      price: product.price,
+                      rating: product.rating ?? '5.0',
+                      reviewCount: product.reviewCount ?? 0,
+                      quantity: controller.quantity.value,
+                      onIncrement: controller.incrementQuantity,
+                      onDecrement: controller.decrementQuantity,
+                    ),
+                    ProductDescriptionSection(
+                      description: product.description ?? '',
+                      isExpanded: controller.isDescriptionExpanded.value,
+                      onToggle: controller.toggleDescription,
+                    ),
+                    ProductSizeSection(
+                      sizes: product.sizes,
+                      selectedSizeId: controller.selectedSizeId.value,
+                      onSizeSelected: controller.selectSize,
+                      onSizeGuideTap: controller.scrollToSizeGuide,
+                    ),
+                    ProductSellerBanner(
+                      shopName: product.shopName ?? '',
+                      categories: product.sellerCategories ?? '',
+                      onTap: controller.navigateToShop,
+                    ),
+                    KeyedSubtree(
+                      key: controller.sizeGuideKey,
+                      child: ProductSizeGuideTable(sizes: product.sizes),
+                    ),
+                    SimilarProductsSection(
+                      products: controller.similarProducts,
+                      shopNameFor: (p) => p.shopName ?? '',
+                      onProductTap: controller.navigateToProduct,
+                      onFavoriteTap: controller.toggleFavoriteFor,
+                    ),
+                    ProductReviewsSection(
+                      reviews: controller.reviews,
+                      onSeeAll: controller.onSeeAllReviews,
+                    ),
+                    const SizedBox(height: 24),
+                  ],
                 ),
-                const SizedBox(height: 24),
-                Text(
-                  product.name,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '\$${product.price}',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: AppColors.secondary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const SizedBox(height: 16),
-                if (product.shopId != null)
-                  TextButton(
-                    onPressed: controller.navigateToShop,
-                    child: Text('viewShop'.tr),
-                  ),
-                const Spacer(),
-                AppButton(
-                  text: 'addToCart'.tr,
-                  onPressed: controller.addToCart,
-                ),
-              ],
+              ),
             ),
-          );
-        },
-      ),
+            ProductDetailsBottomBar(
+              price: product.price,
+              onTryOn: controller.onTryOn,
+              onAddToCart: controller.addToCart,
+            ),
+          ],
+        );
+      }),
     );
   }
 }

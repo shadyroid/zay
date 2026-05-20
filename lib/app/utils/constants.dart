@@ -25,11 +25,15 @@ class Constants {
   static const String favoritesPath = '/catalog/favorites';
   static const String favoritePath = '/catalog/favorite';
   static const String unfavoritePath = '/catalog/unfavorite';
+  static const String reviewsPath = '/catalog/reviews';
+  static const String addReviewPath = '/catalog/reviews/add';
+  static const String tryProductPath = '/catalog/tryProduct';
 
   static const String cartPath = '/cart';
   static const String removeFromCartPath = '/cart/remove';
   static const String checkoutPath = '/cart/checkout';
 
+  static const String createOrderPath = '/orders/create';
   static const String ordersPath = '/orders';
   static const String orderDetailsPath = '/orders/details';
   static const String orderTrackPath = '/orders/track';

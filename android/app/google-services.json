@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "62585206493",
+    "project_id": "hedma-8f41f",
+    "storage_bucket": "hedma-8f41f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62585206493:android:c9e43429edf2eee2900d34",
+        "android_client_info": {
+          "package_name": "com.hedma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoOZM9EdzZheO55asgGDt3Fa3N40LZY68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

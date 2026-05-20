@@ -1,8 +1,8 @@
-import 'package:hedma/domain/models/beans/product_bean.dart';
+import 'package:hedma/domain/models/beans/cart_item_bean.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 
 class CartResponse extends BaseResponse {
-  final List<ProductBean>? data;
+  final List<CartItemBean>? data;
 
   const CartResponse({
     required super.statusCode,
@@ -16,7 +16,7 @@ class CartResponse extends BaseResponse {
       statusCode: json['statusCode'] as int? ?? -2,
       message: json['message'] as String?,
       data: list
-          ?.map((e) => ProductBean.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => CartItemBean.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }

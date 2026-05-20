@@ -175,25 +175,64 @@ class DummyJson {
 
   static const _orders = [
     {
-      'id': '1001',
-      'status': 'Delivered',
-      'total': '179.98',
-      'date': '2026-05-15',
-      'itemCount': 2,
-    },
-    {
-      'id': '1002',
-      'status': 'Processing',
-      'total': '89.99',
-      'date': '2026-05-18',
+      'id': '23456',
+      'status': 'Pending',
+      'total': '290',
+      'date': '03 March 2026',
       'itemCount': 1,
+      'productName': 'Regular fit slogan',
+      'productImageUrl':
+          'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&h=200&fit=crop',
+      'size': 'L',
+      'quantity': 1,
     },
     {
-      'id': '1003',
+      'id': '23457',
+      'status': 'Confirmed',
+      'total': '290',
+      'date': '02 March 2026',
+      'itemCount': 1,
+      'productName': 'Regular Fit Polo',
+      'productImageUrl':
+          'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop',
+      'size': 'L',
+      'quantity': 1,
+    },
+    {
+      'id': '23458',
       'status': 'Shipped',
+      'total': '179.98',
+      'date': '01 March 2026',
+      'itemCount': 1,
+      'productName': 'Regular fit slogan',
+      'productImageUrl':
+          'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&h=200&fit=crop',
+      'size': 'M',
+      'quantity': 1,
+    },
+    {
+      'id': '23459',
+      'status': 'Delivered',
+      'total': '89.99',
+      'date': '28 February 2026',
+      'itemCount': 1,
+      'productName': 'Regular Fit Polo',
+      'productImageUrl':
+          'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop',
+      'size': 'L',
+      'quantity': 1,
+    },
+    {
+      'id': '23460',
+      'status': 'Returned',
       'total': '64.98',
-      'date': '2026-05-19',
-      'itemCount': 2,
+      'date': '25 February 2026',
+      'itemCount': 1,
+      'productName': 'Regular fit slogan',
+      'productImageUrl':
+          'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&h=200&fit=crop',
+      'size': 'S',
+      'quantity': 1,
     },
   ];
 
@@ -228,7 +267,7 @@ class DummyJson {
         data: {
           'name': 'Ahmed Ali',
           'email': 'ahmed@ali.com',
-          'phone': '',
+          'phone': '+20 100 123 4567',
           'height': '',
           'weight': '',
           'location': '',
@@ -273,13 +312,126 @@ class DummyJson {
   ) =>
       products.map(_productWithFavorite).toList();
 
-  static Map<String, dynamic> productDetails(String productId) {
-    final product = _products.cast<Map<String, dynamic>>().firstWhere(
-          (item) => item['id'] == productId,
-          orElse: () => _products.first,
-        );
-    return _success(data: _productWithFavorite(product));
+  static List<Map<String, dynamic>> _defaultProductSizes() => [
+        {
+          'id': 's',
+          'label': 'S',
+          'measurements': [
+            {'id': 'chest', 'label': 'Chest Width', 'value': '41'},
+            {'id': 'length', 'label': 'Shirt Length', 'value': '72'},
+            {'id': 'sleeve', 'label': 'Sleeve Length', 'value': '22'},
+            {'id': 'shoulder', 'label': 'Shoulder Width', 'value': '18'},
+          ],
+        },
+        {
+          'id': 'm',
+          'label': 'M',
+          'measurements': [
+            {'id': 'chest', 'label': 'Chest Width', 'value': '43'},
+            {'id': 'length', 'label': 'Shirt Length', 'value': '74'},
+            {'id': 'sleeve', 'label': 'Sleeve Length', 'value': '23'},
+            {'id': 'shoulder', 'label': 'Shoulder Width', 'value': '19'},
+          ],
+        },
+        {
+          'id': 'l',
+          'label': 'L',
+          'measurements': [
+            {'id': 'chest', 'label': 'Chest Width', 'value': '45'},
+            {'id': 'length', 'label': 'Shirt Length', 'value': '76'},
+            {'id': 'sleeve', 'label': 'Sleeve Length', 'value': '24'},
+            {'id': 'shoulder', 'label': 'Shoulder Width', 'value': '20'},
+          ],
+        },
+        {
+          'id': 'xl',
+          'label': 'XL',
+          'measurements': [
+            {'id': 'chest', 'label': 'Chest Width', 'value': '47'},
+            {'id': 'length', 'label': 'Shirt Length', 'value': '78'},
+            {'id': 'sleeve', 'label': 'Sleeve Length', 'value': '25'},
+            {'id': 'shoulder', 'label': 'Shoulder Width', 'value': '21'},
+          ],
+        },
+        {
+          'id': 'xxl',
+          'label': 'XXL',
+          'measurements': [
+            {'id': 'chest', 'label': 'Chest Width', 'value': '49'},
+            {'id': 'length', 'label': 'Shirt Length', 'value': '80'},
+            {'id': 'sleeve', 'label': 'Sleeve Length', 'value': '26'},
+            {'id': 'shoulder', 'label': 'Shoulder Width', 'value': '22'},
+          ],
+        },
+      ];
+
+  static Map<String, dynamic> _enrichedProduct(String productId) {
+    final product = Map<String, dynamic>.from(
+      _products.cast<Map<String, dynamic>>().firstWhere(
+            (item) => item['id'] == productId,
+            orElse: () => _products.first,
+          ),
+    );
+    final imageUrl = product['imageUrl'] as String?;
+    product['imageUrls'] = [
+      ?imageUrl,
+      'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=720&fit=crop',
+      'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&h=720&fit=crop',
+    ];
+    product['description'] =
+        'The name says it all, the right size slightly snugs the body leaving enough room for comfort in the sleeves and waist.';
+    product['reviewCount'] = 45;
+    product['shopName'] = product['shopId'] == '1'
+        ? "MEN'S CLUB"
+        : _shops.firstWhere(
+            (s) => s['id'] == product['shopId'],
+            orElse: () => _shops.first,
+          )['name'];
+    product['sellerCategories'] = 'MEN, TOP, T-SHIRTS, SUITS, ACCESSORIES';
+    product['sizes'] = _defaultProductSizes();
+    if (productId == '1') {
+      product['name'] = 'Regular Fit Slogan';
+      product['price'] = '299';
+    }
+    return product;
   }
+
+  static Map<String, dynamic> productDetails(String productId) {
+    return _success(data: _productWithFavorite(_enrichedProduct(productId)));
+  }
+
+  static Map<String, dynamic> reviews(String productId) => _success(
+        data: [
+          {
+            'id': '1',
+            'title': 'Good product, Value for money !',
+            'comment':
+                'The shirt is very good. I like it very much. I will buy it again. The quality is good and the price is reasonable.',
+            'authorName': 'Sunny Vo',
+            'rating': 3,
+            'createdAt': '15 mins ago',
+          },
+          {
+            'id': '2',
+            'title': 'Great fit and quality',
+            'comment':
+                'Fits perfectly and the fabric feels premium. Delivery was fast.',
+            'authorName': 'Ahmed Ali',
+            'rating': 5,
+            'createdAt': '2 days ago',
+          },
+        ],
+      );
+
+  static Map<String, dynamic> addReview(String productId) =>
+      _success(message: 'reviewSubmitted');
+
+  static Map<String, dynamic> tryProduct(String productId) => _success(
+        data: {
+          'imageUrl':
+              'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=800&fit=crop',
+        },
+      );
 
   static Map<String, dynamic> favorites() => _success(
         data: _productsWithFavorites(
@@ -318,15 +470,41 @@ class DummyJson {
     return _success(data: _productsWithFavorites(products));
   }
 
-  static Map<String, dynamic> cart() =>
-      _success(data: [_products[0], _products[2]]);
+  static List<Map<String, dynamic>> _cartItems() => [
+        {
+          'id': '1',
+          'name': 'Regular fit slogan',
+          'price': '290',
+          'imageUrl': _products[0]['imageUrl'],
+          'sizeLabel': 'L',
+          'quantity': 1,
+        },
+        {
+          'id': '3',
+          'name': 'Oxford Shirt',
+          'price': '210',
+          'imageUrl': _products[2]['imageUrl'],
+          'sizeLabel': 'M',
+          'quantity': 1,
+        },
+      ];
+
+  static Map<String, dynamic> cart() => _success(data: _cartItems());
 
   static Map<String, dynamic> removeFromCart(String productId) {
-    final items = [_products[0], _products[2]]
-        .where((item) => item['id'] != productId)
-        .toList();
+    final items =
+        _cartItems().where((item) => item['id'] != productId).toList();
     return _success(data: items);
   }
+
+  static Map<String, dynamic> createOrder() => _success(
+        data: {
+          'id': '1004',
+          'status': 'Placed',
+          'total': '500',
+        },
+        message: 'orderPlacedSuccess',
+      );
 
   static Map<String, dynamic> checkout() =>
       _success(message: 'checkoutSuccess');
@@ -334,20 +512,67 @@ class DummyJson {
   static Map<String, dynamic> orders() => _success(data: _orders);
 
   static Map<String, dynamic> orderDetails(String orderId) {
-    final order = _orders.cast<Map<String, dynamic>>().firstWhere(
-          (item) => item['id'] == orderId,
-          orElse: () => _orders.first,
-        );
+    final order = Map<String, dynamic>.from(
+      _orders.cast<Map<String, dynamic>>().firstWhere(
+        (item) => item['id'] == orderId,
+        orElse: () => _orders.first,
+      ),
+    );
+    order.addAll({
+      'customerName': 'Ahmed Ali',
+      'customerAddress': 'Abbas El Akkad, Nasr City, Cairo',
+      'customerPhone': '01002407809',
+      'customerImageUrl':
+          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop',
+      'subtotal': order['total'],
+      'shipping': '0',
+      'paymentMethod': 'cash',
+      'summaryDate': '3-3-2026',
+    });
     return _success(data: order);
   }
 
   static Map<String, dynamic> orderTrack() => _success(
-        data: [
-          'trackPlaced',
-          'trackProcessing',
-          'trackShipped',
-          'trackDelivered',
-        ],
+        data: {
+          'estimatedDelivery': 'Today, 4:30 PM',
+          'steps': [
+            {
+              'titleKey': 'trackStepPending',
+              'subtitleKey': 'trackStepPendingDesc',
+              'timestamp': 'Nov 30, 10:30 AM',
+              'state': 'completed',
+              'icon': 'pending',
+            },
+            {
+              'titleKey': 'trackStepConfirmed',
+              'subtitleKey': 'trackStepConfirmedDesc',
+              'timestamp': 'Nov 30, 12:15 PM',
+              'state': 'completed',
+              'icon': 'confirmed',
+            },
+            {
+              'titleKey': 'trackStepShipped',
+              'subtitleKey': 'trackStepShippedDesc',
+              'timestamp': 'Nov 30, 2:45 PM',
+              'state': 'upcoming',
+              'icon': 'shipped',
+            },
+            {
+              'titleKey': 'trackStepDelivered',
+              'subtitleKey': 'trackStepDeliveredDesc',
+              'timestamp': 'Expected at 4:15 PM',
+              'state': 'upcoming',
+              'icon': 'delivered',
+            },
+            {
+              'titleKey': 'trackStepReturned',
+              'subtitleKey': 'trackStepReturnedDesc',
+              'timestamp': 'Expected at 4:30 PM',
+              'state': 'upcoming',
+              'icon': 'returned',
+            },
+          ],
+        },
       );
 
   static Map<String, dynamic> orderReturn() =>

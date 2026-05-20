@@ -8,7 +8,9 @@ import 'package:hedma/app/bindings/forget_password_binding.dart';
 import 'package:hedma/app/bindings/home_binding.dart';
 import 'package:hedma/app/bindings/no_internet_binding.dart';
 import 'package:hedma/app/bindings/order_details_binding.dart';
+import 'package:hedma/app/bindings/map_binding.dart';
 import 'package:hedma/app/bindings/order_return_binding.dart';
+import 'package:hedma/app/bindings/order_success_binding.dart';
 import 'package:hedma/app/bindings/order_track_binding.dart';
 import 'package:hedma/app/bindings/orders_binding.dart';
 import 'package:hedma/app/bindings/product_details_binding.dart';
@@ -23,6 +25,7 @@ import 'package:hedma/app/bindings/sign_up_binding.dart';
 import 'package:hedma/app/bindings/splash_binding.dart';
 import 'package:hedma/app/bindings/privacy_binding.dart';
 import 'package:hedma/app/bindings/terms_binding.dart';
+import 'package:hedma/app/bindings/try_on_binding.dart';
 import 'package:hedma/app/bindings/verification_binding.dart';
 import 'package:hedma/presentation/screens/about_us/screen.dart';
 import 'package:hedma/presentation/screens/cart/screen.dart';
@@ -33,7 +36,9 @@ import 'package:hedma/presentation/screens/forget_password/screen.dart';
 import 'package:hedma/presentation/screens/home/screen.dart';
 import 'package:hedma/presentation/screens/no_internet/screen.dart';
 import 'package:hedma/presentation/screens/order_details/screen.dart';
+import 'package:hedma/presentation/screens/map/screen.dart';
 import 'package:hedma/presentation/screens/order_return/screen.dart';
+import 'package:hedma/presentation/screens/order_success/screen.dart';
 import 'package:hedma/presentation/screens/order_track/screen.dart';
 import 'package:hedma/presentation/screens/orders/screen.dart';
 import 'package:hedma/presentation/screens/product_details/screen.dart';
@@ -48,6 +53,7 @@ import 'package:hedma/presentation/screens/sign_up/screen.dart';
 import 'package:hedma/presentation/screens/splash/screen.dart';
 import 'package:hedma/presentation/screens/privacy/screen.dart';
 import 'package:hedma/presentation/screens/terms/screen.dart';
+import 'package:hedma/presentation/screens/try_on/screen.dart';
 import 'package:hedma/presentation/screens/verification/screen.dart';
 
 class Routes {
@@ -59,10 +65,13 @@ class Routes {
   static const String resetPassword = '/resetPassword';
   static const String home = '/home';
   static const String productDetails = '/productDetails';
+  static const String tryOn = '/tryOn';
   static const String products = '/products';
   static const String shops = '/shops';
   static const String shopDetails = '/shopDetails';
   static const String cart = '/cart';
+  static const String map = '/map';
+  static const String orderSuccess = '/orderSuccess';
   static const String settings = '/settings';
   static const String editProfile = '/editProfile';
   static const String favorite = '/favorite';
@@ -102,6 +111,11 @@ class Routes {
       page: () => const ProductDetailsScreen(),
       binding: ProductDetailsBinding(),
     ),
+    GetPage(
+      name: tryOn,
+      page: () => const TryOnScreen(),
+      binding: TryOnBinding(),
+    ),
     GetPage(name: products, page: () => const ProductsScreen(), binding: ProductsBinding()),
     GetPage(name: shops, page: () => const ShopsScreen(), binding: ShopsBinding()),
     GetPage(
@@ -110,6 +124,12 @@ class Routes {
       binding: ShopDetailsBinding(),
     ),
     GetPage(name: cart, page: () => const CartScreen(), binding: CartBinding()),
+    GetPage(name: map, page: () => const MapScreen(), binding: MapBinding()),
+    GetPage(
+      name: orderSuccess,
+      page: () => const OrderSuccessScreen(),
+      binding: OrderSuccessBinding(),
+    ),
     GetPage(name: settings, page: () => const SettingsScreen(), binding: SettingsBinding()),
     GetPage(
       name: editProfile,

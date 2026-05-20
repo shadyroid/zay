@@ -26,7 +26,26 @@ class ProductsController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    _applyRouteArguments();
     _loadScreen();
+  }
+
+  void _applyRouteArguments() {
+    final args = Get.arguments;
+    if (args is! Map) return;
+
+    final categoryId = args['categoryId'];
+    if (categoryId is String && categoryId.isNotEmpty) {
+      selectedCategoryId.value = categoryId;
+      activeFilters.value =
+          activeFilters.value.copyWith(categoryId: categoryId);
+    }
+
+    final filters = args['filters'];
+    if (filters is ProductFilters) {
+      activeFilters.value = filters;
+      selectedCategoryId.value = filters.categoryId;
+    }
   }
 
   Future<void> _loadScreen() async {

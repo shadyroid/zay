@@ -29,11 +29,25 @@ class OrderDetailsController extends BaseController {
     order.value = response.data;
   }
 
+  void goBack() => Get.back();
+
   void navigateToTrack() {
-    Get.toNamed(Routes.orderTrack, arguments: {'orderId': orderId});
+    Get.toNamed(
+      Routes.orderTrack,
+      arguments: {
+        'orderId': orderId,
+        'order': order.value,
+      },
+    );
   }
 
   void navigateToReturn() {
-    Get.toNamed(Routes.orderReturn, arguments: {'orderId': orderId});
+    Get.toNamed(
+      Routes.orderReturn,
+      arguments: {
+        'orderId': orderId,
+        'order': order.value,
+      },
+    );
   }
 }

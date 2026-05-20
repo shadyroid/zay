@@ -5,6 +5,7 @@ import 'package:hedma/domain/models/responses/categories_response.dart';
 import 'package:hedma/domain/models/responses/product_response.dart';
 import 'package:hedma/domain/models/responses/products_response.dart';
 import 'package:hedma/domain/models/responses/sizes_response.dart';
+import 'package:hedma/domain/models/responses/try_product_response.dart';
 import 'package:hedma/domain/repositories/products_repository.dart';
 
 class ProductsUseCase {
@@ -33,4 +34,13 @@ class ProductsUseCase {
 
   Future<BaseResponse> requestUnFavorite({required String productId}) =>
       _productsRepository.requestUnFavorite(productId: productId);
+
+  Future<TryProductResponse> requestTryProduct({
+    required String productId,
+    required String imagePath,
+  }) =>
+      _productsRepository.requestTryProduct(
+        productId: productId,
+        imagePath: imagePath,
+      );
 }

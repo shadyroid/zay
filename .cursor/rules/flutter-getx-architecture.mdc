@@ -1,7 +1,7 @@
 ---
 description: Flutter + GetX clean architecture, naming, and coding patterns (Sayes-style)
 globs: **/*.dart
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Flutter + GetX Architecture (Sayes-style)

@@ -5,6 +5,15 @@ import 'package:hedma/data/remote/dummy/remote_post.dart';
 class OrderDataSource {
   final RemotePost _remote = RemotePost.find;
 
+  Future<Map<String, dynamic>> requestCreateOrder({
+    required Map<String, dynamic> body,
+  }) =>
+      _remote.post(
+        Constants.createOrderPath,
+        variables: body,
+        dummyJson: DummyJson.createOrder(),
+      );
+
   Future<Map<String, dynamic>> requestOrders() => _remote.post(
         Constants.ordersPath,
         dummyJson: DummyJson.orders(),

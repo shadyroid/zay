@@ -9,6 +9,28 @@ class OrderRepositoryImpl implements OrderRepository {
   final OrderDataSource _orderDataSource = OrderDataSource();
 
   @override
+  Future<OrderResponse> requestCreateOrder({
+    required String address,
+    required double latitude,
+    required double longitude,
+    required String mobileNumber,
+    required String paymentMethod,
+    required List<Map<String, dynamic>> items,
+  }) async {
+    final json = await _orderDataSource.requestCreateOrder(
+      body: {
+        'address': address,
+        'latitude': latitude,
+        'longitude': longitude,
+        'mobileNumber': mobileNumber,
+        'paymentMethod': paymentMethod,
+        'items': items,
+      },
+    );
+    return OrderResponse.fromJson(json);
+  }
+
+  @override
   Future<OrdersResponse> requestOrders() async {
     final json = await _orderDataSource.requestOrders();
     return OrdersResponse.fromJson(json);

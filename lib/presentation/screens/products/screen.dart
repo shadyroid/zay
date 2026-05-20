@@ -38,6 +38,10 @@ class ProductsScreen extends GetView<ProductsController> {
             return const Center(child: CircularProgressIndicator());
           }
 
+          final selectedCategoryId = controller.selectedCategoryId.value;
+          final favorites = Get.find<FavoriteProductsService>();
+          final favoriteIds = favorites.favoriteIds;
+
           return Stack(
             children: [
               Column(
@@ -53,8 +57,7 @@ class ProductsScreen extends GetView<ProductsController> {
                         final category = controller.categories[index];
                         return CategoryChip(
                           category: category,
-                          isSelected:
-                              controller.selectedCategoryId.value == category.id,
+                          isSelected: selectedCategoryId == category.id,
                           onTap: () => controller.selectCategory(category),
                         );
                       },
@@ -83,17 +86,15 @@ class ProductsScreen extends GetView<ProductsController> {
                       itemCount: controller.products.length,
                       itemBuilder: (context, index) {
                         final product = controller.products[index];
-                        final favorites = Get.find<FavoriteProductsService>();
-                        return Obx(
-                          () => ProductGridItem(
-                            product: product,
-                            isFavorite: favorites.isFavoriteProduct(product),
-                            onTap: () =>
-                                controller.navigateToProductDetails(product),
-                            onFavoriteTap: () async {
-                              await controller.toggleFavorite(product);
-                            },
-                          ),
+                        return ProductGridItem(
+                          product: product,
+                          isFavorite: favoriteIds.contains(product.id) ||
+                              product.isFavorite,
+                          onTap: () =>
+                              controller.navigateToProductDetails(product),
+                          onFavoriteTap: () async {
+                            await controller.toggleFavorite(product);
+                          },
                         );
                       },
                     ),

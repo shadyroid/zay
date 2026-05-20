@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hedma/app/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/cart/controller.dart';
+import 'package:hedma/presentation/screens/cart/widgets/cart_bottom_bar.dart';
+import 'package:hedma/presentation/screens/cart/widgets/cart_delivery_section.dart';
 import 'package:hedma/presentation/screens/cart/widgets/cart_item.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
+import 'package:hedma/presentation/screens/cart/widgets/cart_payment_section.dart';
+import 'package:hedma/presentation/screens/cart/widgets/cart_price_summary.dart';
+import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/empty_state.dart';
 import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
 
@@ -13,57 +16,83 @@ class CartScreen extends GetView<CartController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('cart'.tr),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+      backgroundColor: Colors.white,
+      appBar: AppBackAppBar(
+        onBack: controller.goBack,
+        title: 'cart'.tr,
+        showDivider: true,
       ),
-      body: Obx(
-        () => controller.items.isEmpty
-            ? EmptyState(message: 'emptyCart'.tr, icon: Icons.shopping_cart_outlined)
-            : Column(
-                children: [
-                  Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: controller.items.length,
-                      separatorBuilder: (context, index) => const Divider(),
-                      itemBuilder: (context, index) {
-                        final item = controller.items[index];
-                        return CartItem(
-                          product: item,
-                          onRemove: () => controller.removeItem(item),
-                        );
-                      },
+      body: Obx(() {
+        if (controller.isLoading.value && controller.items.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.items.isEmpty) {
+          return EmptyState(
+            message: 'emptyCart'.tr,
+            icon: Icons.shopping_cart_outlined,
+          );
+        }
+
+        final itemCount = controller.itemCount;
+        final subtotal = controller.subtotal;
+        final shipping = CartController.shippingFee;
+        final total = controller.total;
+        final paymentMethod = controller.paymentMethod.value;
+        final deliveryAddress = controller.deliveryAddress.value;
+
+        return Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                      child: Column(
+                        children: controller.items
+                            .map(
+                              (item) => CartItem(
+                                item: item,
+                                onRemove: () => controller.removeItem(item),
+                                onIncrement: () =>
+                                    controller.incrementQuantity(item),
+                                onDecrement: () =>
+                                    controller.decrementQuantity(item),
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('total'.tr,
-                                style: Theme.of(context).textTheme.titleLarge),
-                            Text('\$${controller.total.toStringAsFixed(2)}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(
-                                      color: AppColors.secondary,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        AppButton(text: 'checkout'.tr, onPressed: controller.checkout),
-                      ],
+                    CartDeliverySection(
+                      locationText: deliveryAddress,
+                      mobileController: controller.mobileController,
+                      onSelectLocation: controller.onSelectLocation,
                     ),
-                  ),
-                ],
+                    CartPaymentSection(
+                      selectedMethod: paymentMethod,
+                      onMethodSelected: controller.selectPaymentMethod,
+                    ),
+                    CartPriceSummary(
+                      itemCount: itemCount,
+                      subtotal: subtotal,
+                      shipping: shipping,
+                      total: total,
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ),
               ),
-      ),
+            ),
+            CartBottomBar(
+              total: total,
+              isLoading: controller.isLoading.value,
+              onPayNow: controller.onPayNow,
+            ),
+          ],
+        );
+      }),
       bottomNavigationBar: const MainBottomNav(currentIndex: 2),
     );
   }

@@ -4,6 +4,7 @@ import 'package:hedma/domain/models/responses/categories_response.dart';
 import 'package:hedma/domain/models/responses/product_response.dart';
 import 'package:hedma/domain/models/responses/products_response.dart';
 import 'package:hedma/domain/models/responses/sizes_response.dart';
+import 'package:hedma/domain/models/responses/try_product_response.dart';
 import 'package:hedma/domain/repositories/products_repository.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
@@ -62,5 +63,17 @@ class ProductsRepositoryImpl implements ProductsRepository {
     final json =
         await _productsDataSource.requestUnFavorite(productId: productId);
     return BaseResponse.fromJson(json);
+  }
+
+  @override
+  Future<TryProductResponse> requestTryProduct({
+    required String productId,
+    required String imagePath,
+  }) async {
+    final json = await _productsDataSource.requestTryProduct(
+      productId: productId,
+      imagePath: imagePath,
+    );
+    return TryProductResponse.fromJson(json);
   }
 }
