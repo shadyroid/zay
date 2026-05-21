@@ -15,7 +15,7 @@ class OrdersScreen extends GetView<OrdersController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: OrdersAppBar(onBack: controller.goBack),
+      appBar: const OrdersAppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

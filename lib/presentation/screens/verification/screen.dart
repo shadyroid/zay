@@ -17,7 +17,7 @@ class VerificationScreen extends GetView<VerificationController> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-      appBar: AppBackAppBar(onBack: controller.goBack),
+      appBar: const AppBackAppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

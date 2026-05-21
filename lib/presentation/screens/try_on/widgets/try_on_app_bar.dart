@@ -7,11 +7,9 @@ import 'package:hedma/app/utils/app_icons.dart';
 class TryOnAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TryOnAppBar({
     super.key,
-    required this.onBack,
     required this.onShare,
   });
 
-  final VoidCallback onBack;
   final VoidCallback onShare;
 
   @override
@@ -24,10 +22,6 @@ class TryOnAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: true,
-      leading: IconButton(
-        icon: SvgPicture.asset(AppIcons.back, width: 20, height: 20),
-        onPressed: onBack,
-      ),
       title: Text(
         'virtualTryOn'.tr,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(

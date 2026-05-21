@@ -13,7 +13,6 @@ class PrivacyScreen extends GetView<PrivacyController> {
         title: 'privacy'.tr,
         html: controller.content.value,
         isLoading: controller.isLoading.value,
-        onBack: controller.goBack,
       ),
     );
   }

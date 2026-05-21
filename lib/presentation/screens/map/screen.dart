@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/map/controller.dart';
 import 'package:hedma/presentation/screens/map/widgets/map_location_bottom_card.dart';
 import 'package:hedma/presentation/screens/map/widgets/map_place_suggestions.dart';
 import 'package:hedma/presentation/screens/map/widgets/map_search_bar.dart';
-
 class MapScreen extends GetView<MapController> {
   const MapScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
+        title: Text(
+          'selectLocation'.tr,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w700,
+              ),
+        ),
+      ),
       body: Obx(
         () => Stack(
           children: [
@@ -45,27 +56,15 @@ class MapScreen extends GetView<MapController> {
                   ),
                 ),
               ),
-            SafeArea(
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Row(
-                      children: [
-                        _MapIconButton(
-                          icon: AppIcons.back,
-                          onTap: controller.goBack,
-                        ),
-                        const Spacer(),
-                        _MapIconButton(
-                          icon: AppIcons.notifications,
-                          onTap: () {},
-                          showBadge: true,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
                     MapSearchBar(
                       controller: controller.searchController,
                       onSubmitted: () {},
@@ -119,54 +118,6 @@ class _MapCenterPin extends StatelessWidget {
           offset: Offset(0, 2),
         ),
       ],
-    );
-  }
-}
-
-class _MapIconButton extends StatelessWidget {
-  const _MapIconButton({
-    required this.icon,
-    required this.onTap,
-    this.showBadge = false,
-  });
-
-  final String icon;
-  final VoidCallback onTap;
-  final bool showBadge;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      shape: const CircleBorder(),
-      elevation: 2,
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        onTap: onTap,
-        child: SizedBox(
-          width: 44,
-          height: 44,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SvgPicture.asset(icon, width: 22, height: 22),
-              if (showBadge)
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

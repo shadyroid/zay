@@ -16,7 +16,6 @@ class EditProfileScreen extends GetView<EditProfileController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBackAppBar(
-        onBack: controller.goBack,
         title: 'editProfile'.tr,
       ),
       body: Column(

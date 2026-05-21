@@ -16,7 +16,6 @@ class ShopsScreen extends GetView<ShopsController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBackAppBar(
-        onBack: controller.goBack,
         title: 'stores'.tr,
         showDivider: true,
         actions: [

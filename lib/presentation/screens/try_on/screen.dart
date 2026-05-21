@@ -17,7 +17,6 @@ class TryOnScreen extends GetView<TryOnController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: TryOnAppBar(
-        onBack: controller.goBack,
         onShare: controller.onShare,
       ),
       body: Obx(() {

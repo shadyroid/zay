@@ -13,7 +13,6 @@ class AboutUsScreen extends GetView<AboutUsController> {
         title: 'aboutUs'.tr,
         html: controller.content.value,
         isLoading: controller.isLoading.value,
-        onBack: controller.goBack,
       ),
     );
   }

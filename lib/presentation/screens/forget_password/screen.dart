@@ -15,7 +15,7 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBackAppBar(onBack: controller.goBack),
+      appBar: const AppBackAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Form(

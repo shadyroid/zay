@@ -13,7 +13,6 @@ class TermsScreen extends GetView<TermsController> {
         title: 'terms'.tr,
         html: controller.content.value,
         isLoading: controller.isLoading.value,
-        onBack: controller.goBack,
       ),
     );
   }

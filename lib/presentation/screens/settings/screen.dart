@@ -17,9 +17,7 @@ class SettingsScreen extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: SettingsAppBar(
-        onBack: controller.goBack,
-      ),
+      appBar: const SettingsAppBar(),
       body: Container(
         decoration: const BoxDecoration(
           color: AppColors.screenBackground,

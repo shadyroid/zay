@@ -15,7 +15,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: OrderDetailsAppBar(onBack: controller.goBack),
+      appBar: const OrderDetailsAppBar(),
       body: Obx(() {
         if (controller.isLoading.value && controller.order.value == null) {
           return const Center(

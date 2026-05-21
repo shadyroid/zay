@@ -24,7 +24,6 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
           backgroundColor: Colors.white,
           appBar: ShopDetailsAppBar(
             title: shop?.name ?? 'shops'.tr,
-            onBack: controller.goBack,
             onShare: controller.onShare,
           ),
           body: _buildBody(context, shop),

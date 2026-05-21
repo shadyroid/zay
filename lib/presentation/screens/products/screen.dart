@@ -18,7 +18,6 @@ class ProductsScreen extends GetView<ProductsController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBackAppBar(
-        onBack: controller.goBack,
         title: 'products'.tr,
         showDivider: false,
         actions: [

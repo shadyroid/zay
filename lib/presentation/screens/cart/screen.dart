@@ -18,7 +18,6 @@ class CartScreen extends GetView<CartController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBackAppBar(
-        onBack: controller.goBack,
         title: 'cart'.tr,
         showDivider: true,
       ),

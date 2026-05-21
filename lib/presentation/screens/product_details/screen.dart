@@ -21,7 +21,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: ProductDetailsAppBar(
-        onBack: controller.goBack,
         onShare: controller.onShare,
       ),
       body: Obx(() {

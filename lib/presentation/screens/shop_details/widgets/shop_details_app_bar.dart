@@ -7,12 +7,10 @@ class ShopDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ShopDetailsAppBar({
     super.key,
     required this.title,
-    required this.onBack,
     required this.onShare,
   });
 
   final String title;
-  final VoidCallback onBack;
   final VoidCallback onShare;
 
   @override
@@ -25,10 +23,6 @@ class ShopDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: true,
-      leading: IconButton(
-        icon: SvgPicture.asset(AppIcons.back, width: 20, height: 20),
-        onPressed: onBack,
-      ),
       title: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(

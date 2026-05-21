@@ -13,7 +13,6 @@ class FavoriteScreen extends GetView<FavoriteController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBackAppBar(
-        onBack: controller.goBack,
         title: 'favoriteTitle'.tr,
         showDivider: true,
       ),

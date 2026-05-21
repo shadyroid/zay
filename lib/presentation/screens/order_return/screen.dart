@@ -15,7 +15,7 @@ class OrderReturnScreen extends GetView<OrderReturnController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: OrderReturnAppBar(onBack: controller.goBack),
+      appBar: const OrderReturnAppBar(),
       body: Column(
         children: [
           Expanded(

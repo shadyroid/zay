@@ -9,20 +9,17 @@ class HtmlContentScaffold extends StatelessWidget {
     required this.title,
     required this.html,
     required this.isLoading,
-    required this.onBack,
   });
 
   final String title;
   final String html;
   final bool isLoading;
-  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.screenBackground,
       appBar: AppBackAppBar(
-        onBack: onBack,
         title: title,
         showDivider: true,
       ),

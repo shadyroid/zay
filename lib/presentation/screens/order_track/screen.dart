@@ -14,7 +14,7 @@ class OrderTrackScreen extends GetView<OrderTrackController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: OrderTrackAppBar(onBack: controller.goBack),
+      appBar: const OrderTrackAppBar(),
       body: Obx(() {
         if (controller.isLoading.value &&
             controller.steps.isEmpty &&

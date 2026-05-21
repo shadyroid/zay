@@ -71,7 +71,7 @@ class SignUpController extends BaseController {
     );
   }
 
-  void navigateToSignIn() => Get.offNamed(Routes.signIn);
+  void navigateToSignIn() => Get.back();
 
   void navigateToTerms() => Get.toNamed(Routes.terms);
 }

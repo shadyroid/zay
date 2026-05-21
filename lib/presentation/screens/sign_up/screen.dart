@@ -15,156 +15,156 @@ class SignUpScreen extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBackAppBar(onBack: controller.navigateToSignIn),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: SignUpHeader(onLogIn: controller.navigateToSignIn),
-          ),
-          const SizedBox(height: 24),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-              child: Form(
-                key: controller.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    AppTextField(
-                      controller: controller.nameController,
-                      hint: 'fullName'.tr,
-                      prefixIconPath: AppIcons.person,
-                      textInputAction: TextInputAction.next,
-                      validator: (v) => v == null || v.trim().isEmpty
-                          ? 'nameRequired'.tr
-                          : null,
+    backgroundColor: Colors.white,
+    appBar: const AppBackAppBar(),
+    body: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: SignUpHeader(onLogIn: controller.navigateToSignIn),
+        ),
+        const SizedBox(height: 24),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+            child: Form(
+              key: controller.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  AppTextField(
+                    controller: controller.nameController,
+                    hint: 'fullName'.tr,
+                    prefixIconPath: AppIcons.person,
+                    textInputAction: TextInputAction.next,
+                    validator: (v) => v == null || v.trim().isEmpty
+                        ? 'nameRequired'.tr
+                        : null,
+                  ),
+                  const SizedBox(height: 12),
+                  AppTextField(
+                    controller: controller.emailController,
+                    hint: 'email'.tr,
+                    prefixIconPath: AppIcons.email,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) {
+                        return 'emailRequired'.tr;
+                      }
+                      if (!GetUtils.isEmail(v.trim())) {
+                        return 'emailInvalid'.tr;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  AppTextField(
+                    controller: controller.mobileController,
+                    hint: 'mobileOptional'.tr,
+                    prefixIconPath: AppIcons.phone,
+                    keyboardType: TextInputType.phone,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  const SizedBox(height: 12),
+                  AppTextField(
+                    controller: controller.heightController,
+                    hint: 'height'.tr,
+                    prefixIconPath: AppIcons.height,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
-                    const SizedBox(height: 12),
-                    AppTextField(
-                      controller: controller.emailController,
-                      hint: 'email'.tr,
-                      prefixIconPath: AppIcons.email,
-                      keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  const SizedBox(height: 12),
+                  AppTextField(
+                    controller: controller.weightController,
+                    hint: 'weight'.tr,
+                    prefixIconPath: AppIcons.weight,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    textInputAction: TextInputAction.next,
+                  ),
+                  const SizedBox(height: 12),
+                  Obx(
+                    () => AppTextField(
+                      controller: controller.passwordController,
+                      hint: 'password'.tr,
+                      prefixIconPath: AppIcons.lock,
+                      obscureText: controller.obscurePassword.value,
                       textInputAction: TextInputAction.next,
+                      suffixIcon: IconButton(
+                        icon: SvgPicture.asset(
+                          controller.obscurePassword.value
+                              ? AppIcons.eyeOff
+                              : AppIcons.eye,
+                          width: 22,
+                          height: 22,
+                        ),
+                        onPressed: controller.togglePasswordVisibility,
+                      ),
                       validator: (v) {
-                        if (v == null || v.trim().isEmpty) {
-                          return 'emailRequired'.tr;
+                        if (v == null || v.isEmpty) {
+                          return 'passwordRequired'.tr;
                         }
-                        if (!GetUtils.isEmail(v.trim())) {
-                          return 'emailInvalid'.tr;
+                        if (v.length < 6) {
+                          return 'passwordMinLength'.tr;
                         }
                         return null;
                       },
                     ),
-                    const SizedBox(height: 12),
-                    AppTextField(
-                      controller: controller.mobileController,
-                      hint: 'mobileOptional'.tr,
-                      prefixIconPath: AppIcons.phone,
-                      keyboardType: TextInputType.phone,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    const SizedBox(height: 12),
-                    AppTextField(
-                      controller: controller.heightController,
-                      hint: 'height'.tr,
-                      prefixIconPath: AppIcons.height,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      textInputAction: TextInputAction.next,
-                    ),
-                    const SizedBox(height: 12),
-                    AppTextField(
-                      controller: controller.weightController,
-                      hint: 'weight'.tr,
-                      prefixIconPath: AppIcons.weight,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      textInputAction: TextInputAction.next,
-                    ),
-                    const SizedBox(height: 12),
-                    Obx(
-                      () => AppTextField(
-                        controller: controller.passwordController,
-                        hint: 'password'.tr,
-                        prefixIconPath: AppIcons.lock,
-                        obscureText: controller.obscurePassword.value,
-                        textInputAction: TextInputAction.next,
-                        suffixIcon: IconButton(
-                          icon: SvgPicture.asset(
-                            controller.obscurePassword.value
-                                ? AppIcons.eyeOff
-                                : AppIcons.eye,
-                            width: 22,
-                            height: 22,
-                          ),
-                          onPressed: controller.togglePasswordVisibility,
+                  ),
+                  const SizedBox(height: 12),
+                  Obx(
+                    () => AppTextField(
+                      controller: controller.confirmPasswordController,
+                      hint: 'confirmPassword'.tr,
+                      prefixIconPath: AppIcons.lockConfirm,
+                      obscureText: controller.obscureConfirm.value,
+                      textInputAction: TextInputAction.done,
+                      suffixIcon: IconButton(
+                        icon: SvgPicture.asset(
+                          controller.obscureConfirm.value
+                              ? AppIcons.eyeOff
+                              : AppIcons.eye,
+                          width: 22,
+                          height: 22,
                         ),
-                        validator: (v) {
-                          if (v == null || v.isEmpty) {
-                            return 'passwordRequired'.tr;
-                          }
-                          if (v.length < 6) {
-                            return 'passwordMinLength'.tr;
-                          }
-                          return null;
-                        },
+                        onPressed: controller.toggleConfirmVisibility,
                       ),
+                      validator: (v) {
+                        if (v != controller.passwordController.text) {
+                          return 'passwordMismatch'.tr;
+                        }
+                        return null;
+                      },
                     ),
-                    const SizedBox(height: 12),
-                    Obx(
-                      () => AppTextField(
-                        controller: controller.confirmPasswordController,
-                        hint: 'confirmPassword'.tr,
-                        prefixIconPath: AppIcons.lockConfirm,
-                        obscureText: controller.obscureConfirm.value,
-                        textInputAction: TextInputAction.done,
-                        suffixIcon: IconButton(
-                          icon: SvgPicture.asset(
-                            controller.obscureConfirm.value
-                                ? AppIcons.eyeOff
-                                : AppIcons.eye,
-                            width: 22,
-                            height: 22,
-                          ),
-                          onPressed: controller.toggleConfirmVisibility,
-                        ),
-                        validator: (v) {
-                          if (v != controller.passwordController.text) {
-                            return 'passwordMismatch'.tr;
-                          }
-                          return null;
-                        },
-                      ),
+                  ),
+                  const SizedBox(height: 16),
+                  Obx(
+                    () => SignUpTermsCheckbox(
+                      value: controller.acceptedTerms.value,
+                      onChanged: controller.toggleAcceptedTerms,
+                      onTermsTap: controller.navigateToTerms,
                     ),
-                    const SizedBox(height: 16),
-                    Obx(
-                      () => SignUpTermsCheckbox(
-                        value: controller.acceptedTerms.value,
-                        onChanged: controller.toggleAcceptedTerms,
-                        onTermsTap: controller.navigateToTerms,
-                      ),
+                  ),
+                  const SizedBox(height: 24),
+                  Obx(
+                    () => AppButton(
+                      text: 'createAccount'.tr,
+                      isLoading: controller.isLoading.value,
+                      onPressed: controller.requestSignUp,
                     ),
-                    const SizedBox(height: 24),
-                    Obx(
-                      () => AppButton(
-                        text: 'createAccount'.tr,
-                        isLoading: controller.isLoading.value,
-                        onPressed: controller.requestSignUp,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      ],
+    ),
+        );
   }
 }

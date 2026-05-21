@@ -15,7 +15,6 @@ class ContactUsScreen extends GetView<ContactUsController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBackAppBar(
-        onBack: controller.goBack,
         title: 'contactUs'.tr,
       ),
       body: Column(
