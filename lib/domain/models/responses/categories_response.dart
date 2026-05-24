@@ -12,7 +12,7 @@ class CategoriesResponse extends BaseResponse {
 
   factory CategoriesResponse.fromJson(Map<String, dynamic> json) {
     return CategoriesResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       data: CategoryBean.parseFlattenedList(json['data'] as List<dynamic>?),
     );

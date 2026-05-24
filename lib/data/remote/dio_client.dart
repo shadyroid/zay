@@ -6,10 +6,6 @@ import 'package:dio/dio.dart' as dio_multipart show FormData;
 import 'package:get/get.dart' hide Response, FormData;
 import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/data/preferences/prefs_manager.dart';
-import 'package:hedma/data/remote/api_response_mapper.dart';
-
-/// When `true` on [RequestOptions.extra], the raw response body is preserved.
-const String kSkipResponseMapper = 'skipResponseMapper';
 
 class DioClient extends GetxService {
   late Dio _dio;
@@ -48,23 +44,14 @@ class DioClient extends GetxService {
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          if (response.requestOptions.extra[kSkipResponseMapper] == true) {
-            response.statusCode = 200;
-            return handler.next(response);
-          }
-
-          response.data = ApiResponseMapper.fromDioResponse(response);
+          response.data = _mapResponse(response);
           response.statusCode = 200;
           return handler.next(response);
         },
         onError: (DioException error, handler) {
-          if (error.requestOptions.extra[kSkipResponseMapper] == true) {
-            return handler.next(error);
-          }
-
           final errorResponse = error.response;
           if (errorResponse != null) {
-            errorResponse.data = ApiResponseMapper.fromDioResponse(errorResponse);
+            errorResponse.data = _mapResponse(errorResponse);
             errorResponse.statusCode = 200;
             return handler.resolve(errorResponse);
           }
@@ -102,6 +89,45 @@ class DioClient extends GetxService {
         logPrint: (object) => log(object.toString()),
       ),
     );
+  }
+
+  static Map<String, dynamic> _mapResponse(Response<dynamic> response) {
+    final httpStatus = response.statusCode ?? -2;
+    final raw = response.data;
+
+    if (raw is! Map) {
+      return {
+        'statusCode': httpStatus,
+        'message': 'Unexpected response format',
+      };
+    }
+
+    final body = Map<String, dynamic>.from(raw);
+
+    if (httpStatus >= 200 && httpStatus < 300) {
+      return body;
+    }
+
+    return {
+      'statusCode': httpStatus,
+      'message': _extractErrorMessage(body),
+    };
+  }
+
+  static String? _extractErrorMessage(Map<String, dynamic> body) {
+    final errors = body['errors'];
+    if (errors is Map) {
+      for (final entry in errors.entries) {
+        final messages = entry.value;
+        if (messages is List && messages.isNotEmpty) {
+          return messages.first.toString();
+        }
+        if (messages is String && messages.isNotEmpty) {
+          return messages;
+        }
+      }
+    }
+    return body['message'] as String?;
   }
 
   Future<Response> get(

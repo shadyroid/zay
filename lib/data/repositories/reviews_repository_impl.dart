@@ -12,7 +12,14 @@ class ReviewsRepositoryImpl implements ReviewsRepository {
   @override
   Future<ReviewsResponse> requestReviews(ReviewsRequest request) async {
     final json = await _reviewsDataSource.requestReviews(request);
-    return ReviewsResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ReviewsResponse.fromJson(json);
+    }
+    return ReviewsResponse.fromJson({
+      ...json,
+      'data': json['reviews'],
+    });
   }
 
   @override
@@ -20,6 +27,10 @@ class ReviewsRepositoryImpl implements ReviewsRepository {
     AddTryOutReviewRequest request,
   ) async {
     final json = await _reviewsDataSource.requestAddTryOutReview(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 
@@ -28,6 +39,10 @@ class ReviewsRepositoryImpl implements ReviewsRepository {
     AddOrderReviewRequest request,
   ) async {
     final json = await _reviewsDataSource.requestAddOrderReview(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 }

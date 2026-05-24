@@ -11,7 +11,14 @@ class CartRepositoryImpl implements CartRepository {
   @override
   Future<CartResponse> requestCart() async {
     final json = await _cartDataSource.requestCart();
-    return CartResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return CartResponse.fromJson(json);
+    }
+    return CartResponse.fromJson({
+      ...json,
+      'data': json['items'],
+    });
   }
 
   @override
@@ -37,7 +44,8 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   Future<CartResponse> _cartAfterMutation(Map<String, dynamic> json) async {
-    if ((json['statusCode'] as int? ?? -2) != 200) {
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
       return CartResponse.fromJson(json);
     }
     return requestCart();

@@ -12,7 +12,7 @@ class SignInResponse extends BaseResponse {
 
   factory SignInResponse.fromJson(Map<String, dynamic> json) {
     return SignInResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       data: json['data'] != null
           ? AuthBean.fromJson(json['data'] as Map<String, dynamic>)

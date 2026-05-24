@@ -17,7 +17,7 @@ class ReturnReasonsResponse extends BaseResponse {
   factory ReturnReasonsResponse.fromJson(Map<String, dynamic> json) {
     final list = json['data'] as List<dynamic>?;
     return ReturnReasonsResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       data: list
           ?.map((e) => ReturnReasonBean.fromJson(e as Map<String, dynamic>))

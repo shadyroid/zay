@@ -10,24 +10,58 @@ class SettingsRepositoryImpl implements SettingsRepository {
   @override
   Future<ContentResponse> requestAboutUs() async {
     final json = await _settingsDataSource.requestAboutUs();
-    return ContentResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ContentResponse.fromJson(json);
+    }
+    final page = json['page'] is Map
+        ? Map<String, dynamic>.from(json['page'] as Map)
+        : null;
+    return ContentResponse.fromJson({
+      ...json,
+      'data': page?['content'] as String? ?? '',
+    });
   }
 
   @override
   Future<ContentResponse> requestTerms() async {
     final json = await _settingsDataSource.requestTerms();
-    return ContentResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ContentResponse.fromJson(json);
+    }
+    final page = json['page'] is Map
+        ? Map<String, dynamic>.from(json['page'] as Map)
+        : null;
+    return ContentResponse.fromJson({
+      ...json,
+      'data': page?['content'] as String? ?? '',
+    });
   }
 
   @override
   Future<ContentResponse> requestPrivacy() async {
     final json = await _settingsDataSource.requestPrivacy();
-    return ContentResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ContentResponse.fromJson(json);
+    }
+    final page = json['page'] is Map
+        ? Map<String, dynamic>.from(json['page'] as Map)
+        : null;
+    return ContentResponse.fromJson({
+      ...json,
+      'data': page?['content'] as String? ?? '',
+    });
   }
 
   @override
   Future<BaseResponse> requestContactUs(ContactUsRequest request) async {
     final json = await _settingsDataSource.requestContactUs(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 }

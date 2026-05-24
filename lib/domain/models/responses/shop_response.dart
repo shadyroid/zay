@@ -12,7 +12,7 @@ class ShopResponse extends BaseResponse {
 
   factory ShopResponse.fromJson(Map<String, dynamic> json) {
     return ShopResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       data: json['data'] != null
           ? ShopBean.fromJson(json['data'] as Map<String, dynamic>)

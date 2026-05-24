@@ -14,30 +14,68 @@ class OrderRepositoryImpl implements OrderRepository {
   @override
   Future<OrderResponse> requestCreateOrder(CreateOrderRequest request) async {
     final json = await _orderDataSource.requestCreateOrder(request);
-    return OrderResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return OrderResponse.fromJson(json);
+    }
+    return OrderResponse.fromJson({
+      ...json,
+      'data': json['order'] is Map
+          ? Map<String, dynamic>.from(json['order'] as Map)
+          : null,
+    });
   }
 
   @override
   Future<OrdersResponse> requestOrders() async {
     final json = await _orderDataSource.requestOrders();
-    return OrdersResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return OrdersResponse.fromJson(json);
+    }
+    return OrdersResponse.fromJson({
+      ...json,
+      'data': json['orders'],
+    });
   }
 
   @override
   Future<OrderResponse> requestOrderDetails(OrderDetailsRequest request) async {
     final json = await _orderDataSource.requestOrderDetails(request);
-    return OrderResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return OrderResponse.fromJson(json);
+    }
+    return OrderResponse.fromJson({
+      ...json,
+      'data': json['order'] is Map
+          ? Map<String, dynamic>.from(json['order'] as Map)
+          : null,
+    });
   }
 
   @override
   Future<BaseResponse> requestOrderReturn(OrderReturnRequest request) async {
     final json = await _orderDataSource.requestOrderReturn(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 
   @override
   Future<ReturnReasonsResponse> requestReturnReasons() async {
     final json = await _orderDataSource.requestReturnReasons();
-    return ReturnReasonsResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ReturnReasonsResponse.fromJson(json);
+    }
+    return ReturnReasonsResponse.fromJson({
+      ...json,
+      'data': json['reasons'],
+      'returnPolicy': json['return_policy'] as String?,
+      'returnWindowDays': json['return_window_days'] as int?,
+    });
   }
 }

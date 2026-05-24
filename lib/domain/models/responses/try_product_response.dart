@@ -12,7 +12,7 @@ class TryProductResponse extends BaseResponse {
   factory TryProductResponse.fromJson(Map<String, dynamic> json) {
     final data = json['data'];
     return TryProductResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       imageUrl: data is Map<String, dynamic>
           ? data['imageUrl'] as String?

@@ -12,7 +12,7 @@ class BaseResponse {
   factory BaseResponse.fromJson(Map<String, dynamic> json) {
     return BaseResponse(
       message: json['message'] as String?,
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
     );
   }
 }

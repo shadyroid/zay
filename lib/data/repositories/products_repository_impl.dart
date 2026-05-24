@@ -17,13 +17,27 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<CategoriesResponse> requestCategories() async {
     final json = await _productsDataSource.requestCategories();
-    return CategoriesResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return CategoriesResponse.fromJson(json);
+    }
+    return CategoriesResponse.fromJson({
+      ...json,
+      'data': json['categories'],
+    });
   }
 
   @override
   Future<SizesResponse> requestSizes() async {
     final json = await _productsDataSource.requestSizes();
-    return SizesResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return SizesResponse.fromJson(json);
+    }
+    return SizesResponse.fromJson({
+      ...json,
+      'data': json['sizes'],
+    });
   }
 
   @override
@@ -31,7 +45,32 @@ class ProductsRepositoryImpl implements ProductsRepository {
     ProductsRequest request = const ProductsRequest(),
   }) async {
     final json = await _productsDataSource.requestProducts(request: request);
-    return ProductsResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ProductsResponse.fromJson(json);
+    }
+
+    final remapped = <String, dynamic>{...json};
+    final data = json['data'];
+    if (data is Map<String, dynamic> && data['products'] is List) {
+      remapped['data'] = data['products'];
+      final pagination = data['pagination'] ?? json['pagination'];
+      if (pagination is Map) {
+        remapped['totalCount'] = pagination['total'];
+      }
+    } else if (json['products'] is List) {
+      remapped['data'] = json['products'];
+      final pagination = json['pagination'];
+      if (pagination is Map) {
+        remapped['totalCount'] = pagination['total'];
+      }
+    } else if (data is List) {
+      remapped['data'] = data;
+    } else if (data is Map<String, dynamic>) {
+      remapped['data'] = data;
+    }
+
+    return ProductsResponse.fromJson(remapped);
   }
 
   @override
@@ -39,30 +78,67 @@ class ProductsRepositoryImpl implements ProductsRepository {
     ProductDetailsRequest request,
   ) async {
     final json = await _productsDataSource.requestProductDetails(request);
-    return ProductResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ProductResponse.fromJson(json);
+    }
+    return ProductResponse.fromJson({
+      ...json,
+      'data': json['product'] is Map
+          ? Map<String, dynamic>.from(json['product'] as Map)
+          : null,
+      if (json['similar_products'] is List)
+        'similarProducts': json['similar_products'],
+    });
   }
 
   @override
   Future<ProductsResponse> requestFavorites() async {
     final json = await _productsDataSource.requestFavorites();
-    return ProductsResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ProductsResponse.fromJson(json);
+    }
+
+    final remapped = <String, dynamic>{
+      ...json,
+      'data': json['wishlist'],
+    };
+    final pagination = json['pagination'];
+    if (pagination is Map) {
+      remapped['totalCount'] = pagination['total'];
+    }
+
+    return ProductsResponse.fromJson(remapped);
   }
 
   @override
   Future<BaseResponse> requestFavorite(ProductIdRequest request) async {
     final json = await _productsDataSource.requestFavorite(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 
   @override
   Future<BaseResponse> requestUnFavorite(ProductIdRequest request) async {
     final json = await _productsDataSource.requestUnFavorite(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 
   @override
   Future<TryProductResponse> requestTryProduct(TryProductRequest request) async {
     final json = await _productsDataSource.requestTryProduct(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return TryProductResponse.fromJson(json);
+    }
     return TryProductResponse.fromJson(json);
   }
 }

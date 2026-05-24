@@ -12,7 +12,7 @@ class OrderResponse extends BaseResponse {
 
   factory OrderResponse.fromJson(Map<String, dynamic> json) {
     return OrderResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       data: json['data'] != null
           ? OrderBean.fromJson(json['data'] as Map<String, dynamic>)

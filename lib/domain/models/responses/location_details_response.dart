@@ -13,7 +13,7 @@ class LocationDetailsResponse extends BaseResponse {
   factory LocationDetailsResponse.fromJson(Map<String, dynamic> json) {
     final raw = json['data'];
     return LocationDetailsResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       data: raw is Map<String, dynamic> ? LocationBean.fromJson(raw) : null,
     );

@@ -15,7 +15,7 @@ class ProductResponse extends BaseResponse {
   factory ProductResponse.fromJson(Map<String, dynamic> json) {
     final similar = json['similarProducts'] as List<dynamic>?;
     return ProductResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       data: json['data'] != null
           ? ProductBean.fromJson(json['data'] as Map<String, dynamic>)

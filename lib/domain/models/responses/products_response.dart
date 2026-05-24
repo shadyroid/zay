@@ -24,7 +24,7 @@ class ProductsResponse extends BaseResponse {
               .toList();
     }
     return ProductsResponse(
-      statusCode: json['statusCode'] as int? ?? -2,
+      statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
       data: products,
       totalCount: json['totalCount'] as int? ?? products?.length,

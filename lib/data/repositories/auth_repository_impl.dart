@@ -17,13 +17,27 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<SignInResponse> requestSignIn(SignInRequest request) async {
     final json = await _authDataSource.requestSignIn(request);
-    return SignInResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return SignInResponse.fromJson(json);
+    }
+    return SignInResponse.fromJson({
+      ...json,
+      'data': {'token': json['token']},
+    });
   }
 
   @override
   Future<SignInResponse> requestSignUp(SignUpRequest request) async {
     final json = await _authDataSource.requestSignUp(request);
-    return SignInResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return SignInResponse.fromJson(json);
+    }
+    return SignInResponse.fromJson({
+      ...json,
+      'data': {'token': json['token']},
+    });
   }
 
   @override
@@ -31,24 +45,40 @@ class AuthRepositoryImpl implements AuthRepository {
     ForgetPasswordRequest request,
   ) async {
     final json = await _authDataSource.requestForgetPassword(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 
   @override
   Future<BaseResponse> requestVerification(VerificationRequest request) async {
     final json = await _authDataSource.requestVerification(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 
   @override
   Future<BaseResponse> requestResetPassword(ResetPasswordRequest request) async {
     final json = await _authDataSource.requestResetPassword(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 
   @override
   Future<BaseResponse> requestSignOut() async {
     final json = await _authDataSource.requestSignOut();
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     final response = BaseResponse.fromJson(json);
     if (response.isSuccess) {
       await PrefsManager.clear();
@@ -59,12 +89,25 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<ProfileResponse> requestProfile() async {
     final json = await _authDataSource.requestProfile();
-    return ProfileResponse.fromJson(json);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return ProfileResponse.fromJson(json);
+    }
+    return ProfileResponse.fromJson({
+      ...json,
+      'data': json['user'] is Map
+          ? Map<String, dynamic>.from(json['user'] as Map)
+          : null,
+    });
   }
 
   @override
   Future<BaseResponse> requestUpdateProfile(UpdateProfileRequest request) async {
     final json = await _authDataSource.requestUpdateProfile(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
     return BaseResponse.fromJson(json);
   }
 }
