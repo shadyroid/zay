@@ -71,11 +71,11 @@ class MapScreen extends GetView<MapController> {
                       onTap: () {},
                     ),
                     if (controller.showSuggestions.value &&
-                        controller.placePredictions.isNotEmpty) ...[
+                        controller.locations.isNotEmpty) ...[
                       const SizedBox(height: 8),
                       MapPlaceSuggestions(
-                        predictions: controller.placePredictions,
-                        onSelect: controller.onPlaceSelected,
+                        locations: controller.locations,
+                        onSelect: controller.onLocationSelected,
                       ),
                     ],
                   ],
@@ -88,8 +88,7 @@ class MapScreen extends GetView<MapController> {
               bottom: 0,
               child: Obx(
                 () => MapLocationBottomCard(
-                  primaryAddress: controller.primaryAddress.value,
-                  secondaryAddress: controller.secondaryAddress.value,
+                  address: controller.address.value,
                   isLoading: controller.isResolvingAddress.value,
                   onPickLocation: controller.pickLocation,
                 ),

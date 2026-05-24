@@ -8,20 +8,18 @@ import 'package:hedma/presentation/widgets/app_button.dart';
 class MapLocationBottomCard extends StatelessWidget {
   const MapLocationBottomCard({
     super.key,
-    required this.primaryAddress,
-    required this.secondaryAddress,
+    required this.address,
     required this.isLoading,
     required this.onPickLocation,
   });
 
-  final String primaryAddress;
-  final String secondaryAddress;
+  final String address;
   final bool isLoading;
   final VoidCallback onPickLocation;
 
   @override
   Widget build(BuildContext context) {
-    final hasAddress = primaryAddress.isNotEmpty || secondaryAddress.isNotEmpty;
+    final hasAddress = address.isNotEmpty;
 
     return Container(
       decoration: const BoxDecoration(
@@ -65,7 +63,7 @@ class MapLocationBottomCard extends StatelessWidget {
                           children: [
                             Text(
                               hasAddress
-                                  ? primaryAddress
+                                  ? address
                                   : 'selectLocation'.tr,
                               style: Theme.of(context)
                                   .textTheme
@@ -77,20 +75,6 @@ class MapLocationBottomCard extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if (secondaryAddress.isNotEmpty) ...[
-                              const SizedBox(height: 4),
-                              Text(
-                                secondaryAddress,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      color: AppColors.textSecondary,
-                                    ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
                           ],
                         ),
                 ),

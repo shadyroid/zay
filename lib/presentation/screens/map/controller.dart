@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hedma/app/use_cases/locations_use_case.dart';
-import 'package:hedma/domain/models/beans/place_prediction.dart';
-import 'package:hedma/domain/requests/place_autocomplete_request.dart';
-import 'package:hedma/domain/requests/place_details_request.dart';
-import 'package:hedma/domain/requests/reverse_geocode_request.dart';
+import 'package:hedma/domain/models/beans/location_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class MapController extends BaseController {
@@ -16,11 +13,10 @@ class MapController extends BaseController {
   final LocationsUseCase _locationsUseCase = LocationsUseCase();
 
   final searchController = TextEditingController();
-  final primaryAddress = ''.obs;
-  final secondaryAddress = ''.obs;
+  final address = ''.obs;
   final latitude = _defaultCenter.latitude.obs;
   final longitude = _defaultCenter.longitude.obs;
-  final placePredictions = <PlacePrediction>[].obs;
+  final locations = <LocationBean>[].obs;
   final showSuggestions = false.obs;
   final isResolvingAddress = false.obs;
 
@@ -28,16 +24,14 @@ class MapController extends BaseController {
   Timer? _searchDebounce;
   bool _skipNextCameraIdle = false;
 
-  CameraPosition get initialCameraPosition => CameraPosition(
-        target: LatLng(latitude.value, longitude.value),
-        zoom: 16,
-      );
+  CameraPosition get initialCameraPosition =>
+      CameraPosition(target: LatLng(latitude.value, longitude.value), zoom: 16);
 
   @override
   void onInit() {
     super.onInit();
     searchController.addListener(_onSearchChanged);
-    _loadInitialLocation();
+    requestCurrentLocation();
   }
 
   @override
@@ -48,36 +42,63 @@ class MapController extends BaseController {
     super.onClose();
   }
 
-  Future<void> _loadInitialLocation() async {
+  Future<void> requestCurrentLocation() async {
     isLoading.value = true;
     try {
-      final granted = await _locationsUseCase.requestLocationPermission();
-      if (!granted) {
-        Get.rawSnackbar(message: 'locationPermissionDenied'.tr);
-        await _resolveAddressForCurrentTarget();
+      final response = await _locationsUseCase.requestCurrentLocation();
+      if (!isSuccess(response)) {
+        if (response.message != null) {
+          Get.rawSnackbar(message: response.message!.tr);
+        }
+        await requestLocation();
         return;
       }
 
-      final position = await _locationsUseCase.requestCurrentPosition();
-      if (position == null) {
+      final location = response.data;
+      if (location == null) {
         Get.rawSnackbar(message: 'locationUnavailable'.tr);
-        await _resolveAddressForCurrentTarget();
+        await requestLocation();
         return;
       }
 
-      await _moveTo(position.latitude, position.longitude);
+      await _applyLocation(location, animate: false);
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> requestLocations(String input) async {
+    isResolvingAddress.value = true;
+    try {
+      final response = await _locationsUseCase.requestLocations(input);
+      if (!isSuccess(response)) return;
+      locations.assignAll(response.data ?? []);
+      showSuggestions.value = locations.isNotEmpty;
+    } finally {
+      isResolvingAddress.value = false;
+    }
+  }
+
+  Future<void> requestLocation() async {
+    isResolvingAddress.value = true;
+    try {
+      final response = await _locationsUseCase.requestLocation(
+        LatLng(latitude.value, longitude.value),
+      );
+      if (!isSuccess(response) || response.data == null) {
+        address.value = '';
+        return;
+      }
+      address.value = response.data!.address;
+    } finally {
+      isResolvingAddress.value = false;
     }
   }
 
   void onMapCreated(GoogleMapController controller) {
     _mapController = controller;
     controller.moveCamera(
-      CameraUpdate.newLatLngZoom(
-        LatLng(latitude.value, longitude.value),
-        16,
-      ),
+      CameraUpdate.newLatLngZoom(LatLng(latitude.value, longitude.value), 16),
     );
   }
 
@@ -91,7 +112,7 @@ class MapController extends BaseController {
       _skipNextCameraIdle = false;
       return;
     }
-    await _resolveAddressForCurrentTarget();
+    await requestLocation();
   }
 
   void _onSearchChanged() {
@@ -99,107 +120,64 @@ class MapController extends BaseController {
     _searchDebounce = Timer(const Duration(milliseconds: 350), () async {
       final query = searchController.text.trim();
       if (query.isEmpty) {
-        placePredictions.clear();
+        locations.clear();
         showSuggestions.value = false;
         return;
       }
-      final results = await _locationsUseCase.requestPlaceAutocomplete(
-        PlaceAutocompleteRequest(input: query),
-      );
-      placePredictions.assignAll(results);
-      showSuggestions.value = results.isNotEmpty;
+      requestLocations(query);
     });
   }
 
-  Future<void> onPlaceSelected(PlacePrediction prediction) async {
+  Future<void> onLocationSelected(int index) async {
+    if (index < 0 || index >= locations.length) return;
+
+    final location = locations[index];
     showSuggestions.value = false;
-    placePredictions.clear();
-    searchController.text =
-        prediction.mainText ?? prediction.description;
+    locations.clear();
+    searchController.text = location.address;
     isResolvingAddress.value = true;
 
     try {
-      final details = await _locationsUseCase.requestPlaceDetails(
-        PlaceDetailsRequest(placeId: prediction.placeId),
-      );
-      if (details == null) {
-        Get.rawSnackbar(message: 'locationUnavailable'.tr);
-        return;
-      }
-
-      primaryAddress.value = details.address.primary;
-      secondaryAddress.value = details.address.secondary;
-      await _moveTo(
-        details.position.latitude,
-        details.position.longitude,
-        animate: true,
-      );
+      await _applyLocation(location, animate: true);
     } finally {
       isResolvingAddress.value = false;
     }
   }
 
-  Future<void> _moveTo(
-    double lat,
-    double lng, {
+  Future<void> _applyLocation(
+    LocationBean location, {
     bool animate = false,
   }) async {
-    latitude.value = lat;
-    longitude.value = lng;
+    address.value = location.address;
+    latitude.value = location.latitude;
+    longitude.value = location.longitude;
     _skipNextCameraIdle = true;
 
     final controller = _mapController;
     if (controller != null) {
-      final target = LatLng(lat, lng);
+      final target = LatLng(location.latitude, location.longitude);
       if (animate) {
-        await controller.animateCamera(
-          CameraUpdate.newLatLng(target),
-        );
+        await controller.animateCamera(CameraUpdate.newLatLng(target));
       } else {
         await controller.moveCamera(CameraUpdate.newLatLng(target));
       }
     }
-
-    await _resolveAddressForCurrentTarget();
   }
 
-  Future<void> _resolveAddressForCurrentTarget() async {
-    isResolvingAddress.value = true;
-    try {
-      final address = await _locationsUseCase.requestReverseGeocode(
-        ReverseGeocodeRequest(
-          latitude: latitude.value,
-          longitude: longitude.value,
-        ),
-      );
-      if (address == null) {
-        primaryAddress.value = '';
-        secondaryAddress.value = '';
-        return;
-      }
-      primaryAddress.value = address.primary;
-      secondaryAddress.value = address.secondary;
-    } finally {
-      isResolvingAddress.value = false;
-    }
-  }
+
 
   void pickLocation() {
-    final address = secondaryAddress.value.isNotEmpty
-        ? secondaryAddress.value
-        : primaryAddress.value;
-
-    if (address.isEmpty) {
+    if (address.value.isEmpty) {
       Get.rawSnackbar(message: 'selectLocationRequired'.tr);
       return;
     }
 
     Get.back(
-      result: {
-        'address': address,
-        'lat': latitude.value,
-        'lng': longitude.value,
-      },
+      result: LocationBean(
+        address: address.value,
+        latitude: latitude.value,
+        longitude: longitude.value,
+      ),
     );
   }
 
@@ -207,6 +185,6 @@ class MapController extends BaseController {
 
   void hideSuggestions() {
     showSuggestions.value = false;
-    placePredictions.clear();
+    locations.clear();
   }
 }

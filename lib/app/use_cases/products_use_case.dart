@@ -13,8 +13,9 @@ import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/domain/requests/try_product_request.dart';
 
 class ProductsUseCase {
-  final ProductsRepository _productsRepository =
-      Get.put(ProductsRepositoryImpl());
+  final ProductsRepository _productsRepository = Get.put(
+    ProductsRepositoryImpl(),
+  );
 
   Future<CategoriesResponse> requestCategories() =>
       _productsRepository.requestCategories();
@@ -23,13 +24,11 @@ class ProductsUseCase {
 
   Future<ProductsResponse> requestProducts({
     ProductsRequest request = const ProductsRequest(),
-  }) =>
-      _productsRepository.requestProducts(request: request);
+  }) => _productsRepository.requestProducts(request: request);
 
   Future<ProductResponse> requestProductDetails(
     ProductDetailsRequest request,
-  ) =>
-      _productsRepository.requestProductDetails(request);
+  ) => _productsRepository.requestProductDetails(request);
 
   Future<ProductsResponse> requestFavorites() =>
       _productsRepository.requestFavorites();

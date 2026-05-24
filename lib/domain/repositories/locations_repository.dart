@@ -1,22 +1,11 @@
-import 'package:hedma/domain/models/beans/location_address.dart';
-import 'package:hedma/domain/models/beans/map_position.dart';
-import 'package:hedma/domain/models/beans/place_prediction.dart';
-import 'package:hedma/domain/requests/place_autocomplete_request.dart';
-import 'package:hedma/domain/requests/place_details_request.dart';
-import 'package:hedma/domain/requests/reverse_geocode_request.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hedma/domain/models/responses/location_details_response.dart';
+import 'package:hedma/domain/models/responses/locations_response.dart';
 
 abstract class LocationsRepository {
-  Future<MapPosition?> requestCurrentPosition();
+  Future<LocationDetailsResponse> requestCurrentLocation();
 
-  Future<bool> requestLocationPermission();
+  Future<LocationDetailsResponse> requestLocation(LatLng latlng);
 
-  Future<LocationAddress?> requestReverseGeocode(ReverseGeocodeRequest request);
-
-  Future<List<PlacePrediction>> requestPlaceAutocomplete(
-    PlaceAutocompleteRequest request,
-  );
-
-  Future<({MapPosition position, LocationAddress address})?> requestPlaceDetails(
-    PlaceDetailsRequest request,
-  );
+  Future<LocationsResponse> requestLocations(String input);
 }

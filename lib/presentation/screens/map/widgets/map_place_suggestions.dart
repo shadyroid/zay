@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/beans/place_prediction.dart';
+import 'package:hedma/domain/models/beans/location_bean.dart';
 
 class MapPlaceSuggestions extends StatelessWidget {
   const MapPlaceSuggestions({
     super.key,
-    required this.predictions,
+    required this.locations,
     required this.onSelect,
   });
 
-  final List<PlacePrediction> predictions;
-  final ValueChanged<PlacePrediction> onSelect;
+  final List<LocationBean> locations;
+  final ValueChanged<int> onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class MapPlaceSuggestions extends StatelessWidget {
       child: ListView.separated(
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(vertical: 8),
-        itemCount: predictions.length,
+        itemCount: locations.length,
         separatorBuilder: (context, index) => const Divider(
           height: 1,
           indent: 16,
@@ -29,32 +29,20 @@ class MapPlaceSuggestions extends StatelessWidget {
           color: AppColors.border,
         ),
         itemBuilder: (context, index) {
-          final prediction = predictions[index];
-          final title = prediction.mainText ?? prediction.description;
-          final subtitle = prediction.secondaryText;
+          final location = locations[index];
 
           return ListTile(
             dense: true,
             title: Text(
-              title,
-              maxLines: 1,
+              location.address,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
             ),
-            subtitle: subtitle == null
-                ? null
-                : Text(
-                    subtitle,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                  ),
-            onTap: () => onSelect(prediction),
+            onTap: () => onSelect(index),
           );
         },
       ),

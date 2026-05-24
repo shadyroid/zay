@@ -6,7 +6,7 @@ import 'package:hedma/app/use_cases/cart_use_case.dart';
 import 'package:hedma/app/use_cases/order_use_case.dart';
 import 'package:hedma/app/utils/payment_method.dart';
 import 'package:hedma/domain/models/beans/cart_item_bean.dart';
-import 'package:hedma/domain/models/beans/delivery_location.dart';
+import 'package:hedma/domain/models/beans/location_bean.dart';
 import 'package:hedma/domain/requests/create_order_request.dart';
 import 'package:hedma/domain/requests/delete_cart_item_request.dart';
 import 'package:hedma/domain/requests/update_cart_item_request.dart';
@@ -92,10 +92,9 @@ class CartController extends BaseController {
   Future<void> onSelectLocation() async {
     final result = await Get.toNamed(Routes.map);
     if (result == null) return;
-    final location = DeliveryLocation.fromMap(result);
-    deliveryAddress.value = location.address;
-    deliveryLatitude.value = location.latitude;
-    deliveryLongitude.value = location.longitude;
+    deliveryAddress.value = result.address;
+    deliveryLatitude.value = result.latitude;
+    deliveryLongitude.value = result.longitude;
   }
 
   int get itemCount =>
