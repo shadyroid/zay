@@ -6,6 +6,7 @@ import 'package:hedma/app/use_cases/cart_use_case.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/reviews_use_case.dart';
 import 'package:hedma/app/utils/image_picker_helper.dart';
+import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/requests/add_cart_item_request.dart';
 import 'package:hedma/domain/requests/product_details_request.dart';
@@ -160,6 +161,8 @@ class ProductDetailsController extends BaseController {
   }
 
   Future<void> onTryOn() async {
+    if (!await AppAuthGuard.ensureAuthenticated()) return;
+
     final file = await ImagePickerHelper.pickFromBottomSheet();
     if (file == null || productId.isEmpty) return;
 
@@ -172,7 +175,7 @@ class ProductDetailsController extends BaseController {
     final imageUrl = response.imageUrl;
     if (imageUrl == null || imageUrl.isEmpty) return;
 
-    Get.toNamed(
+    await AppAuthGuard.toNamed(
       Routes.tryOn,
       arguments: {
         'imageUrl': imageUrl,
@@ -184,6 +187,8 @@ class ProductDetailsController extends BaseController {
   }
 
   Future<void> addToCart() async {
+    if (!await AppAuthGuard.ensureAuthenticated()) return;
+
     final p = product.value;
     final sizeId = selectedSizeId.value;
     if (p == null || productId.isEmpty) return;
@@ -205,7 +210,7 @@ class ProductDetailsController extends BaseController {
     if (!isSuccess(response)) return;
 
     Get.rawSnackbar(message: 'addedToCart'.tr);
-    Get.toNamed(Routes.cart);
+    await AppAuthGuard.toNamed(Routes.cart);
   }
 
   void navigateToShop() {

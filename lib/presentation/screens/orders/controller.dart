@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/order_use_case.dart';
+import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/domain/models/beans/order_bean.dart';
 import 'package:hedma/domain/models/enums/order_list_filter.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
@@ -49,7 +50,7 @@ class OrdersController extends BaseController {
   void goBack() => Get.back();
 
   void navigateToOrderDetails(OrderBean order) {
-    Get.toNamed(
+    AppAuthGuard.toNamed(
       Routes.orderDetails,
       arguments: {'orderId': order.id, 'order': order},
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
+import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 
@@ -25,6 +26,7 @@ class MainBottomNav extends StatelessWidget {
       iconPath: AppIcons.navCart,
       labelKey: 'cart',
       route: Routes.cart,
+      requiresAuth: true,
     ),
     _NavItemData(
       iconPath: AppIcons.navSettings,
@@ -54,10 +56,7 @@ class MainBottomNav extends StatelessWidget {
                   iconPath: _items[index].iconPath,
                   label: _items[index].labelKey.tr,
                   isSelected: currentIndex == index,
-                  onTap: () {
-                    if (index == currentIndex) return;
-                    Get.offNamed(_items[index].route);
-                  },
+                  onTap: () => _onNavTap(index),
                 ),
               ),
             ),
@@ -66,6 +65,16 @@ class MainBottomNav extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> _onNavTap(int index) async {
+    if (index == currentIndex) return;
+    final item = _items[index];
+    if (item.requiresAuth) {
+      await AppAuthGuard.offNamed(item.route);
+      return;
+    }
+    Get.offNamed(item.route);
+  }
 }
 
 class _NavItemData {
@@ -73,11 +82,13 @@ class _NavItemData {
     required this.iconPath,
     required this.labelKey,
     required this.route,
+    this.requiresAuth = false,
   });
 
   final String iconPath;
   final String labelKey;
   final String route;
+  final bool requiresAuth;
 }
 
 class _BottomNavItem extends StatelessWidget {

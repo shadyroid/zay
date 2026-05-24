@@ -4,6 +4,7 @@ import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/app/use_cases/settings_use_case.dart';
 import 'package:hedma/app/utils/constants.dart';
+import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 import 'package:hedma/presentation/bottom_sheets/languages/languages_bottom_sheet.dart';
 import 'package:hedma/presentation/widgets/app_alert_dialog.dart';
@@ -14,11 +15,27 @@ class SettingsController extends BaseController {
   final SettingsUseCase _settingsUseCase = Get.put(SettingsUseCase());
 
   final displayName = ''.obs;
+  final isLoggedIn = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    requestProfile();
+    refreshAuthState();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    refreshAuthState();
+  }
+
+  void refreshAuthState() {
+    isLoggedIn.value = PrefsManager.isLoggedIn;
+    if (isLoggedIn.value) {
+      requestProfile();
+    } else {
+      displayName.value = '';
+    }
   }
 
   Future<void> requestProfile() async {
@@ -36,11 +53,19 @@ class SettingsController extends BaseController {
   }
 
 
-  void navigateToEditProfile() => Get.toNamed(Routes.editProfile);
+  Future<void> navigateToEditProfile() async {
+    Get.toNamed(Routes.editProfile);
+  }
 
-  void navigateToFavorite() => Get.toNamed(Routes.favorite);
+  Future<void> navigateToFavorite() async {
+    Get.toNamed(Routes.favorite);
+  }
 
-  void navigateToOrders() => Get.toNamed(Routes.orders);
+  Future<void> navigateToOrders() async {
+    Get.toNamed(Routes.orders);
+  }
+
+  void navigateToSignIn() => Get.toNamed(Routes.signIn);
 
   void navigateToContactUs() => Get.toNamed(Routes.contactUs);
 

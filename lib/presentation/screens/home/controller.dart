@@ -6,6 +6,7 @@ import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/shops_use_case.dart';
 import 'package:hedma/app/utils/image_picker_helper.dart';
+import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/models/beans/product_filters.dart';
@@ -45,9 +46,9 @@ class HomeController extends BaseController {
 
   Future<void> _loadScreen() async {
     isLoading.value = true;
-    await _favorites.ensureLoaded();
     await Future.wait([
-      _requestProfile(),
+      if (PrefsManager.isLoggedIn) _favorites.ensureLoaded(),
+      if (PrefsManager.isLoggedIn) _requestProfile(),
       _requestCategories(),
       _requestRecommended(),
       _requestNewArrivals(),

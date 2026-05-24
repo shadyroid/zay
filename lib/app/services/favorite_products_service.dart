@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
+import 'package:hedma/app/utils/app_auth_guard.dart';
+import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/requests/product_id_request.dart';
@@ -17,6 +19,7 @@ class FavoriteProductsService extends GetxService {
   }
 
   Future<void> loadFavorites() async {
+    if (!PrefsManager.isLoggedIn) return;
     final response = await _productsUseCase.requestFavorites();
     if (!response.isSuccess) return;
     favoriteIds.assignAll((response.data ?? []).map((p) => p.id));
@@ -29,6 +32,10 @@ class FavoriteProductsService extends GetxService {
       isFavorite(product.id) || product.isFavorite;
 
   Future<bool> toggleFavorite(ProductBean product) async {
+    if (!PrefsManager.isLoggedIn) {
+      await AppAuthGuard.promptSignIn();
+      return false;
+    }
     if (isFavoriteProduct(product)) {
       return requestUnFavorite(product);
     }
@@ -70,6 +77,7 @@ class FavoriteProductsService extends GetxService {
   }
 
   Future<void> ensureLoaded() async {
+    if (!PrefsManager.isLoggedIn) return;
     if (!_loaded) await loadFavorites();
   }
 }

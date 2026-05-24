@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/order_use_case.dart';
+import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/domain/models/beans/order_bean.dart';
 import 'package:hedma/domain/requests/order_details_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
@@ -34,8 +35,8 @@ class OrderDetailsController extends BaseController {
 
   void goBack() => Get.back();
 
-  void navigateToTrack() {
-    Get.toNamed(
+  Future<void> navigateToTrack() async {
+    await AppAuthGuard.toNamed(
       Routes.orderTrack,
       arguments: {
         'orderId': orderId,
@@ -44,8 +45,8 @@ class OrderDetailsController extends BaseController {
     );
   }
 
-  void navigateToReturn() {
-    Get.toNamed(
+  Future<void> navigateToReturn() async {
+    await AppAuthGuard.toNamed(
       Routes.orderReturn,
       arguments: {
         'orderId': orderId,
@@ -54,8 +55,8 @@ class OrderDetailsController extends BaseController {
     );
   }
 
-  void navigateToReview() {
-    Get.toNamed(
+  Future<void> navigateToReview() async {
+    await AppAuthGuard.toNamed(
       Routes.review,
       arguments: {'orderId': orderId},
     );

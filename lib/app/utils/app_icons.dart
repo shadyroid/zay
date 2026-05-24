@@ -50,7 +50,8 @@ abstract final class AppIcons {
   static const String delete = 'assets/icons/ic_delete.svg';
   static const String cash = 'assets/icons/ic_cash.svg';
   static const String card = 'assets/icons/ic_card.svg';
-  static const String logout = 'assets/icons/ic_logout.svg';
+  static const String signOut = 'assets/icons/ic_sign_out.svg';
+  static const String signIn = 'assets/icons/ic_sign_in.svg';
 
   static const String navHome = 'assets/icons/ic_nav_home.svg';
   static const String navCart = 'assets/icons/ic_nav_cart.svg';

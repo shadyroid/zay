@@ -25,70 +25,82 @@ class SettingsScreen extends GetView<SettingsController> {
         ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(top: 24, bottom: 24),
-          child: Column(
-            children: [
-              Obx(
-                () => SettingsProfileHeader(name: controller.displayName.value),
-              ),
-              const SizedBox(height: 24),
-              SettingsMenuCard(
+          child: Obx(
+            () {
+              final loggedIn = controller.isLoggedIn.value;
+
+              return Column(
                 children: [
-                  SettingsItem(
-                    iconPath: AppIcons.editProfile,
-                    title: 'editProfile'.tr,
-                    onTap: controller.navigateToEditProfile,
+                  if (loggedIn) ...[
+                    SettingsProfileHeader(name: controller.displayName.value),
+                    const SizedBox(height: 24),
+                  ],
+                  SettingsMenuCard(
+                    children: [
+                      if (loggedIn) ...[
+                        SettingsItem(
+                          iconPath: AppIcons.editProfile,
+                          title: 'editProfile'.tr,
+                          onTap: controller.navigateToEditProfile,
+                        ),
+                        SettingsItem(
+                          iconPath: AppIcons.favorite,
+                          title: 'favorite'.tr,
+                          onTap: controller.navigateToFavorite,
+                        ),
+                        SettingsItem(
+                          iconPath: AppIcons.orders,
+                          title: 'myOrders'.tr,
+                          onTap: controller.navigateToOrders,
+                        ),
+                      ],
+                      SettingsItem(
+                        iconPath: AppIcons.connectUs,
+                        title: 'contactUs'.tr,
+                        onTap: controller.navigateToContactUs,
+                      ),
+                      SettingsItem(
+                        iconPath: AppIcons.language,
+                        title: 'language'.tr,
+                        onTap: controller.onLanguage,
+                      ),
+                      SettingsItem(
+                        iconPath: AppIcons.aboutUs,
+                        title: 'aboutUs'.tr,
+                        onTap: controller.navigateToAboutUs,
+                      ),
+                      SettingsItem(
+                        iconPath: AppIcons.terms,
+                        title: 'terms'.tr,
+                        onTap: controller.navigateToTerms,
+                      ),
+                      SettingsItem(
+                        iconPath: AppIcons.privacy,
+                        title: 'privacy'.tr,
+                        onTap: controller.navigateToPrivacy,
+                      ),
+                      SettingsItem(
+                        iconPath: AppIcons.share,
+                        title: 'shareApp'.tr,
+                        onTap: controller.onShareApp,
+                      ),
+                      SettingsItem(
+                        iconPath: loggedIn ? AppIcons.signOut : AppIcons.signIn,
+                        title: loggedIn ? 'logout'.tr : 'login'.tr,
+                        onTap: loggedIn
+                            ? controller.requestSignOut
+                            : controller.navigateToSignIn,
+                        showDivider: false,
+                      ),
+                    ],
                   ),
-                  SettingsItem(
-                    iconPath: AppIcons.favorite,
-                    title: 'favorite'.tr,
-                    onTap: controller.navigateToFavorite,
-                  ),
-                  SettingsItem(
-                    iconPath: AppIcons.orders,
-                    title: 'myOrders'.tr,
-                    onTap: controller.navigateToOrders,
-                  ),
-                  SettingsItem(
-                    iconPath: AppIcons.connectUs,
-                    title: 'contactUs'.tr,
-                    onTap: controller.navigateToContactUs,
-                  ),
-                  SettingsItem(
-                    iconPath: AppIcons.language,
-                    title: 'language'.tr,
-                    onTap: controller.onLanguage,
-                  ),
-                  SettingsItem(
-                    iconPath: AppIcons.aboutUs,
-                    title: 'aboutUs'.tr,
-                    onTap: controller.navigateToAboutUs,
-                  ),
-                  SettingsItem(
-                    iconPath: AppIcons.terms,
-                    title: 'terms'.tr,
-                    onTap: controller.navigateToTerms,
-                  ),
-                  SettingsItem(
-                    iconPath: AppIcons.privacy,
-                    title: 'privacy'.tr,
-                    onTap: controller.navigateToPrivacy,
-                  ),
-                  SettingsItem(
-                    iconPath: AppIcons.share,
-                    title: 'shareApp'.tr,
-                    onTap: controller.onShareApp,
-                  ),
-                  SettingsItem(
-                    iconPath: AppIcons.logout,
-                    title: 'logout'.tr,
-                    onTap: controller.requestSignOut,
-                    showDivider: false,
-                  ),
+                  if (loggedIn) ...[
+                    const SizedBox(height: 24),
+                    DeleteAccountButton(onPressed: controller.onDeleteAccount),
+                  ],
                 ],
-              ),
-              const SizedBox(height: 24),
-              DeleteAccountButton(onPressed: controller.onDeleteAccount),
-            ],
+              );
+            },
           ),
         ),
       ),

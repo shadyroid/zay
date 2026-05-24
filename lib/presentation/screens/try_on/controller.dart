@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
+import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/reviews_use_case.dart';
 import 'package:hedma/app/utils/image_picker_helper.dart';
@@ -64,9 +65,10 @@ class TryOnController extends BaseController {
     }
   }
 
-  void onAddToCart() {
+  Future<void> onAddToCart() async {
+    if (!await AppAuthGuard.ensureAuthenticated()) return;
     Get.rawSnackbar(message: 'addedToCart'.tr);
-    Get.toNamed(Routes.cart);
+    await AppAuthGuard.toNamed(Routes.cart);
   }
 
   void onShare() {
