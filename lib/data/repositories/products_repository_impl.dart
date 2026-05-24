@@ -1,3 +1,4 @@
+import 'package:hedma/app/utils/likes_util.dart';
 import 'package:hedma/data/remote/data_sources/products_data_source.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/categories_response.dart';
@@ -13,6 +14,29 @@ import 'package:hedma/domain/requests/try_product_request.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsDataSource _productsDataSource = ProductsDataSource();
+
+  void _syncProductsFromResponse(Map<String, dynamic> json) {
+    final data = json['data'];
+    if (data is Map<String, dynamic> && data['products'] is List) {
+      LikesUtil.syncProductsFromList(data['products'] as List);
+    } else if (json['products'] is List) {
+      LikesUtil.syncProductsFromList(json['products'] as List);
+    } else if (data is List) {
+      LikesUtil.syncProductsFromList(data);
+    } else if (json['wishlist'] is List) {
+      LikesUtil.syncProductsFromList(json['wishlist'] as List);
+    }
+
+    if (json['product'] is Map) {
+      LikesUtil.syncProductFromJson(
+        Map<String, dynamic>.from(json['product'] as Map),
+      );
+    }
+
+    if (json['similar_products'] is List) {
+      LikesUtil.syncProductsFromList(json['similar_products'] as List);
+    }
+  }
 
   @override
   Future<CategoriesResponse> requestCategories() async {
@@ -49,6 +73,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (status != null && status != 200) {
       return ProductsResponse.fromJson(json);
     }
+    _syncProductsFromResponse(json);
 
     final remapped = <String, dynamic>{...json};
     final data = json['data'];
@@ -82,6 +107,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (status != null && status != 200) {
       return ProductResponse.fromJson(json);
     }
+    _syncProductsFromResponse(json);
     return ProductResponse.fromJson({
       ...json,
       'data': json['product'] is Map
@@ -99,6 +125,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (status != null && status != 200) {
       return ProductsResponse.fromJson(json);
     }
+    _syncProductsFromResponse(json);
 
     final remapped = <String, dynamic>{
       ...json,
@@ -119,6 +146,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (status != null && status != 200) {
       return BaseResponse.fromJson(json);
     }
+    LikesUtil.productLike(request.productId, isFavorite: true);
     return BaseResponse.fromJson(json);
   }
 
@@ -129,6 +157,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (status != null && status != 200) {
       return BaseResponse.fromJson(json);
     }
+    LikesUtil.productLike(request.productId, isFavorite: false);
     return BaseResponse.fromJson(json);
   }
 

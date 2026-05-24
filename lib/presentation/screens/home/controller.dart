@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/shops_use_case.dart';
+import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/models/beans/product_filters.dart';
+import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
@@ -20,7 +21,6 @@ class HomeController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
   final ShopsUseCase _shopsUseCase = Get.put(ShopsUseCase());
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());
-  final FavoriteProductsService _favorites = Get.find<FavoriteProductsService>();
 
   final searchController = TextEditingController();
   final userName = ''.obs;
@@ -47,7 +47,6 @@ class HomeController extends BaseController {
   Future<void> _loadScreen() async {
     isLoading.value = true;
     await Future.wait([
-      if (PrefsManager.isLoggedIn) _favorites.ensureLoaded(),
       if (PrefsManager.isLoggedIn) _requestProfile(),
       _requestCategories(),
       _requestRecommended(),
@@ -75,7 +74,6 @@ class HomeController extends BaseController {
     );
     if (!isSuccess(response)) return;
     recommendedProducts.assignAll(response.data ?? []);
-    _syncFavorites(response.data ?? []);
   }
 
   Future<void> _requestNewArrivals() async {
@@ -84,7 +82,6 @@ class HomeController extends BaseController {
     );
     if (!isSuccess(response)) return;
     newArrivalProducts.assignAll(response.data ?? []);
-    _syncFavorites(response.data ?? []);
   }
 
   Future<void> _requestTopStores() async {
@@ -97,23 +94,23 @@ class HomeController extends BaseController {
       ..addEntries(shops.map((s) => MapEntry(s.id, s.name)));
   }
 
-  void _syncFavorites(List<ProductBean> list) {
-    for (final product in list) {
-      if (product.isFavorite) {
-        _favorites.favoriteIds.add(product.id);
-      }
-    }
-  }
-
   String shopNameFor(ProductBean product) {
     if (product.shopId == null) return '';
     return _shopNames[product.shopId] ?? '';
   }
 
-  bool isFavorite(ProductBean product) => _favorites.isFavoriteProduct(product);
+  Future<void> toggleFavorite(ProductBean product) async {
+    if (!await AppAuthGuard.ensureAuthenticated()) return;
 
-  Future<void> toggleFavorite(ProductBean product) =>
-      _favorites.toggleFavorite(product);
+    final response = product.isFavorite.value
+        ? await _productsUseCase.requestUnFavorite(
+            ProductIdRequest(productId: product.id),
+          )
+        : await _productsUseCase.requestFavorite(
+            ProductIdRequest(productId: product.id),
+          );
+    if (!isSuccess(response)) return;
+  }
 
   void navigateToProducts({
     String? categoryId,

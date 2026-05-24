@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/presentation/screens/product_details/controller.dart';
 import 'package:hedma/presentation/screens/product_details/widgets/product_description_section.dart';
 import 'package:hedma/presentation/screens/product_details/widgets/product_details_app_bar.dart';
@@ -31,11 +30,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
         }
         if (product == null) return const SizedBox.shrink();
 
-        final favorites = Get.find<FavoriteProductsService>();
-        final favoriteIds = favorites.favoriteIds;
-        final isFavorite =
-            favoriteIds.contains(product.id) || product.isFavorite;
-
         return Column(
           children: [
             Expanded(
@@ -47,7 +41,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                     ProductImageCarousel(
                       images: product.galleryImages,
                       currentIndex: controller.imageIndex.value,
-                      isFavorite: isFavorite,
+                      isFavorite: product.isFavorite,
                       onFavoriteTap: controller.toggleFavorite,
                       onPageChanged: controller.onImageChanged,
                     ),

@@ -38,7 +38,7 @@ class FavoriteScreen extends GetView<FavoriteController> {
               final product = controller.favorites[index];
               return ProductGridItem(
                 product: product,
-                isFavorite: true,
+                isFavorite: product.isFavorite,
                 onTap: () => controller.navigateToProductDetails(product),
                 onFavoriteTap: () => controller.removeFavorite(product),
               );

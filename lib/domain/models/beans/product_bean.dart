@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:hedma/app/utils/likes_util.dart';
 import 'package:hedma/domain/models/beans/product_size_bean.dart';
 
 class ProductBean {
@@ -15,9 +17,9 @@ class ProductBean {
   final int? reviewCount;
   final String? description;
   final List<ProductSizeBean> sizes;
-  final bool isFavorite;
+  final RxBool isFavorite;
 
-  const ProductBean({
+  ProductBean({
     required this.id,
     required this.name,
     required this.price,
@@ -32,15 +34,16 @@ class ProductBean {
     this.reviewCount,
     this.description,
     this.sizes = const [],
-    this.isFavorite = false,
+    required this.isFavorite,
   });
 
   factory ProductBean.fromJson(Map<String, dynamic> json) {
     final shop = json['shop'] as Map<String, dynamic>?;
     final imageUrls = _resolveImageUrls(json);
+    final id = json['id']?.toString() ?? '';
 
     return ProductBean(
-      id: json['id']?.toString() ?? '',
+      id: id,
       name: _localizedName(json['name']) ?? '',
       price: json['base_price']?.toString() ??
           json['price']?.toString() ??
@@ -58,16 +61,12 @@ class ProductBean {
           json['reviews_count'] as int? ?? json['reviewCount'] as int?,
       description: json['description'] as String?,
       sizes: _parseSizes(json['sizes']),
-      isFavorite: json['isFavorite'] as bool? ?? false,
+      isFavorite: LikesUtil.productLike(
+        id,
+        isFavorite: json['isFavorite'] as bool? ??
+            json['is_favorite'] as bool?,
+      ),
     );
-  }
-
-  static List<ProductSizeBean> _parseSizes(dynamic raw) {
-    if (raw is! List) return const [];
-    return raw
-        .whereType<Map>()
-        .map((e) => ProductSizeBean.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
   }
 
   static List<ProductBean> parseWishlist(List<dynamic>? raw) {
@@ -76,10 +75,11 @@ class ProductBean {
     return raw.map((entry) {
       if (entry is Map<String, dynamic> && entry['product'] is Map) {
         final product = Map<String, dynamic>.from(entry['product'] as Map);
-        return ProductBean.fromJson(product).copyWith(isFavorite: true);
-      }
-      if (entry is Map<String, dynamic>) {
-        return ProductBean.fromJson(entry).copyWith(isFavorite: true);
+        LikesUtil.productLike(
+          product['id']?.toString() ?? '',
+          isFavorite: true,
+        );
+        return ProductBean.fromJson(product);
       }
       return null;
     }).whereType<ProductBean>().toList();
@@ -122,29 +122,17 @@ class ProductBean {
     return const [];
   }
 
+  static List<ProductSizeBean> _parseSizes(dynamic raw) {
+    if (raw is! List) return const [];
+    return raw
+        .whereType<Map>()
+        .map((e) => ProductSizeBean.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+  }
+
   List<String> get galleryImages {
     if (imageUrls.isNotEmpty) return imageUrls;
     if (imageUrl != null && imageUrl!.isNotEmpty) return [imageUrl!];
     return const [];
-  }
-
-  ProductBean copyWith({bool? isFavorite}) {
-    return ProductBean(
-      id: id,
-      name: name,
-      price: price,
-      imageUrl: imageUrl,
-      imageUrls: imageUrls,
-      shopId: shopId,
-      shopName: shopName,
-      sellerCategories: sellerCategories,
-      categoryId: categoryId,
-      sizeId: sizeId,
-      rating: rating,
-      reviewCount: reviewCount,
-      description: description,
-      sizes: sizes,
-      isFavorite: isFavorite ?? this.isFavorite,
-    );
   }
 }

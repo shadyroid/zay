@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_product_item.dart';
 
@@ -21,9 +20,6 @@ class SimilarProductsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (products.isEmpty) return const SizedBox.shrink();
-
-    final favorites = Get.find<FavoriteProductsService>();
-    final favoriteIds = favorites.favoriteIds;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,8 +44,7 @@ class SimilarProductsSection extends StatelessWidget {
               return HomeProductItem(
                 product: product,
                 shopName: shopNameFor(product),
-                isFavorite:
-                    favoriteIds.contains(product.id) || product.isFavorite,
+                isFavorite: product.isFavorite,
                 onTap: () => onProductTap(product),
                 onFavoriteTap: () => onFavoriteTap(product),
               );

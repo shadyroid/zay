@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/presentation/screens/products/controller.dart';
 import 'package:hedma/presentation/screens/products/widgets/category_chip.dart';
 import 'package:hedma/presentation/screens/products/widgets/products_action_bar.dart';
@@ -39,8 +38,6 @@ class ProductsScreen extends GetView<ProductsController> {
           }
 
           final selectedCategoryId = controller.selectedCategoryId.value;
-          final favorites = Get.find<FavoriteProductsService>();
-          final favoriteIds = favorites.favoriteIds;
 
           return Stack(
             children: [
@@ -88,8 +85,7 @@ class ProductsScreen extends GetView<ProductsController> {
                         final product = controller.products[index];
                         return ProductGridItem(
                           product: product,
-                          isFavorite: favoriteIds.contains(product.id) ||
-                              product.isFavorite,
+                          isFavorite: product.isFavorite,
                           onTap: () =>
                               controller.navigateToProductDetails(product),
                           onFavoriteTap: () async {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
@@ -45,7 +44,6 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
     final reviewCount = shop.reviewCount ?? 0;
     final tagline = shop.description ?? '';
     final about = shop.about ?? shop.description ?? '';
-    final favorites = Get.find<FavoriteProductsService>();
 
     return Obx(
       () => CustomScrollView(
@@ -167,7 +165,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
                 final product = controller.bestSellerProducts[index];
                 return ProductGridItem(
                   product: product,
-                  isFavorite: favorites.isFavoriteProduct(product),
+                  isFavorite: product.isFavorite,
                   onTap: () => controller.navigateToProductDetails(product),
                   onFavoriteTap: () async {
                     await controller.toggleFavorite(product);

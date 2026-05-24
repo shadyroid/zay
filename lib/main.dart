@@ -5,7 +5,6 @@ import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/translations/app_translations.dart';
 import 'package:hedma/app/utils/app_theme.dart';
 import 'package:hedma/data/preferences/prefs_manager.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/data/remote/dio_client.dart';
 import 'package:hedma/firebase_options.dart';
 
@@ -16,7 +15,6 @@ Future<void> main() async {
   );
   await PrefsManager.init();
   Get.put(DioClient(), permanent: true);
-  Get.put(FavoriteProductsService(), permanent: true);
   runApp(const HedmaApp());
 }
 

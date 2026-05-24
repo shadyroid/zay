@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/presentation/screens/home/controller.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_header.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_product_item.dart';
@@ -26,9 +25,7 @@ class HomeScreen extends GetView<HomeController> {
             return const Center(child: AppProgressIndicator());
           }
 
-          final favorites = Get.find<FavoriteProductsService>();
           final selectedCategoryId = controller.selectedCategoryId.value;
-          final favoriteIds = favorites.favoriteIds;
 
           return ListView(
             padding: const EdgeInsets.only(bottom: 16),
@@ -73,8 +70,7 @@ class HomeScreen extends GetView<HomeController> {
                     return HomeProductItem(
                       product: product,
                       shopName: controller.shopNameFor(product),
-                      isFavorite: favoriteIds.contains(product.id) ||
-                          product.isFavorite,
+                      isFavorite: product.isFavorite,
                       onTap: () =>
                           controller.navigateToProductDetails(product),
                       onFavoriteTap: () => controller.toggleFavorite(product),
@@ -98,8 +94,7 @@ class HomeScreen extends GetView<HomeController> {
                     return HomeProductItem(
                       product: product,
                       shopName: controller.shopNameFor(product),
-                      isFavorite: favoriteIds.contains(product.id) ||
-                          product.isFavorite,
+                      isFavorite: product.isFavorite,
                       onTap: () =>
                           controller.navigateToProductDetails(product),
                       onFavoriteTap: () => controller.toggleFavorite(product),

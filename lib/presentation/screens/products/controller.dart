@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
+import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/app/utils/product_sort_option.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/models/beans/product_filters.dart';
+import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/filter_bottom_sheet.dart';
@@ -13,7 +14,6 @@ import 'package:hedma/presentation/bottom_sheets/sort/sort_bottom_sheet.dart';
 
 class ProductsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
-  final FavoriteProductsService _favorites = Get.find<FavoriteProductsService>();
 
   final categories = <CategoryBean>[].obs;
   final products = <ProductBean>[].obs;
@@ -48,7 +48,6 @@ class ProductsController extends BaseController {
   }
 
   Future<void> _loadScreen() async {
-    await _favorites.ensureLoaded();
     await requestCategories();
     await requestProducts();
   }
@@ -83,15 +82,6 @@ class ProductsController extends BaseController {
     if (!isSuccess(response)) return;
     products.assignAll(response.data ?? []);
     totalCount.value = response.totalCount ?? products.length;
-    _syncFavoriteIds(response.data ?? []);
-  }
-
-  void _syncFavoriteIds(List<ProductBean> list) {
-    for (final product in list) {
-      if (product.isFavorite) {
-        _favorites.favoriteIds.add(product.id);
-      }
-    }
   }
 
   void selectCategory(CategoryBean category) {
@@ -117,10 +107,18 @@ class ProductsController extends BaseController {
     await requestProducts();
   }
 
-  bool isFavorite(ProductBean product) => _favorites.isFavoriteProduct(product);
+  Future<void> toggleFavorite(ProductBean product) async {
+    if (!await AppAuthGuard.ensureAuthenticated()) return;
 
-  Future<void> toggleFavorite(ProductBean product) =>
-      _favorites.toggleFavorite(product);
+    final response = product.isFavorite.value
+        ? await _productsUseCase.requestUnFavorite(
+            ProductIdRequest(productId: product.id),
+          )
+        : await _productsUseCase.requestFavorite(
+            ProductIdRequest(productId: product.id),
+          );
+    if (!isSuccess(response)) return;
+  }
 
   void navigateToProductDetails(ProductBean product) {
     Get.toNamed(Routes.productDetails, arguments: {'productId': product.id});

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/services/favorite_products_service.dart';
 import 'package:hedma/app/use_cases/cart_use_case.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/reviews_use_case.dart';
@@ -10,6 +9,7 @@ import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/requests/add_cart_item_request.dart';
 import 'package:hedma/domain/requests/product_details_request.dart';
+import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/domain/requests/reviews_request.dart';
 import 'package:hedma/domain/requests/try_product_request.dart';
@@ -20,7 +20,6 @@ class ProductDetailsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
   final CartUseCase _cartUseCase = Get.put(CartUseCase());
   final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
-  final FavoriteProductsService _favorites = Get.find<FavoriteProductsService>();
 
   final scrollController = ScrollController();
   final sizeGuideKey = GlobalKey();
@@ -55,7 +54,6 @@ class ProductDetailsController extends BaseController {
   }
 
   Future<void> _loadScreen() async {
-    await _favorites.ensureLoaded();
     await Future.wait([
       requestProductDetails(),
       requestReviews(),
@@ -84,9 +82,6 @@ class ProductDetailsController extends BaseController {
     product.value = response.data;
     if (response.data != null) {
       _initSelectedSize(response.data!);
-      if (response.data!.isFavorite) {
-        _favorites.favoriteIds.add(productId);
-      }
     }
     final similar = response.similarProducts;
     if (similar != null && similar.isNotEmpty) {
@@ -121,21 +116,24 @@ class ProductDetailsController extends BaseController {
     );
   }
 
-  bool get isFavorite {
-    final p = product.value;
-    if (p == null) return false;
-    return _favorites.isFavoriteProduct(p);
-  }
-
   Future<void> toggleFavorite() async {
     final p = product.value;
     if (p == null) return;
     await toggleFavoriteFor(p);
-    product.refresh();
   }
 
-  Future<void> toggleFavoriteFor(ProductBean item) =>
-      _favorites.toggleFavorite(item);
+  Future<void> toggleFavoriteFor(ProductBean item) async {
+    if (!await AppAuthGuard.ensureAuthenticated()) return;
+
+    final response = item.isFavorite.value
+        ? await _productsUseCase.requestUnFavorite(
+            ProductIdRequest(productId: item.id),
+          )
+        : await _productsUseCase.requestFavorite(
+            ProductIdRequest(productId: item.id),
+          );
+    if (!isSuccess(response)) return;
+  }
 
   void incrementQuantity() => quantity.value++;
 

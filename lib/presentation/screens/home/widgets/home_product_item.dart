@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
@@ -16,7 +17,7 @@ class HomeProductItem extends StatelessWidget {
 
   final ProductBean product;
   final String shopName;
-  final bool isFavorite;
+  final RxBool isFavorite;
   final VoidCallback onTap;
   final VoidCallback onFavoriteTap;
 
@@ -66,13 +67,15 @@ class HomeProductItem extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Center(
-                            child: SvgPicture.asset(
-                              isFavorite
+                            child: Obx(
+                            () => SvgPicture.asset(
+                              isFavorite.value
                                   ? AppIcons.heartFilled
                                   : AppIcons.favorite,
                               width: 16,
                               height: 16,
                             ),
+                          ),
                           ),
                         ),
                       ),

@@ -16,12 +16,13 @@ class ProductsResponse extends BaseResponse {
     final list = json['data'] as List<dynamic>?;
     List<ProductBean>? products;
     if (list != null) {
-      final wishlistProducts = ProductBean.parseWishlist(list);
-      products = wishlistProducts.isNotEmpty
-          ? wishlistProducts
-          : list
-              .map((e) => ProductBean.fromJson(e as Map<String, dynamic>))
-              .toList();
+      if (_isWishlistList(list)) {
+        products = ProductBean.parseWishlist(list);
+      } else {
+        products = list
+            .map((e) => ProductBean.fromJson(e as Map<String, dynamic>))
+            .toList();
+      }
     }
     return ProductsResponse(
       statusCode: json['statusCode'] as int? ?? 200,
@@ -29,5 +30,11 @@ class ProductsResponse extends BaseResponse {
       data: products,
       totalCount: json['totalCount'] as int? ?? products?.length,
     );
+  }
+
+  static bool _isWishlistList(List<dynamic> list) {
+    if (list.isEmpty) return false;
+    final first = list.first;
+    return first is Map<String, dynamic> && first.containsKey('product');
   }
 }

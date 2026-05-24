@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 
@@ -15,7 +16,7 @@ class ProductImageCarousel extends StatelessWidget {
 
   final List<String> images;
   final int currentIndex;
-  final bool isFavorite;
+  final RxBool isFavorite;
   final VoidCallback onFavoriteTap;
   final ValueChanged<int> onPageChanged;
 
@@ -51,10 +52,14 @@ class ProductImageCarousel extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Center(
-                  child: SvgPicture.asset(
-                    isFavorite ? AppIcons.heartFilled : AppIcons.favorite,
-                    width: 18,
-                    height: 18,
+                  child: Obx(
+                    () => SvgPicture.asset(
+                      isFavorite.value
+                          ? AppIcons.heartFilled
+                          : AppIcons.favorite,
+                      width: 18,
+                      height: 18,
+                    ),
                   ),
                 ),
               ),

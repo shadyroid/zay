@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
@@ -9,13 +10,13 @@ class ProductGridItem extends StatelessWidget {
     super.key,
     required this.product,
     required this.onTap,
-    this.isFavorite = false,
+    this.isFavorite,
     this.onFavoriteTap,
   });
 
   final ProductBean product;
   final VoidCallback onTap;
-  final bool isFavorite;
+  final RxBool? isFavorite;
   final VoidCallback? onFavoriteTap;
 
   @override
@@ -37,7 +38,7 @@ class ProductGridItem extends StatelessWidget {
                     child: _ProductImage(imageUrl: product.imageUrl),
                   ),
                 ),
-                if (onFavoriteTap != null)
+                if (onFavoriteTap != null && isFavorite != null)
                   PositionedDirectional(
                     top: 8,
                     end: 8,
@@ -51,12 +52,14 @@ class ProductGridItem extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: Center(
-                          child: SvgPicture.asset(
-                            isFavorite
-                                ? AppIcons.heartFilled
-                                : AppIcons.favorite,
-                            width: 16,
-                            height: 16,
+                          child: Obx(
+                            () => SvgPicture.asset(
+                              isFavorite!.value
+                                  ? AppIcons.heartFilled
+                                  : AppIcons.favorite,
+                              width: 16,
+                              height: 16,
+                            ),
                           ),
                         ),
                       ),
