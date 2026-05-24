@@ -1,4 +1,5 @@
 import 'package:hedma/data/remote/data_sources/settings_data_source.dart';
+import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/content_response.dart';
 import 'package:hedma/domain/repositories/settings_repository.dart';
@@ -64,4 +65,12 @@ class SettingsRepositoryImpl implements SettingsRepository {
     }
     return BaseResponse.fromJson(json);
   }
+
+  @override
+  Future<void> requestSetLocale(String locale) async {
+    await PrefsManager.setLocale(locale);
+  }
+
+  @override
+  String? getLocale() => PrefsManager.locale;
 }

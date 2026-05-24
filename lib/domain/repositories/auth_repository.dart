@@ -24,4 +24,6 @@ abstract class AuthRepository {
   Future<ProfileResponse> requestProfile();
 
   Future<BaseResponse> requestUpdateProfile(UpdateProfileRequest request);
+
+  Future<BaseResponse> requestClearAccount();
 }

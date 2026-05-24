@@ -19,4 +19,9 @@ class SettingsUseCase {
 
   Future<BaseResponse> requestContactUs(ContactUsRequest request) =>
       _settingsRepository.requestContactUs(request);
+
+  Future<void> requestSetLocale(String locale) =>
+      _settingsRepository.requestSetLocale(locale);
+
+  String? getLocale() => _settingsRepository.getLocale();
 }

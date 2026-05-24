@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
-import 'package:hedma/data/preferences/prefs_manager.dart';
+import 'package:hedma/app/use_cases/settings_use_case.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 import 'package:hedma/presentation/bottom_sheets/languages/languages_bottom_sheet.dart';
 
 class SettingsController extends BaseController {
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());
+  final SettingsUseCase _settingsUseCase = Get.put(SettingsUseCase());
 
   final displayName = ''.obs;
 
@@ -47,7 +48,8 @@ class SettingsController extends BaseController {
   void navigateToPrivacy() => Get.toNamed(Routes.privacy);
 
   void onLanguage() {
-    final current = PrefsManager.locale ?? Get.locale?.languageCode ?? 'en';
+    final current =
+        _settingsUseCase.getLocale() ?? Get.locale?.languageCode ?? 'en';
     LanguagesBottomSheet.show(
       selectedCode: current,
       onSelected: _setLocale,
@@ -55,7 +57,7 @@ class SettingsController extends BaseController {
   }
 
   Future<void> _setLocale(String code) async {
-    await PrefsManager.setLocale(code);
+    await _settingsUseCase.requestSetLocale(code);
     await Get.updateLocale(Locale(code));
   }
 
@@ -81,7 +83,7 @@ class SettingsController extends BaseController {
           TextButton(
             onPressed: () async {
               Get.back();
-              await PrefsManager.clear();
+              await _authUseCase.requestClearAccount();
               Get.offAllNamed(Routes.signIn);
               Get.rawSnackbar(message: 'clearAccountSuccess'.tr);
             },

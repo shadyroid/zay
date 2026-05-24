@@ -21,10 +21,15 @@ class AuthRepositoryImpl implements AuthRepository {
     if (status != null && status != 200) {
       return SignInResponse.fromJson(json);
     }
-    return SignInResponse.fromJson({
+    final response = SignInResponse.fromJson({
       ...json,
       'data': {'token': json['token']},
     });
+    final token = response.data?.token;
+    if (response.isSuccess && token != null && token.isNotEmpty) {
+      await PrefsManager.setToken(token);
+    }
+    return response;
   }
 
   @override
@@ -34,10 +39,15 @@ class AuthRepositoryImpl implements AuthRepository {
     if (status != null && status != 200) {
       return SignInResponse.fromJson(json);
     }
-    return SignInResponse.fromJson({
+    final response = SignInResponse.fromJson({
       ...json,
       'data': {'token': json['token']},
     });
+    final token = response.data?.token;
+    if (response.isSuccess && token != null && token.isNotEmpty) {
+      await PrefsManager.setToken(token);
+    }
+    return response;
   }
 
   @override
@@ -109,5 +119,11 @@ class AuthRepositoryImpl implements AuthRepository {
       return BaseResponse.fromJson(json);
     }
     return BaseResponse.fromJson(json);
+  }
+
+  @override
+  Future<BaseResponse> requestClearAccount() async {
+    await PrefsManager.clear();
+    return const BaseResponse(statusCode: 200);
   }
 }

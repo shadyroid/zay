@@ -35,4 +35,7 @@ class AuthUseCase {
 
   Future<BaseResponse> requestUpdateProfile(UpdateProfileRequest request) =>
       _authRepository.requestUpdateProfile(request);
+
+  Future<BaseResponse> requestClearAccount() =>
+      _authRepository.requestClearAccount();
 }

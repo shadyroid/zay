@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
-import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/domain/requests/sign_in_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
@@ -39,10 +38,6 @@ class SignInController extends BaseController {
 
     if (!isSuccess(response)) return;
 
-    final token = response.data?.token;
-    if (token != null && token.isNotEmpty) {
-      await PrefsManager.setToken(token);
-    }
     Get.offNamed(Routes.home);
   }
 

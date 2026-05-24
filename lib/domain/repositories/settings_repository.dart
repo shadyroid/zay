@@ -10,4 +10,8 @@ abstract class SettingsRepository {
   Future<ContentResponse> requestPrivacy();
 
   Future<BaseResponse> requestContactUs(ContactUsRequest request);
+
+  Future<void> requestSetLocale(String locale);
+
+  String? getLocale();
 }
