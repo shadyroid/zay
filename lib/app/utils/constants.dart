@@ -4,9 +4,6 @@ class Constants {
 
   static const String baseUrl = 'https://zaymarketplace.online/api';
 
-  /// Set to `true` when real API endpoints are ready.
-  static const bool useRemoteApi = false;
-
   static const String signInPath = '/auth/login';
   static const String signUpPath = '/auth/register';
   static const String forgetPasswordPath = '/auth/forgot-password';

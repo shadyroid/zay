@@ -188,15 +188,4 @@ class DioClient extends GetxService {
         queryParameters: queryParameters,
         options: options,
       );
-
-  /// Legacy `{ variables: ... }` body used by [RemotePost].
-  Future<Response> postVariables(
-    String path, {
-    Map<String, dynamic>? variables,
-  }) =>
-      post(
-        path,
-        data: {'variables': variables ?? {}},
-        options: Options(extra: {kSkipResponseMapper: true}),
-      );
 }
