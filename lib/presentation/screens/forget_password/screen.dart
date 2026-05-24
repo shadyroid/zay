@@ -7,6 +7,7 @@ import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
 import 'package:hedma/presentation/widgets/app_logo.dart';
 import 'package:hedma/presentation/widgets/app_text_field.dart';
+import 'package:hedma/presentation/widgets/auth_form_layout.dart';
 
 class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
   const ForgetPasswordScreen({super.key});
@@ -16,14 +17,12 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const AppBackAppBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+      body: AuthFormLayout(
         child: Form(
           key: controller.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 16),
               const Center(child: AppLogo()),
               const SizedBox(height: 32),
               const ForgetPasswordHeader(),
@@ -53,7 +52,6 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
                   onPressed: controller.requestForgetPassword,
                 ),
               ),
-              const SizedBox(height: 24),
             ],
           ),
         ),

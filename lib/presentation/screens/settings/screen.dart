@@ -44,6 +44,11 @@ class SettingsScreen extends GetView<SettingsController> {
                           onTap: controller.navigateToEditProfile,
                         ),
                         SettingsItem(
+                          iconPath: AppIcons.lock,
+                          title: 'changePassword'.tr,
+                          onTap: controller.navigateToChangePassword,
+                        ),
+                        SettingsItem(
                           iconPath: AppIcons.favorite,
                           title: 'favorite'.tr,
                           onTap: controller.navigateToFavorite,
@@ -86,7 +91,7 @@ class SettingsScreen extends GetView<SettingsController> {
                       ),
                       SettingsItem(
                         iconPath: loggedIn ? AppIcons.signOut : AppIcons.signIn,
-                        title: loggedIn ? 'logout'.tr : 'login'.tr,
+                        title: loggedIn ? 'signOut'.tr : 'signIn'.tr,
                         onTap: loggedIn
                             ? controller.requestSignOut
                             : controller.navigateToSignIn,

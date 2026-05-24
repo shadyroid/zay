@@ -31,7 +31,7 @@ class SignUpHeader extends StatelessWidget {
             GestureDetector(
               onTap: onLogIn,
               child: Text(
-                'logIn'.tr,
+                'signIn'.tr,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppColors.secondary,
                       fontWeight: FontWeight.w600,

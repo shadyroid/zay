@@ -32,6 +32,7 @@ class Constants {
   static const String returnReasonsPath = '/returns/reasons';
 
   static const String profilePath = '/profile';
+  static const String changePasswordPath = '/profile/password';
   static const String deleteAccountPath = '/profile';
 
   static const String aboutUsPath = '/pages/about-us';

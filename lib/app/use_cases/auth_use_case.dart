@@ -3,6 +3,7 @@ import 'package:hedma/data/repositories/auth_repository_impl.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/profile_response.dart';
 import 'package:hedma/domain/repositories/auth_repository.dart';
+import 'package:hedma/domain/requests/change_password_request.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
 import 'package:hedma/domain/requests/sign_in_request.dart';
@@ -34,6 +35,9 @@ class AuthUseCase {
 
   Future<BaseResponse> requestUpdateProfile(UpdateProfileRequest request) =>
       _authRepository.requestUpdateProfile(request);
+
+  Future<BaseResponse> requestChangePassword(ChangePasswordRequest request) =>
+      _authRepository.requestChangePassword(request);
 
   Future<BaseResponse> requestDeleteAccount() =>
       _authRepository.requestDeleteAccount();

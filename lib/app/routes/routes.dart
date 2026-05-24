@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/bindings/about_us_binding.dart';
 import 'package:hedma/app/bindings/cart_binding.dart';
+import 'package:hedma/app/bindings/change_password_binding.dart';
 import 'package:hedma/app/bindings/contact_us_binding.dart';
 import 'package:hedma/app/bindings/edit_profile_binding.dart';
 import 'package:hedma/app/bindings/favorite_binding.dart';
@@ -31,6 +32,7 @@ import 'package:hedma/app/bindings/try_on_binding.dart';
 import 'package:hedma/app/bindings/verification_binding.dart';
 import 'package:hedma/presentation/screens/about_us/screen.dart';
 import 'package:hedma/presentation/screens/cart/screen.dart';
+import 'package:hedma/presentation/screens/change_password/screen.dart';
 import 'package:hedma/presentation/screens/contact_us/screen.dart';
 import 'package:hedma/presentation/screens/edit_profile/screen.dart';
 import 'package:hedma/presentation/screens/favorite/screen.dart';
@@ -78,6 +80,7 @@ class Routes {
   static const String orderSuccess = '/orderSuccess';
   static const String settings = '/settings';
   static const String editProfile = '/editProfile';
+  static const String changePassword = '/changePassword';
   static const String favorite = '/favorite';
   static const String contactUs = '/contactUs';
   static const String aboutUs = '/aboutUs';
@@ -141,6 +144,11 @@ class Routes {
       name: editProfile,
       page: () => const EditProfileScreen(),
       binding: EditProfileBinding(),
+    ),
+    GetPage(
+      name: changePassword,
+      page: () => const ChangePasswordScreen(),
+      binding: ChangePasswordBinding(),
     ),
     GetPage(name: favorite, page: () => const FavoriteScreen(), binding: FavoriteBinding()),
     GetPage(

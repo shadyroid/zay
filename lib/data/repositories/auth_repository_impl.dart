@@ -3,6 +3,7 @@ import 'package:hedma/data/remote/data_sources/auth_data_source.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/profile_response.dart';
 import 'package:hedma/domain/repositories/auth_repository.dart';
+import 'package:hedma/domain/requests/change_password_request.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
 import 'package:hedma/domain/requests/sign_in_request.dart';
@@ -105,6 +106,18 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<BaseResponse> requestUpdateProfile(UpdateProfileRequest request) async {
     final json = await _authDataSource.requestUpdateProfile(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
+    return BaseResponse.fromJson(json);
+  }
+
+  @override
+  Future<BaseResponse> requestChangePassword(
+    ChangePasswordRequest request,
+  ) async {
+    final json = await _authDataSource.requestChangePassword(request);
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
       return BaseResponse.fromJson(json);

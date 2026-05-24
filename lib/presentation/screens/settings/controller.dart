@@ -57,6 +57,8 @@ class SettingsController extends BaseController {
     Get.toNamed(Routes.editProfile);
   }
 
+  void navigateToChangePassword() => Get.toNamed(Routes.changePassword);
+
   Future<void> navigateToFavorite() async {
     Get.toNamed(Routes.favorite);
   }

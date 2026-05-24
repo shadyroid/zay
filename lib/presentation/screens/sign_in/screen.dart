@@ -9,6 +9,7 @@ import 'package:hedma/presentation/screens/sign_in/widgets/sign_in_welcome_heade
 import 'package:hedma/presentation/widgets/app_button.dart';
 import 'package:hedma/presentation/widgets/app_logo.dart';
 import 'package:hedma/presentation/widgets/app_text_field.dart';
+import 'package:hedma/presentation/widgets/auth_form_layout.dart';
 
 class SignInScreen extends GetView<SignInController> {
   const SignInScreen({super.key});
@@ -18,14 +19,12 @@ class SignInScreen extends GetView<SignInController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: AuthFormLayout(
           child: Form(
             key: controller.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 32),
                 const Center(child: AppLogo()),
                 const SizedBox(height: 32),
                 SignInWelcomeHeader(
@@ -101,7 +100,7 @@ class SignInScreen extends GetView<SignInController> {
                 const SizedBox(height: 24),
                 Obx(
                   () => AppButton(
-                    text: 'login'.tr,
+                    text: 'signIn'.tr,
                     isLoading: controller.isLoading.value,
                     onPressed: controller.requestSignIn,
                   ),
@@ -110,7 +109,6 @@ class SignInScreen extends GetView<SignInController> {
                 GuestContinueButton(
                   onPressed: controller.continueAsGuest,
                 ),
-                const SizedBox(height: 24),
               ],
             ),
           ),

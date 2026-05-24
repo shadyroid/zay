@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' as dio_multipart show FormData, MultipartFile;
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/data/remote/dio_client.dart';
+import 'package:hedma/domain/requests/change_password_request.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
 import 'package:hedma/domain/requests/sign_in_request.dart';
@@ -116,6 +117,20 @@ class AuthDataSource {
     final response = await _dioClient.post(
       Constants.profilePath,
       data: dio_multipart.FormData.fromMap(fields),
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> requestChangePassword(
+    ChangePasswordRequest request,
+  ) async {
+    final response = await _dioClient.postForm(
+      Constants.changePasswordPath,
+      fields: {
+        'current_password': request.currentPassword,
+        'password': request.password,
+        'password_confirmation': request.passwordConfirmation,
+      },
     );
     return Map<String, dynamic>.from(response.data as Map);
   }

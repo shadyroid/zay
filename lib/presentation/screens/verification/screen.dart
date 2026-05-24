@@ -8,6 +8,7 @@ import 'package:hedma/presentation/screens/verification/widgets/verification_tim
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
 import 'package:hedma/presentation/widgets/app_logo.dart';
+import 'package:hedma/presentation/widgets/auth_form_layout.dart';
 
 class VerificationScreen extends GetView<VerificationController> {
   const VerificationScreen({super.key});
@@ -16,18 +17,15 @@ class VerificationScreen extends GetView<VerificationController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
       appBar: const AppBackAppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: AuthFormLayout(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 8),
                   const Center(child: AppLogo()),
                   const SizedBox(height: 32),
                   const VerificationHeader(),
@@ -54,7 +52,6 @@ class VerificationScreen extends GetView<VerificationController> {
                       onResend: controller.resendCode,
                     ),
                   ),
-                  const SizedBox(height: 24),
                 ],
               ),
             ),

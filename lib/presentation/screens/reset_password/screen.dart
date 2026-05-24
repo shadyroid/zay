@@ -8,6 +8,7 @@ import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
 import 'package:hedma/presentation/widgets/app_logo.dart';
 import 'package:hedma/presentation/widgets/app_text_field.dart';
+import 'package:hedma/presentation/widgets/auth_form_layout.dart';
 
 class ResetPasswordScreen extends GetView<ResetPasswordController> {
   const ResetPasswordScreen({super.key});
@@ -17,14 +18,12 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const AppBackAppBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+      body: AuthFormLayout(
         child: Form(
           key: controller.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 16),
               const Center(child: AppLogo()),
               const SizedBox(height: 32),
               const ResetPasswordHeader(),
@@ -92,7 +91,6 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                   onPressed: controller.requestResetPassword,
                 ),
               ),
-              const SizedBox(height: 24),
             ],
           ),
         ),
