@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/enums/order_return_reason.dart';
+import 'package:hedma/domain/models/beans/return_reason_bean.dart';
 
 class ReturnReasonCard extends StatelessWidget {
   const ReturnReasonCard({
@@ -11,7 +10,7 @@ class ReturnReasonCard extends StatelessWidget {
     required this.onTap,
   });
 
-  final OrderReturnReason reason;
+  final ReturnReasonBean reason;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -36,7 +35,7 @@ class ReturnReasonCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  reason.translationKey.tr,
+                  reason.label,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w500,
                         color: AppColors.textPrimary,

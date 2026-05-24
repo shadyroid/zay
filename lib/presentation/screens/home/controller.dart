@@ -9,6 +9,7 @@ import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/models/beans/product_filters.dart';
+import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/filter_bottom_sheet.dart';
@@ -68,18 +69,21 @@ class HomeController extends BaseController {
   }
 
   Future<void> _requestRecommended() async {
-    final response = await _productsUseCase.requestFeaturedProducts();
+    final response = await _productsUseCase.requestProducts(
+      request: const ProductsRequest(recommended: true, pageSize: 4),
+    );
     if (!isSuccess(response)) return;
     recommendedProducts.assignAll(response.data ?? []);
     _syncFavorites(response.data ?? []);
   }
 
   Future<void> _requestNewArrivals() async {
-    final response = await _productsUseCase.requestProducts();
+    final response = await _productsUseCase.requestProducts(
+      request: const ProductsRequest(newArrival: true, pageSize: 6),
+    );
     if (!isSuccess(response)) return;
-    final list = response.data ?? [];
-    newArrivalProducts.assignAll(list.take(6));
-    _syncFavorites(list);
+    newArrivalProducts.assignAll(response.data ?? []);
+    _syncFavorites(response.data ?? []);
   }
 
   Future<void> _requestTopStores() async {

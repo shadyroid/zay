@@ -81,7 +81,7 @@ class SettingsScreen extends GetView<SettingsController> {
                   SettingsItem(
                     iconPath: AppIcons.logout,
                     title: 'logout'.tr,
-                    onTap: controller.requestLogout,
+                    onTap: controller.requestSignOut,
                     showDivider: false,
                   ),
                 ],

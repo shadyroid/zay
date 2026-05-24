@@ -2,7 +2,6 @@ enum ProductSortOption {
   priceHighToLow,
   priceLowToHigh,
   popularity,
-  discount,
   customerRating,
 }
 
@@ -11,8 +10,13 @@ extension ProductSortOptionX on ProductSortOption {
         ProductSortOption.priceHighToLow => 'sortPriceHighToLow',
         ProductSortOption.priceLowToHigh => 'sortPriceLowToHigh',
         ProductSortOption.popularity => 'sortPopularity',
-        ProductSortOption.discount => 'sortDiscount',
         ProductSortOption.customerRating => 'sortCustomerRating',
       };
 
+  String get apiValue => switch (this) {
+        ProductSortOption.priceHighToLow => 'price_high_to_low',
+        ProductSortOption.priceLowToHigh => 'price_low_to_high',
+        ProductSortOption.popularity => 'popularity',
+        ProductSortOption.customerRating => 'rating',
+      };
 }

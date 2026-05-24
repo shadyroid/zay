@@ -24,17 +24,22 @@ class ShopBean {
   });
 
   factory ShopBean.fromJson(Map<String, dynamic> json) {
+    final logoUrl = json['logo_url'] as String? ??
+        json['logoUrl'] as String? ??
+        json['imageUrl'] as String?;
+
     return ShopBean(
       id: json['id']?.toString() ?? '',
       name: json['name'] as String? ?? '',
       description: json['description'] as String?,
-      about: json['about'] as String?,
+      about: json['about'] as String? ?? json['return_policy'] as String?,
       iconUrl: json['iconUrl'] as String?,
-      logoUrl: json['logoUrl'] as String? ?? json['imageUrl'] as String?,
-      bannerUrl: json['bannerUrl'] as String?,
-      imageUrl: json['imageUrl'] as String?,
-      rating: json['rating']?.toString(),
-      reviewCount: json['reviewCount'] as int?,
+      logoUrl: logoUrl,
+      bannerUrl: json['cover_url'] as String? ?? json['bannerUrl'] as String?,
+      imageUrl: logoUrl,
+      rating: json['avg_rating']?.toString() ?? json['rating']?.toString(),
+      reviewCount:
+          json['products_count'] as int? ?? json['reviewCount'] as int?,
     );
   }
 }

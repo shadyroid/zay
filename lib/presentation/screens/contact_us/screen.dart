@@ -59,6 +59,27 @@ class ContactUsScreen extends GetView<ContactUsController> {
                     ),
                     const SizedBox(height: 16),
                     ContactUsLabeledField(
+                      label: 'phone'.tr,
+                      controller: controller.phoneController,
+                      hint: 'phone'.tr,
+                      keyboardType: TextInputType.phone,
+                      textInputAction: TextInputAction.next,
+                      validator: (v) => v == null || v.trim().isEmpty
+                          ? 'mobileRequired'.tr
+                          : null,
+                    ),
+                    const SizedBox(height: 16),
+                    ContactUsLabeledField(
+                      label: 'subject'.tr,
+                      controller: controller.subjectController,
+                      hint: 'subject'.tr,
+                      textInputAction: TextInputAction.next,
+                      validator: (v) => v == null || v.trim().isEmpty
+                          ? 'subjectRequired'.tr
+                          : null,
+                    ),
+                    const SizedBox(height: 16),
+                    ContactUsLabeledField(
                       label: 'description'.tr,
                       controller: controller.messageController,
                       hint: 'description'.tr,
@@ -73,7 +94,7 @@ class ContactUsScreen extends GetView<ContactUsController> {
                       () => AppButton(
                         text: 'send'.tr,
                         isLoading: controller.isLoading.value,
-                        onPressed: controller.requestSendMessage,
+                        onPressed: controller.requestContactUs,
                       ),
                     ),
                     const SizedBox(height: 32),

@@ -1,32 +1,19 @@
 import 'package:hedma/data/remote/data_sources/order_data_source.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/order_response.dart';
-import 'package:hedma/domain/models/responses/order_track_response.dart';
+import 'package:hedma/domain/models/responses/return_reasons_response.dart';
 import 'package:hedma/domain/models/responses/orders_response.dart';
 import 'package:hedma/domain/repositories/order_repository.dart';
+import 'package:hedma/domain/requests/create_order_request.dart';
+import 'package:hedma/domain/requests/order_details_request.dart';
+import 'package:hedma/domain/requests/order_return_request.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
   final OrderDataSource _orderDataSource = OrderDataSource();
 
   @override
-  Future<OrderResponse> requestCreateOrder({
-    required String address,
-    required double latitude,
-    required double longitude,
-    required String mobileNumber,
-    required String paymentMethod,
-    required List<Map<String, dynamic>> items,
-  }) async {
-    final json = await _orderDataSource.requestCreateOrder(
-      body: {
-        'address': address,
-        'latitude': latitude,
-        'longitude': longitude,
-        'mobileNumber': mobileNumber,
-        'paymentMethod': paymentMethod,
-        'items': items,
-      },
-    );
+  Future<OrderResponse> requestCreateOrder(CreateOrderRequest request) async {
+    final json = await _orderDataSource.requestCreateOrder(request);
     return OrderResponse.fromJson(json);
   }
 
@@ -37,26 +24,20 @@ class OrderRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<OrderResponse> requestOrderDetails({required String orderId}) async {
-    final json = await _orderDataSource.requestOrderDetails(orderId: orderId);
+  Future<OrderResponse> requestOrderDetails(OrderDetailsRequest request) async {
+    final json = await _orderDataSource.requestOrderDetails(request);
     return OrderResponse.fromJson(json);
   }
 
   @override
-  Future<OrderTrackResponse> requestOrderTrack({required String orderId}) async {
-    final json = await _orderDataSource.requestOrderTrack(orderId: orderId);
-    return OrderTrackResponse.fromJson(json);
+  Future<BaseResponse> requestOrderReturn(OrderReturnRequest request) async {
+    final json = await _orderDataSource.requestOrderReturn(request);
+    return BaseResponse.fromJson(json);
   }
 
   @override
-  Future<BaseResponse> requestOrderReturn({
-    required String orderId,
-    required String reason,
-  }) async {
-    final json = await _orderDataSource.requestOrderReturn(
-      orderId: orderId,
-      reason: reason,
-    );
-    return BaseResponse.fromJson(json);
+  Future<ReturnReasonsResponse> requestReturnReasons() async {
+    final json = await _orderDataSource.requestReturnReasons();
+    return ReturnReasonsResponse.fromJson(json);
   }
 }

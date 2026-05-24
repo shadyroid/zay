@@ -1,5 +1,6 @@
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/content_response.dart';
+import 'package:hedma/domain/requests/contact_us_request.dart';
 
 abstract class SettingsRepository {
   Future<ContentResponse> requestAboutUs();
@@ -8,9 +9,5 @@ abstract class SettingsRepository {
 
   Future<ContentResponse> requestPrivacy();
 
-  Future<BaseResponse> requestSendMessage({
-    required String name,
-    required String email,
-    required String message,
-  });
+  Future<BaseResponse> requestContactUs(ContactUsRequest request);
 }

@@ -7,6 +7,10 @@ import 'package:hedma/domain/models/responses/products_response.dart';
 import 'package:hedma/domain/models/responses/sizes_response.dart';
 import 'package:hedma/domain/models/responses/try_product_response.dart';
 import 'package:hedma/domain/repositories/products_repository.dart';
+import 'package:hedma/domain/requests/product_details_request.dart';
+import 'package:hedma/domain/requests/product_id_request.dart';
+import 'package:hedma/domain/requests/products_request.dart';
+import 'package:hedma/domain/requests/try_product_request.dart';
 
 class ProductsUseCase {
   final ProductsRepository _productsRepository =
@@ -17,30 +21,25 @@ class ProductsUseCase {
 
   Future<SizesResponse> requestSizes() => _productsRepository.requestSizes();
 
-  Future<ProductsResponse> requestProducts({String? categoryId}) =>
-      _productsRepository.requestProducts(categoryId: categoryId);
+  Future<ProductsResponse> requestProducts({
+    ProductsRequest request = const ProductsRequest(),
+  }) =>
+      _productsRepository.requestProducts(request: request);
 
-  Future<ProductsResponse> requestFeaturedProducts() =>
-      _productsRepository.requestFeaturedProducts();
-
-  Future<ProductResponse> requestProductDetails({required String productId}) =>
-      _productsRepository.requestProductDetails(productId: productId);
+  Future<ProductResponse> requestProductDetails(
+    ProductDetailsRequest request,
+  ) =>
+      _productsRepository.requestProductDetails(request);
 
   Future<ProductsResponse> requestFavorites() =>
       _productsRepository.requestFavorites();
 
-  Future<BaseResponse> requestFavorite({required String productId}) =>
-      _productsRepository.requestFavorite(productId: productId);
+  Future<BaseResponse> requestFavorite(ProductIdRequest request) =>
+      _productsRepository.requestFavorite(request);
 
-  Future<BaseResponse> requestUnFavorite({required String productId}) =>
-      _productsRepository.requestUnFavorite(productId: productId);
+  Future<BaseResponse> requestUnFavorite(ProductIdRequest request) =>
+      _productsRepository.requestUnFavorite(request);
 
-  Future<TryProductResponse> requestTryProduct({
-    required String productId,
-    required String imagePath,
-  }) =>
-      _productsRepository.requestTryProduct(
-        productId: productId,
-        imagePath: imagePath,
-      );
+  Future<TryProductResponse> requestTryProduct(TryProductRequest request) =>
+      _productsRepository.requestTryProduct(request);
 }

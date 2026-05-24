@@ -76,6 +76,9 @@ class SignUpScreen extends GetView<SignUpController> {
                       decimal: true,
                     ),
                     textInputAction: TextInputAction.next,
+                    validator: (v) => v == null || v.trim().isEmpty
+                        ? 'heightRequired'.tr
+                        : null,
                   ),
                   const SizedBox(height: 12),
                   AppTextField(
@@ -86,6 +89,9 @@ class SignUpScreen extends GetView<SignUpController> {
                       decimal: true,
                     ),
                     textInputAction: TextInputAction.next,
+                    validator: (v) => v == null || v.trim().isEmpty
+                        ? 'weightRequired'.tr
+                        : null,
                   ),
                   const SizedBox(height: 12),
                   Obx(

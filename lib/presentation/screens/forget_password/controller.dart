@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
+import 'package:hedma/domain/requests/forget_password_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class ForgetPasswordController extends BaseController {
@@ -21,7 +22,7 @@ class ForgetPasswordController extends BaseController {
 
     isLoading.value = true;
     final response = await _authUseCase.requestForgetPassword(
-      email: emailController.text.trim(),
+      ForgetPasswordRequest(email: emailController.text.trim()),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;

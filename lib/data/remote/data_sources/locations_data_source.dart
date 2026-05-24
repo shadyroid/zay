@@ -4,6 +4,9 @@ import 'package:hedma/app/utils/google_maps_config.dart';
 import 'package:hedma/domain/models/beans/location_address.dart';
 import 'package:hedma/domain/models/beans/map_position.dart';
 import 'package:hedma/domain/models/beans/place_prediction.dart';
+import 'package:hedma/domain/requests/place_autocomplete_request.dart';
+import 'package:hedma/domain/requests/place_details_request.dart';
+import 'package:hedma/domain/requests/reverse_geocode_request.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class LocationsDataSource {
@@ -46,15 +49,14 @@ class LocationsDataSource {
     }
   }
 
-  Future<LocationAddress?> requestReverseGeocode({
-    required double latitude,
-    required double longitude,
-  }) async {
+  Future<LocationAddress?> requestReverseGeocode(
+    ReverseGeocodeRequest request,
+  ) async {
     try {
       final response = await _dio.get<Map<String, dynamic>>(
         '/geocode/json',
         queryParameters: {
-          'latlng': '$latitude,$longitude',
+          'latlng': '${request.latitude},${request.longitude}',
           'key': _apiKey,
         },
       );
@@ -64,8 +66,10 @@ class LocationsDataSource {
     }
   }
 
-  Future<List<PlacePrediction>> requestPlaceAutocomplete(String input) async {
-    final query = input.trim();
+  Future<List<PlacePrediction>> requestPlaceAutocomplete(
+    PlaceAutocompleteRequest request,
+  ) async {
+    final query = request.input.trim();
     if (query.isEmpty) return [];
 
     try {
@@ -96,16 +100,15 @@ class LocationsDataSource {
     }
   }
 
-  Future<({MapPosition position, LocationAddress address})?> requestPlaceDetails(
-    String placeId,
-  ) async {
-    if (placeId.isEmpty) return null;
+  Future<({MapPosition position, LocationAddress address})?>
+      requestPlaceDetails(PlaceDetailsRequest request) async {
+    if (request.placeId.isEmpty) return null;
 
     try {
       final response = await _dio.get<Map<String, dynamic>>(
         '/place/details/json',
         queryParameters: {
-          'place_id': placeId,
+          'place_id': request.placeId,
           'fields': 'geometry,formatted_address,address_components',
           'key': _apiKey,
         },

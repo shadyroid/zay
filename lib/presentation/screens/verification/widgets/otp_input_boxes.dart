@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class OtpInputBoxes extends StatelessWidget {
-  const OtpInputBoxes({super.key, required this.code, this.length = 4});
+  const OtpInputBoxes({super.key, required this.code, this.length = 6});
 
   final String code;
   final int length;

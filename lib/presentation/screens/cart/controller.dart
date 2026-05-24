@@ -7,6 +7,9 @@ import 'package:hedma/app/use_cases/order_use_case.dart';
 import 'package:hedma/app/utils/payment_method.dart';
 import 'package:hedma/domain/models/beans/cart_item_bean.dart';
 import 'package:hedma/domain/models/beans/delivery_location.dart';
+import 'package:hedma/domain/requests/create_order_request.dart';
+import 'package:hedma/domain/requests/delete_cart_item_request.dart';
+import 'package:hedma/domain/requests/update_cart_item_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class CartController extends BaseController {
@@ -55,23 +58,31 @@ class CartController extends BaseController {
 
   Future<void> removeItem(CartItemBean item) async {
     isLoading.value = true;
-    final response =
-        await _cartUseCase.requestRemoveFromCart(productId: item.id);
+    final response = await _cartUseCase.requestDeleteCartItem(
+      DeleteCartItemRequest(cartItemId: item.id),
+    );
     isLoading.value = false;
     if (!isSuccess(response)) return;
     items.assignAll(response.data ?? []);
   }
 
-  void incrementQuantity(CartItemBean item) {
-    final index = items.indexWhere((i) => i.id == item.id);
-    if (index < 0) return;
-    items[index] = items[index].copyWith(quantity: items[index].quantity + 1);
+  Future<void> incrementQuantity(CartItemBean item) async {
+    await _updateItemQuantity(item, item.quantity + 1);
   }
 
-  void decrementQuantity(CartItemBean item) {
-    final index = items.indexWhere((i) => i.id == item.id);
-    if (index < 0 || items[index].quantity <= 1) return;
-    items[index] = items[index].copyWith(quantity: items[index].quantity - 1);
+  Future<void> decrementQuantity(CartItemBean item) async {
+    if (item.quantity <= 1) return;
+    await _updateItemQuantity(item, item.quantity - 1);
+  }
+
+  Future<void> _updateItemQuantity(CartItemBean item, int quantity) async {
+    isLoading.value = true;
+    final response = await _cartUseCase.requestUpdateCartItem(
+      UpdateCartItemRequest(cartItemId: item.id, quantity: quantity),
+    );
+    isLoading.value = false;
+    if (!isSuccess(response)) return;
+    items.assignAll(response.data ?? []);
   }
 
   void selectPaymentMethod(PaymentMethod method) {
@@ -112,21 +123,13 @@ class CartController extends BaseController {
 
     isLoading.value = true;
     final response = await _orderUseCase.requestCreateOrder(
-      address: address,
-      latitude: deliveryLatitude.value ?? 0,
-      longitude: deliveryLongitude.value ?? 0,
-      mobileNumber: phone,
-      paymentMethod: paymentMethod.value.name,
-      items: items
-          .map(
-            (item) => {
-              'productId': item.id,
-              'quantity': item.quantity,
-              'sizeLabel': item.sizeLabel,
-              'price': item.price,
-            },
-          )
-          .toList(),
+      CreateOrderRequest(
+        address: address,
+        latitude: deliveryLatitude.value ?? 0,
+        longitude: deliveryLongitude.value ?? 0,
+        mobileNumber: phone,
+        paymentMethod: paymentMethod.value.name,
+      ),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;

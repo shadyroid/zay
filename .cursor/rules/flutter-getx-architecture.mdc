@@ -33,6 +33,7 @@ lib/
       beans/             # {Entity}Bean — domain/DTO models
       responses/         # {Entity}Response extends BaseResponse
     repositories/        # abstract {Domain}Repository
+    requests/            # {Action}Request — API call parameters
   presentation/
     base/base_controller.dart
     bottom_sheets/       # modal bottom sheets (not tied to one screen)
@@ -59,6 +60,7 @@ lib/
 | Repository impl | `{domain}_repository_impl.dart` | `AuthRepositoryImpl` |
 | Data source | `{domain}_data_source.dart` | `AuthDataSource` |
 | Entity model | `{entity}_bean.dart` / `{Entity}Bean` | `GarageBean` |
+| Request model | `{action}_request.dart` / `{Action}Request` | `requestProducts` → `ProductsRequest` |
 | API model | `{entity}_response.dart` / `{Entity}Response` | `GaragesResponse` |
 | Screen widget file | `widgets/{name}.dart` / `{Name}` | `settings/widgets/settings_menu_card.dart` → `SettingsMenuCard` |
 | List / grid item widget | `widgets/{entity}_item.dart` / `{Entity}Item` | `shops/widgets/shop_item.dart` → `ShopItem` |
@@ -88,6 +90,31 @@ Controller → UseCase → Repository (abstract) → RepositoryImpl → DataSour
 - **RepositoryImpl**: call data source, `return XxxResponse.fromJson(json)`.
 - **UseCase**: thin delegate — one-liner `=> _repository.requestXxx(...)`.
 - **Controller**: never call repository or Dio directly. Never import dummy JSON helpers outside the data layer.
+
+## Request models
+
+Any repository, use case, or data source method that takes arguments uses a single **Request** object from `domain/requests/`, named after the method (`requestProducts` → `ProductsRequest`, `requestSignIn` → `SignInRequest`). Parameterless methods (`requestCart()`, `requestProfile()`, etc.) stay as-is.
+
+```dart
+// domain/requests/products_request.dart
+class ProductsRequest {
+  const ProductsRequest({this.page, this.categoryId, ...});
+  final int? page;
+  // ...
+}
+
+// domain/repositories/products_repository.dart
+Future<ProductsResponse> requestProducts({
+  ProductsRequest request = const ProductsRequest(),
+});
+
+// presentation — controller constructs the request
+await _productsUseCase.requestProducts(
+  request: ProductsRequest(categoryId: selectedCategoryId.value),
+);
+```
+
+Request classes use `const` constructors and `final` fields. Controllers build request objects; use cases and repositories forward them unchanged.
 
 ## Dummy JSON (until real endpoints)
 

@@ -63,12 +63,11 @@ class SettingsController extends BaseController {
     Get.rawSnackbar(message: 'shareAppComingSoon'.tr);
   }
 
-  Future<void> requestLogout() async {
+  Future<void> requestSignOut() async {
     isLoading.value = true;
-    final response = await _authUseCase.requestLogout();
+    final response = await _authUseCase.requestSignOut();
     isLoading.value = false;
     if (!isSuccess(response)) return;
-    await PrefsManager.clear();
     Get.offAllNamed(Routes.signIn);
   }
 

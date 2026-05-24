@@ -69,7 +69,7 @@ class _ReviewItem extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  review.title,
+                  review.title.isNotEmpty ? review.title : review.authorName,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
@@ -85,21 +85,25 @@ class _ReviewItem extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           _StarRating(rating: review.rating),
-          const SizedBox(height: 4),
-          Text(
-            '${'by'.tr} ${review.authorName}',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            review.comment,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondary,
-                  height: 1.45,
-                ),
-          ),
+          if (review.authorName.isNotEmpty && review.title.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              '${'by'.tr} ${review.authorName}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+            ),
+          ],
+          if (review.comment.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              review.comment,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.textSecondary,
+                    height: 1.45,
+                  ),
+            ),
+          ],
         ],
       ),
     );

@@ -20,14 +20,29 @@ class ProfileAvatar extends StatelessWidget {
       child: SizedBox(
         width: size,
         height: size,
-        child: imagePath != null && imagePath!.isNotEmpty
-            ? Image.file(
-                File(imagePath!),
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => _placeholder(),
-              )
-            : _placeholder(),
+        child: _buildImage(),
       ),
+    );
+  }
+
+  Widget _buildImage() {
+    final path = imagePath;
+    if (path == null || path.isEmpty) {
+      return _placeholder();
+    }
+
+    if (path.startsWith('http')) {
+      return Image.network(
+        path,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => _placeholder(),
+      );
+    }
+
+    return Image.file(
+      File(path),
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => _placeholder(),
     );
   }
 

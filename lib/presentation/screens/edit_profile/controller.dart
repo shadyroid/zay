@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
-import 'package:hedma/domain/models/beans/user_bean.dart';
+import 'package:hedma/domain/requests/update_profile_request.dart';
 import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
@@ -56,6 +56,7 @@ class EditProfileController extends BaseController {
     weightController.text = profile.weight ?? '';
     locationController.text = profile.location ?? '';
     displayName.value = profile.name ?? '';
+    profileImagePath.value = profile.avatarUrl;
   }
 
   Future<void> onEditPhoto() async {
@@ -94,14 +95,21 @@ class EditProfileController extends BaseController {
     if (formKey.currentState?.validate() != true) return;
 
     isLoading.value = true;
+
+    final imagePath = profileImagePath.value;
+    final localAvatarPath = imagePath != null && !imagePath.startsWith('http')
+        ? imagePath
+        : null;
+
     final response = await _authUseCase.requestUpdateProfile(
-      profile: UserBean(
+      UpdateProfileRequest(
         name: nameController.text.trim(),
         email: emailController.text.trim(),
         phone: phoneController.text.trim(),
         height: heightController.text.trim(),
         weight: weightController.text.trim(),
         location: locationController.text.trim(),
+        avatarPath: localAvatarPath,
       ),
     );
     isLoading.value = false;

@@ -14,9 +14,15 @@ class ProductsResponse extends BaseResponse {
 
   factory ProductsResponse.fromJson(Map<String, dynamic> json) {
     final list = json['data'] as List<dynamic>?;
-    final products = list
-        ?.map((e) => ProductBean.fromJson(e as Map<String, dynamic>))
-        .toList();
+    List<ProductBean>? products;
+    if (list != null) {
+      final wishlistProducts = ProductBean.parseWishlist(list);
+      products = wishlistProducts.isNotEmpty
+          ? wishlistProducts
+          : list
+              .map((e) => ProductBean.fromJson(e as Map<String, dynamic>))
+              .toList();
+    }
     return ProductsResponse(
       statusCode: json['statusCode'] as int? ?? -2,
       message: json['message'] as String?,

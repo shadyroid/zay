@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
+import 'package:hedma/domain/requests/reset_password_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class ResetPasswordController extends BaseController {
@@ -13,14 +14,14 @@ class ResetPasswordController extends BaseController {
   final obscurePassword = true.obs;
   final obscureConfirm = true.obs;
   late final String email;
-  late final String code;
+  late final String otp;
 
   @override
   void onInit() {
     super.onInit();
     final args = Get.arguments as Map<String, dynamic>? ?? {};
     email = args['email'] as String? ?? '';
-    code = args['code'] as String? ?? '';
+    otp = args['otp'] as String? ?? args['code'] as String? ?? '';
   }
 
   @override
@@ -38,9 +39,12 @@ class ResetPasswordController extends BaseController {
 
     isLoading.value = true;
     final response = await _authUseCase.requestResetPassword(
-      email: email,
-      password: passwordController.text,
-      code: code,
+      ResetPasswordRequest(
+        email: email,
+        otp: otp,
+        password: passwordController.text,
+        passwordConfirmation: confirmPasswordController.text,
+      ),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;

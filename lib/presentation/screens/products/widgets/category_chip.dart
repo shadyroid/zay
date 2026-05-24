@@ -83,6 +83,10 @@ class _CategoryIcon extends StatelessWidget {
       );
     }
 
+    if (!iconUrl.startsWith('http')) {
+      return Text(iconUrl, style: const TextStyle(fontSize: 16));
+    }
+
     return SvgPicture.network(
       iconUrl,
       width: 18,

@@ -33,7 +33,10 @@ class VerificationScreen extends GetView<VerificationController> {
                   const VerificationHeader(),
                   const SizedBox(height: 32),
                   Obx(
-                    () => OtpInputBoxes(code: controller.otpCode.value),
+                    () => OtpInputBoxes(
+                      code: controller.otpCode.value,
+                      length: VerificationController.otpLength,
+                    ),
                   ),
                   const SizedBox(height: 32),
                   Obx(

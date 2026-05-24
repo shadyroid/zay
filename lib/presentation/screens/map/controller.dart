@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hedma/app/use_cases/locations_use_case.dart';
 import 'package:hedma/domain/models/beans/place_prediction.dart';
+import 'package:hedma/domain/requests/place_autocomplete_request.dart';
+import 'package:hedma/domain/requests/place_details_request.dart';
+import 'package:hedma/domain/requests/reverse_geocode_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class MapController extends BaseController {
@@ -100,7 +103,9 @@ class MapController extends BaseController {
         showSuggestions.value = false;
         return;
       }
-      final results = await _locationsUseCase.requestPlaceAutocomplete(query);
+      final results = await _locationsUseCase.requestPlaceAutocomplete(
+        PlaceAutocompleteRequest(input: query),
+      );
       placePredictions.assignAll(results);
       showSuggestions.value = results.isNotEmpty;
     });
@@ -114,8 +119,9 @@ class MapController extends BaseController {
     isResolvingAddress.value = true;
 
     try {
-      final details =
-          await _locationsUseCase.requestPlaceDetails(prediction.placeId);
+      final details = await _locationsUseCase.requestPlaceDetails(
+        PlaceDetailsRequest(placeId: prediction.placeId),
+      );
       if (details == null) {
         Get.rawSnackbar(message: 'locationUnavailable'.tr);
         return;
@@ -161,8 +167,10 @@ class MapController extends BaseController {
     isResolvingAddress.value = true;
     try {
       final address = await _locationsUseCase.requestReverseGeocode(
-        latitude: latitude.value,
-        longitude: longitude.value,
+        ReverseGeocodeRequest(
+          latitude: latitude.value,
+          longitude: longitude.value,
+        ),
       );
       if (address == null) {
         primaryAddress.value = '';

@@ -54,7 +54,7 @@ class ProductSizeSection extends StatelessWidget {
             children: sizes.map((size) {
               final isSelected = selectedSizeId == size.id;
               return InkWell(
-                onTap: () => onSizeSelected(size.id),
+                onTap: size.isAvailable ? () => onSizeSelected(size.id) : null,
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
                   width: 48,
@@ -65,13 +65,18 @@ class ProductSizeSection extends StatelessWidget {
                         ? AppColors.secondary
                         : AppColors.screenBackground,
                     borderRadius: BorderRadius.circular(10),
+                    border: size.isAvailable
+                        ? null
+                        : Border.all(color: AppColors.border),
                   ),
                   child: Text(
                     size.label,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: isSelected
-                              ? Colors.white
-                              : AppColors.textPrimary,
+                          color: !size.isAvailable
+                              ? AppColors.textSecondary.withValues(alpha: 0.5)
+                              : isSelected
+                                  ? Colors.white
+                                  : AppColors.textPrimary,
                           fontWeight: FontWeight.w600,
                         ),
                   ),

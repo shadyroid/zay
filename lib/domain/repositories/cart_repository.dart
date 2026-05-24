@@ -1,10 +1,14 @@
-import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/cart_response.dart';
+import 'package:hedma/domain/requests/add_cart_item_request.dart';
+import 'package:hedma/domain/requests/delete_cart_item_request.dart';
+import 'package:hedma/domain/requests/update_cart_item_request.dart';
 
 abstract class CartRepository {
   Future<CartResponse> requestCart();
 
-  Future<CartResponse> requestRemoveFromCart({required String productId});
+  Future<CartResponse> requestAddCartItem(AddCartItemRequest request);
 
-  Future<BaseResponse> requestCheckout();
+  Future<CartResponse> requestUpdateCartItem(UpdateCartItemRequest request);
+
+  Future<CartResponse> requestDeleteCartItem(DeleteCartItemRequest request);
 }

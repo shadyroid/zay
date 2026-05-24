@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/order_use_case.dart';
 import 'package:hedma/domain/models/beans/order_bean.dart';
+import 'package:hedma/domain/requests/order_details_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class OrderDetailsController extends BaseController {
@@ -23,7 +24,9 @@ class OrderDetailsController extends BaseController {
   Future<void> requestOrderDetails() async {
     if (orderId.isEmpty) return;
     isLoading.value = true;
-    final response = await _orderUseCase.requestOrderDetails(orderId: orderId);
+    final response = await _orderUseCase.requestOrderDetails(
+      OrderDetailsRequest(orderId: orderId),
+    );
     isLoading.value = false;
     if (!isSuccess(response)) return;
     order.value = response.data;
@@ -48,6 +51,13 @@ class OrderDetailsController extends BaseController {
         'orderId': orderId,
         'order': order.value,
       },
+    );
+  }
+
+  void navigateToReview() {
+    Get.toNamed(
+      Routes.review,
+      arguments: {'orderId': orderId},
     );
   }
 }

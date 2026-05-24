@@ -5,6 +5,8 @@ import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/shops_use_case.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
+import 'package:hedma/domain/requests/products_request.dart';
+import 'package:hedma/domain/requests/shop_details_request.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
@@ -15,23 +17,11 @@ class ShopDetailsController extends BaseController {
 
   final shop = Rxn<ShopBean>();
   final categories = <CategoryBean>[].obs;
-  final products = <ProductBean>[].obs;
+  final bestSellerProducts = <ProductBean>[].obs;
   final selectedCategoryId = 'all'.obs;
   final isAboutExpanded = false.obs;
 
   late final String shopId;
-
-  List<ProductBean> get filteredProducts {
-    if (selectedCategoryId.value == 'all') return products;
-    return products
-        .where((p) => p.categoryId == selectedCategoryId.value)
-        .toList();
-  }
-
-  List<ProductBean> get bestSellerProducts {
-    final list = filteredProducts;
-    return list.length > 4 ? list.take(4).toList() : list;
-  }
 
   @override
   void onInit() {
@@ -47,13 +37,15 @@ class ShopDetailsController extends BaseController {
     await _favorites.ensureLoaded();
     await requestShopDetails();
     await requestCategories();
-    await requestShopProducts();
+    await requestProducts();
   }
 
   Future<void> requestShopDetails() async {
     if (shopId.isEmpty) return;
     isLoading.value = true;
-    final response = await _shopsUseCase.requestShopDetails(shopId: shopId);
+    final response = await _shopsUseCase.requestShopDetails(
+      ShopDetailsRequest(shopId: shopId),
+    );
     isLoading.value = false;
     if (!isSuccess(response)) return;
     shop.value = response.data;
@@ -65,11 +57,21 @@ class ShopDetailsController extends BaseController {
     categories.assignAll(response.data ?? []);
   }
 
-  Future<void> requestShopProducts() async {
+  ProductsRequest _buildQuery() {
+    return ProductsRequest(
+      shopId: shopId,
+      categoryId: selectedCategoryId.value,
+      bestSeller: true,
+      pageSize: 4,
+    );
+  }
+
+  Future<void> requestProducts() async {
     if (shopId.isEmpty) return;
-    final response = await _shopsUseCase.requestShopProducts(shopId: shopId);
+    final response =
+        await _productsUseCase.requestProducts(request: _buildQuery());
     if (!isSuccess(response)) return;
-    products.assignAll(response.data ?? []);
+    bestSellerProducts.assignAll(response.data ?? []);
     for (final product in response.data ?? []) {
       if (product.isFavorite) {
         _favorites.favoriteIds.add(product.id);
@@ -80,6 +82,7 @@ class ShopDetailsController extends BaseController {
   void selectCategory(CategoryBean category) {
     if (selectedCategoryId.value == category.id) return;
     selectedCategoryId.value = category.id;
+    requestProducts();
   }
 
   void toggleAboutExpanded() => isAboutExpanded.toggle();

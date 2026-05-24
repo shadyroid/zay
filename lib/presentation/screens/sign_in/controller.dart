@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/data/preferences/prefs_manager.dart';
+import 'package:hedma/domain/requests/sign_in_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class SignInController extends BaseController {
@@ -29,8 +30,10 @@ class SignInController extends BaseController {
 
     isLoading.value = true;
     final response = await _authUseCase.requestSignIn(
-      email: emailController.text.trim(),
-      password: passwordController.text,
+      SignInRequest(
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      ),
     );
     isLoading.value = false;
 

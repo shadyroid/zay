@@ -9,10 +9,12 @@ class OrderDetailsActions extends StatelessWidget {
     super.key,
     required this.onReturn,
     required this.onTrack,
+    this.onReview,
   });
 
   final VoidCallback onReturn;
   final VoidCallback onTrack;
+  final VoidCallback? onReview;
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +28,36 @@ class OrderDetailsActions extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        child: Row(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: _OutlinedActionButton(
-                icon: AppIcons.retry,
-                label: 'returnProduct'.tr,
-                onTap: onReturn,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: _OutlinedActionButton(
+                    icon: AppIcons.retry,
+                    label: 'returnProduct'.tr,
+                    onTap: onReturn,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _FilledActionButton(
+                    icon: AppIcons.track,
+                    label: 'trackOrder'.tr,
+                    onTap: onTrack,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _FilledActionButton(
-                icon: AppIcons.track,
-                label: 'trackOrder'.tr,
-                onTap: onTrack,
+            if (onReview != null) ...[
+              const SizedBox(height: 12),
+              _FilledActionButton(
+                icon: AppIcons.star,
+                label: 'submitYourRating'.tr,
+                onTap: onReview!,
               ),
-            ),
+            ],
           ],
         ),
       ),
@@ -128,6 +143,7 @@ class _FilledActionButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(28),
         child: SizedBox(
           height: 52,
+          width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

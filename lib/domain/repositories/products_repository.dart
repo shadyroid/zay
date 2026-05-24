@@ -4,26 +4,27 @@ import 'package:hedma/domain/models/responses/product_response.dart';
 import 'package:hedma/domain/models/responses/products_response.dart';
 import 'package:hedma/domain/models/responses/sizes_response.dart';
 import 'package:hedma/domain/models/responses/try_product_response.dart';
+import 'package:hedma/domain/requests/product_details_request.dart';
+import 'package:hedma/domain/requests/product_id_request.dart';
+import 'package:hedma/domain/requests/products_request.dart';
+import 'package:hedma/domain/requests/try_product_request.dart';
 
 abstract class ProductsRepository {
   Future<CategoriesResponse> requestCategories();
 
   Future<SizesResponse> requestSizes();
 
-  Future<ProductsResponse> requestProducts({String? categoryId});
+  Future<ProductsResponse> requestProducts({
+    ProductsRequest request = const ProductsRequest(),
+  });
 
-  Future<ProductsResponse> requestFeaturedProducts();
-
-  Future<ProductResponse> requestProductDetails({required String productId});
+  Future<ProductResponse> requestProductDetails(ProductDetailsRequest request);
 
   Future<ProductsResponse> requestFavorites();
 
-  Future<BaseResponse> requestFavorite({required String productId});
+  Future<BaseResponse> requestFavorite(ProductIdRequest request);
 
-  Future<BaseResponse> requestUnFavorite({required String productId});
+  Future<BaseResponse> requestUnFavorite(ProductIdRequest request);
 
-  Future<TryProductResponse> requestTryProduct({
-    required String productId,
-    required String imagePath,
-  });
+  Future<TryProductResponse> requestTryProduct(TryProductRequest request);
 }

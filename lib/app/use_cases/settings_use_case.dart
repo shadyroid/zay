@@ -3,6 +3,7 @@ import 'package:hedma/data/repositories/settings_repository_impl.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/content_response.dart';
 import 'package:hedma/domain/repositories/settings_repository.dart';
+import 'package:hedma/domain/requests/contact_us_request.dart';
 
 class SettingsUseCase {
   final SettingsRepository _settingsRepository =
@@ -16,14 +17,6 @@ class SettingsUseCase {
   Future<ContentResponse> requestPrivacy() =>
       _settingsRepository.requestPrivacy();
 
-  Future<BaseResponse> requestSendMessage({
-    required String name,
-    required String email,
-    required String message,
-  }) =>
-      _settingsRepository.requestSendMessage(
-        name: name,
-        email: email,
-        message: message,
-      );
+  Future<BaseResponse> requestContactUs(ContactUsRequest request) =>
+      _settingsRepository.requestContactUs(request);
 }

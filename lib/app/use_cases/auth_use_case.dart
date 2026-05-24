@@ -1,61 +1,38 @@
 import 'package:get/get.dart';
 import 'package:hedma/data/repositories/auth_repository_impl.dart';
-import 'package:hedma/domain/models/beans/user_bean.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/profile_response.dart';
 import 'package:hedma/domain/models/responses/sign_in_response.dart';
 import 'package:hedma/domain/repositories/auth_repository.dart';
+import 'package:hedma/domain/requests/forget_password_request.dart';
+import 'package:hedma/domain/requests/reset_password_request.dart';
+import 'package:hedma/domain/requests/sign_in_request.dart';
+import 'package:hedma/domain/requests/sign_up_request.dart';
+import 'package:hedma/domain/requests/update_profile_request.dart';
+import 'package:hedma/domain/requests/verification_request.dart';
 
 class AuthUseCase {
   final AuthRepository _authRepository = Get.put(AuthRepositoryImpl());
 
-  Future<SignInResponse> requestSignIn({
-    required String email,
-    required String password,
-  }) =>
-      _authRepository.requestSignIn(email: email, password: password);
+  Future<SignInResponse> requestSignIn(SignInRequest request) =>
+      _authRepository.requestSignIn(request);
 
-  Future<SignInResponse> requestSignUp({
-    required String name,
-    required String email,
-    required String password,
-    String? phone,
-    String? height,
-    String? weight,
-  }) =>
-      _authRepository.requestSignUp(
-        name: name,
-        email: email,
-        password: password,
-        phone: phone,
-        height: height,
-        weight: weight,
-      );
+  Future<SignInResponse> requestSignUp(SignUpRequest request) =>
+      _authRepository.requestSignUp(request);
 
-  Future<BaseResponse> requestForgetPassword({required String email}) =>
-      _authRepository.requestForgetPassword(email: email);
+  Future<BaseResponse> requestForgetPassword(ForgetPasswordRequest request) =>
+      _authRepository.requestForgetPassword(request);
 
-  Future<BaseResponse> requestVerification({
-    required String email,
-    required String code,
-  }) =>
-      _authRepository.requestVerification(email: email, code: code);
+  Future<BaseResponse> requestVerification(VerificationRequest request) =>
+      _authRepository.requestVerification(request);
 
-  Future<BaseResponse> requestResetPassword({
-    required String email,
-    required String password,
-    required String code,
-  }) =>
-      _authRepository.requestResetPassword(
-        email: email,
-        password: password,
-        code: code,
-      );
+  Future<BaseResponse> requestResetPassword(ResetPasswordRequest request) =>
+      _authRepository.requestResetPassword(request);
 
-  Future<BaseResponse> requestLogout() => _authRepository.requestLogout();
+  Future<BaseResponse> requestSignOut() => _authRepository.requestSignOut();
 
   Future<ProfileResponse> requestProfile() => _authRepository.requestProfile();
 
-  Future<BaseResponse> requestUpdateProfile({required UserBean profile}) =>
-      _authRepository.requestUpdateProfile(profile: profile);
+  Future<BaseResponse> requestUpdateProfile(UpdateProfileRequest request) =>
+      _authRepository.requestUpdateProfile(request);
 }

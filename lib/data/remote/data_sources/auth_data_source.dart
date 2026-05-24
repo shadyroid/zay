@@ -1,95 +1,122 @@
+import 'package:dio/dio.dart' as dio_multipart show FormData, MultipartFile;
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/remote/dummy/dummy_json.dart';
-import 'package:hedma/data/remote/dummy/remote_post.dart';
-import 'package:hedma/domain/models/beans/user_bean.dart';
+import 'package:hedma/data/remote/dio_client.dart';
+import 'package:hedma/domain/requests/forget_password_request.dart';
+import 'package:hedma/domain/requests/reset_password_request.dart';
+import 'package:hedma/domain/requests/sign_in_request.dart';
+import 'package:hedma/domain/requests/sign_up_request.dart';
+import 'package:hedma/domain/requests/update_profile_request.dart';
+import 'package:hedma/domain/requests/verification_request.dart';
 
 class AuthDataSource {
-  final RemotePost _remote = RemotePost.find;
+  final DioClient _dioClient = Get.find<DioClient>();
 
-  Future<Map<String, dynamic>> requestSignIn({
-    required String email,
-    required String password,
-  }) =>
-      _remote.post(
-        Constants.signInPath,
-        variables: {'email': email, 'password': password},
-        dummyJson: DummyJson.signIn(),
-      );
-
-  Future<Map<String, dynamic>> requestSignUp({
-    required String name,
-    required String email,
-    required String password,
-    String? phone,
-    String? height,
-    String? weight,
-  }) {
-    final variables = <String, dynamic>{
-      'name': name,
-      'email': email,
-      'password': password,
-    };
-    if (phone != null) variables['phone'] = phone;
-    if (height != null) variables['height'] = height;
-    if (weight != null) variables['weight'] = weight;
-
-    return _remote.post(
-      Constants.signUpPath,
-      variables: variables,
-      dummyJson: DummyJson.signUp(),
+  Future<Map<String, dynamic>> requestSignIn(SignInRequest request) async {
+    final response = await _dioClient.postForm(
+      Constants.signInPath,
+      fields: {
+        'email': request.email,
+        'password': request.password,
+      },
     );
+    return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> requestForgetPassword({
-    required String email,
-  }) =>
-      _remote.post(
-        Constants.forgetPasswordPath,
-        variables: {'email': email},
-        dummyJson: DummyJson.forgetPassword(),
-      );
+  Future<Map<String, dynamic>> requestSignUp(SignUpRequest request) async {
+    final response = await _dioClient.postForm(
+      Constants.signUpPath,
+      fields: {
+        'name': request.name,
+        'email': request.email,
+        'phone': request.phone ?? '',
+        'password': request.password,
+        'password_confirmation': request.passwordConfirmation,
+        'height': request.height,
+        'weight': request.weight,
+      },
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 
-  Future<Map<String, dynamic>> requestVerification({
-    required String email,
-    required String code,
-  }) =>
-      _remote.post(
-        Constants.verificationPath,
-        variables: {'email': email, 'code': code},
-        dummyJson: DummyJson.verification(),
-      );
+  Future<Map<String, dynamic>> requestForgetPassword(
+    ForgetPasswordRequest request,
+  ) async {
+    final response = await _dioClient.postForm(
+      Constants.forgetPasswordPath,
+      fields: {'email': request.email},
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 
-  Future<Map<String, dynamic>> requestResetPassword({
-    required String email,
-    required String password,
-    required String code,
-  }) =>
-      _remote.post(
-        Constants.resetPasswordPath,
-        variables: {
-          'email': email,
-          'password': password,
-          'code': code,
-        },
-        dummyJson: DummyJson.resetPassword(),
-      );
+  Future<Map<String, dynamic>> requestVerification(
+    VerificationRequest request,
+  ) async {
+    final response = await _dioClient.postForm(
+      Constants.verificationPath,
+      fields: {
+        'email': request.email,
+        'otp': request.otp,
+      },
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 
-  Future<Map<String, dynamic>> requestLogout() => _remote.post(
-        Constants.logoutPath,
-        dummyJson: DummyJson.logout(),
-      );
+  Future<Map<String, dynamic>> requestResetPassword(
+    ResetPasswordRequest request,
+  ) async {
+    final response = await _dioClient.postForm(
+      Constants.resetPasswordPath,
+      fields: {
+        'email': request.email,
+        'otp': request.otp,
+        'password': request.password,
+        'password_confirmation': request.passwordConfirmation,
+      },
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 
-  Future<Map<String, dynamic>> requestProfile() => _remote.post(
-        Constants.profilePath,
-        dummyJson: DummyJson.profile(),
-      );
+  Future<Map<String, dynamic>> requestSignOut() async {
+    final response = await _dioClient.post(Constants.signOutPath);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 
-  Future<Map<String, dynamic>> requestUpdateProfile({
-    required UserBean profile,
-  }) =>
-      _remote.post(
-        Constants.updateProfilePath,
-        variables: profile.toJson(),
-        dummyJson: DummyJson.updateProfile(),
+  Future<Map<String, dynamic>> requestProfile() async {
+    final response = await _dioClient.get(Constants.profilePath);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> requestUpdateProfile(
+    UpdateProfileRequest request,
+  ) async {
+    final fields = <String, dynamic>{
+      'name': request.name ?? '',
+      'phone': request.phone ?? '',
+    };
+
+    final height = request.height?.trim();
+    if (height != null && height.isNotEmpty) {
+      fields['height'] = height;
+    }
+
+    final weight = request.weight?.trim();
+    if (weight != null && weight.isNotEmpty) {
+      fields['weight'] = weight;
+    }
+
+    final avatarPath = request.avatarPath;
+    if (avatarPath != null && avatarPath.isNotEmpty) {
+      fields['avatar'] = await dio_multipart.MultipartFile.fromFile(
+        avatarPath,
+        filename: avatarPath.split('/').last,
       );
+    }
+
+    final response = await _dioClient.post(
+      Constants.profilePath,
+      data: dio_multipart.FormData.fromMap(fields),
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 }

@@ -11,13 +11,10 @@ class CategoriesResponse extends BaseResponse {
   });
 
   factory CategoriesResponse.fromJson(Map<String, dynamic> json) {
-    final list = json['data'] as List<dynamic>?;
     return CategoriesResponse(
       statusCode: json['statusCode'] as int? ?? -2,
       message: json['message'] as String?,
-      data: list
-          ?.map((e) => CategoryBean.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      data: CategoryBean.parseFlattenedList(json['data'] as List<dynamic>?),
     );
   }
 }

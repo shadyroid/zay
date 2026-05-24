@@ -1,4 +1,5 @@
 import 'package:hedma/data/remote/dummy/dummy_html_content.dart';
+import 'package:hedma/domain/requests/products_request.dart';
 
 class DummyJson {
   DummyJson._();
@@ -281,23 +282,48 @@ class DummyJson {
 
   static Map<String, dynamic> sizes() => _success(data: _sizes);
 
-  static Map<String, dynamic> products({String? categoryId}) {
-    final filtered = categoryId == null || categoryId == 'all'
-        ? _products
-        : _products
-            .where((p) => p['categoryId'] == categoryId)
-            .toList(growable: false);
+  static Map<String, dynamic> products({
+    ProductsRequest request = const ProductsRequest(),
+  }) {
+    var filtered = _products.cast<Map<String, dynamic>>().toList();
+
+    if (request.shopId != null) {
+      filtered =
+          filtered.where((p) => p['shopId'] == request.shopId).toList();
+    }
+    if (request.categoryId != null &&
+        request.categoryId!.isNotEmpty &&
+        request.categoryId != 'all') {
+      filtered = filtered
+          .where((p) => p['categoryId'] == request.categoryId)
+          .toList();
+    }
+    if (request.similarToId != null) {
+      final source = _products.cast<Map<String, dynamic>>().firstWhere(
+            (item) => item['id'] == request.similarToId,
+            orElse: () => _products.first,
+          );
+      filtered = filtered
+          .where((p) => p['id'] != request.similarToId)
+          .where((p) => p['categoryId'] == source['categoryId'])
+          .toList();
+    }
+    if (request.recommended == true) {
+      filtered = filtered.take(4).toList();
+    } else if (request.newArrival == true) {
+      filtered = filtered.reversed.take(request.pageSize ?? 6).toList();
+    } else if (request.bestSeller == true) {
+      filtered = filtered.take(request.pageSize ?? 4).toList();
+    }
+    if (request.pageSize != null && request.recommended != true) {
+      filtered = filtered.take(request.pageSize!).toList();
+    }
+
     return _success(
-      data: _productsWithFavorites(filtered.cast<Map<String, dynamic>>()),
-      totalCount: categoryId == null || categoryId == 'all' ? 320 : filtered.length,
+      data: _productsWithFavorites(filtered),
+      totalCount: filtered.length,
     );
   }
-
-  static Map<String, dynamic> featuredProducts() => _success(
-        data: _productsWithFavorites(
-          _products.take(4).cast<Map<String, dynamic>>().toList(),
-        ),
-      );
 
   static Map<String, dynamic> _productWithFavorite(
     Map<String, dynamic> product,
@@ -423,7 +449,10 @@ class DummyJson {
         ],
       );
 
-  static Map<String, dynamic> addReview(String productId) =>
+  static Map<String, dynamic> addTryOutReview(String productId) =>
+      _success(message: 'reviewSubmitted');
+
+  static Map<String, dynamic> addOrderReview() =>
       _success(message: 'reviewSubmitted');
 
   static Map<String, dynamic> tryProduct(String productId) => _success(
@@ -462,14 +491,6 @@ class DummyJson {
     return _success(data: shop);
   }
 
-  static Map<String, dynamic> shopProducts(String shopId) {
-    final products = _products
-        .where((item) => item['shopId'] == shopId)
-        .cast<Map<String, dynamic>>()
-        .toList();
-    return _success(data: _productsWithFavorites(products));
-  }
-
   static List<Map<String, dynamic>> _cartItems() => [
         {
           'id': '1',
@@ -506,9 +527,6 @@ class DummyJson {
         message: 'orderPlacedSuccess',
       );
 
-  static Map<String, dynamic> checkout() =>
-      _success(message: 'checkoutSuccess');
-
   static Map<String, dynamic> orders() => _success(data: _orders);
 
   static Map<String, dynamic> orderDetails(String orderId) {
@@ -528,52 +546,47 @@ class DummyJson {
       'shipping': '0',
       'paymentMethod': 'cash',
       'summaryDate': '3-3-2026',
+      'estimatedDelivery': 'Today, 4:30 PM',
+      'steps': [
+        {
+          'titleKey': 'trackStepPending',
+          'subtitleKey': 'trackStepPendingDesc',
+          'timestamp': 'Nov 30, 10:30 AM',
+          'state': 'completed',
+          'icon': 'pending',
+        },
+        {
+          'titleKey': 'trackStepConfirmed',
+          'subtitleKey': 'trackStepConfirmedDesc',
+          'timestamp': 'Nov 30, 12:15 PM',
+          'state': 'completed',
+          'icon': 'confirmed',
+        },
+        {
+          'titleKey': 'trackStepShipped',
+          'subtitleKey': 'trackStepShippedDesc',
+          'timestamp': 'Nov 30, 2:45 PM',
+          'state': 'upcoming',
+          'icon': 'shipped',
+        },
+        {
+          'titleKey': 'trackStepDelivered',
+          'subtitleKey': 'trackStepDeliveredDesc',
+          'timestamp': 'Expected at 4:15 PM',
+          'state': 'upcoming',
+          'icon': 'delivered',
+        },
+        {
+          'titleKey': 'trackStepReturned',
+          'subtitleKey': 'trackStepReturnedDesc',
+          'timestamp': 'Expected at 4:30 PM',
+          'state': 'upcoming',
+          'icon': 'returned',
+        },
+      ],
     });
     return _success(data: order);
   }
-
-  static Map<String, dynamic> orderTrack() => _success(
-        data: {
-          'estimatedDelivery': 'Today, 4:30 PM',
-          'steps': [
-            {
-              'titleKey': 'trackStepPending',
-              'subtitleKey': 'trackStepPendingDesc',
-              'timestamp': 'Nov 30, 10:30 AM',
-              'state': 'completed',
-              'icon': 'pending',
-            },
-            {
-              'titleKey': 'trackStepConfirmed',
-              'subtitleKey': 'trackStepConfirmedDesc',
-              'timestamp': 'Nov 30, 12:15 PM',
-              'state': 'completed',
-              'icon': 'confirmed',
-            },
-            {
-              'titleKey': 'trackStepShipped',
-              'subtitleKey': 'trackStepShippedDesc',
-              'timestamp': 'Nov 30, 2:45 PM',
-              'state': 'upcoming',
-              'icon': 'shipped',
-            },
-            {
-              'titleKey': 'trackStepDelivered',
-              'subtitleKey': 'trackStepDeliveredDesc',
-              'timestamp': 'Expected at 4:15 PM',
-              'state': 'upcoming',
-              'icon': 'delivered',
-            },
-            {
-              'titleKey': 'trackStepReturned',
-              'subtitleKey': 'trackStepReturnedDesc',
-              'timestamp': 'Expected at 4:30 PM',
-              'state': 'upcoming',
-              'icon': 'returned',
-            },
-          ],
-        },
-      );
 
   static Map<String, dynamic> orderReturn() =>
       _success(message: 'returnSubmitted');

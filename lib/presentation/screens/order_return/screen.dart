@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/enums/order_return_reason.dart';
 import 'package:hedma/presentation/screens/order_return/controller.dart';
 import 'package:hedma/presentation/screens/order_return/widgets/order_return_app_bar.dart';
 import 'package:hedma/presentation/screens/order_return/widgets/return_info_banner.dart';
@@ -33,34 +32,47 @@ class OrderReturnScreen extends GetView<OrderReturnController> {
                   ),
                   const SizedBox(height: 12),
                   Obx(
-                    () => Column(
-                      children: [
-                        ReturnReasonCard(
-                          reason: OrderReturnReason.wrongSize,
-                          isSelected: controller.selectedReason.value ==
-                              OrderReturnReason.wrongSize,
-                          onTap: () => controller.selectReason(
-                            OrderReturnReason.wrongSize,
+                    () {
+                      if (controller.isLoading.value &&
+                          controller.reasons.isEmpty) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 24),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        ReturnReasonCard(
-                          reason: OrderReturnReason.productProblem,
-                          isSelected: controller.selectedReason.value ==
-                              OrderReturnReason.productProblem,
-                          onTap: () => controller.selectReason(
-                            OrderReturnReason.productProblem,
-                          ),
-                        ),
-                      ],
-                    ),
+                        );
+                      }
+
+                      return Column(
+                        children: [
+                          for (var i = 0; i < controller.reasons.length; i++) ...[
+                            ReturnReasonCard(
+                              reason: controller.reasons[i],
+                              isSelected: controller.selectedReasonValue.value ==
+                                  controller.reasons[i].value,
+                              onTap: () => controller.selectReason(
+                                controller.reasons[i],
+                              ),
+                            ),
+                            if (i < controller.reasons.length - 1)
+                              const SizedBox(height: 12),
+                          ],
+                        ],
+                      );
+                    },
                   ),
                   const SizedBox(height: 24),
                   _AdditionalNotesSection(
                     controller: controller.notesController,
                   ),
                   const SizedBox(height: 20),
-                  const ReturnInfoBanner(),
+                  Obx(
+                    () => ReturnInfoBanner(
+                      message: controller.returnPolicy.value,
+                    ),
+                  ),
                 ],
               ),
             ),

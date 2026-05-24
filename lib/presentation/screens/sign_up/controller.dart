@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/data/preferences/prefs_manager.dart';
+import 'package:hedma/domain/requests/sign_up_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class SignUpController extends BaseController {
@@ -45,18 +46,17 @@ class SignUpController extends BaseController {
 
     isLoading.value = true;
     final response = await _authUseCase.requestSignUp(
-      name: nameController.text.trim(),
-      email: emailController.text.trim(),
-      password: passwordController.text,
-      phone: mobileController.text.trim().isEmpty
-          ? null
-          : mobileController.text.trim(),
-      height: heightController.text.trim().isEmpty
-          ? null
-          : heightController.text.trim(),
-      weight: weightController.text.trim().isEmpty
-          ? null
-          : weightController.text.trim(),
+      SignUpRequest(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text,
+        passwordConfirmation: confirmPasswordController.text,
+        phone: mobileController.text.trim().isEmpty
+            ? null
+            : mobileController.text.trim(),
+        height: heightController.text.trim(),
+        weight: weightController.text.trim(),
+      ),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;

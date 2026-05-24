@@ -6,6 +6,10 @@ import 'package:hedma/domain/models/responses/products_response.dart';
 import 'package:hedma/domain/models/responses/sizes_response.dart';
 import 'package:hedma/domain/models/responses/try_product_response.dart';
 import 'package:hedma/domain/repositories/products_repository.dart';
+import 'package:hedma/domain/requests/product_details_request.dart';
+import 'package:hedma/domain/requests/product_id_request.dart';
+import 'package:hedma/domain/requests/products_request.dart';
+import 'package:hedma/domain/requests/try_product_request.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsDataSource _productsDataSource = ProductsDataSource();
@@ -23,25 +27,18 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<ProductsResponse> requestProducts({String? categoryId}) async {
-    final json =
-        await _productsDataSource.requestProducts(categoryId: categoryId);
-    return ProductsResponse.fromJson(json);
-  }
-
-  @override
-  Future<ProductsResponse> requestFeaturedProducts() async {
-    final json = await _productsDataSource.requestFeaturedProducts();
-    return ProductsResponse.fromJson(json);
-  }
-
-  @override
-  Future<ProductResponse> requestProductDetails({
-    required String productId,
+  Future<ProductsResponse> requestProducts({
+    ProductsRequest request = const ProductsRequest(),
   }) async {
-    final json = await _productsDataSource.requestProductDetails(
-      productId: productId,
-    );
+    final json = await _productsDataSource.requestProducts(request: request);
+    return ProductsResponse.fromJson(json);
+  }
+
+  @override
+  Future<ProductResponse> requestProductDetails(
+    ProductDetailsRequest request,
+  ) async {
+    final json = await _productsDataSource.requestProductDetails(request);
     return ProductResponse.fromJson(json);
   }
 
@@ -52,28 +49,20 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<BaseResponse> requestFavorite({required String productId}) async {
-    final json =
-        await _productsDataSource.requestFavorite(productId: productId);
+  Future<BaseResponse> requestFavorite(ProductIdRequest request) async {
+    final json = await _productsDataSource.requestFavorite(request);
     return BaseResponse.fromJson(json);
   }
 
   @override
-  Future<BaseResponse> requestUnFavorite({required String productId}) async {
-    final json =
-        await _productsDataSource.requestUnFavorite(productId: productId);
+  Future<BaseResponse> requestUnFavorite(ProductIdRequest request) async {
+    final json = await _productsDataSource.requestUnFavorite(request);
     return BaseResponse.fromJson(json);
   }
 
   @override
-  Future<TryProductResponse> requestTryProduct({
-    required String productId,
-    required String imagePath,
-  }) async {
-    final json = await _productsDataSource.requestTryProduct(
-      productId: productId,
-      imagePath: imagePath,
-    );
+  Future<TryProductResponse> requestTryProduct(TryProductRequest request) async {
+    final json = await _productsDataSource.requestTryProduct(request);
     return TryProductResponse.fromJson(json);
   }
 }

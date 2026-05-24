@@ -6,6 +6,7 @@ import 'package:hedma/app/utils/product_sort_option.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/models/beans/product_filters.dart';
+import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/filter_bottom_sheet.dart';
 import 'package:hedma/presentation/bottom_sheets/sort/sort_bottom_sheet.dart';
@@ -20,8 +21,6 @@ class ProductsController extends BaseController {
   final activeFilters = ProductFilters.initial.obs;
   final selectedSort = ProductSortOption.priceHighToLow.obs;
   final totalCount = 0.obs;
-
-  final List<ProductBean> _sourceProducts = [];
 
   @override
   void onInit() {
@@ -64,19 +63,27 @@ class ProductsController extends BaseController {
     }
   }
 
+  ProductsRequest _buildQuery() {
+    final filters = activeFilters.value;
+    return ProductsRequest(
+      categoryId: selectedCategoryId.value,
+      shopId: filters.shopId,
+      sizeId: filters.sizeId,
+      minPrice: filters.priceMin,
+      maxPrice: filters.priceMax,
+      sortBy: selectedSort.value,
+    );
+  }
+
   Future<void> requestProducts() async {
     isLoading.value = true;
-    final categoryId =
-        selectedCategoryId.value == 'all' ? null : selectedCategoryId.value;
     final response =
-        await _productsUseCase.requestProducts(categoryId: categoryId);
+        await _productsUseCase.requestProducts(request: _buildQuery());
     isLoading.value = false;
     if (!isSuccess(response)) return;
-    _sourceProducts
-      ..clear()
-      ..addAll(response.data ?? []);
+    products.assignAll(response.data ?? []);
+    totalCount.value = response.totalCount ?? products.length;
     _syncFavoriteIds(response.data ?? []);
-    _applyFiltersAndSort();
   }
 
   void _syncFavoriteIds(List<ProductBean> list) {
@@ -101,60 +108,14 @@ class ProductsController extends BaseController {
     await requestProducts();
   }
 
-  void _applyFiltersAndSort() {
-    final filters = activeFilters.value;
-    var filtered = List<ProductBean>.from(_sourceProducts);
-
-    if (filters.shopId != null) {
-      filtered =
-          filtered.where((p) => p.shopId == filters.shopId).toList();
-    }
-    if (filters.sizeId != null) {
-      filtered =
-          filtered.where((p) => p.sizeId == filters.sizeId).toList();
-    }
-    filtered = filtered
-        .where((p) {
-          final price = _price(p);
-          return price >= filters.priceMin && price <= filters.priceMax;
-        })
-        .toList();
-
-    totalCount.value = filtered.length;
-    _sortAndAssign(filtered);
-  }
-
-  void _applySort() => _applyFiltersAndSort();
-
-  void _sortAndAssign(List<ProductBean> list) {
-    final sorted = List<ProductBean>.from(list);
-    switch (selectedSort.value) {
-      case ProductSortOption.priceHighToLow:
-        sorted.sort((a, b) => _price(b).compareTo(_price(a)));
-      case ProductSortOption.priceLowToHigh:
-        sorted.sort((a, b) => _price(a).compareTo(_price(b)));
-      case ProductSortOption.popularity:
-        sorted.sort((a, b) => _rating(b).compareTo(_rating(a)));
-      case ProductSortOption.discount:
-        sorted.sort((a, b) => a.id.compareTo(b.id));
-      case ProductSortOption.customerRating:
-        sorted.sort((a, b) => _rating(b).compareTo(_rating(a)));
-    }
-    products.assignAll(sorted);
-  }
-
   Future<void> onSort() async {
     final option = await SortBottomSheet.show(
       selectedOption: selectedSort.value,
     );
     if (option == null || option == selectedSort.value) return;
     selectedSort.value = option;
-    _applySort();
+    await requestProducts();
   }
-
-  double _price(ProductBean product) => double.tryParse(product.price) ?? 0;
-
-  double _rating(ProductBean product) => double.tryParse(product.rating ?? '') ?? 0;
 
   bool isFavorite(ProductBean product) => _favorites.isFavoriteProduct(product);
 

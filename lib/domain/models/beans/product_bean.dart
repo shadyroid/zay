@@ -36,30 +36,90 @@ class ProductBean {
   });
 
   factory ProductBean.fromJson(Map<String, dynamic> json) {
-    final images = json['imageUrls'] as List<dynamic>?;
-    final sizesList = json['sizes'] as List<dynamic>?;
+    final shop = json['shop'] as Map<String, dynamic>?;
+    final imageUrls = _resolveImageUrls(json);
 
     return ProductBean(
       id: json['id']?.toString() ?? '',
-      name: json['name'] as String? ?? '',
-      price: json['price']?.toString() ?? '0',
-      imageUrl: json['imageUrl'] as String?,
-      imageUrls: images?.map((e) => e.toString()).toList() ??
-          (json['imageUrl'] != null ? [json['imageUrl'] as String] : []),
-      shopId: json['shopId']?.toString(),
-      shopName: json['shopName'] as String?,
+      name: _localizedName(json['name']) ?? '',
+      price: json['base_price']?.toString() ??
+          json['price']?.toString() ??
+          '0',
+      imageUrl: imageUrls.isNotEmpty ? imageUrls.first : json['imageUrl'] as String?,
+      imageUrls: imageUrls,
+      shopId: shop?['id']?.toString() ?? json['shopId']?.toString(),
+      shopName: _localizedName(shop?['name']) ?? json['shopName'] as String?,
       sellerCategories: json['sellerCategories'] as String?,
-      categoryId: json['categoryId']?.toString(),
+      categoryId: json['category_id']?.toString() ??
+          json['categoryId']?.toString(),
       sizeId: json['sizeId']?.toString(),
-      rating: json['rating']?.toString(),
-      reviewCount: json['reviewCount'] as int?,
+      rating: json['avg_rating']?.toString() ?? json['rating']?.toString(),
+      reviewCount:
+          json['reviews_count'] as int? ?? json['reviewCount'] as int?,
       description: json['description'] as String?,
-      sizes: sizesList
-              ?.map((e) => ProductSizeBean.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+      sizes: _parseSizes(json['sizes']),
       isFavorite: json['isFavorite'] as bool? ?? false,
     );
+  }
+
+  static List<ProductSizeBean> _parseSizes(dynamic raw) {
+    if (raw is! List) return const [];
+    return raw
+        .whereType<Map>()
+        .map((e) => ProductSizeBean.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+  }
+
+  static List<ProductBean> parseWishlist(List<dynamic>? raw) {
+    if (raw == null) return [];
+
+    return raw.map((entry) {
+      if (entry is Map<String, dynamic> && entry['product'] is Map) {
+        final product = Map<String, dynamic>.from(entry['product'] as Map);
+        return ProductBean.fromJson(product).copyWith(isFavorite: true);
+      }
+      if (entry is Map<String, dynamic>) {
+        return ProductBean.fromJson(entry).copyWith(isFavorite: true);
+      }
+      return null;
+    }).whereType<ProductBean>().toList();
+  }
+
+  static String? _localizedName(dynamic value) {
+    if (value is String) return value;
+    if (value is Map) {
+      return value['ar']?.toString() ?? value['en']?.toString();
+    }
+    return null;
+  }
+
+  static List<String> _resolveImageUrls(Map<String, dynamic> json) {
+    final apiImages = json['images'] as List<dynamic>?;
+    if (apiImages != null && apiImages.isNotEmpty) {
+      return apiImages
+          .whereType<Map>()
+          .map((image) => image['url']?.toString())
+          .whereType<String>()
+          .where((url) => url.isNotEmpty)
+          .toList();
+    }
+
+    final legacyImages = json['imageUrls'] as List<dynamic>?;
+    if (legacyImages != null && legacyImages.isNotEmpty) {
+      return legacyImages.map((e) => e.toString()).toList();
+    }
+
+    final primaryImage = json['primary_image'] as String?;
+    if (primaryImage != null && primaryImage.isNotEmpty) {
+      return [primaryImage];
+    }
+
+    final imageUrl = json['imageUrl'] as String?;
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      return [imageUrl];
+    }
+
+    return const [];
   }
 
   List<String> get galleryImages {

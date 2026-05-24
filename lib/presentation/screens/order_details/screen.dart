@@ -54,6 +54,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
             OrderDetailsActions(
               onReturn: controller.navigateToReturn,
               onTrack: controller.navigateToTrack,
+              onReview: order.isCompleted ? controller.navigateToReview : null,
             ),
           ],
         );

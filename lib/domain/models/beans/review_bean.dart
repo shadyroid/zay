@@ -16,13 +16,15 @@ class ReviewBean {
   });
 
   factory ReviewBean.fromJson(Map<String, dynamic> json) {
+    final user = json['user'] as Map<String, dynamic>?;
+
     return ReviewBean(
       id: json['id']?.toString() ?? '',
       title: json['title'] as String? ?? '',
       comment: json['comment'] as String? ?? '',
-      authorName: json['authorName'] as String? ?? '',
+      authorName: user?['name'] as String? ?? json['authorName'] as String? ?? '',
       rating: (json['rating'] as num?)?.toDouble() ?? 0,
-      createdAt: json['createdAt'] as String? ?? '',
+      createdAt: json['created_at'] as String? ?? json['createdAt'] as String? ?? '',
     );
   }
 }

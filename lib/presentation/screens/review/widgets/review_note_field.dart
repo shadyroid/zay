@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:hedma/app/utils/app_colors.dart';
+import 'package:hedma/app/utils/app_icons.dart';
+
+class ReviewNoteField extends StatelessWidget {
+  const ReviewNoteField({super.key, required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      maxLines: 5,
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: AppColors.textPrimary,
+          ),
+      decoration: InputDecoration(
+        hintText: 'writeReviewOptional'.tr,
+        hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: AppColors.hint,
+            ),
+        prefixIcon: Padding(
+          padding: const EdgeInsetsDirectional.only(start: 16, end: 8),
+          child: SvgPicture.asset(
+            AppIcons.editProfile,
+            width: 20,
+            height: 20,
+            colorFilter: const ColorFilter.mode(
+              AppColors.hint,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+        prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+        contentPadding: const EdgeInsets.fromLTRB(0, 16, 16, 16),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.border),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.primary),
+        ),
+      ),
+    );
+  }
+}

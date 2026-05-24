@@ -1,30 +1,22 @@
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/remote/dummy/dummy_json.dart';
-import 'package:hedma/data/remote/dummy/remote_post.dart';
+import 'package:hedma/data/remote/dio_client.dart';
+import 'package:hedma/domain/requests/shop_details_request.dart';
 
 class ShopsDataSource {
-  final RemotePost _remote = RemotePost.find;
+  final DioClient _dioClient = Get.find<DioClient>();
 
-  Future<Map<String, dynamic>> requestShops() => _remote.post(
-        Constants.shopsPath,
-        dummyJson: DummyJson.shops(),
-      );
+  Future<Map<String, dynamic>> requestShops() async {
+    final response = await _dioClient.get(Constants.shopsPath);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 
-  Future<Map<String, dynamic>> requestShopDetails({
-    required String shopId,
-  }) =>
-      _remote.post(
-        Constants.shopDetailsPath,
-        variables: {'shopId': shopId},
-        dummyJson: DummyJson.shopDetails(shopId),
-      );
-
-  Future<Map<String, dynamic>> requestShopProducts({
-    required String shopId,
-  }) =>
-      _remote.post(
-        Constants.shopProductsPath,
-        variables: {'shopId': shopId},
-        dummyJson: DummyJson.shopProducts(shopId),
-      );
+  Future<Map<String, dynamic>> requestShopDetails(
+    ShopDetailsRequest request,
+  ) async {
+    final response = await _dioClient.get(
+      '${Constants.shopDetailsPath}/${request.shopId}',
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 }

@@ -1,26 +1,19 @@
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/order_response.dart';
-import 'package:hedma/domain/models/responses/order_track_response.dart';
+import 'package:hedma/domain/models/responses/return_reasons_response.dart';
 import 'package:hedma/domain/models/responses/orders_response.dart';
+import 'package:hedma/domain/requests/create_order_request.dart';
+import 'package:hedma/domain/requests/order_details_request.dart';
+import 'package:hedma/domain/requests/order_return_request.dart';
 
 abstract class OrderRepository {
-  Future<OrderResponse> requestCreateOrder({
-    required String address,
-    required double latitude,
-    required double longitude,
-    required String mobileNumber,
-    required String paymentMethod,
-    required List<Map<String, dynamic>> items,
-  });
+  Future<OrderResponse> requestCreateOrder(CreateOrderRequest request);
 
   Future<OrdersResponse> requestOrders();
 
-  Future<OrderResponse> requestOrderDetails({required String orderId});
+  Future<OrderResponse> requestOrderDetails(OrderDetailsRequest request);
 
-  Future<OrderTrackResponse> requestOrderTrack({required String orderId});
+  Future<BaseResponse> requestOrderReturn(OrderReturnRequest request);
 
-  Future<BaseResponse> requestOrderReturn({
-    required String orderId,
-    required String reason,
-  });
+  Future<ReturnReasonsResponse> requestReturnReasons();
 }

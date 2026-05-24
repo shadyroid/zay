@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
+import 'package:hedma/domain/requests/forget_password_request.dart';
+import 'package:hedma/domain/requests/verification_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class VerificationController extends BaseController {
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());
 
-  static const int otpLength = 4;
+  static const int otpLength = 6;
   static const int resendSeconds = 59;
 
   final otpCode = ''.obs;
@@ -69,7 +71,9 @@ class VerificationController extends BaseController {
 
     if (flow == 'reset') {
       isLoading.value = true;
-      final response = await _authUseCase.requestForgetPassword(email: email);
+      final response = await _authUseCase.requestForgetPassword(
+        ForgetPasswordRequest(email: email),
+      );
       isLoading.value = false;
       if (!isSuccess(response)) return;
     }
@@ -85,21 +89,21 @@ class VerificationController extends BaseController {
       return;
     }
 
+    if (flow == 'reset') {
+      Get.offNamed(
+        Routes.resetPassword,
+        arguments: {'email': email, 'otp': otpCode.value},
+      );
+      return;
+    }
+
     isLoading.value = true;
     final response = await _authUseCase.requestVerification(
-      email: email,
-      code: otpCode.value,
+      VerificationRequest(email: email, otp: otpCode.value),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
 
-    if (flow == 'reset') {
-      Get.offNamed(
-        Routes.resetPassword,
-        arguments: {'email': email, 'code': otpCode.value},
-      );
-      return;
-    }
     Get.offNamed(Routes.home);
   }
 

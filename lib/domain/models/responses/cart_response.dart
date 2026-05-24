@@ -11,13 +11,10 @@ class CartResponse extends BaseResponse {
   });
 
   factory CartResponse.fromJson(Map<String, dynamic> json) {
-    final list = json['data'] as List<dynamic>?;
     return CartResponse(
       statusCode: json['statusCode'] as int? ?? -2,
       message: json['message'] as String?,
-      data: list
-          ?.map((e) => CartItemBean.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      data: CartItemBean.parseList(json['data'] as List<dynamic>?),
     );
   }
 }

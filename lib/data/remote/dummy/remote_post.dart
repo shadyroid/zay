@@ -18,7 +18,8 @@ class RemotePost {
       return dummyJson;
     }
 
-    final json = await _dioClient.post(path, variables: variables);
+    final response = await _dioClient.postVariables(path, variables: variables);
+    final json = Map<String, dynamic>.from(response.data as Map);
     if (_isSuccess(json)) return json;
     return dummyJson;
   }

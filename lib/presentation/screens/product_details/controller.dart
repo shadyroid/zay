@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/services/favorite_products_service.dart';
+import 'package:hedma/app/use_cases/cart_use_case.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/reviews_use_case.dart';
 import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
+import 'package:hedma/domain/requests/add_cart_item_request.dart';
+import 'package:hedma/domain/requests/product_details_request.dart';
+import 'package:hedma/domain/requests/products_request.dart';
+import 'package:hedma/domain/requests/reviews_request.dart';
+import 'package:hedma/domain/requests/try_product_request.dart';
 import 'package:hedma/domain/models/beans/review_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class ProductDetailsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
+  final CartUseCase _cartUseCase = Get.put(CartUseCase());
   final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
   final FavoriteProductsService _favorites = Get.find<FavoriteProductsService>();
 
@@ -51,7 +58,6 @@ class ProductDetailsController extends BaseController {
     await Future.wait([
       requestProductDetails(),
       requestReviews(),
-      requestSimilarProducts(),
     ]);
   }
 
@@ -60,14 +66,18 @@ class ProductDetailsController extends BaseController {
     final match = p.sizeId != null
         ? p.sizes.where((s) => s.id == p.sizeId).firstOrNull
         : null;
-    selectedSizeId.value = match?.id ?? p.sizes.first.id;
+    final fallback = p.sizes.where((s) => s.isAvailable).firstOrNull ??
+        p.sizes.first;
+    final selected = match != null && match.isAvailable ? match : fallback;
+    selectedSizeId.value = selected.id;
   }
 
   Future<void> requestProductDetails() async {
     if (productId.isEmpty) return;
     isLoading.value = true;
-    final response =
-        await _productsUseCase.requestProductDetails(productId: productId);
+    final response = await _productsUseCase.requestProductDetails(
+      ProductDetailsRequest(productId: productId),
+    );
     isLoading.value = false;
     if (!isSuccess(response)) return;
     product.value = response.data;
@@ -77,19 +87,29 @@ class ProductDetailsController extends BaseController {
         _favorites.favoriteIds.add(productId);
       }
     }
+    final similar = response.similarProducts;
+    if (similar != null && similar.isNotEmpty) {
+      similarProducts.assignAll(similar);
+    } else {
+      await requestSimilarProducts();
+    }
   }
 
   Future<void> requestReviews() async {
     if (productId.isEmpty) return;
-    final response = await _reviewsUseCase.requestReviews(productId: productId);
+    final response = await _reviewsUseCase.requestReviews(
+      ReviewsRequest(productId: productId),
+    );
     if (!isSuccess(response)) return;
     reviews.assignAll(response.data ?? []);
   }
 
   Future<void> requestSimilarProducts() async {
-    final categoryId = product.value?.categoryId;
     final response = await _productsUseCase.requestProducts(
-      categoryId: categoryId,
+      request: ProductsRequest(
+        similarToId: productId,
+        pageSize: 6,
+      ),
     );
     if (!isSuccess(response)) return;
     similarProducts.assignAll(
@@ -145,8 +165,7 @@ class ProductDetailsController extends BaseController {
 
     isLoading.value = true;
     final response = await _productsUseCase.requestTryProduct(
-      productId: productId,
-      imagePath: file.path,
+      TryProductRequest(productId: productId, imagePath: file.path),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
@@ -164,7 +183,27 @@ class ProductDetailsController extends BaseController {
     );
   }
 
-  void addToCart() {
+  Future<void> addToCart() async {
+    final p = product.value;
+    final sizeId = selectedSizeId.value;
+    if (p == null || productId.isEmpty) return;
+
+    if (p.sizes.isNotEmpty && (sizeId == null || sizeId.isEmpty)) {
+      Get.rawSnackbar(message: 'selectSizeRequired'.tr);
+      return;
+    }
+
+    isLoading.value = true;
+    final response = await _cartUseCase.requestAddCartItem(
+      AddCartItemRequest(
+        productId: productId,
+        productSizeId: sizeId ?? '',
+        quantity: quantity.value,
+      ),
+    );
+    isLoading.value = false;
+    if (!isSuccess(response)) return;
+
     Get.rawSnackbar(message: 'addedToCart'.tr);
     Get.toNamed(Routes.cart);
   }
