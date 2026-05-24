@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/edit_profile/controller.dart';
 import 'package:hedma/presentation/screens/edit_profile/widgets/profile_avatar_header.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
 import 'package:hedma/presentation/widgets/app_text_field.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class EditProfileScreen extends GetView<EditProfileController> {
   const EditProfileScreen({super.key});
@@ -25,7 +25,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
             child: Obx(
               () {
                 if (controller.isProfileLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: AppProgressIndicator());
                 }
 
                 return SingleChildScrollView(
@@ -95,19 +95,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
                           ),
-                          textInputAction: TextInputAction.next,
-                        ),
-                        const SizedBox(height: 12),
-                        AppTextField(
-                          controller: controller.locationController,
-                          hint: 'location'.tr,
-                          prefixIconPath: AppIcons.location,
-                          readOnly: true,
-                          onTap: controller.onLocationTap,
-                          suffixIcon: const Icon(
-                            Icons.chevron_right,
-                            color: AppColors.textSecondary,
-                          ),
+                          textInputAction: TextInputAction.done,
                         ),
                       ],
                     ),

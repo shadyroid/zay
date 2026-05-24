@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class CategoryChip extends StatelessWidget {
   const CategoryChip({
@@ -95,7 +96,7 @@ class _CategoryIcon extends StatelessWidget {
       placeholderBuilder: (context) => SizedBox(
         width: 18,
         height: 18,
-        child: CircularProgressIndicator(strokeWidth: 1.5, color: color),
+        child: AppProgressIndicator(radius: 8, color: color),
       ),
       errorBuilder: (context, error, stackTrace) => SvgPicture.asset(
         AppIcons.categoryAll,

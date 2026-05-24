@@ -44,6 +44,8 @@ abstract final class AppIcons {
   static const String terms = 'assets/icons/ic_terms.svg';
   static const String privacy = 'assets/icons/ic_privacy.svg';
   static const String share = 'assets/icons/ic_share.svg';
+  static const String virtualTryOn = 'assets/icons/ic_virtual_try_on.svg';
+  static const String searchByImage = 'assets/icons/ic_search_by_image.svg';
   static const String retry = 'assets/icons/ic_retry.svg';
   static const String delete = 'assets/icons/ic_delete.svg';
   static const String cash = 'assets/icons/ic_cash.svg';

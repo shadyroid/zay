@@ -23,6 +23,8 @@ class AppBackAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       scrolledUnderElevation: 0,
+      foregroundColor: AppColors.textPrimary,
+      iconTheme: const IconThemeData(color: AppColors.textPrimary),
       centerTitle: true,
       title: title == null
           ? null

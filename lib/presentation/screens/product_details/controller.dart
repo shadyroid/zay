@@ -226,7 +226,13 @@ class ProductDetailsController extends BaseController {
   }
 
   void onSeeAllReviews() {
-    Get.rawSnackbar(message: 'seeAllReviewsComingSoon'.tr);
+    Get.toNamed(
+      Routes.reviews,
+      arguments: {
+        'productId': productId,
+        'reviews': reviews.toList(),
+      },
+    );
   }
 
   void goBack() => Get.back();

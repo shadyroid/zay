@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class MapLocationBottomCard extends StatelessWidget {
   const MapLocationBottomCard({
@@ -53,8 +54,7 @@ class MapLocationBottomCard extends StatelessWidget {
                   child: isLoading && !hasAddress
                       ? const Padding(
                           padding: EdgeInsets.symmetric(vertical: 8),
-                          child: LinearProgressIndicator(
-                            minHeight: 2,
+                          child: AppProgressIndicator(
                             color: AppColors.secondary,
                           ),
                         )

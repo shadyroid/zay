@@ -9,6 +9,7 @@ import 'package:hedma/presentation/screens/products/widgets/category_chip.dart';
 import 'package:hedma/presentation/screens/products/widgets/products_action_bar.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/product_grid_item.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class ProductsScreen extends GetView<ProductsController> {
   const ProductsScreen({super.key});
@@ -34,7 +35,7 @@ class ProductsScreen extends GetView<ProductsController> {
       body: Obx(
         () {
           if (controller.isLoading.value && controller.products.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: AppProgressIndicator());
           }
 
           final selectedCategoryId = controller.selectedCategoryId.value;

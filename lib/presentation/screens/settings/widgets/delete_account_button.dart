@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ClearAccountButton extends StatelessWidget {
-  const ClearAccountButton({super.key, required this.onPressed});
+class DeleteAccountButton extends StatelessWidget {
+  const DeleteAccountButton({super.key, required this.onPressed});
 
   final VoidCallback onPressed;
 
@@ -24,7 +24,7 @@ class ClearAccountButton extends StatelessWidget {
             ),
           ),
           child: Text(
-            'clearAccount'.tr,
+            'deleteAccount'.tr,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,

@@ -5,7 +5,6 @@ class UpdateProfileRequest {
     this.phone,
     this.height,
     this.weight,
-    this.location,
     this.avatarPath,
   });
 
@@ -14,6 +13,5 @@ class UpdateProfileRequest {
   final String? phone;
   final String? height;
   final String? weight;
-  final String? location;
   final String? avatarPath;
 }

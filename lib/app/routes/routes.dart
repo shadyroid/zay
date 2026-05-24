@@ -16,6 +16,7 @@ import 'package:hedma/app/bindings/orders_binding.dart';
 import 'package:hedma/app/bindings/product_details_binding.dart';
 import 'package:hedma/app/bindings/products_binding.dart';
 import 'package:hedma/app/bindings/review_binding.dart';
+import 'package:hedma/app/bindings/reviews_binding.dart';
 import 'package:hedma/app/bindings/reset_password_binding.dart';
 import 'package:hedma/app/bindings/server_error_binding.dart';
 import 'package:hedma/app/bindings/settings_binding.dart';
@@ -45,6 +46,7 @@ import 'package:hedma/presentation/screens/orders/screen.dart';
 import 'package:hedma/presentation/screens/product_details/screen.dart';
 import 'package:hedma/presentation/screens/products/screen.dart';
 import 'package:hedma/presentation/screens/review/screen.dart';
+import 'package:hedma/presentation/screens/reviews/screen.dart';
 import 'package:hedma/presentation/screens/reset_password/screen.dart';
 import 'package:hedma/presentation/screens/server_error/screen.dart';
 import 'package:hedma/presentation/screens/settings/screen.dart';
@@ -86,6 +88,7 @@ class Routes {
   static const String orderTrack = '/orderTrack';
   static const String orderReturn = '/orderReturn';
   static const String review = '/review';
+  static const String reviews = '/reviews';
   static const String noInternet = '/noInternet';
   static const String serverError = '/serverError';
 
@@ -172,6 +175,11 @@ class Routes {
       name: review,
       page: () => const ReviewScreen(),
       binding: ReviewBinding(),
+    ),
+    GetPage(
+      name: reviews,
+      page: () => const ReviewsScreen(),
+      binding: ReviewsBinding(),
     ),
     GetPage(
       name: noInternet,

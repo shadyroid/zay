@@ -32,11 +32,17 @@ class Constants {
   static const String returnReasonsPath = '/returns/reasons';
 
   static const String profilePath = '/profile';
+  static const String deleteAccountPath = '/profile';
 
   static const String aboutUsPath = '/pages/about-us';
   static const String termsPath = '/pages/terms';
   static const String privacyPath = '/pages/privacy';
   static const String contactUsPath = '/pages/contact-us';
+
+  static const String appName = 'Hedma';
+  static const String androidStoreUrl =
+      'https://play.google.com/store/apps/details?id=com.hedma';
+  static const String iosStoreUrl = 'https://zaymarketplace.online';
 
   static const int splashDelaySeconds = 2;
 }

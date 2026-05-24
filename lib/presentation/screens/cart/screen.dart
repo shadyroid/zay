@@ -9,6 +9,7 @@ import 'package:hedma/presentation/screens/cart/widgets/cart_price_summary.dart'
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/empty_state.dart';
 import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class CartScreen extends GetView<CartController> {
   const CartScreen({super.key});
@@ -23,7 +24,7 @@ class CartScreen extends GetView<CartController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.items.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: AppProgressIndicator());
         }
 
         if (controller.items.isEmpty) {

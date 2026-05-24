@@ -38,7 +38,7 @@ class SimilarProductsSection extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 248,
+          height: HomeProductItem.listHeight,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),

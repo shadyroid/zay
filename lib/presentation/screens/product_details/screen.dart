@@ -12,6 +12,7 @@ import 'package:hedma/presentation/screens/product_details/widgets/product_selle
 import 'package:hedma/presentation/screens/product_details/widgets/product_size_guide_table.dart';
 import 'package:hedma/presentation/screens/product_details/widgets/product_size_section.dart';
 import 'package:hedma/presentation/screens/product_details/widgets/similar_products_section.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
   const ProductDetailsScreen({super.key});
@@ -26,7 +27,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
       body: Obx(() {
         final product = controller.product.value;
         if (controller.isLoading.value && product == null) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: AppProgressIndicator());
         }
         if (product == null) return const SizedBox.shrink();
 

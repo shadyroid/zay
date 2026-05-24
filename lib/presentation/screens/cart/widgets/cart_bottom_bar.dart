@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class CartBottomBar extends StatelessWidget {
   const CartBottomBar({
@@ -65,8 +66,8 @@ class CartBottomBar extends StatelessWidget {
                     ? const SizedBox(
                         width: 24,
                         height: 24,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
+                        child: AppProgressIndicator(
+                          radius: 10,
                           color: Colors.white,
                         ),
                       )

@@ -10,6 +10,7 @@ import 'package:hedma/presentation/screens/home/widgets/home_section_header.dart
 import 'package:hedma/presentation/screens/home/widgets/home_top_store_item.dart';
 import 'package:hedma/presentation/screens/products/widgets/category_chip.dart';
 import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
@@ -22,7 +23,7 @@ class HomeScreen extends GetView<HomeController> {
         child: Obx(() {
           if (controller.isLoading.value &&
               controller.recommendedProducts.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: AppProgressIndicator());
           }
 
           final favorites = Get.find<FavoriteProductsService>();
@@ -42,7 +43,7 @@ class HomeScreen extends GetView<HomeController> {
               ),
               const SizedBox(height: 16),
               SizedBox(
-                height: 48,
+                height: 56,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -62,7 +63,7 @@ class HomeScreen extends GetView<HomeController> {
                 onSeeAll: controller.onSeeAllRecommended,
               ),
               SizedBox(
-                height: 248,
+                height: HomeProductItem.listHeight,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -81,16 +82,13 @@ class HomeScreen extends GetView<HomeController> {
                   },
                 ),
               ),
-              HomePromoBanner(
-                onVirtualTryOn: controller.onVirtualTryOn,
-                onSearchByImage: controller.onSearchByImage,
-              ),
+              const HomePromoBanner(),
               HomeSectionHeader(
                 title: 'newArrival'.tr,
                 onSeeAll: controller.onSeeAllNewArrival,
               ),
               SizedBox(
-                height: 248,
+                height: HomeProductItem.listHeight,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -114,7 +112,7 @@ class HomeScreen extends GetView<HomeController> {
                 onSeeAll: controller.onSeeAllStores,
               ),
               SizedBox(
-                height: 120,
+                height: HomeTopStoreItem.listHeight,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -7,6 +7,7 @@ import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_section_t
 import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_size_chip.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_store_chip.dart';
 import 'package:hedma/presentation/screens/products/widgets/category_chip.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class FilterBottomSheet extends GetView<FilterBottomSheetController> {
   const FilterBottomSheet({super.key});
@@ -65,7 +66,7 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: AppProgressIndicator());
                 }
 
                 final selectedCategoryId = controller.selectedCategoryId.value;

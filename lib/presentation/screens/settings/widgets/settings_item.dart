@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class SettingsItem extends StatelessWidget {
   const SettingsItem({
@@ -34,10 +33,10 @@ class SettingsItem extends StatelessWidget {
                   color: AppColors.textPrimary,
                 ),
           ),
-          trailing: SvgPicture.asset(
-            AppIcons.chevronRight,
-            width: 20,
-            height: 20,
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            size: 20,
+            color: AppColors.textSecondary,
           ),
           onTap: onTap,
         ),

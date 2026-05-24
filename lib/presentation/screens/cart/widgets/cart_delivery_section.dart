@@ -59,10 +59,10 @@ class CartDeliverySection extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SvgPicture.asset(
-                    AppIcons.chevronRight,
-                    width: 18,
-                    height: 18,
+                  const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 18,
+                    color: AppColors.textSecondary,
                   ),
                 ],
               ),

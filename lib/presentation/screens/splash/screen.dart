@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/screens/splash/controller.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class SplashScreen extends GetView<SplashController> {
   const SplashScreen({super.key});
@@ -53,9 +54,7 @@ class SplashScreen extends GetView<SplashController> {
                       ),
                 ),
                 const Spacer(),
-                const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
+                const AppProgressIndicator(color: Colors.white),
                 const SizedBox(height: 48),
               ],
             ),

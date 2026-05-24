@@ -7,6 +7,7 @@ import 'package:hedma/presentation/screens/shops/controller.dart';
 import 'package:hedma/presentation/screens/shops/widgets/shop_item.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class ShopsScreen extends GetView<ShopsController> {
   const ShopsScreen({super.key});
@@ -32,7 +33,7 @@ class ShopsScreen extends GetView<ShopsController> {
       body: Obx(
         () {
           if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: AppProgressIndicator());
           }
           return ListView.separated(
             itemCount: controller.shops.length,

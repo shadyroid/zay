@@ -2,7 +2,6 @@ import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/data/remote/data_sources/auth_data_source.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/profile_response.dart';
-import 'package:hedma/domain/models/responses/sign_in_response.dart';
 import 'package:hedma/domain/repositories/auth_repository.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
@@ -15,39 +14,31 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource _authDataSource = AuthDataSource();
 
   @override
-  Future<SignInResponse> requestSignIn(SignInRequest request) async {
+  Future<BaseResponse> requestSignIn(SignInRequest request) async {
     final json = await _authDataSource.requestSignIn(request);
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
-      return SignInResponse.fromJson(json);
+      return BaseResponse.fromJson(json);
     }
-    final response = SignInResponse.fromJson({
-      ...json,
-      'data': {'token': json['token']},
-    });
-    final token = response.data?.token;
-    if (response.isSuccess && token != null && token.isNotEmpty) {
+    final token = json['token'] as String?;
+    if (token != null && token.isNotEmpty) {
       await PrefsManager.setToken(token);
     }
-    return response;
+    return BaseResponse.fromJson(json);
   }
 
   @override
-  Future<SignInResponse> requestSignUp(SignUpRequest request) async {
+  Future<BaseResponse> requestSignUp(SignUpRequest request) async {
     final json = await _authDataSource.requestSignUp(request);
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
-      return SignInResponse.fromJson(json);
+      return BaseResponse.fromJson(json);
     }
-    final response = SignInResponse.fromJson({
-      ...json,
-      'data': {'token': json['token']},
-    });
-    final token = response.data?.token;
-    if (response.isSuccess && token != null && token.isNotEmpty) {
+    final token = json['token'] as String?;
+    if (token != null && token.isNotEmpty) {
       await PrefsManager.setToken(token);
     }
-    return response;
+    return BaseResponse.fromJson(json);
   }
 
   @override
@@ -122,8 +113,16 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<BaseResponse> requestClearAccount() async {
-    await PrefsManager.clear();
-    return const BaseResponse(statusCode: 200);
+  Future<BaseResponse> requestDeleteAccount() async {
+    final json = await _authDataSource.requestDeleteAccount();
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
+    final response = BaseResponse.fromJson(json);
+    if (response.isSuccess) {
+      await PrefsManager.clear();
+    }
+    return response;
   }
 }

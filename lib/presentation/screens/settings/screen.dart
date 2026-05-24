@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/settings/controller.dart';
-import 'package:hedma/presentation/screens/settings/widgets/clear_account_button.dart';
+import 'package:hedma/presentation/screens/settings/widgets/delete_account_button.dart';
 import 'package:hedma/presentation/screens/settings/widgets/settings_app_bar.dart';
 import 'package:hedma/presentation/screens/settings/widgets/settings_menu_card.dart';
 import 'package:hedma/presentation/screens/settings/widgets/settings_profile_header.dart';
@@ -87,7 +87,7 @@ class SettingsScreen extends GetView<SettingsController> {
                 ],
               ),
               const SizedBox(height: 24),
-              ClearAccountButton(onPressed: controller.onClearAccount),
+              DeleteAccountButton(onPressed: controller.onDeleteAccount),
             ],
           ),
         ),

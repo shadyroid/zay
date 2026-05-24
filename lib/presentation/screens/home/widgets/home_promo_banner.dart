@@ -5,14 +5,10 @@ import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/app_icons.dart';
 
 class HomePromoBanner extends StatelessWidget {
-  const HomePromoBanner({
-    super.key,
-    required this.onVirtualTryOn,
-    required this.onSearchByImage,
-  });
+  const HomePromoBanner({super.key});
 
-  final VoidCallback onVirtualTryOn;
-  final VoidCallback onSearchByImage;
+  static const Color _bannerBackground = Color(0xFFFDF6F0);
+  static const Color _iconBackground = Color(0xFFFCEEE4);
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +16,30 @@ class HomePromoBanner extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFFFFF5E8),
-          borderRadius: BorderRadius.circular(16),
+          color: _bannerBackground,
+          borderRadius: BorderRadius.circular(24),
         ),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: IntrinsicHeight(
           child: Row(
             children: [
               Expanded(
                 child: _PromoTile(
-                  iconPath: AppIcons.person,
+                  iconPath: AppIcons.virtualTryOn,
                   title: 'virtualTryOn'.tr,
                   subtitle: 'virtualTryOnSubtitle'.tr,
-                  onTap: onVirtualTryOn,
                 ),
               ),
-              Container(width: 1, color: AppColors.border.withValues(alpha: 0.5)),
+              Container(
+                width: 1,
+                margin: const EdgeInsets.symmetric(vertical: 4),
+                color: AppColors.border.withValues(alpha: 0.6),
+              ),
               Expanded(
                 child: _PromoTile(
-                  iconPath: AppIcons.cameraOutline,
+                  iconPath: AppIcons.searchByImage,
                   title: 'searchByImage'.tr,
                   subtitle: 'searchByImageSubtitle'.tr,
-                  onTap: onSearchByImage,
                 ),
               ),
             ],
@@ -56,51 +55,62 @@ class _PromoTile extends StatelessWidget {
     required this.iconPath,
     required this.title,
     required this.subtitle,
-    required this.onTap,
   });
 
   final String iconPath;
   final String title;
   final String subtitle;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: HomePromoBanner._iconBackground,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            alignment: Alignment.center,
+            child: SvgPicture.asset(
               iconPath,
-              width: 28,
-              height: 28,
-              colorFilter: ColorFilter.mode(
+              width: 24,
+              height: 24,
+              colorFilter: const ColorFilter.mode(
                 AppColors.secondary,
                 BlendMode.srcIn,
               ),
             ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.w700,
-                  ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.w700,
+                        height: 1.25,
+                      ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                        height: 1.35,
+                      ),
+                ),
+              ],
             ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.textSecondary,
-                    height: 1.3,
-                  ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -15,7 +15,7 @@ abstract final class AppLanguages {
     AppLanguageOption(
       code: 'ar',
       labelKey: 'arabic',
-      flagUrl: 'https://flagcdn.com/w80/sa.png',
+      flagUrl: 'https://flagcdn.com/w80/eg.png',
     ),
     AppLanguageOption(
       code: 'en',

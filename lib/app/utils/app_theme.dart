@@ -18,12 +18,14 @@ abstract final class AppTheme {
       textTheme: GoogleFonts.cairoTextTheme(base.textTheme),
       primaryTextTheme: GoogleFonts.cairoTextTheme(base.primaryTextTheme),
       appBarTheme: base.appBarTheme.copyWith(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.white,
+        foregroundColor: AppColors.textPrimary,
+        iconTheme: const IconThemeData(color: AppColors.textPrimary),
+        actionsIconTheme: const IconThemeData(color: AppColors.textPrimary),
         titleTextStyle: GoogleFonts.cairo(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: Colors.white,
+          color: AppColors.textPrimary,
         ),
       ),
       navigationBarTheme: base.navigationBarTheme.copyWith(

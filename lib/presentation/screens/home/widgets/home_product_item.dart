@@ -22,6 +22,13 @@ class HomeProductItem extends StatelessWidget {
 
   static const double cardWidth = 150;
 
+  /// Height for horizontal [ListView] rows that host this item.
+  static double get listHeight {
+    const imageHeight = cardWidth / 0.78;
+    const detailsHeight = 8 + 20 + 4 + 18 + 6 + 22;
+    return imageHeight + detailsHeight;
+  }
+
   @override
   Widget build(BuildContext context) {
     final rating = product.rating ?? '5.0';

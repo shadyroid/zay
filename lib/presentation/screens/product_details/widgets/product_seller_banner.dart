@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class ProductSellerBanner extends StatelessWidget {
   const ProductSellerBanner({
@@ -86,10 +84,10 @@ class ProductSellerBanner extends StatelessWidget {
                 ],
               ),
             ),
-            SvgPicture.asset(
-              AppIcons.chevronRight,
-              width: 18,
-              height: 18,
+            const Icon(
+              Icons.arrow_forward_ios,
+              size: 18,
+              color: AppColors.textSecondary,
             ),
           ],
         ),

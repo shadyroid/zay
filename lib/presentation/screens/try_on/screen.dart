@@ -8,6 +8,7 @@ import 'package:hedma/presentation/screens/try_on/widgets/try_on_app_bar.dart';
 import 'package:hedma/presentation/screens/try_on/widgets/try_on_bottom_bar.dart';
 import 'package:hedma/presentation/screens/try_on/widgets/try_on_fee_card.dart';
 import 'package:hedma/presentation/screens/try_on/widgets/try_on_feedback_section.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class TryOnScreen extends GetView<TryOnController> {
   const TryOnScreen({super.key});
@@ -21,7 +22,7 @@ class TryOnScreen extends GetView<TryOnController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.imageUrl.value.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: AppProgressIndicator());
         }
 
         final url = controller.imageUrl.value;
@@ -54,7 +55,7 @@ class TryOnScreen extends GetView<TryOnController> {
                                   const ColoredBox(
                                     color: Color(0x66000000),
                                     child: Center(
-                                      child: CircularProgressIndicator(
+                                      child: AppProgressIndicator(
                                         color: Colors.white,
                                       ),
                                     ),

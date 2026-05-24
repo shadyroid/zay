@@ -6,6 +6,7 @@ import 'package:hedma/presentation/screens/order_return/widgets/order_return_app
 import 'package:hedma/presentation/screens/order_return/widgets/return_info_banner.dart';
 import 'package:hedma/presentation/screens/order_return/widgets/return_reason_card.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class OrderReturnScreen extends GetView<OrderReturnController> {
   const OrderReturnScreen({super.key});
@@ -38,7 +39,7 @@ class OrderReturnScreen extends GetView<OrderReturnController> {
                         return const Padding(
                           padding: EdgeInsets.symmetric(vertical: 24),
                           child: Center(
-                            child: CircularProgressIndicator(
+                            child: AppProgressIndicator(
                               color: AppColors.secondary,
                             ),
                           ),

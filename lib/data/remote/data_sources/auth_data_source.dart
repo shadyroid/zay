@@ -119,4 +119,9 @@ class AuthDataSource {
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
+
+  Future<Map<String, dynamic>> requestDeleteAccount() async {
+    final response = await _dioClient.delete(Constants.deleteAccountPath);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
 }

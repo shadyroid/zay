@@ -6,6 +6,7 @@ import 'package:hedma/presentation/screens/order_track/controller.dart';
 import 'package:hedma/presentation/screens/order_track/widgets/order_track_app_bar.dart';
 import 'package:hedma/presentation/screens/order_track/widgets/order_track_delivery_card.dart';
 import 'package:hedma/presentation/screens/order_track/widgets/order_track_timeline_card.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class OrderTrackScreen extends GetView<OrderTrackController> {
   const OrderTrackScreen({super.key});
@@ -20,7 +21,7 @@ class OrderTrackScreen extends GetView<OrderTrackController> {
             controller.steps.isEmpty &&
             controller.order.value == null) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.secondary),
+            child: AppProgressIndicator(color: AppColors.secondary),
           );
         }
 

@@ -4,6 +4,7 @@ import 'package:hedma/presentation/screens/favorite/controller.dart';
 import 'package:hedma/presentation/screens/favorite/widgets/favorite_empty_state.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
 import 'package:hedma/presentation/widgets/product_grid_item.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class FavoriteScreen extends GetView<FavoriteController> {
   const FavoriteScreen({super.key});
@@ -19,7 +20,7 @@ class FavoriteScreen extends GetView<FavoriteController> {
       body: Obx(
         () {
           if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: AppProgressIndicator());
           }
           if (controller.favorites.isEmpty) {
             return const FavoriteEmptyState();

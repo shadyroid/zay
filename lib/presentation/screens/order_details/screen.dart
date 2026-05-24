@@ -7,6 +7,7 @@ import 'package:hedma/presentation/screens/order_details/widgets/order_details_a
 import 'package:hedma/presentation/screens/order_details/widgets/order_details_app_bar.dart';
 import 'package:hedma/presentation/screens/order_details/widgets/order_items_card.dart';
 import 'package:hedma/presentation/screens/order_details/widgets/order_summary_card.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class OrderDetailsScreen extends GetView<OrderDetailsController> {
   const OrderDetailsScreen({super.key});
@@ -19,7 +20,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
       body: Obx(() {
         if (controller.isLoading.value && controller.order.value == null) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.secondary),
+            child: AppProgressIndicator(color: AppColors.secondary),
           );
         }
 

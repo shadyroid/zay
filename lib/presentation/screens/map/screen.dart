@@ -6,6 +6,7 @@ import 'package:hedma/presentation/screens/map/controller.dart';
 import 'package:hedma/presentation/screens/map/widgets/map_location_bottom_card.dart';
 import 'package:hedma/presentation/screens/map/widgets/map_place_suggestions.dart';
 import 'package:hedma/presentation/screens/map/widgets/map_search_bar.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 class MapScreen extends GetView<MapController> {
   const MapScreen({super.key});
 
@@ -51,7 +52,7 @@ class MapScreen extends GetView<MapController> {
               const ColoredBox(
                 color: Color(0x33FFFFFF),
                 child: Center(
-                  child: CircularProgressIndicator(
+                  child: AppProgressIndicator(
                     color: AppColors.secondary,
                   ),
                 ),

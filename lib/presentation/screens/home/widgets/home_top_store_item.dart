@@ -15,6 +15,8 @@ class HomeTopStoreItem extends StatelessWidget {
 
   static const double itemWidth = 88;
 
+  static double get listHeight => itemWidth + 8 + 22;
+
   @override
   Widget build(BuildContext context) {
     return Padding(

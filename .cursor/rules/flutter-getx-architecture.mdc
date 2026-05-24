@@ -87,9 +87,9 @@ Controller → UseCase → Repository (abstract) → RepositoryImpl → DataSour
 ```
 
 - **DataSource**: `post(path, variables: map)` → return `response.data` as `Map<String, dynamic>`.
-- **RepositoryImpl**: call data source, `return XxxResponse.fromJson(json)`.
+- **RepositoryImpl**: call data source, remap raw API JSON to response shape, persist via `PrefsManager` when needed, `return XxxResponse.fromJson(...)`.
 - **UseCase**: thin delegate — one-liner `=> _repository.requestXxx(...)`.
-- **Controller**: never call repository or Dio directly. Never import dummy JSON helpers outside the data layer.
+- **Controller**: never call repository or Dio directly. Never call `PrefsManager.set*` / `PrefsManager.clear()` — reads only when needed for navigation (e.g. Splash).
 
 ## Request models
 
@@ -153,7 +153,7 @@ Group use cases, repositories, and data sources by domain. Prefer fewer, cohesiv
 | **Shops** | `ShopsRepository`, `ShopsDataSource` | `ShopsUseCase` | Shops list, shop details, shop products |
 | **Cart** | `CartRepository`, `CartDataSource` | `CartUseCase` | Cart, checkout |
 | **Order** | `OrderRepository`, `OrderDataSource` | `OrderUseCase` | Orders, details, track, return |
-| **Settings** | `SettingsRepository`, `SettingsDataSource` | `SettingsUseCase` | About us, terms, contact us |
+| **Settings** | `SettingsRepository`, `SettingsDataSource` | `SettingsUseCase` | About us, terms, contact us, **locale** (read/write prefs) |
 
 Do **not** create separate Profile, Catalog, Content, Contact, or App modules — fold them into the modules above.
 
@@ -168,7 +168,7 @@ Every screen controller with data or actions must wire to a suitable use case:
 | `ShopsUseCase` | Shops, Shop Details |
 | `CartUseCase` | Cart |
 | `OrderUseCase` | Orders, Order Details, Order Track, Order Return |
-| `SettingsUseCase` | About Us, Terms, Contact Us |
+| `SettingsUseCase` | About Us, Terms, Contact Us, Settings (language / locale) |
 
 Navigation-only screens (e.g. Splash, No Internet, Server Error) may omit a use case.
 
@@ -197,6 +197,8 @@ Load initial data in `onInit()` → `super.onInit()` then call `request*()` meth
 - **BaseResponse**: `message`, `statusCode`, `isSuccess` (`statusCode == 200`), `fromJson` factory.
 - **Responses** extend `BaseResponse`, pass `json` to `super`, parse `data` in `fromJson`.
 - **Beans**: immutable-style fields, `const` constructor, `factory fromJson`.
+- If the **UI layer does not use** a request's response `data`, the use case and repository return **`BaseResponse`** instead of a typed response. Handle side effects (e.g. saving token to `PrefsManager`) inside **`RepositoryImpl`** only. Example: `requestSignIn`, `requestSignUp`, `requestForgetPassword`, favorite toggle, order return.
+- Do **not** expose typed responses with unused `data` fields to controllers — keeps presentation dependent only on `statusCode` / `message` / `isSuccess`.
 
 ## Routing
 
@@ -270,7 +272,33 @@ When implementing UI from a design (Figma, screenshot, etc.):
 
 ## Preferences
 
-- `PrefsManager` static API: `init()`, getters/setters using `Constants` keys, `clear()` on logout.
+- `PrefsManager` static API: `init()`, getters/setters using `Constants` keys (`token`, `locale`).
+- **`main.dart`**: call `PrefsManager.init()` before `Get.put(DioClient())`. `DioClient` may **read** token/locale for headers.
+- **All writes** (`setToken`, `setLocale`, `clear`) happen in **`RepositoryImpl` only** — never in controllers, screens, or use cases.
+- Controllers use the use case → repository path for anything that changes prefs.
+
+| Action | Repository | When |
+|--------|------------|------|
+| Save auth token | `AuthRepositoryImpl` | After successful `requestSignIn` / `requestSignUp` |
+| Clear session | `AuthRepositoryImpl` | `requestSignOut` |
+| Delete account | `AuthRepositoryImpl` | `requestDeleteAccount` (API then clear prefs) |
+| Save locale | `SettingsRepositoryImpl` | `requestSetLocale` |
+| Read locale | `SettingsRepositoryImpl` | `getLocale()` (Settings language picker) |
+
+```dart
+// auth_repository_impl.dart — after successful sign-in
+final token = json['token'] as String?;
+if (token != null && token.isNotEmpty) {
+  await PrefsManager.setToken(token);
+}
+return BaseResponse.fromJson(json);
+
+// sign_in/controller.dart — do NOT save token here
+if (!isSuccess(response)) return;
+Get.offNamed(Routes.home);
+```
+
+- Presentation may **read** prefs for routing only (e.g. Splash checking `PrefsManager.token`); prefer repository/use-case getters when the read is feature-related (e.g. `SettingsUseCase.getLocale()`).
 
 ## Style
 

@@ -11,6 +11,7 @@ import 'package:hedma/presentation/screens/shop_details/widgets/shop_about_secti
 import 'package:hedma/presentation/screens/shop_details/widgets/shop_banner_header.dart';
 import 'package:hedma/presentation/screens/shop_details/widgets/shop_details_app_bar.dart';
 import 'package:hedma/presentation/widgets/product_grid_item.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class ShopDetailsScreen extends GetView<ShopDetailsController> {
   const ShopDetailsScreen({super.key});
@@ -34,7 +35,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
 
   Widget _buildBody(BuildContext context, ShopBean? shop) {
     if (controller.isLoading.value && shop == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: AppProgressIndicator());
     }
     if (shop == null) {
       return const SizedBox.shrink();

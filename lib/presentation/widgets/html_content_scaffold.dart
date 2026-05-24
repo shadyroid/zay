@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
+import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class HtmlContentScaffold extends StatelessWidget {
   const HtmlContentScaffold({
@@ -24,7 +25,7 @@ class HtmlContentScaffold extends StatelessWidget {
         showDivider: true,
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: AppProgressIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Container(

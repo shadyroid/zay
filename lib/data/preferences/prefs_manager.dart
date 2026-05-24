@@ -10,6 +10,11 @@ class PrefsManager {
 
   static String? get token => _prefs?.getString(Constants.tokenKey);
 
+  static bool get isLoggedIn {
+    final value = token;
+    return value != null && value.isNotEmpty;
+  }
+
   static Future<void> setToken(String value) async {
     await _prefs?.setString(Constants.tokenKey, value);
   }

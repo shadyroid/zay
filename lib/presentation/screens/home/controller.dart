@@ -165,10 +165,4 @@ class HomeController extends BaseController {
   void onStoreTap(ShopBean shop) {
     Get.toNamed(Routes.shopDetails, arguments: {'shopId': shop.id});
   }
-
-  void onVirtualTryOn() {
-    Get.rawSnackbar(message: 'virtualTryOnComingSoon'.tr);
-  }
-
-  Future<void> onSearchByImage() async => onCameraTap();
 }

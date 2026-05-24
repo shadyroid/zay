@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 
 class ProductListItem extends StatelessWidget {
@@ -20,7 +21,11 @@ class ProductListItem extends StatelessWidget {
       ),
       title: Text(product.name),
       subtitle: Text('\$${product.price}'),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 20,
+        color: AppColors.textSecondary,
+      ),
       onTap: onTap,
     );
   }

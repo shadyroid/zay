@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:hedma/data/repositories/auth_repository_impl.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/profile_response.dart';
-import 'package:hedma/domain/models/responses/sign_in_response.dart';
 import 'package:hedma/domain/repositories/auth_repository.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
@@ -14,10 +13,10 @@ import 'package:hedma/domain/requests/verification_request.dart';
 class AuthUseCase {
   final AuthRepository _authRepository = Get.put(AuthRepositoryImpl());
 
-  Future<SignInResponse> requestSignIn(SignInRequest request) =>
+  Future<BaseResponse> requestSignIn(SignInRequest request) =>
       _authRepository.requestSignIn(request);
 
-  Future<SignInResponse> requestSignUp(SignUpRequest request) =>
+  Future<BaseResponse> requestSignUp(SignUpRequest request) =>
       _authRepository.requestSignUp(request);
 
   Future<BaseResponse> requestForgetPassword(ForgetPasswordRequest request) =>
@@ -36,6 +35,6 @@ class AuthUseCase {
   Future<BaseResponse> requestUpdateProfile(UpdateProfileRequest request) =>
       _authRepository.requestUpdateProfile(request);
 
-  Future<BaseResponse> requestClearAccount() =>
-      _authRepository.requestClearAccount();
+  Future<BaseResponse> requestDeleteAccount() =>
+      _authRepository.requestDeleteAccount();
 }
