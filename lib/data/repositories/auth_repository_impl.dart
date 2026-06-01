@@ -5,6 +5,7 @@ import 'package:hedma/domain/models/responses/profile_response.dart';
 import 'package:hedma/domain/repositories/auth_repository.dart';
 import 'package:hedma/domain/requests/change_password_request.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
+import 'package:hedma/domain/requests/resend_verification_code_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
 import 'package:hedma/domain/requests/sign_in_request.dart';
 import 'package:hedma/domain/requests/sign_up_request.dart';
@@ -57,6 +58,18 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<BaseResponse> requestVerification(VerificationRequest request) async {
     final json = await _authDataSource.requestVerification(request);
+    final status = json['statusCode'] as int?;
+    if (status != null && status != 200) {
+      return BaseResponse.fromJson(json);
+    }
+    return BaseResponse.fromJson(json);
+  }
+
+  @override
+  Future<BaseResponse> requestResendVerificationCode(
+    ResendVerificationCodeRequest request,
+  ) async {
+    final json = await _authDataSource.requestResendVerificationCode(request);
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
       return BaseResponse.fromJson(json);

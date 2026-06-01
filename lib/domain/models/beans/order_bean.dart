@@ -1,3 +1,4 @@
+import 'package:hedma/domain/models/beans/order_line_item_bean.dart';
 import 'package:hedma/domain/models/beans/order_track_step_bean.dart';
 
 class OrderBean {
@@ -20,6 +21,7 @@ class OrderBean {
   final String summaryDate;
   final String? estimatedDelivery;
   final List<OrderTrackStepBean>? steps;
+  final List<OrderLineItemBean> items;
 
   const OrderBean({
     required this.id,
@@ -41,6 +43,7 @@ class OrderBean {
     this.summaryDate = '',
     this.estimatedDelivery,
     this.steps,
+    this.items = const [],
   });
 
   bool get isActive {
@@ -116,7 +119,27 @@ class OrderBean {
       estimatedDelivery: json['estimated_delivery'] as String? ??
           json['estimatedDelivery'] as String?,
       steps: _parseSteps(json['steps']),
+      items: _parseLineItems(json),
     );
+  }
+
+  static List<OrderLineItemBean> _parseLineItems(Map<String, dynamic> json) {
+    final items = <OrderLineItemBean>[];
+    final subOrders = json['sub_orders'] as List<dynamic>?;
+    if (subOrders == null) return items;
+
+    for (final sub in subOrders) {
+      if (sub is! Map<String, dynamic>) continue;
+      final lineItems = sub['items'] as List<dynamic>?;
+      if (lineItems == null) continue;
+
+      for (final item in lineItems) {
+        if (item is Map<String, dynamic>) {
+          items.add(OrderLineItemBean.fromJson(item));
+        }
+      }
+    }
+    return items;
   }
 
   static List<OrderTrackStepBean>? _parseSteps(dynamic value) {

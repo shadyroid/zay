@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
@@ -17,6 +18,7 @@ class AppTextField extends StatelessWidget {
     this.maxLines = 1,
     this.readOnly = false,
     this.onTap,
+    this.inputFormatters,
   });
 
   final TextEditingController controller;
@@ -31,6 +33,7 @@ class AppTextField extends StatelessWidget {
   final int maxLines;
   final bool readOnly;
   final VoidCallback? onTap;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +47,7 @@ class AppTextField extends StatelessWidget {
       validator: validator,
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
+      inputFormatters: inputFormatters,
       style: const TextStyle(color: AppColors.textPrimary),
       decoration: InputDecoration(
         hintText: hint,

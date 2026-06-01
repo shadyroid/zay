@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
+import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/domain/requests/sign_up_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
@@ -50,9 +51,7 @@ class SignUpController extends BaseController {
         email: emailController.text.trim(),
         password: passwordController.text,
         passwordConfirmation: confirmPasswordController.text,
-        phone: mobileController.text.trim().isEmpty
-            ? null
-            : mobileController.text.trim(),
+        phone: EgyptianPhoneUtil.normalize(mobileController.text.trim()),
         height: heightController.text.trim(),
         weight: weightController.text.trim(),
       ),
@@ -62,7 +61,7 @@ class SignUpController extends BaseController {
 
     Get.offNamed(
       Routes.verification,
-      arguments: {'email': emailController.text.trim()},
+      arguments: {'email': emailController.text.trim(), 'flow': 'signup'},
     );
   }
 

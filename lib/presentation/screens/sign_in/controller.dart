@@ -36,9 +36,16 @@ class SignInController extends BaseController {
     );
     isLoading.value = false;
 
-    if (!isSuccess(response)) return;
-
-    Get.offNamed(Routes.home);
+    if (response.statusCode == 403) {
+      Get.offNamed(
+        Routes.verification,
+        arguments: {'email': emailController.text.trim(), 'flow': 'signin'},
+      );
+    } else if (!isSuccess(response)) {
+      return;
+    } else {
+      Get.offNamed(Routes.home);
+    }
   }
 
   void navigateToSignUp() => Get.toNamed(Routes.signUp);

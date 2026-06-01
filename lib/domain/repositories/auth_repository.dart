@@ -2,6 +2,7 @@ import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/profile_response.dart';
 import 'package:hedma/domain/requests/change_password_request.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
+import 'package:hedma/domain/requests/resend_verification_code_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
 import 'package:hedma/domain/requests/sign_in_request.dart';
 import 'package:hedma/domain/requests/sign_up_request.dart';
@@ -16,6 +17,10 @@ abstract class AuthRepository {
   Future<BaseResponse> requestForgetPassword(ForgetPasswordRequest request);
 
   Future<BaseResponse> requestVerification(VerificationRequest request);
+
+  Future<BaseResponse> requestResendVerificationCode(
+    ResendVerificationCodeRequest request,
+  );
 
   Future<BaseResponse> requestResetPassword(ResetPasswordRequest request);
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
+import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/domain/requests/update_profile_request.dart';
 import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
@@ -76,7 +77,7 @@ class EditProfileController extends BaseController {
       UpdateProfileRequest(
         name: nameController.text.trim(),
         email: emailController.text.trim(),
-        phone: phoneController.text.trim(),
+        phone: EgyptianPhoneUtil.normalize(phoneController.text.trim()),
         height: heightController.text.trim(),
         weight: weightController.text.trim(),
         avatarPath: localAvatarPath,

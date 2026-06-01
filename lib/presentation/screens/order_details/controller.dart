@@ -56,9 +56,15 @@ class OrderDetailsController extends BaseController {
   }
 
   Future<void> navigateToReview() async {
+    final currentOrder = order.value;
     await AppAuthGuard.toNamed(
       Routes.review,
-      arguments: {'orderId': orderId},
+      arguments: {
+        'orderId': orderId,
+        'order': currentOrder,
+        if (currentOrder != null && currentOrder.items.isNotEmpty)
+          'items': currentOrder.items,
+      },
     );
   }
 }

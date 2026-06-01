@@ -19,7 +19,8 @@ class ProductsController extends BaseController {
   final products = <ProductBean>[].obs;
   final selectedCategoryId = 'all'.obs;
   final activeFilters = ProductFilters.initial.obs;
-  final selectedSort = ProductSortOption.priceHighToLow.obs;
+  final selectedSort = ProductSortOption.newest.obs;
+  final searchQuery = ''.obs;
   final totalCount = 0.obs;
 
   @override
@@ -44,6 +45,11 @@ class ProductsController extends BaseController {
     if (filters is ProductFilters) {
       activeFilters.value = filters;
       selectedCategoryId.value = filters.categoryId;
+    }
+
+    final search = args['search'];
+    if (search is String && search.trim().isNotEmpty) {
+      searchQuery.value = search.trim();
     }
   }
 
@@ -71,6 +77,7 @@ class ProductsController extends BaseController {
       minPrice: filters.priceMin,
       maxPrice: filters.priceMax,
       sortBy: selectedSort.value,
+      search: searchQuery.value.isEmpty ? null : searchQuery.value,
     );
   }
 

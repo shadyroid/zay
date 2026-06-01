@@ -7,6 +7,7 @@ class Constants {
   static const String signInPath = '/auth/login';
   static const String signUpPath = '/auth/register';
   static const String forgetPasswordPath = '/auth/forgot-password';
+  static const String resendVerificationPath = '/auth/resend-verification';
   static const String verificationPath = '/auth/verify-email';
   static const String resetPasswordPath = '/auth/reset-password';
   static const String signOutPath = '/auth/logout';
@@ -20,12 +21,12 @@ class Constants {
   static const String wishlistPath = '/wishlist';
   static const String reviewsPath = '/products';
   static const String addTryOutReviewPath = '/catalog/reviews/add';
-  static const String tryProductPath = '/catalog/tryProduct';
+  static const String tryProductPath = '/try-on';
 
   static const String cartPath = '/cart';
   static const String cartItemsPath = '/cart/items';
 
-  static const String createOrderPath = '/orders/create';
+  static const String createOrderPath = '/orders';
   static const String ordersPath = '/orders';
   static const String orderDetailsPath = '/orders';
   static const String orderReturnPath = '/returns/order';

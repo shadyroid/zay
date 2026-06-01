@@ -15,6 +15,7 @@ class ProductsRequest {
     this.minPrice,
     this.maxPrice,
     this.sortBy,
+    this.search,
   });
 
   final int? page;
@@ -30,6 +31,7 @@ class ProductsRequest {
   final double? minPrice;
   final double? maxPrice;
   final ProductSortOption? sortBy;
+  final String? search;
 
   Map<String, dynamic> toQueryParameters() {
     final params = <String, dynamic>{};
@@ -52,6 +54,9 @@ class ProductsRequest {
     if (minPrice != null) params['min_price'] = minPrice;
     if (maxPrice != null) params['max_price'] = maxPrice;
     if (sortBy != null) params['sort_by'] = sortBy!.apiValue;
+    if (search != null && search!.trim().isNotEmpty) {
+      params['search'] = search!.trim();
+    }
 
     return params;
   }

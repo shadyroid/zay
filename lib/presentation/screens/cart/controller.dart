@@ -4,6 +4,7 @@ import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/app/use_cases/cart_use_case.dart';
 import 'package:hedma/app/use_cases/order_use_case.dart';
+import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/app/utils/payment_method.dart';
 import 'package:hedma/domain/models/beans/cart_item_bean.dart';
 import 'package:hedma/domain/models/beans/location_bean.dart';
@@ -17,8 +18,10 @@ class CartController extends BaseController {
   final OrderUseCase _orderUseCase = Get.put(OrderUseCase());
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());
 
+  final deliveryFormKey = GlobalKey<FormState>();
   final items = <CartItemBean>[].obs;
   final mobileController = TextEditingController();
+  String _recipientName = '';
   final deliveryAddress = RxnString();
   final deliveryLatitude = RxnDouble();
   final deliveryLongitude = RxnDouble();
@@ -30,7 +33,7 @@ class CartController extends BaseController {
   void onInit() {
     super.onInit();
     requestCart();
-    _loadProfilePhone();
+    _loadProfile();
   }
 
   @override
@@ -39,12 +42,18 @@ class CartController extends BaseController {
     super.onClose();
   }
 
-  Future<void> _loadProfilePhone() async {
+  Future<void> _loadProfile() async {
     final response = await _authUseCase.requestProfile();
     if (!response.isSuccess) return;
+
     final phone = response.data?.phone?.trim();
     if (phone != null && phone.isNotEmpty) {
       mobileController.text = phone;
+    }
+
+    final name = response.data?.name?.trim();
+    if (name != null && name.isNotEmpty) {
+      _recipientName = name;
     }
   }
 
@@ -90,8 +99,13 @@ class CartController extends BaseController {
   }
 
   Future<void> onSelectLocation() async {
+    deliveryAddress.value = "asdasdsadasd";
+    deliveryLatitude.value = 0.0;
+    deliveryLongitude.value = 0.0;
+    return;
     final result = await Get.toNamed(Routes.map);
-    if (result == null) return;
+    if (result is! LocationBean) return;
+
     deliveryAddress.value = result.address;
     deliveryLatitude.value = result.latitude;
     deliveryLongitude.value = result.longitude;
@@ -114,20 +128,26 @@ class CartController extends BaseController {
       return;
     }
 
-    final phone = mobileController.text.trim();
-    if (phone.isEmpty) {
-      Get.rawSnackbar(message: 'mobileRequired'.tr);
+    if (deliveryFormKey.currentState?.validate() != true) return;
+
+    final phone = EgyptianPhoneUtil.normalize(mobileController.text.trim())!;
+
+    final lat = deliveryLatitude.value;
+    final lng = deliveryLongitude.value;
+    if (lat == null || lng == null) {
+      Get.rawSnackbar(message: 'selectLocationRequired'.tr);
       return;
     }
 
     isLoading.value = true;
     final response = await _orderUseCase.requestCreateOrder(
       CreateOrderRequest(
+        lat: lat,
+        lng: lng,
         address: address,
-        latitude: deliveryLatitude.value ?? 0,
-        longitude: deliveryLongitude.value ?? 0,
-        mobileNumber: phone,
-        paymentMethod: paymentMethod.value.name,
+        phone: phone,
+        recipientName: _recipientName,
+        paymentMethod: paymentMethod.value.apiValue,
       ),
     );
     isLoading.value = false;

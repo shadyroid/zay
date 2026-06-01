@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hedma/app/utils/app_input_formatters.dart';
+import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/presentation/screens/contact_us/controller.dart';
 import 'package:hedma/presentation/screens/contact_us/widgets/contact_us_header.dart';
 import 'package:hedma/presentation/screens/contact_us/widgets/contact_us_labeled_field.dart';
@@ -56,9 +58,9 @@ class ContactUsScreen extends GetView<ContactUsController> {
                 controller: controller.phoneController,
                 hint: 'phone'.tr,
                 keyboardType: TextInputType.phone,
+                inputFormatters: AppInputFormatters.phone,
                 textInputAction: TextInputAction.next,
-                validator: (v) =>
-                    v == null || v.trim().isEmpty ? 'mobileRequired'.tr : null,
+                validator: (v) => EgyptianPhoneUtil.validate(v, required: true),
               ),
               const SizedBox(height: 16),
               ContactUsLabeledField(

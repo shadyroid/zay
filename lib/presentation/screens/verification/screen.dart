@@ -33,6 +33,8 @@ class VerificationScreen extends GetView<VerificationController> {
                   Obx(
                     () => OtpInputBoxes(
                       code: controller.otpCode.value,
+                      controller: controller.otpTextController,
+                      focusNode: controller.otpFocusNode,
                       length: VerificationController.otpLength,
                     ),
                   ),

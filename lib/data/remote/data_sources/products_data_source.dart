@@ -77,7 +77,7 @@ class ProductsDataSource {
       Constants.tryProductPath,
       fields: {
         'product_id': request.productId,
-        'image': await dio_multipart.MultipartFile.fromFile(
+        'photo': await dio_multipart.MultipartFile.fromFile(
           request.imagePath,
           filename: request.imagePath.split('/').last,
         ),

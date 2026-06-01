@@ -99,10 +99,10 @@ class SettingsScreen extends GetView<SettingsController> {
                       ),
                     ],
                   ),
-                  if (loggedIn) ...[
-                    const SizedBox(height: 24),
-                    DeleteAccountButton(onPressed: controller.onDeleteAccount),
-                  ],
+                  // if (loggedIn) ...[
+                  //   const SizedBox(height: 24),
+                  //   DeleteAccountButton(onPressed: controller.onDeleteAccount),
+                  // ],
                 ],
               );
             },

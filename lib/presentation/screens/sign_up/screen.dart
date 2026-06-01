@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_icons.dart';
+import 'package:hedma/app/utils/app_input_formatters.dart';
+import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/presentation/screens/sign_up/controller.dart';
 import 'package:hedma/presentation/screens/sign_up/widgets/sign_up_header.dart';
 import 'package:hedma/presentation/screens/sign_up/widgets/sign_up_terms_checkbox.dart';
@@ -65,7 +67,9 @@ class SignUpScreen extends GetView<SignUpController> {
                     hint: 'mobileOptional'.tr,
                     prefixIconPath: AppIcons.phone,
                     keyboardType: TextInputType.phone,
+                    inputFormatters: AppInputFormatters.phone,
                     textInputAction: TextInputAction.next,
+                    validator: (v) => EgyptianPhoneUtil.validate(v),
                   ),
                   const SizedBox(height: 12),
                   AppTextField(
@@ -75,10 +79,16 @@ class SignUpScreen extends GetView<SignUpController> {
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
+                    inputFormatters: AppInputFormatters.decimal,
                     textInputAction: TextInputAction.next,
-                    validator: (v) => v == null || v.trim().isEmpty
-                        ? 'heightRequired'.tr
-                        : null,
+                    validator: (v) {
+                      final value = v?.trim() ?? '';
+                      if (value.isEmpty) return 'heightRequired'.tr;
+                      if (double.tryParse(value) == null) {
+                        return 'numberInvalid'.tr;
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 12),
                   AppTextField(
@@ -88,10 +98,16 @@ class SignUpScreen extends GetView<SignUpController> {
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
+                    inputFormatters: AppInputFormatters.decimal,
                     textInputAction: TextInputAction.next,
-                    validator: (v) => v == null || v.trim().isEmpty
-                        ? 'weightRequired'.tr
-                        : null,
+                    validator: (v) {
+                      final value = v?.trim() ?? '';
+                      if (value.isEmpty) return 'weightRequired'.tr;
+                      if (double.tryParse(value) == null) {
+                        return 'numberInvalid'.tr;
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 12),
                   Obx(

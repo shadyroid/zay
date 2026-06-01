@@ -1,15 +1,17 @@
 import 'package:hedma/domain/models/enums/review_size_fit.dart';
 
-class AddOrderReviewRequest {
-  const AddOrderReviewRequest({
-    required this.orderId,
+class AddReviewRequest {
+  const AddReviewRequest({
+    required this.productId,
+    required this.orderItemId,
     required this.sizeFit,
     required this.rating,
     this.comment,
   });
 
-  final String orderId;
+  final String productId;
+  final String orderItemId;
   final ReviewSizeFit sizeFit;
-  final double rating;
+  final int rating;
   final String? comment;
 }

@@ -115,6 +115,7 @@ class HomeController extends BaseController {
   void navigateToProducts({
     String? categoryId,
     ProductFilters? filters,
+    String? search,
   }) {
     if (Get.isRegistered<ProductsController>()) {
       Get.delete<ProductsController>();
@@ -122,15 +123,19 @@ class HomeController extends BaseController {
     Get.toNamed(
       Routes.products,
       arguments: <String, dynamic>{
-        'categoryId': categoryId,
-        'filters': filters,
+        'categoryId': ?categoryId,
+        'filters': ?filters,
+        'search': ?search,
       },
     );
   }
 
-  void onSearchSubmit() => navigateToProducts();
+  void onSearchSubmit() {
+    final query = searchController.text.trim();
+    navigateToProducts(search: query.isEmpty ? null : query);
+  }
 
-  void onSearchIconTap() => navigateToProducts();
+  void onSearchIconTap() => onSearchSubmit();
 
   Future<void> onCameraTap() async {
     final file = await ImagePickerHelper.pickFromBottomSheet();

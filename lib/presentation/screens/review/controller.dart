@@ -1,16 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hedma/app/use_cases/order_use_case.dart';
 import 'package:hedma/app/use_cases/reviews_use_case.dart';
+import 'package:hedma/domain/models/beans/order_bean.dart';
+import 'package:hedma/domain/models/beans/order_line_item_bean.dart';
 import 'package:hedma/domain/models/enums/review_size_fit.dart';
-import 'package:hedma/domain/requests/add_order_review_request.dart';
+import 'package:hedma/domain/requests/add_review_request.dart';
+import 'package:hedma/domain/requests/order_details_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:hedma/presentation/screens/review/models/order_item_review_draft.dart';
 
 class ReviewController extends BaseController {
   final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
+  final OrderUseCase _orderUseCase = Get.put(OrderUseCase());
 
-  final reviewController = TextEditingController();
-  final selectedSizeFit = ReviewSizeFit.good.obs;
-  final selectedRating = 0.obs;
+  final itemReviews = <OrderItemReviewDraft>[].obs;
 
   late final String orderId;
 
@@ -19,39 +22,97 @@ class ReviewController extends BaseController {
     super.onInit();
     final args = Get.arguments as Map<String, dynamic>? ?? {};
     orderId = args['orderId'] as String? ?? '';
+    final order = args['order'] as OrderBean?;
+    final items = args['items'] as List<OrderLineItemBean>?;
+
+    if (items != null && items.isNotEmpty) {
+      _setItemReviews(items);
+    } else if (order != null && order.items.isNotEmpty) {
+      _setItemReviews(order.items);
+    } else {
+      _loadOrderItems();
+    }
   }
 
   @override
   void onClose() {
-    reviewController.dispose();
+    for (final draft in itemReviews) {
+      draft.dispose();
+    }
     super.onClose();
   }
 
-  void selectSizeFit(ReviewSizeFit fit) => selectedSizeFit.value = fit;
+  void _setItemReviews(List<OrderLineItemBean> items) {
+    itemReviews.assignAll(
+      items.map((item) => OrderItemReviewDraft(item: item)),
+    );
+  }
 
-  void selectRating(int rating) => selectedRating.value = rating;
-
-  Future<void> requestAddOrderReview() async {
+  Future<void> _loadOrderItems() async {
     if (orderId.isEmpty) return;
-    if (selectedRating.value <= 0) {
-      Get.rawSnackbar(message: 'ratingRequired'.tr);
-      return;
-    }
 
     isLoading.value = true;
-    final response = await _reviewsUseCase.requestAddOrderReview(
-      AddOrderReviewRequest(
-        orderId: orderId,
-        sizeFit: selectedSizeFit.value,
-        rating: selectedRating.value.toDouble(),
-        comment: reviewController.text.trim(),
-      ),
+    final response = await _orderUseCase.requestOrderDetails(
+      OrderDetailsRequest(orderId: orderId),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
 
+    final items = response.data?.items ?? [];
+    if (items.isEmpty) {
+      Get.rawSnackbar(message: 'noItemsToReview'.tr);
+      return;
+    }
+    _setItemReviews(items);
+  }
+
+  void selectSizeFit(int index, ReviewSizeFit fit) {
+    itemReviews[index].selectedSizeFit.value = fit;
+  }
+
+  void selectRating(int index, int rating) {
+    itemReviews[index].selectedRating.value = rating;
+  }
+
+  Future<void> requestAddReview() async {
+    if (itemReviews.isEmpty) return;
+
+    for (var i = 0; i < itemReviews.length; i++) {
+      final draft = itemReviews[i];
+      if (draft.selectedRating.value <= 0) {
+        Get.rawSnackbar(
+          message: 'ratingRequiredForItem'.trParams({
+            'index': '${i + 1}',
+          }),
+        );
+        return;
+      }
+      if (draft.item.productId.isEmpty || draft.item.id.isEmpty) {
+        Get.rawSnackbar(message: 'reviewItemInvalid'.tr);
+        return;
+      }
+    }
+
+    isLoading.value = true;
+    for (final draft in itemReviews) {
+      final response = await _reviewsUseCase.requestAddReview(
+        AddReviewRequest(
+          productId: draft.item.productId,
+          orderItemId: draft.item.id,
+          sizeFit: draft.selectedSizeFit.value,
+          rating: draft.selectedRating.value,
+          comment: draft.commentController.text.trim(),
+        ),
+      );
+      if (!isSuccess(response)) {
+        isLoading.value = false;
+        return;
+      }
+    }
+    isLoading.value = false;
+
     Get.back();
-    Get.rawSnackbar(message: response.message?.tr ?? 'reviewSubmitted'.tr);
+    Get.rawSnackbar(message: 'reviewSubmitted'.tr);
   }
 
   void goBack() => Get.back();

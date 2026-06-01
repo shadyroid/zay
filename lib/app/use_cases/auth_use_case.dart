@@ -5,6 +5,7 @@ import 'package:hedma/domain/models/responses/profile_response.dart';
 import 'package:hedma/domain/repositories/auth_repository.dart';
 import 'package:hedma/domain/requests/change_password_request.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
+import 'package:hedma/domain/requests/resend_verification_code_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
 import 'package:hedma/domain/requests/sign_in_request.dart';
 import 'package:hedma/domain/requests/sign_up_request.dart';
@@ -25,6 +26,11 @@ class AuthUseCase {
 
   Future<BaseResponse> requestVerification(VerificationRequest request) =>
       _authRepository.requestVerification(request);
+
+  Future<BaseResponse> requestResendVerificationCode(
+    ResendVerificationCodeRequest request,
+  ) =>
+      _authRepository.requestResendVerificationCode(request);
 
   Future<BaseResponse> requestResetPassword(ResetPasswordRequest request) =>
       _authRepository.requestResetPassword(request);

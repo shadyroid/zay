@@ -4,6 +4,7 @@ import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/data/remote/dio_client.dart';
 import 'package:hedma/domain/requests/change_password_request.dart';
 import 'package:hedma/domain/requests/forget_password_request.dart';
+import 'package:hedma/domain/requests/resend_verification_code_request.dart';
 import 'package:hedma/domain/requests/reset_password_request.dart';
 import 'package:hedma/domain/requests/sign_in_request.dart';
 import 'package:hedma/domain/requests/sign_up_request.dart';
@@ -63,6 +64,22 @@ class AuthDataSource {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
+  Future<Map<String, dynamic>> requestResendVerificationCode(
+    ResendVerificationCodeRequest request,
+  ) async {
+    if (request.isPasswordReset) {
+      return requestForgetPassword(
+        ForgetPasswordRequest(email: request.email),
+      );
+    }
+
+    final response = await _dioClient.postForm(
+      Constants.resendVerificationPath,
+      fields: {'email': request.email},
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
   Future<Map<String, dynamic>> requestResetPassword(
     ResetPasswordRequest request,
   ) async {
@@ -92,19 +109,11 @@ class AuthDataSource {
     UpdateProfileRequest request,
   ) async {
     final fields = <String, dynamic>{
-      'name': request.name ?? '',
-      'phone': request.phone ?? '',
+      'name': request.name,
+      if(request.phone!=null)'phone': request.phone,
+      if(request.height!=null)'height': request.height,
+      if(request.weight!=null)'weight': request.weight,
     };
-
-    final height = request.height?.trim();
-    if (height != null && height.isNotEmpty) {
-      fields['height'] = height;
-    }
-
-    final weight = request.weight?.trim();
-    if (weight != null && weight.isNotEmpty) {
-      fields['weight'] = weight;
-    }
 
     final avatarPath = request.avatarPath;
     if (avatarPath != null && avatarPath.isNotEmpty) {

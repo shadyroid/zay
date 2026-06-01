@@ -66,6 +66,7 @@ class CartScreen extends GetView<CartController> {
                       ),
                     ),
                     CartDeliverySection(
+                      formKey: controller.deliveryFormKey,
                       locationText: deliveryAddress,
                       mobileController: controller.mobileController,
                       onSelectLocation: controller.onSelectLocation,

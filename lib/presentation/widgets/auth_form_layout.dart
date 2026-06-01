@@ -18,6 +18,10 @@ class AuthFormLayout extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        final minHeight = constraints.maxHeight.isFinite
+            ? constraints.maxHeight
+            : 0.0;
+
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
             horizontalPadding,
@@ -27,13 +31,11 @@ class AuthFormLayout extends StatelessWidget {
           ),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: IntrinsicHeight(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [child],
-              ),
+            constraints: BoxConstraints(minHeight: minHeight),
+            child: Align(
+              alignment: Alignment.center,
+              widthFactor: 1,
+              child: child,
             ),
           ),
         );

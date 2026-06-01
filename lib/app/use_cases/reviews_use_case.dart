@@ -3,7 +3,7 @@ import 'package:hedma/data/repositories/reviews_repository_impl.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/reviews_response.dart';
 import 'package:hedma/domain/repositories/reviews_repository.dart';
-import 'package:hedma/domain/requests/add_order_review_request.dart';
+import 'package:hedma/domain/requests/add_review_request.dart';
 import 'package:hedma/domain/requests/add_try_out_review_request.dart';
 import 'package:hedma/domain/requests/reviews_request.dart';
 
@@ -18,6 +18,6 @@ class ReviewsUseCase {
   ) =>
       _reviewsRepository.requestAddTryOutReview(request);
 
-  Future<BaseResponse> requestAddOrderReview(AddOrderReviewRequest request) =>
-      _reviewsRepository.requestAddOrderReview(request);
+  Future<BaseResponse> requestAddReview(AddReviewRequest request) =>
+      _reviewsRepository.requestAddReview(request);
 }

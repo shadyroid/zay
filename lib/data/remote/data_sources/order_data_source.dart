@@ -14,11 +14,13 @@ class OrderDataSource {
     final response = await _dioClient.postForm(
       Constants.createOrderPath,
       fields: {
+        'lat': request.lat,
+        'lng': request.lng,
         'address': request.address,
-        'latitude': request.latitude,
-        'longitude': request.longitude,
-        'mobile_number': request.mobileNumber,
+        'phone': request.phone,
+        'recipient_name': request.recipientName,
         'payment_method': request.paymentMethod,
+        'notes': request.notes?.trim() ?? '',
       },
     );
     return Map<String, dynamic>.from(response.data as Map);

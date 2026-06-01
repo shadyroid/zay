@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/settings_use_case.dart';
+import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/domain/requests/contact_us_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
@@ -32,7 +33,7 @@ class ContactUsController extends BaseController {
       ContactUsRequest(
         name: nameController.text.trim(),
         email: emailController.text.trim(),
-        phone: phoneController.text.trim(),
+        phone: EgyptianPhoneUtil.normalize(phoneController.text.trim())!,
         subject: subjectController.text.trim(),
         message: messageController.text.trim(),
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_icons.dart';
+import 'package:hedma/app/utils/app_input_formatters.dart';
+import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/presentation/screens/edit_profile/controller.dart';
 import 'package:hedma/presentation/screens/edit_profile/widgets/profile_avatar_header.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
@@ -75,7 +77,9 @@ class EditProfileScreen extends GetView<EditProfileController> {
                           hint: 'mobileNumber'.tr,
                           prefixIconPath: AppIcons.phone,
                           keyboardType: TextInputType.phone,
+                          inputFormatters: AppInputFormatters.phone,
                           textInputAction: TextInputAction.next,
+                          validator: (v) => EgyptianPhoneUtil.validate(v),
                         ),
                         const SizedBox(height: 12),
                         AppTextField(
@@ -85,7 +89,16 @@ class EditProfileScreen extends GetView<EditProfileController> {
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
                           ),
+                          inputFormatters: AppInputFormatters.decimal,
                           textInputAction: TextInputAction.next,
+                          validator: (v) {
+                            final value = v?.trim() ?? '';
+                            if (value.isEmpty) return null;
+                            if (double.tryParse(value) == null) {
+                              return 'numberInvalid'.tr;
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 12),
                         AppTextField(
@@ -95,7 +108,16 @@ class EditProfileScreen extends GetView<EditProfileController> {
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
                           ),
+                          inputFormatters: AppInputFormatters.decimal,
                           textInputAction: TextInputAction.done,
+                          validator: (v) {
+                            final value = v?.trim() ?? '';
+                            if (value.isEmpty) return null;
+                            if (double.tryParse(value) == null) {
+                              return 'numberInvalid'.tr;
+                            }
+                            return null;
+                          },
                         ),
                       ],
                     ),

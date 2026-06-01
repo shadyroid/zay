@@ -2,7 +2,7 @@ import 'package:hedma/data/remote/data_sources/reviews_data_source.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
 import 'package:hedma/domain/models/responses/reviews_response.dart';
 import 'package:hedma/domain/repositories/reviews_repository.dart';
-import 'package:hedma/domain/requests/add_order_review_request.dart';
+import 'package:hedma/domain/requests/add_review_request.dart';
 import 'package:hedma/domain/requests/add_try_out_review_request.dart';
 import 'package:hedma/domain/requests/reviews_request.dart';
 
@@ -35,10 +35,8 @@ class ReviewsRepositoryImpl implements ReviewsRepository {
   }
 
   @override
-  Future<BaseResponse> requestAddOrderReview(
-    AddOrderReviewRequest request,
-  ) async {
-    final json = await _reviewsDataSource.requestAddOrderReview(request);
+  Future<BaseResponse> requestAddReview(AddReviewRequest request) async {
+    final json = await _reviewsDataSource.requestAddReview(request);
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
       return BaseResponse.fromJson(json);
