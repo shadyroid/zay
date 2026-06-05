@@ -79,7 +79,7 @@ class CartDeliverySection extends StatelessWidget {
             AppTextField(
               controller: mobileController,
               hint: 'mobileNumber'.tr,
-              prefixIconPath: 'assets/icons/ic_phone',
+              prefixIconPath: 'assets/icons/ic_phone.svg',
               keyboardType: TextInputType.phone,
               inputFormatters: AppInputFormatters.phone,
               textInputAction: TextInputAction.done,

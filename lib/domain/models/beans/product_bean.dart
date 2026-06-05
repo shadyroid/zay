@@ -13,12 +13,12 @@ class ProductBean {
   final ShopBean? shop;
   final CategoryBean? category;
   final String? sellerCategories;
-  final int? sizeId;
   final String? rating;
   final int? reviewCount;
   final String? description;
-  final List<ProductSizeBean> sizes;
+  final List<ProductSizeBean>? sizes;
   final RxBool isFavorite;
+  final Map<int,int>? selectedSizesQuantities;
 
   ProductBean({
     required this.id,
@@ -29,12 +29,12 @@ class ProductBean {
     required this.sellerCategories,
     required this.shop,
     required this.category,
-    required this.sizeId,
     required this.rating,
     required this.reviewCount,
     required this.description,
     required this.sizes,
     required this.isFavorite,
+    required this.selectedSizesQuantities,
   });
 
   factory ProductBean.fromJson(Map<String, dynamic> json) {
@@ -58,8 +58,10 @@ class ProductBean {
         isFavorite: json['is_favorite'],
       ),
 
+      //From cart
+      selectedSizesQuantities: json['selectedSizesQuantities'],
+
       sellerCategories: json['sellerCategories'] as String?,
-      sizeId: json['sizeId'],
       sizes: _parseSizes(json['sizes']),
 
     );

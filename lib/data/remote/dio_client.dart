@@ -116,7 +116,10 @@ class DioClient extends GetxService {
     final body = Map<String, dynamic>.from(raw);
 
     if (httpStatus >= 200 && httpStatus < 300) {
-      return body;
+      return {
+        ...body,
+        'statusCode': httpStatus,
+      };
     }
 
     return {

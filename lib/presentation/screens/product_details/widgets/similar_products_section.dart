@@ -19,39 +19,42 @@ class SimilarProductsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (products.isEmpty) return const SizedBox.shrink();
+    return Obx(() {
+      if (products.isEmpty) return const SizedBox.shrink();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
-          child: Text(
-            'similarTo'.tr,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
+            child: Text(
+              'similarTo'.tr,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
-        ),
-        SizedBox(
-          height: HomeProductItem.listHeight,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              final product = products[index];
-              return HomeProductItem(
-                product: product,
-                shopName: shopNameFor(product),
-                isFavorite: product.isFavorite,
-                onTap: () => onProductTap(product),
-                onFavoriteTap: () => onFavoriteTap(product),
-              );
-            },
+          SizedBox(
+            height: HomeProductItem.listHeight,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return HomeProductItem(
+                  product: product,
+                  shopName: shopNameFor(product),
+                  isFavorite: product.isFavorite,
+                  onTap: () => onProductTap(product),
+                  onFavoriteTap: () => onFavoriteTap(product),
+                );
+              },
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
+
   }
 }

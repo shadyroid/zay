@@ -69,13 +69,15 @@ class _PaymentOption extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           children: [
-            SvgPicture.asset(
-              iconPath,
+            SizedBox(
               width: 24,
               height: 24,
-              colorFilter: ColorFilter.mode(
-                AppColors.textPrimary,
-                BlendMode.srcIn,
+              child: SvgPicture.asset(
+                iconPath,
+                colorFilter: ColorFilter.mode(
+                  AppColors.textPrimary,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
             const SizedBox(width: 12),

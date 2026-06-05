@@ -27,6 +27,7 @@ class ProductDetailsController extends BaseController {
   final reviews = <ReviewBean>[].obs;
   final similarProducts = <ProductBean>[].obs;
   final quantity = 1.obs;
+  Map<int, int> selectedSizesQuantities = {};
   final selectedSizeId = RxnInt();
   final isDescriptionExpanded = false.obs;
   final imageIndex = 0.obs;
@@ -54,27 +55,22 @@ class ProductDetailsController extends BaseController {
     ]);
   }
 
-  void _initSelectedSize(ProductBean p) {
-    if (p.sizes.isEmpty) return;
-    final match = p.sizeId != null
-        ? p.sizes.where((s) => s.id == p.sizeId).firstOrNull
-        : null;
-    final fallback =
-        p.sizes.where((s) => s.isAvailable).firstOrNull ?? p.sizes.first;
-    final selected = match != null && match.isAvailable ? match : fallback;
-    selectedSizeId.value = selected.id;
-  }
-
-  Future<void> requestProductDetails() async {
-    isLoading.value = true;
+  Future<void> requestProductDetails({bool isLoading = true}) async {
+    this.isLoading.value = isLoading;
     final response = await _productsUseCase.requestProductDetails(
       ProductDetailsRequest(productId: productId),
     );
-    isLoading.value = false;
+    this.isLoading.value = false;
     if (!isSuccess(response)) return;
     product.value = response.data;
     if (response.data != null) {
-      _initSelectedSize(response.data!);
+      selectedSizesQuantities = response.data?.selectedSizesQuantities ?? {};
+      if (selectedSizeId.value != null) {
+        quantity.value =  selectedSizesQuantities[selectedSizeId.value!]??1;
+
+      }
+
+
     }
   }
 
@@ -115,13 +111,32 @@ class ProductDetailsController extends BaseController {
     if (!isSuccess(response)) return;
   }
 
-  void incrementQuantity() => quantity.value++;
+  void incrementQuantity() {
+    if (selectedSizeId.value == null) {
+      Get.rawSnackbar(message: 'selectSizeFirst'.tr);
+      return;
+    }
 
-  void decrementQuantity() {
-    if (quantity.value > 1) quantity.value--;
+    quantity.value++;
+    selectedSizesQuantities[selectedSizeId.value!] = quantity.value;
   }
 
-  void selectSize(int sizeId) => selectedSizeId.value = sizeId;
+  void decrementQuantity() {
+    if (selectedSizeId.value == null) {
+      Get.rawSnackbar(message: 'selectSizeFirst'.tr);
+      return;
+    }
+
+    if (quantity.value > 1) {
+      quantity.value--;
+      selectedSizesQuantities[selectedSizeId.value!] = quantity.value;
+    }
+  }
+
+  void selectSize(int sizeId) {
+    selectedSizeId.value = sizeId;
+    quantity.value = selectedSizesQuantities[sizeId] ?? 1;
+  }
 
   void toggleDescription() =>
       isDescriptionExpanded.value = !isDescriptionExpanded.value;
@@ -156,7 +171,7 @@ class ProductDetailsController extends BaseController {
     final sizeId = selectedSizeId.value;
     if (p == null) return;
 
-    if (p.sizes.isNotEmpty && sizeId == null) {
+    if (p.sizes?.isNotEmpty == true && sizeId == null) {
       Get.rawSnackbar(message: 'selectSizeRequired'.tr);
       return;
     }
@@ -174,6 +189,7 @@ class ProductDetailsController extends BaseController {
 
     Get.rawSnackbar(message: 'addedToCart'.tr);
     await AppAuthGuard.toNamed(Routes.cart);
+    requestProductDetails(isLoading: false);
   }
 
   void navigateToShop() {

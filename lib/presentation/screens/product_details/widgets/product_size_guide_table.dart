@@ -5,13 +5,13 @@ import 'package:hedma/domain/models/beans/product_size_bean.dart';
 class ProductSizeGuideTable extends StatelessWidget {
   const ProductSizeGuideTable({super.key, required this.sizes});
 
-  final List<ProductSizeBean> sizes;
+  final List<ProductSizeBean>? sizes;
 
   @override
   Widget build(BuildContext context) {
-    if (sizes.isEmpty) return const SizedBox.shrink();
+    if (sizes==null||sizes!.isEmpty) return const SizedBox.shrink();
 
-    final measurementRows = _buildMeasurementRows(sizes);
+    final measurementRows = _buildMeasurementRows(sizes!);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
@@ -39,7 +39,7 @@ class ProductSizeGuideTable extends StatelessWidget {
                     ),
                     children: [
                       _headerCell(context, 'size'.tr),
-                      ...sizes.map((s) => _headerCell(context, s.label)),
+                      ...sizes!.map((s) => _headerCell(context, s.label)),
                     ],
                   ),
                   ...measurementRows.map((row) {
@@ -51,7 +51,7 @@ class ProductSizeGuideTable extends StatelessWidget {
                       ),
                       children: [
                         _dataCell(context, row.label??"", bold: true),
-                        ...sizes.map((size) {
+                        ...sizes!.map((size) {
                           final value = row.values[size.id] ?? '-';
                           return _dataCell(context, value);
                         }),

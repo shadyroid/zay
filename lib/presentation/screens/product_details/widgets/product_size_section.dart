@@ -12,14 +12,14 @@ class ProductSizeSection extends StatelessWidget {
     required this.onSizeGuideTap,
   });
 
-  final List<ProductSizeBean> sizes;
+  final List<ProductSizeBean>? sizes;
   final int? selectedSizeId;
   final ValueChanged<int> onSizeSelected;
   final VoidCallback onSizeGuideTap;
 
   @override
   Widget build(BuildContext context) {
-    if (sizes.isEmpty) return const SizedBox.shrink();
+    if (sizes==null||sizes!.isEmpty) return const SizedBox.shrink();
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
@@ -51,7 +51,7 @@ class ProductSizeSection extends StatelessWidget {
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: sizes.map((size) {
+            children: sizes!.map((size) {
               final isSelected = selectedSizeId == size.id;
               return InkWell(
                 onTap: size.isAvailable ? () => onSizeSelected(size.id) : null,
