@@ -25,9 +25,9 @@ class ProductsRequest {
   final bool? newArrival;
   final String? image;
   final String? similarToId;
-  final String? categoryId;
-  final String? shopId;
-  final String? sizeId;
+  final int? categoryId;
+  final int? shopId;
+  final int? sizeId;
   final double? minPrice;
   final double? maxPrice;
   final ProductSortOption? sortBy;
@@ -44,13 +44,11 @@ class ProductsRequest {
     if (similarToId != null && similarToId!.isNotEmpty) {
       params['similar_to_id'] = similarToId;
     }
-    if (categoryId != null &&
-        categoryId!.isNotEmpty &&
-        categoryId != 'all') {
+    if (categoryId != null) {
       params['category_id'] = categoryId;
     }
-    if (shopId != null && shopId!.isNotEmpty) params['shop_id'] = shopId;
-    if (sizeId != null && sizeId!.isNotEmpty) params['size_id'] = sizeId;
+    if (shopId != null) params['shop_id'] = shopId;
+    if (sizeId != null) params['size_id'] = sizeId;
     if (minPrice != null) params['min_price'] = minPrice;
     if (maxPrice != null) params['max_price'] = maxPrice;
     if (sortBy != null) params['sort_by'] = sortBy!.apiValue;

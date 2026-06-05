@@ -24,9 +24,9 @@ class SettingsDataSource {
   Future<Map<String, dynamic>> requestContactUs(
     ContactUsRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.contactUsPath,
-      fields: {
+      data: {
         'name': request.name,
         'email': request.email,
         'phone': request.phone,

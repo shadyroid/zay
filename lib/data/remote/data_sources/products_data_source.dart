@@ -28,9 +28,9 @@ class ProductsDataSource {
       fields['image'] = await dio_multipart.MultipartFile.fromFile(
         request.image!,
       );
-      final response = await _dioClient.postForm(
+      final response = await _dioClient.post(
         Constants.productsPath,
-        fields: fields,
+        data: fields,
       );
       return Map<String, dynamic>.from(response.data as Map);
     }
@@ -73,9 +73,9 @@ class ProductsDataSource {
   Future<Map<String, dynamic>> requestTryProduct(
     TryProductRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.tryProductPath,
-      fields: {
+      data: {
         'product_id': request.productId,
         'photo': await dio_multipart.MultipartFile.fromFile(
           request.imagePath,

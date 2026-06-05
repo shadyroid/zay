@@ -14,7 +14,7 @@ class CategoriesResponse extends BaseResponse {
     return CategoriesResponse(
       statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'] as String?,
-      data: CategoryBean.parseFlattenedList(json['data'] as List<dynamic>?),
+      data: (json['data'] as List?)?.map((e) => CategoryBean.fromJson(e)).toList(),
     );
   }
 }

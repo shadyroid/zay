@@ -11,9 +11,9 @@ class OrderDataSource {
   Future<Map<String, dynamic>> requestCreateOrder(
     CreateOrderRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.createOrderPath,
-      fields: {
+      data: {
         'lat': request.lat,
         'lng': request.lng,
         'address': request.address,
@@ -43,9 +43,9 @@ class OrderDataSource {
   Future<Map<String, dynamic>> requestOrderReturn(
     OrderReturnRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       '${Constants.orderReturnPath}/${request.orderId}',
-      fields: {
+      data: {
         'reason': request.reason,
         'description': request.description,
       },

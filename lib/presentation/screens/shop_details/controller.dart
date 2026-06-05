@@ -18,18 +18,15 @@ class ShopDetailsController extends BaseController {
   final shop = Rxn<ShopBean>();
   final categories = <CategoryBean>[].obs;
   final bestSellerProducts = <ProductBean>[].obs;
-  final selectedCategoryId = 'all'.obs;
+  final selectedCategoryId = RxnInt();
   final isAboutExpanded = false.obs;
 
-  late final String shopId;
+  late final int shopId;
 
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    final passed = args['shop'] as ShopBean?;
-    shopId = args['shopId'] as String? ?? passed?.id ?? '';
-    if (passed != null) shop.value = passed;
+    shopId = Get.arguments['shopId'];
     _loadScreen();
   }
 
@@ -40,7 +37,6 @@ class ShopDetailsController extends BaseController {
   }
 
   Future<void> requestShopDetails() async {
-    if (shopId.isEmpty) return;
     isLoading.value = true;
     final response = await _shopsUseCase.requestShopDetails(
       ShopDetailsRequest(shopId: shopId),
@@ -66,7 +62,6 @@ class ShopDetailsController extends BaseController {
   }
 
   Future<void> requestProducts() async {
-    if (shopId.isEmpty) return;
     final response =
         await _productsUseCase.requestProducts(request: _buildQuery());
     if (!isSuccess(response)) return;

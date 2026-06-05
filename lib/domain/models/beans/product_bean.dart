@@ -1,18 +1,19 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/likes_util.dart';
+import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_size_bean.dart';
+import 'package:hedma/domain/models/beans/shop_bean.dart';
 
 class ProductBean {
-  final String id;
-  final String name;
-  final String price;
+  final int? id;
+  final String? name;
+  final String? price;
   final String? imageUrl;
-  final List<String> imageUrls;
-  final String? shopId;
-  final String? shopName;
+  final List<String>? imageUrls;
+  final ShopBean? shop;
+  final CategoryBean? category;
   final String? sellerCategories;
-  final String? categoryId;
-  final String? sizeId;
+  final int? sizeId;
   final String? rating;
   final int? reviewCount;
   final String? description;
@@ -25,10 +26,9 @@ class ProductBean {
     required this.price,
     this.imageUrl,
     this.imageUrls = const [],
-    this.shopId,
-    this.shopName,
     this.sellerCategories,
-    this.categoryId,
+    this.shop,
+    this.category,
     this.sizeId,
     this.rating,
     this.reviewCount,
@@ -38,33 +38,28 @@ class ProductBean {
   });
 
   factory ProductBean.fromJson(Map<String, dynamic> json) {
-    final shop = json['shop'] as Map<String, dynamic>?;
-    final imageUrls = _resolveImageUrls(json);
-    final id = json['id']?.toString() ?? '';
-
     return ProductBean(
-      id: id,
-      name: _localizedName(json['name']) ?? '',
-      price: json['base_price']?.toString() ??
-          json['price']?.toString() ??
-          '0',
-      imageUrl: imageUrls.isNotEmpty ? imageUrls.first : json['imageUrl'] as String?,
-      imageUrls: imageUrls,
-      shopId: shop?['id']?.toString() ?? json['shopId']?.toString(),
-      shopName: _localizedName(shop?['name']) ?? json['shopName'] as String?,
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      price: json['base_price'], //original_price, discount_percentage
+      imageUrl: json['primary_image'],
+      imageUrls: (json['images'] as List?)?.map((e) => e.toString()).toList(),
+      rating: json['avg_rating'],
+      reviewCount: json['reviews_count'],
+      shop: json['shop'] != null
+          ? ShopBean.fromJson(json['shop'] as Map<String, dynamic>)
+          : null,
+      category: json['category'] != null
+          ? CategoryBean.fromJson(json['category'] as Map<String, dynamic>)
+          : null,
+
       sellerCategories: json['sellerCategories'] as String?,
-      categoryId: json['category_id']?.toString() ??
-          json['categoryId']?.toString(),
-      sizeId: json['sizeId']?.toString(),
-      rating: json['avg_rating']?.toString() ?? json['rating']?.toString(),
-      reviewCount:
-          json['reviews_count'] as int? ?? json['reviewCount'] as int?,
-      description: json['description'] as String?,
+      sizeId: json['sizeId'],
       sizes: _parseSizes(json['sizes']),
       isFavorite: LikesUtil.productLike(
-        id,
-        isFavorite: json['isFavorite'] as bool? ??
-            json['is_favorite'] as bool?,
+        json['id'],
+        isFavorite: json['is_favorite'],
       ),
     );
   }
@@ -76,7 +71,7 @@ class ProductBean {
       if (entry is Map<String, dynamic> && entry['product'] is Map) {
         final product = Map<String, dynamic>.from(entry['product'] as Map);
         LikesUtil.productLike(
-          product['id']?.toString() ?? '',
+          product['id'],
           isFavorite: true,
         );
         return ProductBean.fromJson(product);
@@ -130,9 +125,4 @@ class ProductBean {
         .toList();
   }
 
-  List<String> get galleryImages {
-    if (imageUrls.isNotEmpty) return imageUrls;
-    if (imageUrl != null && imageUrl!.isNotEmpty) return [imageUrl!];
-    return const [];
-  }
 }

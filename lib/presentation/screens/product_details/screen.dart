@@ -39,15 +39,15 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ProductImageCarousel(
-                      images: product.galleryImages,
+                      images: product.imageUrls ?? [],
                       currentIndex: controller.imageIndex.value,
                       isFavorite: product.isFavorite,
                       onFavoriteTap: controller.toggleFavorite,
                       onPageChanged: controller.onImageChanged,
                     ),
                     ProductDetailsHeader(
-                      name: product.name,
-                      price: product.price,
+                      name: product.name ?? "",
+                      price: product.price ?? "",
                       rating: product.rating ?? '5.0',
                       reviewCount: product.reviewCount ?? 0,
                       quantity: controller.quantity.value,
@@ -66,7 +66,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       onSizeGuideTap: controller.scrollToSizeGuide,
                     ),
                     ProductSellerBanner(
-                      shopName: product.shopName ?? '',
+                      shopName: product.shop?.name ?? '',
                       categories: product.sellerCategories ?? '',
                       onTap: controller.navigateToShop,
                     ),
@@ -76,7 +76,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                     ),
                     SimilarProductsSection(
                       products: controller.similarProducts,
-                      shopNameFor: (p) => p.shopName ?? '',
+                      shopNameFor: (p) => p.shop?.name ?? '',
                       onProductTap: controller.navigateToProduct,
                       onFavoriteTap: controller.toggleFavoriteFor,
                     ),
@@ -90,7 +90,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               ),
             ),
             ProductDetailsBottomBar(
-              price: product.price,
+              price: product.price ?? "",
               onTryOn: controller.onTryOn,
               onAddToCart: controller.addToCart,
             ),

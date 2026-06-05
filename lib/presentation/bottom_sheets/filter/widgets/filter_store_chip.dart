@@ -49,7 +49,7 @@ class FilterStoreChip extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  shop.name,
+                  shop.name ?? "",
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w600,

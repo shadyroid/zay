@@ -45,10 +45,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (status != null && status != 200) {
       return CategoriesResponse.fromJson(json);
     }
-    return CategoriesResponse.fromJson({
-      ...json,
-      'data': json['categories'],
-    });
+    return CategoriesResponse.fromJson({...json, 'data': json['categories']});
   }
 
   @override
@@ -58,44 +55,26 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (status != null && status != 200) {
       return SizesResponse.fromJson(json);
     }
-    return SizesResponse.fromJson({
-      ...json,
-      'data': json['sizes'],
-    });
+    return SizesResponse.fromJson({...json, 'data': json['sizes']});
   }
 
   @override
   Future<ProductsResponse> requestProducts({
     ProductsRequest request = const ProductsRequest(),
   }) async {
-    final json = await _productsDataSource.requestProducts(request: request);
+    var json = await _productsDataSource.requestProducts(request: request);
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
       return ProductsResponse.fromJson(json);
     }
-    _syncProductsFromResponse(json);
+    json = {
+      "statusCode": json['statusCode'],
+      "data": json['products'],
+      "totalCount": json['pagination']?['total'],
+    };
+    LikesUtil.syncProductsFromList(json['data']);
 
-    final remapped = <String, dynamic>{...json};
-    final data = json['data'];
-    if (data is Map<String, dynamic> && data['products'] is List) {
-      remapped['data'] = data['products'];
-      final pagination = data['pagination'] ?? json['pagination'];
-      if (pagination is Map) {
-        remapped['totalCount'] = pagination['total'];
-      }
-    } else if (json['products'] is List) {
-      remapped['data'] = json['products'];
-      final pagination = json['pagination'];
-      if (pagination is Map) {
-        remapped['totalCount'] = pagination['total'];
-      }
-    } else if (data is List) {
-      remapped['data'] = data;
-    } else if (data is Map<String, dynamic>) {
-      remapped['data'] = data;
-    }
-
-    return ProductsResponse.fromJson(remapped);
+    return ProductsResponse.fromJson(json);
   }
 
   @override
@@ -120,23 +99,17 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<ProductsResponse> requestFavorites() async {
-    final json = await _productsDataSource.requestFavorites();
+    var json = await _productsDataSource.requestFavorites();
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
       return ProductsResponse.fromJson(json);
     }
-    _syncProductsFromResponse(json);
-
-    final remapped = <String, dynamic>{
-      ...json,
-      'data': json['wishlist'],
+    json = {
+      "statusCode": json['statusCode'],
+      "data": json['wishlist'],
     };
-    final pagination = json['pagination'];
-    if (pagination is Map) {
-      remapped['totalCount'] = pagination['total'];
-    }
-
-    return ProductsResponse.fromJson(remapped);
+    LikesUtil.syncProductsFromList(json['data']);
+    return ProductsResponse.fromJson(json);
   }
 
   @override
@@ -162,7 +135,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<TryProductResponse> requestTryProduct(TryProductRequest request) async {
+  Future<TryProductResponse> requestTryProduct(
+    TryProductRequest request,
+  ) async {
     final json = await _productsDataSource.requestTryProduct(request);
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {

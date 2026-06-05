@@ -24,7 +24,7 @@ class ShopsController extends BaseController {
   }
 
   void navigateToShopDetails(ShopBean shop) {
-    Get.toNamed(Routes.shopDetails, arguments: {'shopId': shop.id, 'shop': shop});
+    Get.toNamed(Routes.shopDetails, arguments: {'shopId': shop.id});
   }
 
   void goBack() => Get.offNamed(Routes.home);

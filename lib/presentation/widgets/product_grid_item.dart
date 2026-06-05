@@ -70,7 +70,7 @@ class ProductGridItem extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            product.name,
+            product.name ?? "",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(

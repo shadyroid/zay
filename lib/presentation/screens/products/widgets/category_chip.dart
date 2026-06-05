@@ -37,12 +37,12 @@ class CategoryChip extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _CategoryIcon(
-                  iconUrl: category.iconUrl,
+                  iconUrl: category.iconUrl ?? "",
                   color: foreground,
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  category.name,
+                  category.name ?? "",
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: foreground,
                         fontWeight:

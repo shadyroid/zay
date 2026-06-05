@@ -17,7 +17,7 @@ class ProductsController extends BaseController {
 
   final categories = <CategoryBean>[].obs;
   final products = <ProductBean>[].obs;
-  final selectedCategoryId = 'all'.obs;
+  final selectedCategoryId = RxnInt();
   final activeFilters = ProductFilters.initial.obs;
   final selectedSort = ProductSortOption.newest.obs;
   final searchQuery = ''.obs;
@@ -35,10 +35,9 @@ class ProductsController extends BaseController {
     if (args is! Map) return;
 
     final categoryId = args['categoryId'];
-    if (categoryId is String && categoryId.isNotEmpty) {
+    if (args['categoryId'] != null) {
       selectedCategoryId.value = categoryId;
-      activeFilters.value =
-          activeFilters.value.copyWith(categoryId: categoryId);
+      activeFilters.value = activeFilters.value.copyWith(categoryId: categoryId);
     }
 
     final filters = args['filters'];

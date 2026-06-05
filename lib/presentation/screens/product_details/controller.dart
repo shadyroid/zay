@@ -37,13 +37,7 @@ class ProductDetailsController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    final passed = args['product'] as ProductBean?;
-    productId = args['productId'] as String? ?? passed?.id ?? '';
-    if (passed != null) {
-      product.value = passed;
-      _initSelectedSize(passed);
-    }
+    productId = Get.arguments['productId'];
     _loadScreen();
   }
 
@@ -57,6 +51,7 @@ class ProductDetailsController extends BaseController {
     await Future.wait([
       requestProductDetails(),
       requestReviews(),
+      requestSimilarProducts()
     ]);
   }
 
@@ -82,12 +77,6 @@ class ProductDetailsController extends BaseController {
     product.value = response.data;
     if (response.data != null) {
       _initSelectedSize(response.data!);
-    }
-    final similar = response.similarProducts;
-    if (similar != null && similar.isNotEmpty) {
-      similarProducts.assignAll(similar);
-    } else {
-      await requestSimilarProducts();
     }
   }
 
@@ -212,7 +201,7 @@ class ProductDetailsController extends BaseController {
   }
 
   void navigateToShop() {
-    final shopId = product.value?.shopId;
+    final shopId = product.value?.shop?.id;
     if (shopId == null) return;
     Get.toNamed(Routes.shopDetails, arguments: {'shopId': shopId});
   }
@@ -220,7 +209,7 @@ class ProductDetailsController extends BaseController {
   void navigateToProduct(ProductBean item) {
     Get.toNamed(
       Routes.productDetails,
-      arguments: {'productId': item.id, 'product': item},
+      arguments: {'productId': item.id},
     );
   }
 

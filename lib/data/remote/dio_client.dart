@@ -202,16 +202,4 @@ class DioClient extends GetxService {
     }
   }
 
-  Future<Response> postForm(
-    String path, {
-    required Map<String, dynamic> fields,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) =>
-      post(
-        path,
-        data: dio_multipart.FormData.fromMap(fields),
-        queryParameters: queryParameters,
-        options: options,
-      );
 }

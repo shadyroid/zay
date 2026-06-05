@@ -16,9 +16,9 @@ class CartDataSource {
   Future<Map<String, dynamic>> requestAddCartItem(
     AddCartItemRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.cartItemsPath,
-      fields: {
+      data: {
         'product_id': request.productId,
         'product_size_id': request.productSizeId,
         'quantity': request.quantity,
@@ -30,9 +30,9 @@ class CartDataSource {
   Future<Map<String, dynamic>> requestUpdateCartItem(
     UpdateCartItemRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       '${Constants.cartItemsPath}/${request.cartItemId}',
-      fields: {'quantity': request.quantity},
+      data: {'quantity': request.quantity},
     );
     return Map<String, dynamic>.from(response.data as Map);
   }

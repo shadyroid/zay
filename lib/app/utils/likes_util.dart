@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
 class LikesUtil {
-  static final productsLikes = <String, RxBool>{}.obs;
+  static final productsLikes = <int, RxBool>{}.obs;
 
-  static RxBool productLike(String id, {bool? isFavorite}) {
+  static RxBool productLike(int? id, {bool? isFavorite}) {
     if (productsLikes.containsKey(id)) {
       if (isFavorite != null) {
         productsLikes[id]!.value = isFavorite;
@@ -12,17 +12,15 @@ class LikesUtil {
     }
 
     final liked = RxBool(isFavorite ?? false);
-    productsLikes[id] = liked;
+    if(id!=null) productsLikes[id] = liked;
     return liked;
   }
 
   static void syncProductFromJson(Map<String, dynamic> json) {
-    final id = json['id']?.toString();
-    if (id == null || id.isEmpty) return;
+    final id = json['id'];
+    if (id == null) return;
 
-    final isFavorite = json['isFavorite'] as bool? ??
-        json['is_favorite'] as bool? ??
-        false;
+    final isFavorite = json['is_favorite'];
 
     productLike(id, isFavorite: isFavorite);
   }

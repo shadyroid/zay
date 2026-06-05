@@ -40,7 +40,7 @@ class HomeTopStoreItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                shop.name,
+                shop.name ?? "",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,

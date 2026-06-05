@@ -54,7 +54,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               Text(
-                shop.name,
+                shop.name ?? "",
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: AppColors.textPrimary,
                       fontWeight: FontWeight.w700,

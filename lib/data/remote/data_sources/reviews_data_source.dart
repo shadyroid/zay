@@ -19,9 +19,9 @@ class ReviewsDataSource {
   Future<Map<String, dynamic>> requestAddTryOutReview(
     AddTryOutReviewRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.addTryOutReviewPath,
-      fields: {
+      data: {
         'product_id': request.productId,
         'title': request.title,
         'comment': request.comment,
@@ -34,9 +34,9 @@ class ReviewsDataSource {
   Future<Map<String, dynamic>> requestAddReview(
     AddReviewRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       '${Constants.reviewsPath}/${request.productId}/reviews',
-      fields: {
+      data: {
         'order_item_id': request.orderItemId,
         'rating': request.rating,
         'comment': request.comment?.trim() ?? '',

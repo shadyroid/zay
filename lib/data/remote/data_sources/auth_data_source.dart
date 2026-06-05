@@ -15,9 +15,9 @@ class AuthDataSource {
   final DioClient _dioClient = Get.find<DioClient>();
 
   Future<Map<String, dynamic>> requestSignIn(SignInRequest request) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.signInPath,
-      fields: {
+      data: {
         'email': request.email,
         'password': request.password,
       },
@@ -26,9 +26,9 @@ class AuthDataSource {
   }
 
   Future<Map<String, dynamic>> requestSignUp(SignUpRequest request) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.signUpPath,
-      fields: {
+      data: {
         'name': request.name,
         'email': request.email,
         'phone': request.phone ?? '',
@@ -44,9 +44,9 @@ class AuthDataSource {
   Future<Map<String, dynamic>> requestForgetPassword(
     ForgetPasswordRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.forgetPasswordPath,
-      fields: {'email': request.email},
+      data: {'email': request.email},
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
@@ -54,9 +54,9 @@ class AuthDataSource {
   Future<Map<String, dynamic>> requestVerification(
     VerificationRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.verificationPath,
-      fields: {
+      data: {
         'email': request.email,
         'otp': request.otp,
       },
@@ -73,9 +73,9 @@ class AuthDataSource {
       );
     }
 
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.resendVerificationPath,
-      fields: {'email': request.email},
+      data: {'email': request.email},
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
@@ -83,9 +83,9 @@ class AuthDataSource {
   Future<Map<String, dynamic>> requestResetPassword(
     ResetPasswordRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.resetPasswordPath,
-      fields: {
+      data: {
         'email': request.email,
         'otp': request.otp,
         'password': request.password,
@@ -133,9 +133,9 @@ class AuthDataSource {
   Future<Map<String, dynamic>> requestChangePassword(
     ChangePasswordRequest request,
   ) async {
-    final response = await _dioClient.postForm(
+    final response = await _dioClient.post(
       Constants.changePasswordPath,
-      fields: {
+      data: {
         'current_password': request.currentPassword,
         'password': request.password,
         'password_confirmation': request.passwordConfirmation,

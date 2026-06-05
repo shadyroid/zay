@@ -8,7 +8,7 @@ import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/domain/models/beans/size_bean.dart';
 class FilterBottomSheetController extends GetxController {
   FilterBottomSheetController({required ProductFilters initial}) {
-    selectedCategoryId.value = initial.categoryId;
+    selectedCategoryId.value = null;
     selectedShopId.value = initial.shopId;
     selectedSizeId.value = initial.sizeId;
     priceRange.value = RangeValues(initial.priceMin, initial.priceMax);
@@ -27,9 +27,9 @@ class FilterBottomSheetController extends GetxController {
   final shops = <ShopBean>[].obs;
   final sizes = <SizeBean>[].obs;
 
-  final selectedCategoryId = 'all'.obs;
-  final selectedShopId = RxnString();
-  final selectedSizeId = RxnString();
+  final selectedCategoryId = RxnInt();
+  final selectedShopId = RxnInt();
+  final selectedSizeId = RxnInt();
   final priceRange =
       const RangeValues(priceMinBound, priceMaxBound).obs;
 
@@ -72,8 +72,7 @@ class FilterBottomSheetController extends GetxController {
   }
 
   void selectShop(ShopBean shop) {
-    selectedShopId.value =
-        selectedShopId.value == shop.id ? null : shop.id;
+    selectedShopId.value = selectedShopId.value == shop.id ? null : shop.id;
   }
 
   void selectSize(SizeBean size) {
@@ -86,7 +85,7 @@ class FilterBottomSheetController extends GetxController {
   }
 
   void clearFilters() {
-    selectedCategoryId.value = 'all';
+    selectedCategoryId.value = null;
     selectedShopId.value = null;
     selectedSizeId.value = null;
     priceRange.value = const RangeValues(priceMinBound, priceMaxBound);

@@ -1,6 +1,6 @@
 class SizeBean {
-  final String id;
-  final String label;
+  final int? id;
+  final String? label;
 
   const SizeBean({
     required this.id,
@@ -9,8 +9,8 @@ class SizeBean {
 
   factory SizeBean.fromJson(Map<String, dynamic> json) {
     return SizeBean(
-      id: json['id']?.toString() ?? '',
-      label: json['label'] as String? ?? json['name'] as String? ?? '',
+      id: json['id'],
+      label: json['label'],
     );
   }
 }

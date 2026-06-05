@@ -33,7 +33,7 @@ class FilterSizeChip extends StatelessWidget {
             height: 48,
             child: Center(
               child: Text(
-                size.label,
+                size.label ?? "",
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: foreground,
                       fontWeight: FontWeight.w600,

@@ -28,14 +28,14 @@ class ShopItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ShopLogo(imageUrl: shop.imageUrl, name: shop.name),
+            _ShopLogo(imageUrl: shop.imageUrl, name: shop.name ?? ""),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    shop.name,
+                    shop.name ?? "",
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: AppColors.textPrimary,
                           fontWeight: FontWeight.w700,

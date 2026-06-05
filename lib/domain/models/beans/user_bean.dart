@@ -1,42 +1,30 @@
 class UserBean {
+  final int? id;
   final String? name;
   final String? email;
   final String? phone;
-  final String? height;
-  final String? weight;
-  final String? location;
+  final int? height;
+  final int? weight;
   final String? avatarUrl;
 
   const UserBean({
+    this.id,
     this.name,
     this.email,
     this.phone,
     this.height,
     this.weight,
-    this.location,
     this.avatarUrl,
   });
 
   factory UserBean.fromJson(Map<String, dynamic> json) {
-    final bodyProfile = json['body_profile'] as Map<String, dynamic>?;
-
     return UserBean(
-      name: json['name'] as String?,
-      email: json['email'] as String?,
-      phone: json['phone'] as String?,
-      height: bodyProfile?['height']?.toString() ?? json['height']?.toString(),
-      weight: bodyProfile?['weight']?.toString() ?? json['weight']?.toString(),
-      location: json['location'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
+      name: json['name'],
+      email: json['email'],
+      phone: json['phone'],
+      height: json['body_profile']?['height'],
+      weight: json['body_profile']?['weight'],
+      avatarUrl: json['avatar_url'],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'email': email,
-        'phone': phone,
-        if (height != null) 'height': height,
-        if (weight != null) 'weight': weight,
-        if (location != null) 'location': location,
-      };
 }

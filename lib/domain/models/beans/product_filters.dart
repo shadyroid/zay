@@ -1,24 +1,24 @@
 class ProductFilters {
   const ProductFilters({
-    this.categoryId = 'all',
+    this.categoryId,
     this.shopId,
     this.sizeId,
     this.priceMin = 0,
     this.priceMax = 250,
   });
 
-  final String categoryId;
-  final String? shopId;
-  final String? sizeId;
+  final int? categoryId;
+  final int? shopId;
+  final int? sizeId;
   final double priceMin;
   final double priceMax;
 
   static const ProductFilters initial = ProductFilters();
 
   ProductFilters copyWith({
-    String? categoryId,
-    String? shopId,
-    String? sizeId,
+    int? categoryId,
+    int? shopId,
+    int? sizeId,
     double? priceMin,
     double? priceMax,
     bool clearShop = false,

@@ -28,9 +28,9 @@ class HomeController extends BaseController {
   final recommendedProducts = <ProductBean>[].obs;
   final newArrivalProducts = <ProductBean>[].obs;
   final topStores = <ShopBean>[].obs;
-  final selectedCategoryId = 'all'.obs;
+  final selectedCategoryId = RxnInt();
 
-  final Map<String, String> _shopNames = {};
+  final Map<int?, String?> _shopNames = {};
 
   @override
   void onInit() {
@@ -95,8 +95,8 @@ class HomeController extends BaseController {
   }
 
   String shopNameFor(ProductBean product) {
-    if (product.shopId == null) return '';
-    return _shopNames[product.shopId] ?? '';
+    if (product.shop?.id == null) return '';
+    return _shopNames[product.shop!.id] ?? '';
   }
 
   Future<void> toggleFavorite(ProductBean product) async {
@@ -113,7 +113,7 @@ class HomeController extends BaseController {
   }
 
   void navigateToProducts({
-    String? categoryId,
+    int? categoryId,
     ProductFilters? filters,
     String? search,
   }) {

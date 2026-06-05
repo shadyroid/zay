@@ -51,8 +51,8 @@ class EditProfileController extends BaseController {
     nameController.text = profile.name ?? '';
     emailController.text = profile.email ?? '';
     phoneController.text = profile.phone ?? '';
-    heightController.text = profile.height ?? '';
-    weightController.text = profile.weight ?? '';
+    heightController.text = profile.height?.toString() ?? '';
+    weightController.text = profile.weight?.toString() ?? '';
     displayName.value = profile.name ?? '';
     profileImagePath.value = profile.avatarUrl;
   }

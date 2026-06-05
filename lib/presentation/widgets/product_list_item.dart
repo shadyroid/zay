@@ -19,7 +19,7 @@ class ProductListItem extends StatelessWidget {
         backgroundColor: Colors.grey.shade200,
         child: const Icon(Icons.shopping_bag_outlined),
       ),
-      title: Text(product.name),
+      title: Text(product.name ?? ""),
       subtitle: Text('\$${product.price}'),
       trailing: const Icon(
         Icons.arrow_forward_ios,

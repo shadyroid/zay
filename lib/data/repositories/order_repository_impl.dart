@@ -28,30 +28,30 @@ class OrderRepositoryImpl implements OrderRepository {
 
   @override
   Future<OrdersResponse> requestOrders() async {
-    final json = await _orderDataSource.requestOrders();
+    var json = await _orderDataSource.requestOrders();
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
       return OrdersResponse.fromJson(json);
     }
-    return OrdersResponse.fromJson({
-      ...json,
-      'data': json['orders'],
-    });
+    json = {
+      "statusCode": json['statusCode'],
+      "data": json['orders'],
+    };
+    return OrdersResponse.fromJson(json);
   }
 
   @override
   Future<OrderResponse> requestOrderDetails(OrderDetailsRequest request) async {
-    final json = await _orderDataSource.requestOrderDetails(request);
+    var json = await _orderDataSource.requestOrderDetails(request);
     final status = json['statusCode'] as int?;
     if (status != null && status != 200) {
       return OrderResponse.fromJson(json);
     }
-    return OrderResponse.fromJson({
-      ...json,
-      'data': json['order'] is Map
-          ? Map<String, dynamic>.from(json['order'] as Map)
-          : null,
-    });
+    json = {
+      "statusCode": json['statusCode'],
+      "data": json['order'],
+    };
+    return OrderResponse.fromJson(json);
   }
 
   @override

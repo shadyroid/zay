@@ -1,6 +1,8 @@
+import 'package:hedma/app/utils/parser.dart';
+
 class ShopBean {
-  final String id;
-  final String name;
+  final int? id;
+  final String? name;
   final String? description;
   final String? about;
   final String? iconUrl;
@@ -29,17 +31,18 @@ class ShopBean {
         json['imageUrl'] as String?;
 
     return ShopBean(
-      id: json['id']?.toString() ?? '',
-      name: json['name'] as String? ?? '',
-      description: json['description'] as String?,
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      rating: Parser.parseString(json['avg_rating']),
+      logoUrl: json['logo_url'],
+      bannerUrl: json['cover_url'],
+
+
       about: json['about'] as String? ?? json['return_policy'] as String?,
       iconUrl: json['iconUrl'] as String?,
-      logoUrl: logoUrl,
-      bannerUrl: json['cover_url'] as String? ?? json['bannerUrl'] as String?,
       imageUrl: logoUrl,
-      rating: json['avg_rating']?.toString() ?? json['rating']?.toString(),
-      reviewCount:
-          json['products_count'] as int? ?? json['reviewCount'] as int?,
+      reviewCount: json['products_count'] as int? ?? json['reviewCount'] as int?,
     );
   }
 }
