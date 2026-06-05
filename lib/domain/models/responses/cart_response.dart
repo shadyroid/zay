@@ -13,7 +13,7 @@ class CartResponse extends BaseResponse {
   factory CartResponse.fromJson(Map<String, dynamic> json) {
     return CartResponse(
       statusCode: json['statusCode'] as int? ?? 200,
-      message: json['message'] as String?,
+      message: json['message'],
       data: CartItemBean.parseList(json['data'] as List<dynamic>?),
     );
   }

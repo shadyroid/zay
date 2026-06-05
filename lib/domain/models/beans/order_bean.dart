@@ -2,7 +2,7 @@ import 'package:hedma/domain/models/beans/order_line_item_bean.dart';
 import 'package:hedma/domain/models/beans/order_track_step_bean.dart';
 
 class OrderBean {
-  final String id;
+  final int id;
   final String status;
   final String total;
   final String date;
@@ -82,11 +82,11 @@ class OrderBean {
         (lineItem?['product'] as Map<String, dynamic>?)?['name'];
     final shippingAddress = json['shipping_address'] as Map<String, dynamic>?;
     final createdAt =
-        json['created_at'] as String? ?? json['date'] as String? ?? '';
+        json['created_at'] as String? ?? json['date'];
     final productName = _localized(productNameField);
 
     return OrderBean(
-      id: json['id']?.toString() ?? '',
+      id: json['id'],
       status: _resolveStatus(json),
       total: _formatAmount(json['total']),
       date: _formatDate(createdAt),
@@ -105,7 +105,7 @@ class OrderBean {
           '',
       customerAddress: shippingAddress != null
           ? _formatAddress(shippingAddress)
-          : json['customerAddress'] as String? ?? '',
+          : json['customerAddress'],
       customerPhone: json['recipient_phone'] as String? ??
           json['customerPhone'] as String? ??
           '',
@@ -173,7 +173,7 @@ class OrderBean {
 
     final first = subOrders.first;
     if (first is Map<String, dynamic>) {
-      return first['status'] as String? ?? '';
+      return first['status'];
     }
     return '';
   }
@@ -215,7 +215,7 @@ class OrderBean {
   static String _localized(dynamic value) {
     if (value is String) return value;
     if (value is Map) {
-      return value['ar']?.toString() ?? value['en']?.toString() ?? '';
+      return value['ar'] ?? value['en'];
     }
     return '';
   }
@@ -238,9 +238,9 @@ class OrderBean {
     if (full != null && full.isNotEmpty) return full;
 
     final parts = <String>[
-      address['street'] as String? ?? '',
-      address['city'] as String? ?? '',
-      address['governorate'] as String? ?? '',
+      address['street'],
+      address['city'],
+      address['governorate'],
     ].where((part) => part.isNotEmpty).toList();
 
     return parts.join(', ');

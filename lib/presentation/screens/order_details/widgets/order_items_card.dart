@@ -19,7 +19,7 @@ class OrderItemsCard extends StatelessWidget {
         : [
             OrderLineItemBean(
               id: order.id,
-              productId: '',
+              productId: 0,
               productName: order.productName,
               productImageUrl: order.productImageUrl,
               size: order.size,

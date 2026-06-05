@@ -9,14 +9,13 @@ class ReviewsController extends BaseController {
 
   final reviews = <ReviewBean>[].obs;
 
-  late final String productId;
+  late final int productId;
 
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    productId = args['productId'] as String? ?? '';
-    final passed = args['reviews'] as List<ReviewBean>?;
+    productId =  Get.arguments['productId'];
+    final passed = Get.arguments['reviews'];
     if (passed != null && passed.isNotEmpty) {
       reviews.assignAll(passed);
     }
@@ -24,7 +23,6 @@ class ReviewsController extends BaseController {
   }
 
   Future<void> requestReviews() async {
-    if (productId.isEmpty) return;
     isLoading.value = reviews.isEmpty;
     final response = await _reviewsUseCase.requestReviews(
       ReviewsRequest(productId: productId),

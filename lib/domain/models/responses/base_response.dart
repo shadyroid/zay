@@ -11,7 +11,7 @@ class BaseResponse {
 
   factory BaseResponse.fromJson(Map<String, dynamic> json) {
     return BaseResponse(
-      message: json['message'] as String?,
+      message: json['message'],
       statusCode: json['statusCode'] as int? ?? 200,
     );
   }

@@ -22,9 +22,7 @@ class ProductsDataSource {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> requestProducts({
-    ProductsRequest request = const ProductsRequest(),
-  }) async {
+  Future<Map<String, dynamic>> requestProducts(ProductsRequest request) async {
     if (request.image != null && request.image!.isNotEmpty) {
       final fields = Map<String, dynamic>.from(request.toQueryParameters());
       fields['image'] = await dio_multipart.MultipartFile.fromFile(

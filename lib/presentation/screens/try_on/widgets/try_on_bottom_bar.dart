@@ -11,7 +11,7 @@ class TryOnBottomBar extends StatelessWidget {
     required this.onAddToCart,
   });
 
-  final String price;
+  final String? price;
   final VoidCallback onTryOnAgain;
   final VoidCallback onAddToCart;
 

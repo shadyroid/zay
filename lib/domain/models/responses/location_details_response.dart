@@ -14,7 +14,7 @@ class LocationDetailsResponse extends BaseResponse {
     final raw = json['data'];
     return LocationDetailsResponse(
       statusCode: json['statusCode'] as int? ?? 200,
-      message: json['message'] as String?,
+      message: json['message'],
       data: raw is Map<String, dynamic> ? LocationBean.fromJson(raw) : null,
     );
   }

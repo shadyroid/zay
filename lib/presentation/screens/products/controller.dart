@@ -47,7 +47,7 @@ class ProductsController extends BaseController {
   Future<void> requestProducts() async {
     isLoading.value = true;
     final response = await _productsUseCase.requestProducts(
-      request: ProductsRequest(
+      ProductsRequest(
         categoryId: selectedCategoryId.value,
         shopId: shopId,
         sizeId: sizeId,

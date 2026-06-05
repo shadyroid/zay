@@ -9,29 +9,23 @@ class ShopsRepositoryImpl implements ShopsRepository {
 
   @override
   Future<ShopsResponse> requestShops() async {
-    final json = await _shopsDataSource.requestShops();
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return ShopsResponse.fromJson(json);
-    }
-    return ShopsResponse.fromJson({
-      ...json,
-      'data': json['shops'],
-    });
+    var json = await _shopsDataSource.requestShops();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['shops'],
+    };
+    return ShopsResponse.fromJson(json);
   }
 
   @override
   Future<ShopResponse> requestShopDetails(ShopDetailsRequest request) async {
-    final json = await _shopsDataSource.requestShopDetails(request);
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return ShopResponse.fromJson(json);
-    }
-    return ShopResponse.fromJson({
-      ...json,
-      'data': json['shop'] is Map
-          ? Map<String, dynamic>.from(json['shop'] as Map)
-          : null,
-    });
+    var json = await _shopsDataSource.requestShopDetails(request);
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['shop'],
+    };
+    return ShopResponse.fromJson(json);
   }
 }

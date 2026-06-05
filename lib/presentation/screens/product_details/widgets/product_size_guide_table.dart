@@ -50,7 +50,7 @@ class ProductSizeGuideTable extends StatelessWidget {
                             : AppColors.screenBackground,
                       ),
                       children: [
-                        _dataCell(context, row.label, bold: true),
+                        _dataCell(context, row.label??"", bold: true),
                         ...sizes.map((size) {
                           final value = row.values[size.id] ?? '-';
                           return _dataCell(context, value);
@@ -70,13 +70,13 @@ class ProductSizeGuideTable extends StatelessWidget {
   List<_MeasurementRow> _buildMeasurementRows(List<ProductSizeBean> sizes) {
     if (sizes.isEmpty) return [];
 
-    final ordered = <String, String>{};
+    final ordered = <int?, String?>{};
     for (final m in sizes.first.measurements) {
       ordered[m.id] = m.label;
     }
 
     return ordered.entries.map((entry) {
-      final values = <String, String>{};
+      final values = <int?, String?>{};
       for (final size in sizes) {
         final match = size.measurements
             .where((m) => m.id == entry.key)
@@ -117,6 +117,6 @@ class ProductSizeGuideTable extends StatelessWidget {
 class _MeasurementRow {
   const _MeasurementRow({required this.label, required this.values});
 
-  final String label;
-  final Map<String, String> values;
+  final String? label;
+  final Map<int?, String?> values;
 }

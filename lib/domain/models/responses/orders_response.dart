@@ -14,7 +14,7 @@ class OrdersResponse extends BaseResponse {
     final list = json['data'] as List<dynamic>?;
     return OrdersResponse(
       statusCode: json['statusCode'] as int? ?? 200,
-      message: json['message'] as String?,
+      message: json['message'],
       data: list
           ?.map((e) => OrderBean.fromJson(e as Map<String, dynamic>))
           .toList(),

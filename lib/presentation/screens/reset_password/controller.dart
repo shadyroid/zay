@@ -19,9 +19,9 @@ class ResetPasswordController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    email = args['email'] as String? ?? '';
-    otp = args['otp'] as String? ?? args['code'] as String? ?? '';
+    
+    email = Get.arguments['email'] as String? ?? '';
+    otp = Get.arguments['otp'] as String? ?? Get.arguments['code'] as String? ?? '';
   }
 
   @override

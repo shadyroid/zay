@@ -14,9 +14,7 @@ abstract class ProductsRepository {
 
   Future<SizesResponse> requestSizes();
 
-  Future<ProductsResponse> requestProducts({
-    ProductsRequest request = const ProductsRequest(),
-  });
+  Future<ProductsResponse> requestProducts(ProductsRequest request);
 
   Future<ProductResponse> requestProductDetails(ProductDetailsRequest request);
 

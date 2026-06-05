@@ -12,19 +12,18 @@ class OrderTrackController extends BaseController {
   final steps = <OrderTrackStepBean>[].obs;
   final estimatedDelivery = ''.obs;
 
-  late final String orderId;
+  late final int orderId;
 
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    orderId = args['orderId'] as String? ?? '';
-    order.value = args['order'] as OrderBean?;
+    
+    orderId =  Get.arguments['orderId'];
+    order.value =  Get.arguments['order'];
     requestOrderDetails();
   }
 
   Future<void> requestOrderDetails() async {
-    if (orderId.isEmpty) return;
     isLoading.value = true;
     final response = await _orderUseCase.requestOrderDetails(
       OrderDetailsRequest(orderId: orderId),

@@ -13,13 +13,12 @@ class OrderReturnController extends BaseController {
   final selectedReasonValue = RxnString();
   final returnPolicy = RxnString();
 
-  late final String orderId;
+  late final int orderId;
 
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    orderId = args['orderId'] as String? ?? '';
+    orderId = Get.arguments['orderId'];
     requestReturnReasons();
   }
 
@@ -46,11 +45,7 @@ class OrderReturnController extends BaseController {
     selectedReasonValue.value = reason.value;
   }
 
-  
-
   Future<void> requestOrderReturn() async {
-    if (orderId.isEmpty) return;
-
     final reason = selectedReasonValue.value;
     if (reason == null || reason.isEmpty) return;
 

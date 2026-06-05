@@ -5,10 +5,10 @@ import 'package:hedma/app/use_cases/shops_use_case.dart';
 import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
+import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/domain/requests/shop_details_request.dart';
-import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class ShopDetailsController extends BaseController {
@@ -16,7 +16,6 @@ class ShopDetailsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
 
   final shop = Rxn<ShopBean>();
-  final categories = <CategoryBean>[].obs;
   final bestSellerProducts = <ProductBean>[].obs;
   final selectedCategoryId = RxnInt();
   final isAboutExpanded = false.obs;
@@ -31,9 +30,8 @@ class ShopDetailsController extends BaseController {
   }
 
   Future<void> _loadScreen() async {
-    await requestShopDetails();
-    await requestCategories();
-    await requestProducts();
+    requestShopDetails();
+    requestProducts();
   }
 
   Future<void> requestShopDetails() async {
@@ -46,24 +44,15 @@ class ShopDetailsController extends BaseController {
     shop.value = response.data;
   }
 
-  Future<void> requestCategories() async {
-    final response = await _productsUseCase.requestCategories();
-    if (!isSuccess(response)) return;
-    categories.assignAll(response.data ?? []);
-  }
-
-  ProductsRequest _buildQuery() {
-    return ProductsRequest(
-      shopId: shopId,
-      categoryId: selectedCategoryId.value,
-      bestSeller: true,
-      pageSize: 4,
-    );
-  }
-
   Future<void> requestProducts() async {
-    final response =
-        await _productsUseCase.requestProducts(request: _buildQuery());
+    final response = await _productsUseCase.requestProducts(
+      ProductsRequest(
+        shopId: shopId,
+        categoryId: selectedCategoryId.value,
+        bestSeller: true,
+        pageSize: 4,
+      ),
+    );
     if (!isSuccess(response)) return;
     bestSellerProducts.assignAll(response.data ?? []);
   }
@@ -94,8 +83,6 @@ class ShopDetailsController extends BaseController {
   }
 
   void navigateToAllProducts() => Get.toNamed(Routes.products);
-
-  
 
   void onShare() {
     Get.rawSnackbar(message: 'shareComingSoon'.tr);

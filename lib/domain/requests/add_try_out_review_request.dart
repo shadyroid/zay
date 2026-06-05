@@ -6,7 +6,7 @@ class AddTryOutReviewRequest {
     required this.rating,
   });
 
-  final String productId;
+  final int? productId;
   final String title;
   final String comment;
   final double rating;

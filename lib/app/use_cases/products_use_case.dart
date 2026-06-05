@@ -22,9 +22,7 @@ class ProductsUseCase {
 
   Future<SizesResponse> requestSizes() => _productsRepository.requestSizes();
 
-  Future<ProductsResponse> requestProducts({
-    ProductsRequest request = const ProductsRequest(),
-  }) => _productsRepository.requestProducts(request: request);
+  Future<ProductsResponse> requestProducts(ProductsRequest request) => _productsRepository.requestProducts(request);
 
   Future<ProductResponse> requestProductDetails(
     ProductDetailsRequest request,

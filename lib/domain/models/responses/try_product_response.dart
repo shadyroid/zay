@@ -26,7 +26,7 @@ class TryProductResponse extends BaseResponse {
 
     return TryProductResponse(
       statusCode: json['statusCode'] as int? ?? 200,
-      message: json['message'] as String?,
+      message: json['message'],
       imageUrl: imageUrl,
     );
   }

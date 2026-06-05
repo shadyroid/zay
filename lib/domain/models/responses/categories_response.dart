@@ -13,7 +13,7 @@ class CategoriesResponse extends BaseResponse {
   factory CategoriesResponse.fromJson(Map<String, dynamic> json) {
     return CategoriesResponse(
       statusCode: json['statusCode'] as int? ?? 200,
-      message: json['message'] as String?,
+      message: json['message'],
       data: (json['data'] as List?)?.map((e) => CategoryBean.fromJson(e)).toList(),
     );
   }

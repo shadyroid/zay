@@ -68,7 +68,7 @@ class HomeController extends BaseController {
 
   Future<void> _requestRecommended() async {
     final response = await _productsUseCase.requestProducts(
-      request: const ProductsRequest(recommended: true, pageSize: 4),
+      ProductsRequest(recommended: true, pageSize: 4),
     );
     if (!isSuccess(response)) return;
     recommendedProducts.assignAll(response.data ?? []);
@@ -76,7 +76,7 @@ class HomeController extends BaseController {
 
   Future<void> _requestNewArrivals() async {
     final response = await _productsUseCase.requestProducts(
-      request: const ProductsRequest(newArrival: true, pageSize: 6),
+      ProductsRequest(newArrival: true, pageSize: 6),
     );
     if (!isSuccess(response)) return;
     newArrivalProducts.assignAll(response.data ?? []);

@@ -22,9 +22,9 @@ class OrderTrackStepBean {
 
   factory OrderTrackStepBean.fromJson(Map<String, dynamic> json) {
     return OrderTrackStepBean(
-      titleKey: json['titleKey'] as String? ?? '',
-      subtitleKey: json['subtitleKey'] as String? ?? '',
-      timestamp: json['timestamp'] as String? ?? '',
+      titleKey: json['titleKey'],
+      subtitleKey: json['subtitleKey'],
+      timestamp: json['timestamp'],
       state: OrderTrackStepState.fromString(json['state'] as String?),
       icon: OrderTrackStepIcon.fromString(json['icon'] as String?),
     );

@@ -5,7 +5,7 @@ class AddCartItemRequest {
     required this.quantity,
   });
 
-  final String productId;
-  final String productSizeId;
+  final int productId;
+  final int? productSizeId;
   final int quantity;
 }

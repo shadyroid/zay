@@ -9,8 +9,8 @@ class OrderSuccessController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    orderId.value = args['orderId'] as String? ?? '';
+    
+    orderId.value = Get.arguments['orderId'] as String? ?? '';
   }
 
   void goHome() => Get.offAllNamed(Routes.home);

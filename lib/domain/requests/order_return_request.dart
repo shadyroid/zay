@@ -5,7 +5,7 @@ class OrderReturnRequest {
     required this.description,
   });
 
-  final String orderId;
+  final int orderId;
   final String reason;
   final String description;
 }

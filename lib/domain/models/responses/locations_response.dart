@@ -13,7 +13,7 @@ class LocationsResponse extends BaseResponse {
   factory LocationsResponse.fromJson(Map<String, dynamic> json) {
     return LocationsResponse(
       statusCode: json['statusCode'] as int? ?? 200,
-      message: json['message'] as String?,
+      message: json['message'],
       data: LocationBean.listFromJson(json['data'] as List<dynamic>?),
     );
   }

@@ -11,7 +11,7 @@ class LocationBean {
 
   factory LocationBean.fromJson(Map<String, dynamic> json) {
     return LocationBean(
-      address: json['address'] as String? ?? '',
+      address: json['address'],
       latitude: (json['latitude'] as num?)?.toDouble() ??
           (json['lat'] as num?)?.toDouble() ??
           0,

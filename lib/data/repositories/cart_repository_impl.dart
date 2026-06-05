@@ -10,44 +10,34 @@ class CartRepositoryImpl implements CartRepository {
 
   @override
   Future<CartResponse> requestCart() async {
-    final json = await _cartDataSource.requestCart();
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return CartResponse.fromJson(json);
-    }
-    return CartResponse.fromJson({
-      ...json,
-      'data': json['items'],
-    });
+    var json = await _cartDataSource.requestCart();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['items'],
+    };
+    return CartResponse.fromJson(json);
   }
 
   @override
   Future<CartResponse> requestAddCartItem(AddCartItemRequest request) async {
-    final json = await _cartDataSource.requestAddCartItem(request);
-    return _cartAfterMutation(json);
+    await _cartDataSource.requestAddCartItem(request);
+    return requestCart();
   }
 
   @override
   Future<CartResponse> requestUpdateCartItem(
     UpdateCartItemRequest request,
   ) async {
-    final json = await _cartDataSource.requestUpdateCartItem(request);
-    return _cartAfterMutation(json);
+    await _cartDataSource.requestUpdateCartItem(request);
+    return requestCart();
   }
 
   @override
   Future<CartResponse> requestDeleteCartItem(
     DeleteCartItemRequest request,
   ) async {
-    final json = await _cartDataSource.requestDeleteCartItem(request);
-    return _cartAfterMutation(json);
-  }
-
-  Future<CartResponse> _cartAfterMutation(Map<String, dynamic> json) async {
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return CartResponse.fromJson(json);
-    }
+    await _cartDataSource.requestDeleteCartItem(request);
     return requestCart();
   }
 }

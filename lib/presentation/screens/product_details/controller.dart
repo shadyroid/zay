@@ -4,16 +4,15 @@ import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/cart_use_case.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/reviews_use_case.dart';
-import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/app/utils/app_auth_guard.dart';
+import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
+import 'package:hedma/domain/models/beans/review_bean.dart';
 import 'package:hedma/domain/requests/add_cart_item_request.dart';
 import 'package:hedma/domain/requests/product_details_request.dart';
 import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/domain/requests/reviews_request.dart';
-import 'package:hedma/domain/requests/try_product_request.dart';
-import 'package:hedma/domain/models/beans/review_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 
 class ProductDetailsController extends BaseController {
@@ -28,11 +27,11 @@ class ProductDetailsController extends BaseController {
   final reviews = <ReviewBean>[].obs;
   final similarProducts = <ProductBean>[].obs;
   final quantity = 1.obs;
-  final selectedSizeId = RxnString();
+  final selectedSizeId = RxnInt();
   final isDescriptionExpanded = false.obs;
   final imageIndex = 0.obs;
 
-  late final String productId;
+  late final int productId;
 
   @override
   void onInit() {
@@ -51,7 +50,7 @@ class ProductDetailsController extends BaseController {
     await Future.wait([
       requestProductDetails(),
       requestReviews(),
-      requestSimilarProducts()
+      requestSimilarProducts(),
     ]);
   }
 
@@ -60,8 +59,8 @@ class ProductDetailsController extends BaseController {
     final match = p.sizeId != null
         ? p.sizes.where((s) => s.id == p.sizeId).firstOrNull
         : null;
-    final fallback = p.sizes.where((s) => s.isAvailable).firstOrNull ??
-        p.sizes.first;
+    final fallback =
+        p.sizes.where((s) => s.isAvailable).firstOrNull ?? p.sizes.first;
     final selected = match != null && match.isAvailable ? match : fallback;
     selectedSizeId.value = selected.id;
   }
@@ -89,17 +88,11 @@ class ProductDetailsController extends BaseController {
 
   Future<void> requestSimilarProducts() async {
     final response = await _productsUseCase.requestProducts(
-      request: ProductsRequest(
-        similarToId: productId,
-        pageSize: 6,
-      ),
+      ProductsRequest(similarToId: productId, pageSize: 6),
     );
     if (!isSuccess(response)) return;
     similarProducts.assignAll(
-      (response.data ?? [])
-          .where((p) => p.id != productId)
-          .take(6)
-          .toList(),
+      (response.data ?? []).where((p) => p.id != productId).take(6).toList(),
     );
   }
 
@@ -128,7 +121,7 @@ class ProductDetailsController extends BaseController {
     if (quantity.value > 1) quantity.value--;
   }
 
-  void selectSize(String sizeId) => selectedSizeId.value = sizeId;
+  void selectSize(int sizeId) => selectedSizeId.value = sizeId;
 
   void toggleDescription() =>
       isDescriptionExpanded.value = !isDescriptionExpanded.value;
@@ -150,24 +143,9 @@ class ProductDetailsController extends BaseController {
 
     final file = await ImagePickerHelper.pickFromBottomSheet();
     if (file == null) return;
-
-    isLoading.value = true;
-    final response = await _productsUseCase.requestTryProduct(
-      TryProductRequest(productId: productId, imagePath: file.path),
-    );
-    isLoading.value = false;
-    if (!isSuccess(response)) return;
-    final imageUrl = response.imageUrl;
-    if (imageUrl == null || imageUrl.isEmpty) return;
-
     await AppAuthGuard.toNamed(
       Routes.tryOn,
-      arguments: {
-        'imageUrl': imageUrl,
-        'productId': productId,
-        'productPrice': product.value?.price,
-        'productName': product.value?.name,
-      },
+      arguments: {'file': file, 'product': product.value},
     );
   }
 
@@ -178,7 +156,7 @@ class ProductDetailsController extends BaseController {
     final sizeId = selectedSizeId.value;
     if (p == null) return;
 
-    if (p.sizes.isNotEmpty && (sizeId == null || sizeId.isEmpty)) {
+    if (p.sizes.isNotEmpty && sizeId == null) {
       Get.rawSnackbar(message: 'selectSizeRequired'.tr);
       return;
     }
@@ -187,7 +165,7 @@ class ProductDetailsController extends BaseController {
     final response = await _cartUseCase.requestAddCartItem(
       AddCartItemRequest(
         productId: productId,
-        productSizeId: sizeId ?? '',
+        productSizeId: sizeId,
         quantity: quantity.value,
       ),
     );
@@ -205,10 +183,7 @@ class ProductDetailsController extends BaseController {
   }
 
   void navigateToProduct(ProductBean item) {
-    Get.toNamed(
-      Routes.productDetails,
-      arguments: {'productId': item.id},
-    );
+    Get.toNamed(Routes.productDetails, arguments: {'productId': item.id});
   }
 
   void onShare() {
@@ -218,12 +193,7 @@ class ProductDetailsController extends BaseController {
   void onSeeAllReviews() {
     Get.toNamed(
       Routes.reviews,
-      arguments: {
-        'productId': productId,
-        'reviews': reviews.toList(),
-      },
+      arguments: {'productId': productId, 'reviews': reviews.toList()},
     );
   }
-
-  
 }

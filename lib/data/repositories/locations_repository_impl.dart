@@ -59,10 +59,7 @@ class LocationsRepositoryImpl implements LocationsRepository {
       );
     }
 
-    return LocationDetailsResponse(
-      statusCode: 200,
-      data: location,
-    );
+    return LocationDetailsResponse(statusCode: 200, data: location);
   }
 
   @override
@@ -108,9 +105,7 @@ class LocationsRepositoryImpl implements LocationsRepository {
       if (placeId.isNotEmpty) placeIds.add(placeId);
     }
 
-    final locations = await Future.wait(
-      placeIds.map(_locationFromPlaceId),
-    );
+    final locations = await Future.wait(placeIds.map(_locationFromPlaceId));
 
     return LocationsResponse(
       statusCode: 200,
@@ -136,11 +131,7 @@ class LocationsRepositoryImpl implements LocationsRepository {
 
     if (lat == null || lng == null || address.isEmpty) return null;
 
-    return LocationBean(
-      address: address,
-      latitude: lat,
-      longitude: lng,
-    );
+    return LocationBean(address: address, latitude: lat, longitude: lng);
   }
 
   LocationBean? _parseGeocodeResponse(Map<String, dynamic>? google) {
@@ -160,11 +151,7 @@ class LocationsRepositoryImpl implements LocationsRepository {
 
     if (address.isEmpty || lat == null || lng == null) return null;
 
-    return LocationBean(
-      address: address,
-      latitude: lat,
-      longitude: lng,
-    );
+    return LocationBean(address: address, latitude: lat, longitude: lng);
   }
 
   Future<bool> _requestLocationPermission() async {

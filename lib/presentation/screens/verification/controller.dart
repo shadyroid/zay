@@ -26,9 +26,9 @@ class VerificationController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    email = args['email'] as String? ?? '';
-    flow = args['flow'] as String? ?? 'signup';
+    
+    email = Get.arguments['email'] as String? ?? '';
+    flow = Get.arguments['flow'] as String? ?? 'signup';
 
     otpTextController = TextEditingController();
     otpTextController.addListener(_onOtpTextChanged);

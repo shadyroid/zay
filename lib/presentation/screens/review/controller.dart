@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/order_use_case.dart';
 import 'package:hedma/app/use_cases/reviews_use_case.dart';
-import 'package:hedma/domain/models/beans/order_bean.dart';
 import 'package:hedma/domain/models/beans/order_line_item_bean.dart';
 import 'package:hedma/domain/models/enums/review_size_fit.dart';
 import 'package:hedma/domain/requests/add_review_request.dart';
@@ -15,22 +14,21 @@ class ReviewController extends BaseController {
 
   final itemReviews = <OrderItemReviewDraft>[].obs;
 
-  late final String orderId;
+  late final int orderId;
 
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    orderId = args['orderId'] as String? ?? '';
-    final order = args['order'] as OrderBean?;
-    final items = args['items'] as List<OrderLineItemBean>?;
+    orderId = Get.arguments['orderId'];
+    final order = Get.arguments['order'];
+    final items = Get.arguments['items'];
 
     if (items != null && items.isNotEmpty) {
       _setItemReviews(items);
     } else if (order != null && order.items.isNotEmpty) {
       _setItemReviews(order.items);
     } else {
-      _loadOrderItems();
+      requestOrderDetails();
     }
   }
 
@@ -48,9 +46,7 @@ class ReviewController extends BaseController {
     );
   }
 
-  Future<void> _loadOrderItems() async {
-    if (orderId.isEmpty) return;
-
+  Future<void> requestOrderDetails() async {
     isLoading.value = true;
     final response = await _orderUseCase.requestOrderDetails(
       OrderDetailsRequest(orderId: orderId),
@@ -81,16 +77,11 @@ class ReviewController extends BaseController {
       final draft = itemReviews[i];
       if (draft.selectedRating.value <= 0) {
         Get.rawSnackbar(
-          message: 'ratingRequiredForItem'.trParams({
-            'index': '${i + 1}',
-          }),
+          message: 'ratingRequiredForItem'.trParams({'index': '${i + 1}'}),
         );
         return;
       }
-      if (draft.item.productId.isEmpty || draft.item.id.isEmpty) {
-        Get.rawSnackbar(message: 'reviewItemInvalid'.tr);
-        return;
-      }
+      Get.rawSnackbar(message: 'reviewItemInvalid'.tr);
     }
 
     isLoading.value = true;
@@ -114,6 +105,4 @@ class ReviewController extends BaseController {
     Get.back();
     Get.rawSnackbar(message: 'reviewSubmitted'.tr);
   }
-
-  
 }

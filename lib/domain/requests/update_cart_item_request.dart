@@ -4,6 +4,6 @@ class UpdateCartItemRequest {
     required this.quantity,
   });
 
-  final String cartItemId;
+  final int cartItemId;
   final int quantity;
 }

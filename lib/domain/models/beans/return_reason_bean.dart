@@ -9,8 +9,8 @@ class ReturnReasonBean {
 
   factory ReturnReasonBean.fromJson(Map<String, dynamic> json) {
     return ReturnReasonBean(
-      value: json['value'] as String? ?? '',
-      label: json['label'] as String? ?? '',
+      value: json['value'],
+      label: json['label'],
     );
   }
 }

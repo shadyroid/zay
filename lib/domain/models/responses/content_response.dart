@@ -12,7 +12,7 @@ class ContentResponse extends BaseResponse {
   factory ContentResponse.fromJson(Map<String, dynamic> json) {
     return ContentResponse(
       statusCode: json['statusCode'] as int? ?? 200,
-      message: json['message'] as String?,
+      message: json['message'],
       data: json['data'] as String?,
     );
   }

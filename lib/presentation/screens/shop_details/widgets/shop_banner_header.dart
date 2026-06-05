@@ -14,7 +14,7 @@ class ShopBannerHeader extends StatelessWidget {
       height: 200,
       child: Stack(
         clipBehavior: Clip.none,
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.center,
         children: [
           Positioned.fill(
             child: shop.banner != null
@@ -26,34 +26,31 @@ class ShopBannerHeader extends StatelessWidget {
                   )
                 : const ColoredBox(color: Color(0xFFE8E8E8)),
           ),
-          Positioned(
-            bottom: -36,
-            child: Container(
-              width: 88,
-              height: 88,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFE8E8E8)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(11),
-                child: shop.logo != null
-                    ? Image.network(
-                        shop.logo!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            _logoPlaceholder(),
-                      )
-                    : _logoPlaceholder(),
-              ),
+          Container(
+            width: 88,
+            height: 88,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFE8E8E8)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(11),
+              child: shop.logo != null
+                  ? Image.network(
+                      shop.logo!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                          _logoPlaceholder(),
+                    )
+                  : _logoPlaceholder(),
             ),
           ),
         ],

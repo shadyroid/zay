@@ -4,6 +4,6 @@ class TryProductRequest {
     required this.imagePath,
   });
 
-  final String productId;
+  final int? productId;
   final String imagePath;
 }

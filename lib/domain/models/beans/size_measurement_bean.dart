@@ -1,7 +1,7 @@
 class SizeMeasurementBean {
-  final String id;
-  final String label;
-  final String value;
+  final int? id;
+  final String? label;
+  final String? value;
 
   const SizeMeasurementBean({
     required this.id,
@@ -11,9 +11,9 @@ class SizeMeasurementBean {
 
   factory SizeMeasurementBean.fromJson(Map<String, dynamic> json) {
     return SizeMeasurementBean(
-      id: json['id']?.toString() ?? '',
-      label: json['label'] as String? ?? '',
-      value: json['value']?.toString() ?? '',
+      id: json['id'],
+      label: json['label'],
+      value: json['value'],
     );
   }
 }

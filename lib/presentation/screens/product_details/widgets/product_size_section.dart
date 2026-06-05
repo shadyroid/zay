@@ -13,8 +13,8 @@ class ProductSizeSection extends StatelessWidget {
   });
 
   final List<ProductSizeBean> sizes;
-  final String? selectedSizeId;
-  final ValueChanged<String> onSizeSelected;
+  final int? selectedSizeId;
+  final ValueChanged<int> onSizeSelected;
   final VoidCallback onSizeGuideTap;
 
   @override

@@ -25,7 +25,7 @@ class ProductsRequest {
   final bool? recommended;
   final bool? newArrival;
   final String? image;
-  final String? similarToId;
+  final int? similarToId;
   final int? categoryId;
   final int? shopId;
   final int? sizeId;
@@ -42,7 +42,7 @@ class ProductsRequest {
     if (bestSeller == true) params['best_seller'] = 1;
     if (recommended == true) params['recommended'] = 1;
     if (newArrival == true) params['new_arrival'] = 1;
-    if (similarToId != null && similarToId!.isNotEmpty) {
+    if (similarToId != null) {
       params['similar_to_id'] = similarToId;
     }
     if (categoryId != null) {

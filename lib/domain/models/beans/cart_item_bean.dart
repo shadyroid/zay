@@ -1,5 +1,5 @@
 class CartItemBean {
-  final String id;
+  final int id;
   final String name;
   final String price;
   final String? imageUrl;
@@ -20,10 +20,10 @@ class CartItemBean {
     final size = json['size'] as Map<String, dynamic>?;
 
     return CartItemBean(
-      id: json['id']?.toString() ?? product?['id']?.toString() ?? '',
-      name: product?['name'] as String? ?? json['name'] as String? ?? '',
-      price: json['unit_price']?.toString() ??
-          json['price']?.toString() ??
+      id: json['id'] ?? product?['id'],
+      name: product?['name'] as String? ?? json['name'],
+      price: json['unit_price'] ??
+          json['price'] ??
           '0',
       imageUrl: product?['image'] as String? ??
           product?['imageUrl'] as String? ??

@@ -16,10 +16,7 @@ class ReviewsRepositoryImpl implements ReviewsRepository {
     if (status != null && status != 200) {
       return ReviewsResponse.fromJson(json);
     }
-    return ReviewsResponse.fromJson({
-      ...json,
-      'data': json['reviews'],
-    });
+    return ReviewsResponse.fromJson({...json, 'data': json['reviews']});
   }
 
   @override

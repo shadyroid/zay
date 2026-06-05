@@ -10,20 +10,18 @@ class OrderDetailsController extends BaseController {
   final OrderUseCase _orderUseCase = Get.put(OrderUseCase());
 
   final order = Rxn<OrderBean>();
-  late final String orderId;
+  late final int orderId;
 
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    final passed = args['order'] as OrderBean?;
-    orderId = args['orderId'] as String? ?? passed?.id ?? '';
+    final passed = Get.arguments['order'];
+    orderId = Get.arguments['orderId'];
     if (passed != null) order.value = passed;
     requestOrderDetails();
   }
 
   Future<void> requestOrderDetails() async {
-    if (orderId.isEmpty) return;
     isLoading.value = true;
     final response = await _orderUseCase.requestOrderDetails(
       OrderDetailsRequest(orderId: orderId),
@@ -33,25 +31,17 @@ class OrderDetailsController extends BaseController {
     order.value = response.data;
   }
 
-  
-
   Future<void> navigateToTrack() async {
     await AppAuthGuard.toNamed(
       Routes.orderTrack,
-      arguments: {
-        'orderId': orderId,
-        'order': order.value,
-      },
+      arguments: {'orderId': orderId, 'order': order.value},
     );
   }
 
   Future<void> navigateToReturn() async {
     await AppAuthGuard.toNamed(
       Routes.orderReturn,
-      arguments: {
-        'orderId': orderId,
-        'order': order.value,
-      },
+      arguments: {'orderId': orderId, 'order': order.value},
     );
   }
 

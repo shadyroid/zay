@@ -10,59 +10,40 @@ class SettingsRepositoryImpl implements SettingsRepository {
 
   @override
   Future<ContentResponse> requestAboutUs() async {
-    final json = await _settingsDataSource.requestAboutUs();
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return ContentResponse.fromJson(json);
-    }
-    final page = json['page'] is Map
-        ? Map<String, dynamic>.from(json['page'] as Map)
-        : null;
-    return ContentResponse.fromJson({
-      ...json,
-      'data': page?['content'] as String? ?? '',
-    });
+    var json = await _settingsDataSource.requestAboutUs();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['page']?['content'],
+    };
+    return ContentResponse.fromJson(json);
   }
 
   @override
   Future<ContentResponse> requestTerms() async {
-    final json = await _settingsDataSource.requestTerms();
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return ContentResponse.fromJson(json);
-    }
-    final page = json['page'] is Map
-        ? Map<String, dynamic>.from(json['page'] as Map)
-        : null;
-    return ContentResponse.fromJson({
-      ...json,
-      'data': page?['content'] as String? ?? '',
-    });
+    var json = await _settingsDataSource.requestTerms();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['page']?['content'],
+    };
+    return ContentResponse.fromJson(json);
   }
 
   @override
   Future<ContentResponse> requestPrivacy() async {
-    final json = await _settingsDataSource.requestPrivacy();
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return ContentResponse.fromJson(json);
-    }
-    final page = json['page'] is Map
-        ? Map<String, dynamic>.from(json['page'] as Map)
-        : null;
-    return ContentResponse.fromJson({
-      ...json,
-      'data': page?['content'] as String? ?? '',
-    });
+    var json = await _settingsDataSource.requestPrivacy();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['page']?['content'],
+    };
+    return ContentResponse.fromJson(json);
   }
 
   @override
   Future<BaseResponse> requestContactUs(ContactUsRequest request) async {
     final json = await _settingsDataSource.requestContactUs(request);
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return BaseResponse.fromJson(json);
-    }
     return BaseResponse.fromJson(json);
   }
 

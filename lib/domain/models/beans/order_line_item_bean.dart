@@ -9,8 +9,8 @@ class OrderLineItemBean {
     this.unitPrice = '',
   });
 
-  final String id;
-  final String productId;
+  final int id;
+  final int productId;
   final String productName;
   final String? productImageUrl;
   final String size;
@@ -21,10 +21,8 @@ class OrderLineItemBean {
     final product = json['product'] as Map<String, dynamic>?;
 
     return OrderLineItemBean(
-      id: json['id']?.toString() ?? '',
-      productId: json['product_id']?.toString() ??
-          product?['id']?.toString() ??
-          '',
+      id: json['id'],
+      productId: json['product_id'],
       productName: _localized(json['product_name'] ?? product?['name']),
       productImageUrl: json['product_image'] as String? ??
           product?['primary_image'] as String? ??
@@ -40,7 +38,7 @@ class OrderLineItemBean {
   static String _localized(dynamic value) {
     if (value is String) return value;
     if (value is Map) {
-      return value['ar']?.toString() ?? value['en']?.toString() ?? '';
+      return value['ar'] ?? value['en'];
     }
     return '';
   }

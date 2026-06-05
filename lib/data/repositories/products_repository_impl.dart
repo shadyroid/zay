@@ -15,60 +15,34 @@ import 'package:hedma/domain/requests/try_product_request.dart';
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsDataSource _productsDataSource = ProductsDataSource();
 
-  void _syncProductsFromResponse(Map<String, dynamic> json) {
-    final data = json['data'];
-    if (data is Map<String, dynamic> && data['products'] is List) {
-      LikesUtil.syncProductsFromList(data['products'] as List);
-    } else if (json['products'] is List) {
-      LikesUtil.syncProductsFromList(json['products'] as List);
-    } else if (data is List) {
-      LikesUtil.syncProductsFromList(data);
-    } else if (json['wishlist'] is List) {
-      LikesUtil.syncProductsFromList(json['wishlist'] as List);
-    }
-
-    if (json['product'] is Map) {
-      LikesUtil.syncProductFromJson(
-        Map<String, dynamic>.from(json['product'] as Map),
-      );
-    }
-
-    if (json['similar_products'] is List) {
-      LikesUtil.syncProductsFromList(json['similar_products'] as List);
-    }
-  }
-
   @override
   Future<CategoriesResponse> requestCategories() async {
-    final json = await _productsDataSource.requestCategories();
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return CategoriesResponse.fromJson(json);
-    }
-    return CategoriesResponse.fromJson({...json, 'data': json['categories']});
+    var json = await _productsDataSource.requestCategories();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['categories'],
+    };
+    return CategoriesResponse.fromJson(json);
   }
 
   @override
   Future<SizesResponse> requestSizes() async {
-    final json = await _productsDataSource.requestSizes();
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return SizesResponse.fromJson(json);
-    }
-    return SizesResponse.fromJson({...json, 'data': json['sizes']});
+    var json = await _productsDataSource.requestSizes();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['sizes'],
+    };
+    return SizesResponse.fromJson(json);
   }
 
   @override
-  Future<ProductsResponse> requestProducts({
-    ProductsRequest request = const ProductsRequest(),
-  }) async {
-    var json = await _productsDataSource.requestProducts(request: request);
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return ProductsResponse.fromJson(json);
-    }
+  Future<ProductsResponse> requestProducts(ProductsRequest request) async {
+    var json = await _productsDataSource.requestProducts(request);
     json = {
       "statusCode": json['statusCode'],
+      "message": json['message'],
       "data": json['products'],
       "totalCount": json['pagination']?['total'],
     };
@@ -81,31 +55,28 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<ProductResponse> requestProductDetails(
     ProductDetailsRequest request,
   ) async {
-    final json = await _productsDataSource.requestProductDetails(request);
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return ProductResponse.fromJson(json);
-    }
-    _syncProductsFromResponse(json);
-    return ProductResponse.fromJson({
-      ...json,
-      'data': json['product'] is Map
-          ? Map<String, dynamic>.from(json['product'] as Map)
-          : null,
-      if (json['similar_products'] is List)
-        'similarProducts': json['similar_products'],
-    });
+    var json = await _productsDataSource.requestProductDetails(request);
+    final images = json['product']?['images'];
+    json['product']['primary_image'] = images.firstWhere(
+      (e) => e['is_primary'] == true,
+      orElse: () => images.first,
+    )['url'];
+    json['product']['images'] = images.map((e) => e['url']).toList();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['product'],
+    };
+    LikesUtil.syncProductFromJson(json['data']);
+    return ProductResponse.fromJson(json);
   }
 
   @override
   Future<ProductsResponse> requestFavorites() async {
     var json = await _productsDataSource.requestFavorites();
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return ProductsResponse.fromJson(json);
-    }
     json = {
       "statusCode": json['statusCode'],
+      "message": json['message'],
       "data": json['wishlist'].map((entry) => entry['product']).toList(),
     };
 
@@ -115,11 +86,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<BaseResponse> requestFavorite(ProductIdRequest request) async {
-    final json = await _productsDataSource.requestFavorite(request);
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return BaseResponse.fromJson(json);
-    }
+    var json = await _productsDataSource.requestFavorite(request);
     LikesUtil.productLike(request.productId, isFavorite: true);
     return BaseResponse.fromJson(json);
   }
@@ -127,10 +94,6 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<BaseResponse> requestUnFavorite(ProductIdRequest request) async {
     final json = await _productsDataSource.requestUnFavorite(request);
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return BaseResponse.fromJson(json);
-    }
     LikesUtil.productLike(request.productId, isFavorite: false);
     return BaseResponse.fromJson(json);
   }
@@ -140,10 +103,6 @@ class ProductsRepositoryImpl implements ProductsRepository {
     TryProductRequest request,
   ) async {
     final json = await _productsDataSource.requestTryProduct(request);
-    final status = json['statusCode'] as int?;
-    if (status != null && status != 200) {
-      return TryProductResponse.fromJson(json);
-    }
     return TryProductResponse.fromJson(json);
   }
 }

@@ -14,7 +14,7 @@ class SizesResponse extends BaseResponse {
     final list = json['data'] as List<dynamic>?;
     return SizesResponse(
       statusCode: json['statusCode'] as int? ?? 200,
-      message: json['message'] as String?,
+      message: json['message'],
       data: list
           ?.map((e) => SizeBean.fromJson(e as Map<String, dynamic>))
           .toList(),

@@ -20,12 +20,12 @@ class TryOnScreen extends GetView<TryOnController> {
         onShare: controller.onShare,
       ),
       body: Obx(() {
-        if (controller.isLoading.value && controller.imageUrl.value.isEmpty) {
+        if (controller.isLoading.value && controller.imageUrl.value == null) {
           return const Center(child: AppProgressIndicator());
         }
 
         final url = controller.imageUrl.value;
-        final price = controller.productPrice.value;
+        final price = controller.product.price;
 
         return Column(
           children: [
@@ -34,7 +34,7 @@ class TryOnScreen extends GetView<TryOnController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (url.isNotEmpty)
+                    if (url!=null)
                       Padding(
                         padding: const EdgeInsets.all(16),
                         child: AspectRatio(
@@ -85,7 +85,7 @@ class TryOnScreen extends GetView<TryOnController> {
               ),
             ),
             TryOnBottomBar(
-              price: price.isNotEmpty ? price : '0',
+              price: price,
               onTryOnAgain: controller.onTryOnAgain,
               onAddToCart: controller.onAddToCart,
             ),
