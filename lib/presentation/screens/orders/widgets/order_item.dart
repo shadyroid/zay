@@ -18,9 +18,6 @@ class OrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeQty = order.size.isNotEmpty
-        ? '${'size'.tr} : ${order.size} | ${'qty'.tr} : ${order.quantity}'
-        : '${'qty'.tr} : ${order.quantity}';
 
     return Material(
       color: Colors.white,
@@ -42,7 +39,7 @@ class OrderItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        '${'orderId'.tr} : ${order.id}',
+                        '${'orderId'.tr} : ${order.refNumber}',
                         style: Get.theme.textTheme.bodySmall?.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -61,7 +58,7 @@ class OrderItem extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: _OrderProductImage(
-                        imageUrl: order.productImageUrl,
+                        imageUrl: order.shop?.logo,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -70,9 +67,7 @@ class OrderItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            order.productName.isNotEmpty
-                                ? order.productName
-                                : '${'order'.tr} #${order.id}',
+                            order.shop?.name??"",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: Get.theme
@@ -85,7 +80,7 @@ class OrderItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            sizeQty,
+                            order.itemsCount.toString(),
                             style: Get.theme
                                 .textTheme
                                 .bodySmall
@@ -95,7 +90,7 @@ class OrderItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            order.date,
+                            order.createdAt??"",
                             style: Get.theme
                                 .textTheme
                                 .bodySmall

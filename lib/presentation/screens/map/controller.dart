@@ -86,11 +86,11 @@ class MapController extends BaseController {
       final response = await _locationsUseCase.requestLocation(
         LatLng(latitude.value, longitude.value),
       );
-      if (!isSuccess(response) || response.data == null) {
+      if (!isSuccess(response) || response.data?.address == null) {
         address.value = '';
         return;
       }
-      address.value = response.data!.address;
+      address.value = response.data!.address!;
     } finally {
       isResolvingAddress.value = false;
     }
@@ -135,7 +135,7 @@ class MapController extends BaseController {
     final location = locations[index];
     showSuggestions.value = false;
     locations.clear();
-    searchController.text = location.address;
+    searchController.text = location.address??"";
     isResolvingAddress.value = true;
 
     try {
@@ -149,14 +149,14 @@ class MapController extends BaseController {
     LocationBean location, {
     bool animate = false,
   }) async {
-    address.value = location.address;
-    latitude.value = location.latitude;
-    longitude.value = location.longitude;
+    address.value = location.address??"";
+    latitude.value = location.lat??0.0;
+    longitude.value = location.lng??0.0;
     _skipNextCameraIdle = true;
 
     final controller = _mapController;
     if (controller != null) {
-      final target = LatLng(location.latitude, location.longitude);
+      final target = LatLng(location.lat??0.0, location.lng??0.0);
       if (animate) {
         await controller.animateCamera(CameraUpdate.newLatLng(target));
       } else {
@@ -176,8 +176,8 @@ class MapController extends BaseController {
     Get.back(
       result: LocationBean(
         address: address.value,
-        latitude: latitude.value,
-        longitude: longitude.value,
+        lat: latitude.value,
+        lng: longitude.value,
       ),
     );
   }

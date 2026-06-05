@@ -12,7 +12,7 @@ class OrderRepositoryImpl implements OrderRepository {
   final OrderDataSource _orderDataSource = OrderDataSource();
 
   @override
-  Future<OrderResponse> requestCreateOrder(CreateOrderRequest request) async {
+  Future<BaseResponse> requestCreateOrder(CreateOrderRequest request) async {
     var json = await _orderDataSource.requestCreateOrder(request);
     json = {
       "statusCode": json['statusCode'],

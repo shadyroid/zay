@@ -35,7 +35,7 @@ class MapPlaceSuggestions extends StatelessWidget {
           return ListTile(
             dense: true,
             title: Text(
-              location.address,
+              location.address??"",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: Get.theme.textTheme.bodyMedium?.copyWith(

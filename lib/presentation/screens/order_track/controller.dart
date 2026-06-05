@@ -35,8 +35,8 @@ class OrderTrackController extends BaseController {
     if (data == null) return;
 
     order.value = data;
-    estimatedDelivery.value = data.estimatedDelivery ?? '';
-    steps.assignAll(data.steps ?? []);
+    // estimatedDelivery.value = data.estimatedDelivery ?? '';
+    // steps.assignAll(data.steps ?? []);
   }
 
   

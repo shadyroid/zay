@@ -9,7 +9,7 @@ class OrderStatusBadge extends StatelessWidget {
     required this.status,
   });
 
-  final String status;
+  final String? status;
 
   @override
   Widget build(BuildContext context) {

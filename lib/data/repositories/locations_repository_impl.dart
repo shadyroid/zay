@@ -1,10 +1,12 @@
+import 'dart:developer';
+
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hedma/data/remote/data_sources/locations_data_source.dart';
 import 'package:hedma/domain/models/beans/location_bean.dart';
 import 'package:hedma/domain/models/responses/location_details_response.dart';
 import 'package:hedma/domain/models/responses/locations_response.dart';
 import 'package:hedma/domain/repositories/locations_repository.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class LocationsRepositoryImpl implements LocationsRepository {
   final LocationsDataSource _dataSource = LocationsDataSource();
@@ -16,7 +18,7 @@ class LocationsRepositoryImpl implements LocationsRepository {
     final granted = await _requestLocationPermission();
     if (!granted) {
       return const LocationDetailsResponse(
-        statusCode: -2,
+        statusCode: 400,
         message: 'locationPermissionDenied',
       );
     }
@@ -131,7 +133,7 @@ class LocationsRepositoryImpl implements LocationsRepository {
 
     if (lat == null || lng == null || address.isEmpty) return null;
 
-    return LocationBean(address: address, latitude: lat, longitude: lng);
+    return LocationBean(address: address, lat: lat, lng: lng);
   }
 
   LocationBean? _parseGeocodeResponse(Map<String, dynamic>? google) {
@@ -151,14 +153,12 @@ class LocationsRepositoryImpl implements LocationsRepository {
 
     if (address.isEmpty || lat == null || lng == null) return null;
 
-    return LocationBean(address: address, latitude: lat, longitude: lng);
+    return LocationBean(address: address, lat: lat, lng: lng);
   }
 
   Future<bool> _requestLocationPermission() async {
-    var status = await Permission.locationWhenInUse.status;
-    if (status.isGranted) return true;
-    status = await Permission.locationWhenInUse.request();
-    return status.isGranted;
+    var locationPermission = await Geolocator.requestPermission();
+    return locationPermission == LocationPermission.whileInUse;
   }
 
   bool _looksLikePlaceId(String value) =>

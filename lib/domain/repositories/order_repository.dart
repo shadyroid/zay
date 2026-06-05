@@ -7,7 +7,7 @@ import 'package:hedma/domain/requests/order_details_request.dart';
 import 'package:hedma/domain/requests/order_return_request.dart';
 
 abstract class OrderRepository {
-  Future<OrderResponse> requestCreateOrder(CreateOrderRequest request);
+  Future<BaseResponse> requestCreateOrder(CreateOrderRequest request);
 
   Future<OrdersResponse> requestOrders();
 

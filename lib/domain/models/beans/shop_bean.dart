@@ -32,7 +32,7 @@ class ShopBean {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      logo: json['logo_url'],
+      logo: json['logo_url']??json['logo'],
       banner: json['banner_url'],
       icon: json['icon_url'],
       slogan: json['slogan'],

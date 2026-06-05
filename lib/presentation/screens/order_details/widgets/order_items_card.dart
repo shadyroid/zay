@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/beans/order_bean.dart';
-import 'package:hedma/domain/models/beans/order_line_item_bean.dart';
+import 'package:hedma/domain/models/beans/order_product_bean.dart';
 import 'package:hedma/presentation/screens/order_details/widgets/order_details_section_card.dart';
 import 'package:hedma/presentation/screens/orders/widgets/order_status_badge.dart';
 
@@ -15,31 +15,18 @@ class OrderItemsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = order.items.isNotEmpty
-        ? order.items
-        : [
-            OrderLineItemBean(
-              id: order.id,
-              productId: 0,
-              productName: order.productName,
-              productImageUrl: order.productImageUrl,
-              size: order.size,
-              quantity: order.quantity,
-              unitPrice: order.total,
-            ),
-          ];
 
     return OrderDetailsSectionCard(
-      title: '${'items'.tr} (${order.itemCount})',
+      title: '${'items'.tr} (${order.itemsCount})',
       trailing: OrderStatusBadge(status: order.status),
       subtitle: '${'orderId'.tr} : ${order.id}',
       child: Column(
         children: [
-          for (var i = 0; i < items.length; i++) ...[
+          for (var i = 0; i < (order.items?.length??0); i++) ...[
             if (i > 0) const Divider(height: 1, color: AppColors.border),
             Padding(
               padding: const EdgeInsets.all(16),
-              child: _OrderLineItemRow(item: items[i]),
+              child: _OrderLineItemRow(item: order.items![i]),
             ),
           ],
         ],
@@ -51,20 +38,17 @@ class OrderItemsCard extends StatelessWidget {
 class _OrderLineItemRow extends StatelessWidget {
   const _OrderLineItemRow({required this.item});
 
-  final OrderLineItemBean item;
+  final OrderProductBean item;
 
   @override
   Widget build(BuildContext context) {
-    final sizeQty = item.size.isNotEmpty
-        ? '${'size'.tr} : ${item.size} | ${'qty'.tr} : ${item.quantity}'
-        : '${'qty'.tr} : ${item.quantity}';
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: _ProductImage(imageUrl: item.productImageUrl),
+          child: _ProductImage(imageUrl: item.productImage),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -72,9 +56,7 @@ class _OrderLineItemRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                item.productName.isNotEmpty
-                    ? item.productName
-                    : '${'product'.tr} #${item.productId}',
+                item.productName??"",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: Get.theme.textTheme.titleSmall?.copyWith(
@@ -84,12 +66,12 @@ class _OrderLineItemRow extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                sizeQty,
+                '${'qty'.tr} : ${item.quantity}',
                 style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                     ),
               ),
-              if (item.unitPrice.isNotEmpty) ...[
+              if (item.unitPrice!=null) ...[
                 const SizedBox(height: 8),
                 Text(
                   '\$${item.unitPrice}',

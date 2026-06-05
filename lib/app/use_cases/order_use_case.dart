@@ -12,7 +12,7 @@ import 'package:hedma/domain/requests/order_return_request.dart';
 class OrderUseCase {
   final OrderRepository _orderRepository = Get.put(OrderRepositoryImpl());
 
-  Future<OrderResponse> requestCreateOrder(CreateOrderRequest request) =>
+  Future<BaseResponse> requestCreateOrder(CreateOrderRequest request) =>
       _orderRepository.requestCreateOrder(request);
 
   Future<OrdersResponse> requestOrders() => _orderRepository.requestOrders();

@@ -14,7 +14,7 @@ class LocationsResponse extends BaseResponse {
     return LocationsResponse(
       statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'],
-      data: LocationBean.listFromJson(json['data'] as List<dynamic>?),
+      data: (json['data'] as List?)?.map((e) => LocationBean.fromJson(e)).toList(),
     );
   }
 }

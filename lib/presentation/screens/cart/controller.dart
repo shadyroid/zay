@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/app/use_cases/cart_use_case.dart';
@@ -100,23 +99,21 @@ class CartController extends BaseController {
   }
 
   Future<void> onSelectLocation() async {
-    deliveryAddress.value = "asdasdsadasd";
-    deliveryLatitude.value = 0.0;
-    deliveryLongitude.value = 0.0;
-    return;
+    // deliveryAddress.value = "asdasdsadasd";
+    // deliveryLatitude.value = 0.0;
+    // deliveryLongitude.value = 0.0;
+    // return;
     final result = await Get.toNamed(Routes.map);
     if (result is! LocationBean) return;
 
     deliveryAddress.value = result.address;
-    deliveryLatitude.value = result.latitude;
-    deliveryLongitude.value = result.longitude;
+    deliveryLatitude.value = result.lat;
+    deliveryLongitude.value = result.lng;
   }
 
-  int get itemCount =>
-      items.fold(0, (sum, item) => sum + item.quantity);
+  int get itemCount => items.fold(0, (sum, item) => sum + item.quantity);
 
-  double get subtotal =>
-      items.fold(0, (sum, item) => sum + item.lineTotal);
+  double get subtotal => items.fold(0, (sum, item) => sum + item.lineTotal);
 
   double get total => subtotal + shippingFee;
 
@@ -154,11 +151,6 @@ class CartController extends BaseController {
     isLoading.value = false;
     if (!isSuccess(response)) return;
 
-    Get.offNamed(
-      Routes.orderSuccess,
-      arguments: {'orderId': response.data?.id ?? ''},
-    );
+    Get.offNamed(Routes.orderSuccess);
   }
-
-  
 }

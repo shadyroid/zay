@@ -12,9 +12,9 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final itemLabel = order.itemCount == 1
-        ? '${'subtotal'.tr} (${order.itemCount} ${'item'.tr})'
-        : '${'subtotal'.tr} (${order.itemCount} ${'items'.tr})';
+    final itemLabel = order.itemsCount == 1
+        ? '${'subtotal'.tr} (${order.itemsCount} ${'item'.tr})'
+        : '${'subtotal'.tr} (${order.itemsCount} ${'items'.tr})';
 
     return OrderDetailsSectionCard(
       title: 'orderSummary'.tr,
@@ -24,22 +24,22 @@ class OrderSummaryCard extends StatelessWidget {
           children: [
             _SummaryRow(
               label: itemLabel,
-              value: '\$${order.displaySubtotal}',
+              value: '\$${order.subtotal}',
             ),
             const SizedBox(height: 10),
             _SummaryRow(
               label: 'shipping'.tr,
-              value: '\$ ${order.shipping}',
+              value: '\$ ${order.shippingFee}',
             ),
             const SizedBox(height: 10),
             _SummaryRow(
               label: 'orderDate'.tr,
-              value: order.displaySummaryDate,
+              value: order.createdAt ??"",
             ),
             const SizedBox(height: 10),
             _SummaryRow(
               label: 'paymentMethod'.tr,
-              value: order.paymentMethodLabel.tr,
+              value: order.paymentMethod??"",
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 14),

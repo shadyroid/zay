@@ -31,8 +31,8 @@ class LocationsDataSource {
 
       return _success(
         data: {
-          'latitude': position.latitude,
-          'longitude': position.longitude,
+          'lat': position.latitude,
+          'lng': position.longitude,
         },
       );
     } catch (_) {

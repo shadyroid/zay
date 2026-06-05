@@ -20,7 +20,7 @@ class OrderCustomerCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _CustomerAvatar(imageUrl: order.customerImageUrl),
+            // _CustomerAvatar(imageUrl: order.customerImageUrl),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -35,7 +35,7 @@ class OrderCustomerCard extends StatelessWidget {
                           color: AppColors.textPrimary,
                         ),
                   ),
-                  if (order.customerAddress.isNotEmpty) ...[
+                  if (order.location!.address!.isNotEmpty == true) ...[
                     const SizedBox(height: 8),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +55,7 @@ class OrderCustomerCard extends StatelessWidget {
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            order.customerAddress,
+                            order.location!.address!,
                             style: Get.theme
                                 .textTheme
                                 .bodySmall

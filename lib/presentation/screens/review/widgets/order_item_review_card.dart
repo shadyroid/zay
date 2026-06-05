@@ -28,9 +28,6 @@ class OrderItemReviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = draft.item;
-    final sizeQty = item.size.isNotEmpty
-        ? '${'size'.tr} : ${item.size} | ${'qty'.tr} : ${item.quantity}'
-        : '${'qty'.tr} : ${item.quantity}';
 
     return Container(
       margin: EdgeInsets.only(bottom: index < total - 1 ? 16 : 0),
@@ -57,7 +54,7 @@ class OrderItemReviewCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: _ProductImage(imageUrl: item.productImageUrl),
+                child: _ProductImage(imageUrl: item.productImage),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -65,9 +62,7 @@ class OrderItemReviewCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.productName.isNotEmpty
-                          ? item.productName
-                          : '${'product'.tr} #${item.productId}',
+                      item.productName??"",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Get.theme.textTheme.titleSmall?.copyWith(
@@ -77,12 +72,12 @@ class OrderItemReviewCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      sizeQty,
+                      '${'qty'.tr} : ${item.quantity}',
                       style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
                     ),
-                    if (item.unitPrice.isNotEmpty) ...[
+                    if (item.unitPrice!=null) ...[
                       const SizedBox(height: 8),
                       Text(
                         '\$${item.unitPrice}',

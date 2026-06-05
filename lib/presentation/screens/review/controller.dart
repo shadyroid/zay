@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/order_use_case.dart';
 import 'package:hedma/app/use_cases/reviews_use_case.dart';
-import 'package:hedma/domain/models/beans/order_line_item_bean.dart';
+import 'package:hedma/domain/models/beans/order_product_bean.dart';
 import 'package:hedma/domain/models/enums/review_size_fit.dart';
 import 'package:hedma/domain/requests/add_review_request.dart';
 import 'package:hedma/domain/requests/order_details_request.dart';
@@ -40,7 +40,7 @@ class ReviewController extends BaseController {
     super.onClose();
   }
 
-  void _setItemReviews(List<OrderLineItemBean> items) {
+  void _setItemReviews(List<OrderProductBean> items) {
     itemReviews.assignAll(
       items.map((item) => OrderItemReviewDraft(item: item)),
     );

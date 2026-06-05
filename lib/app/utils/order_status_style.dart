@@ -13,8 +13,8 @@ class OrderStatusStyle {
   final Color backgroundColor;
   final Color textColor;
 
-  static OrderStatusStyle forStatus(String status) {
-    switch (status.toLowerCase()) {
+  static OrderStatusStyle forStatus(String? status) {
+    switch (status?.toLowerCase()) {
       case 'pending':
         return const OrderStatusStyle(
           labelKey: 'orderStatusPending',

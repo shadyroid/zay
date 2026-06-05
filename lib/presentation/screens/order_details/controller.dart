@@ -52,7 +52,7 @@ class OrderDetailsController extends BaseController {
       arguments: {
         'orderId': orderId,
         'order': currentOrder,
-        if (currentOrder != null && currentOrder.items.isNotEmpty)
+        if (currentOrder != null && currentOrder.items?.isNotEmpty==true)
           'items': currentOrder.items,
       },
     );

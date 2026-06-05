@@ -9,8 +9,8 @@ class AddReviewRequest {
     this.comment,
   });
 
-  final int productId;
-  final int orderItemId;
+  final int? productId;
+  final int? orderItemId;
   final ReviewSizeFit sizeFit;
   final int rating;
   final String? comment;
