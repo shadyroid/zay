@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/enums/review_size_fit.dart';
 import 'package:hedma/presentation/screens/review/models/order_item_review_draft.dart';
 import 'package:hedma/presentation/screens/review/widgets/product_rating_section.dart';
@@ -148,7 +147,7 @@ class _ProductImage extends StatelessWidget {
       color: AppColors.screenBackground,
       alignment: Alignment.center,
       child: SvgPicture.asset(
-        AppIcons.productPlaceholder,
+        'assets/icons/ic_product_placeholder.svg',
         width: 32,
         height: 32,
       ),

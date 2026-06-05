@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/order_bean.dart';
 import 'package:hedma/presentation/screens/orders/widgets/order_status_badge.dart';
 
@@ -157,7 +156,7 @@ class _OrderProductImage extends StatelessWidget {
       color: AppColors.screenBackground,
       alignment: Alignment.center,
       child: SvgPicture.asset(
-        AppIcons.productPlaceholder,
+        'assets/icons/ic_product_placeholder.svg',
         width: 36,
         height: 36,
       ),

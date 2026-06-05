@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class ContactUsHeader extends StatelessWidget {
   const ContactUsHeader({super.key});
@@ -12,7 +11,7 @@ class ContactUsHeader extends StatelessWidget {
     return Column(
       children: [
         SvgPicture.asset(
-          AppIcons.contactChat,
+          'assets/icons/ic_contact_chat.svg',
           width: 80,
           height: 64,
         ),

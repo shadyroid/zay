@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/shops/controller.dart';
 import 'package:hedma/presentation/screens/shops/widgets/shop_item.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
@@ -22,7 +21,7 @@ class ShopsScreen extends GetView<ShopsController> {
         actions: [
           IconButton(
             icon: SvgPicture.asset(
-              AppIcons.search,
+              'assets/icons/ic_search.svg',
               width: 22,
               height: 22,
             ),

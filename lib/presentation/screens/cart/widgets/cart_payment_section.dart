@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/app/utils/payment_method.dart';
 
 class CartPaymentSection extends StatelessWidget {
@@ -30,14 +29,14 @@ class CartPaymentSection extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           _PaymentOption(
-            iconPath: AppIcons.cash,
+            iconPath: 'assets/icons/ic_cash.svg',
             label: 'cash'.tr,
             isSelected: selectedMethod == PaymentMethod.cash,
             onTap: () => onMethodSelected(PaymentMethod.cash),
           ),
           const SizedBox(height: 8),
           _PaymentOption(
-            iconPath: AppIcons.card,
+            iconPath: 'assets/icons/ic_card.svg',
             label: 'card'.tr,
             isSelected: selectedMethod == PaymentMethod.card,
             onTap: () => onMethodSelected(PaymentMethod.card),

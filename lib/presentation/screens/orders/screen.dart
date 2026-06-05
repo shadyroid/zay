@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/orders/controller.dart';
 import 'package:hedma/presentation/screens/orders/widgets/order_item.dart';
 import 'package:hedma/presentation/screens/orders/widgets/orders_app_bar.dart';
@@ -73,7 +72,7 @@ class _OrdersEmptyState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              AppIcons.orders,
+              'assets/icons/ic_orders.svg',
               width: 64,
               height: 64,
               colorFilter: const ColorFilter.mode(

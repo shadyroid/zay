@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/app/utils/app_input_formatters.dart';
 import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/presentation/screens/sign_up/controller.dart';
@@ -38,7 +37,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   AppTextField(
                     controller: controller.nameController,
                     hint: 'fullName'.tr,
-                    prefixIconPath: AppIcons.person,
+                    prefixIconPath: 'assets/icons/ic_person.svg',
                     textInputAction: TextInputAction.next,
                     validator: (v) => v == null || v.trim().isEmpty
                         ? 'nameRequired'.tr
@@ -48,7 +47,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   AppTextField(
                     controller: controller.emailController,
                     hint: 'email'.tr,
-                    prefixIconPath: AppIcons.email,
+                    prefixIconPath: 'assets/icons/ic_email.svg',
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     validator: (v) {
@@ -65,7 +64,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   AppTextField(
                     controller: controller.mobileController,
                     hint: 'mobileOptional'.tr,
-                    prefixIconPath: AppIcons.phone,
+                    prefixIconPath: 'assets/icons/ic_phone.svg',
                     keyboardType: TextInputType.phone,
                     inputFormatters: AppInputFormatters.phone,
                     textInputAction: TextInputAction.next,
@@ -75,7 +74,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   AppTextField(
                     controller: controller.heightController,
                     hint: 'height'.tr,
-                    prefixIconPath: AppIcons.height,
+                    prefixIconPath: 'assets/icons/ic_height.svg',
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
@@ -94,7 +93,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   AppTextField(
                     controller: controller.weightController,
                     hint: 'weight'.tr,
-                    prefixIconPath: AppIcons.weight,
+                    prefixIconPath: 'assets/icons/ic_weight.svg',
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
@@ -114,14 +113,14 @@ class SignUpScreen extends GetView<SignUpController> {
                     () => AppTextField(
                       controller: controller.passwordController,
                       hint: 'password'.tr,
-                      prefixIconPath: AppIcons.lock,
+                      prefixIconPath: 'assets/icons/ic_lock.svg',
                       obscureText: controller.obscurePassword.value,
                       textInputAction: TextInputAction.next,
                       suffixIcon: IconButton(
                         icon: SvgPicture.asset(
                           controller.obscurePassword.value
-                              ? AppIcons.eyeOff
-                              : AppIcons.eye,
+                              ? 'assets/icons/ic_eye_off.svg'
+                              : 'assets/icons/ic_eye.svg',
                           width: 22,
                           height: 22,
                         ),
@@ -143,14 +142,14 @@ class SignUpScreen extends GetView<SignUpController> {
                     () => AppTextField(
                       controller: controller.confirmPasswordController,
                       hint: 'confirmPassword'.tr,
-                      prefixIconPath: AppIcons.lockConfirm,
+                      prefixIconPath: 'assets/icons/ic_lock_confirm.svg',
                       obscureText: controller.obscureConfirm.value,
                       textInputAction: TextInputAction.done,
                       suffixIcon: IconButton(
                         icon: SvgPicture.asset(
                           controller.obscureConfirm.value
-                              ? AppIcons.eyeOff
-                              : AppIcons.eye,
+                              ? 'assets/icons/ic_eye_off.svg'
+                              : 'assets/icons/ic_eye.svg',
                           width: 22,
                           height: 22,
                         ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/try_on/controller.dart';
 import 'package:hedma/presentation/screens/try_on/widgets/try_on_app_bar.dart';
 import 'package:hedma/presentation/screens/try_on/widgets/try_on_bottom_bar.dart';
@@ -101,7 +100,7 @@ class TryOnScreen extends GetView<TryOnController> {
       color: AppColors.screenBackground,
       child: Center(
         child: SvgPicture.asset(
-          AppIcons.productPlaceholder,
+          'assets/icons/ic_product_placeholder.svg',
           width: 80,
           height: 80,
         ),

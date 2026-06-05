@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/widgets/profile_avatar.dart';
 
 class ProfileAvatarHeader extends StatelessWidget {
@@ -39,7 +38,7 @@ class ProfileAvatarHeader extends StatelessWidget {
                   ),
                   child: Center(
                     child: SvgPicture.asset(
-                      AppIcons.camera,
+                      'assets/icons/ic_camera.svg',
                       width: 18,
                       height: 18,
                     ),

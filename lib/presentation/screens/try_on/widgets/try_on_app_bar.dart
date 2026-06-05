@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class TryOnAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TryOnAppBar({
@@ -31,7 +30,7 @@ class TryOnAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: SvgPicture.asset(AppIcons.share, width: 22, height: 22),
+          icon: SvgPicture.asset('assets/icons/ic_share.svg', width: 22, height: 22),
           onPressed: onShare,
         ),
       ],

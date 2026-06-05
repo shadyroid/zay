@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class OrderDetailsActions extends StatelessWidget {
   const OrderDetailsActions({
@@ -35,7 +34,7 @@ class OrderDetailsActions extends StatelessWidget {
               children: [
                 Expanded(
                   child: _OutlinedActionButton(
-                    icon: AppIcons.retry,
+                    icon: 'assets/icons/ic_retry.svg',
                     label: 'returnProduct'.tr,
                     onTap: onReturn,
                   ),
@@ -43,7 +42,7 @@ class OrderDetailsActions extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: _FilledActionButton(
-                    icon: AppIcons.track,
+                    icon: 'assets/icons/ic_track.svg',
                     label: 'trackOrder'.tr,
                     onTap: onTrack,
                   ),
@@ -53,7 +52,7 @@ class OrderDetailsActions extends StatelessWidget {
             if (onReview != null) ...[
               const SizedBox(height: 12),
               _FilledActionButton(
-                icon: AppIcons.star,
+                icon: 'assets/icons/ic_star.svg',
                 label: 'submitYourRating'.tr,
                 onTap: onReview!,
               ),

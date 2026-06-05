@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/order_track_step_bean.dart';
 import 'package:hedma/domain/models/enums/order_track_step_icon.dart';
 
@@ -106,7 +105,7 @@ class _StepIcon extends StatelessWidget {
     switch (step.icon) {
       case OrderTrackStepIcon.confirmed:
         child = SvgPicture.asset(
-          AppIcons.check,
+          'assets/icons/ic_check.svg',
           width: 14,
           height: 14,
           colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
@@ -160,7 +159,7 @@ class _StepIcon extends StatelessWidget {
         );
       case OrderTrackStepIcon.returned:
         child = SvgPicture.asset(
-          AppIcons.retry,
+          'assets/icons/ic_retry.svg',
           width: 16,
           height: 16,
           colorFilter: const ColorFilter.mode(

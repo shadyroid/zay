@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/order_bean.dart';
 import 'package:hedma/presentation/screens/order_details/widgets/order_details_section_card.dart';
 
@@ -43,7 +42,7 @@ class OrderCustomerCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 2),
                           child: SvgPicture.asset(
-                            AppIcons.location,
+                            'assets/icons/ic_location.svg',
                             width: 16,
                             height: 16,
                             colorFilter: const ColorFilter.mode(
@@ -102,7 +101,7 @@ class _CustomerAvatar extends StatelessWidget {
           : null,
       child: url == null || url.isEmpty
           ? SvgPicture.asset(
-              AppIcons.person,
+              'assets/icons/ic_person.svg',
               width: 28,
               height: 28,
               colorFilter: const ColorFilter.mode(

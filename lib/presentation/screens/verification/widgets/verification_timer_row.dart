@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class VerificationTimerRow extends StatelessWidget {
   const VerificationTimerRow({
@@ -24,7 +23,7 @@ class VerificationTimerRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              AppIcons.timer,
+              'assets/icons/ic_timer.svg',
               width: 20,
               height: 20,
             ),

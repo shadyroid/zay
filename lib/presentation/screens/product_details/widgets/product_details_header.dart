@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class ProductDetailsHeader extends StatelessWidget {
   const ProductDetailsHeader({
@@ -63,7 +62,7 @@ class ProductDetailsHeader extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    SvgPicture.asset(AppIcons.star, width: 16, height: 16),
+                    SvgPicture.asset('assets/icons/ic_star.svg', width: 16, height: 16),
                     const SizedBox(width: 4),
                     Text(
                       '$rating ($reviewCount ${'reviews'.tr})',

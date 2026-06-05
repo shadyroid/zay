@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class FavoriteEmptyState extends StatelessWidget {
   const FavoriteEmptyState({super.key});
@@ -16,7 +15,7 @@ class FavoriteEmptyState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              AppIcons.favorite,
+              'assets/icons/ic_favorite.svg',
               width: 64,
               height: 64,
               colorFilter: const ColorFilter.mode(

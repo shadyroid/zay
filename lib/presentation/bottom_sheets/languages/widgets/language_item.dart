@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/app/utils/app_languages.dart';
 
 class LanguageItem extends StatelessWidget {
@@ -49,7 +48,7 @@ class LanguageItem extends StatelessWidget {
             ),
             if (isSelected)
               SvgPicture.asset(
-                AppIcons.check,
+                'assets/icons/ic_check.svg',
                 width: 22,
                 height: 22,
               ),

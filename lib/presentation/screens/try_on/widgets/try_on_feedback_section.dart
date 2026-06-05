@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class TryOnFeedbackSection extends StatelessWidget {
   const TryOnFeedbackSection({
@@ -46,7 +45,7 @@ class TryOnFeedbackSection extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => onRatingSelected(starIndex),
                   child: SvgPicture.asset(
-                    AppIcons.star,
+                    'assets/icons/ic_star.svg',
                     width: 28,
                     height: 28,
                     colorFilter: ColorFilter.mode(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/app/utils/product_sort_option.dart';
 import 'package:hedma/presentation/bottom_sheets/sort/widgets/sort_option_item.dart';
 
@@ -62,7 +61,7 @@ class SortBottomSheet extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
                     icon: SvgPicture.asset(
-                      AppIcons.close,
+                      'assets/icons/ic_close.svg',
                       width: 20,
                       height: 20,
                     ),

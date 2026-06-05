@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class ProductDetailsBottomBar extends StatelessWidget {
   const ProductDetailsBottomBar({
@@ -56,7 +55,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: onTryOn,
                     icon: SvgPicture.asset(
-                      AppIcons.person2,
+                      'assets/icons/ic_person_2.svg',
                       width: 20,
                       height: 20,
                     ),
@@ -76,7 +75,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: onAddToCart,
                     icon: SvgPicture.asset(
-                      AppIcons.navCart,
+                      'assets/icons/ic_nav_cart.svg',
                       width: 20,
                       height: 20,
                       colorFilter: const ColorFilter.mode(

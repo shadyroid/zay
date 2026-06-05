@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class ProductRatingSection extends StatelessWidget {
   const ProductRatingSection({
@@ -44,7 +43,7 @@ class ProductRatingSection extends StatelessWidget {
                 onTap: () => onRatingSelected(starValue),
                 borderRadius: BorderRadius.circular(8),
                 child: SvgPicture.asset(
-                  AppIcons.star,
+                  'assets/icons/ic_star.svg',
                   width: 36,
                   height: 36,
                   colorFilter: ColorFilter.mode(

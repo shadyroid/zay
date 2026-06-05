@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class ReviewNoteField extends StatelessWidget {
   const ReviewNoteField({super.key, required this.controller});
@@ -25,7 +24,7 @@ class ReviewNoteField extends StatelessWidget {
         prefixIcon: Padding(
           padding: const EdgeInsetsDirectional.only(start: 16, end: 8),
           child: SvgPicture.asset(
-            AppIcons.editProfile,
+            'assets/icons/ic_edit_profile.svg',
             width: 20,
             height: 20,
             colorFilter: const ColorFilter.mode(

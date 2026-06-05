@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class ProductsActionBar extends StatelessWidget {
   const ProductsActionBar({
@@ -36,7 +35,7 @@ class ProductsActionBar extends StatelessWidget {
           children: [
             Expanded(
               child: _ActionButton(
-                iconPath: AppIcons.filter,
+                iconPath: 'assets/icons/ic_filter.svg',
                 label: 'filters'.tr,
                 onTap: onFilters,
               ),
@@ -48,7 +47,7 @@ class ProductsActionBar extends StatelessWidget {
             ),
             Expanded(
               child: _ActionButton(
-                iconPath: AppIcons.sort,
+                iconPath: 'assets/icons/ic_sort.svg',
                 label: 'sortBy'.tr,
                 onTap: onSort,
               ),

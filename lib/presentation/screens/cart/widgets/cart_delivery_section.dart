@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/app/utils/app_input_formatters.dart';
 import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/presentation/widgets/app_text_field.dart';
@@ -50,7 +49,7 @@ class CartDeliverySection extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    SvgPicture.asset(AppIcons.location, width: 22, height: 22),
+                    SvgPicture.asset('assets/icons/ic_location.svg', width: 22, height: 22),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -80,7 +79,7 @@ class CartDeliverySection extends StatelessWidget {
             AppTextField(
               controller: mobileController,
               hint: 'mobileNumber'.tr,
-              prefixIconPath: AppIcons.phone,
+              prefixIconPath: 'assets/icons/ic_phone',
               keyboardType: TextInputType.phone,
               inputFormatters: AppInputFormatters.phone,
               textInputAction: TextInputAction.done,

@@ -44,6 +44,17 @@ class DioClient extends GetxService {
           return handler.next(options);
         },
         onResponse: (response, handler) {
+          // return handler.resolve(
+          //   Response(
+          //     requestOptions: response.requestOptions,
+          //     statusCode: 200,
+          //     data: {
+          //       'statusCode':-1,
+          //       'message': 'noInternetTitle'.tr ,
+          //       'data': null,
+          //     },
+          //   ),
+          // );
           response.data = _mapResponse(response);
           response.statusCode = 200;
           return handler.next(response);

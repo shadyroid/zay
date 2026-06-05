@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
 
 class ShopBannerHeader extends StatelessWidget {
@@ -67,7 +66,7 @@ class ShopBannerHeader extends StatelessWidget {
   Widget _logoPlaceholder() {
     return Center(
       child: SvgPicture.asset(
-        AppIcons.productPlaceholder,
+        'assets/icons/ic_product_placeholder.svg',
         width: 48,
         height: 48,
       ),

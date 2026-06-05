@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
-import 'package:hedma/domain/models/beans/category_bean.dart';
+import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
-class CategoryChip extends StatelessWidget {
-  const CategoryChip({
+class ShopItem extends StatelessWidget {
+  const ShopItem({
     super.key,
-    required this.category,
-    required this.isSelected,
+    required this.shop,
     required this.onTap,
   });
 
-  final CategoryBean category;
-  final bool isSelected;
+  final ShopBean shop;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final foreground = isSelected ? Colors.white : AppColors.textPrimary;
-    final background =
-        isSelected ? AppColors.secondary : AppColors.screenBackground;
 
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 8),
       child: Material(
-        color: background,
-        borderRadius: BorderRadius.circular(24),
+        color: AppColors.screenBackground,
+        borderRadius: BorderRadius.circular(16),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(24),
@@ -36,17 +30,17 @@ class CategoryChip extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _CategoryIcon(
-                  iconUrl: category.iconUrl ?? "",
-                  color: foreground,
+                _ShopIcon(
+                  iconUrl: shop.logoUrl ?? shop.iconUrl ?? "",
+                  color: AppColors.textPrimary,
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  category.name ?? "",
+                  shop.name ?? "",
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: foreground,
+                        color: AppColors.textPrimary,
                         fontWeight:
-                            isSelected ? FontWeight.w600 : FontWeight.w500,
+                           FontWeight.w500,
                       ),
                 ),
               ],
@@ -58,8 +52,8 @@ class CategoryChip extends StatelessWidget {
   }
 }
 
-class _CategoryIcon extends StatelessWidget {
-  const _CategoryIcon({required this.iconUrl, required this.color});
+class _ShopIcon extends StatelessWidget {
+  const _ShopIcon({required this.iconUrl, required this.color});
 
   final String iconUrl;
   final Color color;
@@ -68,7 +62,7 @@ class _CategoryIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     if (iconUrl.isEmpty) {
       return SvgPicture.asset(
-        AppIcons.categoryAll,
+        'assets/icons/ic_category_all.svg',
         width: 18,
         height: 18,
         colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
@@ -99,7 +93,7 @@ class _CategoryIcon extends StatelessWidget {
         child: AppProgressIndicator(radius: 8, color: color),
       ),
       errorBuilder: (context, error, stackTrace) => SvgPicture.asset(
-        AppIcons.categoryAll,
+        'assets/icons/ic_category_all.svg',
         width: 18,
         height: 18,
         colorFilter: ColorFilter.mode(color, BlendMode.srcIn),

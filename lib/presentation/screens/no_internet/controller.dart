@@ -3,13 +3,6 @@ import 'package:hedma/presentation/base/base_controller.dart';
 
 class NoInternetController extends BaseController {
   void retry() {
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
-    final route = args['currentRoute'] as String?;
-    final routeArgs = args['arguments'];
-    if (route != null && route.isNotEmpty) {
-      Get.offNamed(route, arguments: routeArgs);
-      return;
-    }
-    Get.back();
+    Get.offNamed(Get.arguments['currentRoute'], arguments: Get.arguments['arguments']);
   }
 }

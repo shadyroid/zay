@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class HomePromoBanner extends StatelessWidget {
   const HomePromoBanner({super.key});
@@ -25,7 +24,7 @@ class HomePromoBanner extends StatelessWidget {
             children: [
               Expanded(
                 child: _PromoTile(
-                  iconPath: AppIcons.virtualTryOn,
+                  iconPath: 'assets/icons/ic_virtual_try_on.svg',
                   title: 'virtualTryOn'.tr,
                   subtitle: 'virtualTryOnSubtitle'.tr,
                 ),
@@ -37,7 +36,7 @@ class HomePromoBanner extends StatelessWidget {
               ),
               Expanded(
                 child: _PromoTile(
-                  iconPath: AppIcons.searchByImage,
+                  iconPath: 'assets/icons/ic_search_by_image.svg',
                   title: 'searchByImage'.tr,
                   subtitle: 'searchByImageSubtitle'.tr,
                 ),

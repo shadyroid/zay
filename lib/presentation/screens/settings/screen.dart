@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/settings/controller.dart';
 import 'package:hedma/presentation/screens/settings/widgets/delete_account_button.dart';
 import 'package:hedma/presentation/screens/settings/widgets/settings_app_bar.dart';
@@ -39,58 +38,58 @@ class SettingsScreen extends GetView<SettingsController> {
                     children: [
                       if (loggedIn) ...[
                         SettingsItem(
-                          iconPath: AppIcons.editProfile,
+                          iconPath: 'assets/icons/ic_edit_profile.svg',
                           title: 'editProfile'.tr,
                           onTap: controller.navigateToEditProfile,
                         ),
                         SettingsItem(
-                          iconPath: AppIcons.lock,
+                          iconPath: 'assets/icons/ic_lock.svg',
                           title: 'changePassword'.tr,
                           onTap: controller.navigateToChangePassword,
                         ),
                         SettingsItem(
-                          iconPath: AppIcons.favorite,
+                          iconPath: 'assets/icons/ic_favorite.svg',
                           title: 'favorite'.tr,
                           onTap: controller.navigateToFavorite,
                         ),
                         SettingsItem(
-                          iconPath: AppIcons.orders,
+                          iconPath: 'assets/icons/ic_orders.svg',
                           title: 'myOrders'.tr,
                           onTap: controller.navigateToOrders,
                         ),
                       ],
                       SettingsItem(
-                        iconPath: AppIcons.connectUs,
+                        iconPath: 'assets/icons/ic_connect_us.svg',
                         title: 'contactUs'.tr,
                         onTap: controller.navigateToContactUs,
                       ),
                       SettingsItem(
-                        iconPath: AppIcons.language,
+                        iconPath: 'assets/icons/ic_language.svg',
                         title: 'language'.tr,
                         onTap: controller.onLanguage,
                       ),
                       SettingsItem(
-                        iconPath: AppIcons.aboutUs,
+                        iconPath: 'assets/icons/ic_about_us.svg',
                         title: 'aboutUs'.tr,
                         onTap: controller.navigateToAboutUs,
                       ),
                       SettingsItem(
-                        iconPath: AppIcons.terms,
+                        iconPath: 'assets/icons/ic_terms.svg',
                         title: 'terms'.tr,
                         onTap: controller.navigateToTerms,
                       ),
                       SettingsItem(
-                        iconPath: AppIcons.privacy,
+                        iconPath: 'assets/icons/ic_privacy.svg',
                         title: 'privacy'.tr,
                         onTap: controller.navigateToPrivacy,
                       ),
                       SettingsItem(
-                        iconPath: AppIcons.share,
+                        iconPath: 'assets/icons/ic_share.svg',
                         title: 'shareApp'.tr,
                         onTap: controller.onShareApp,
                       ),
                       SettingsItem(
-                        iconPath: loggedIn ? AppIcons.signOut : AppIcons.signIn,
+                        iconPath: loggedIn ? 'assets/icons/ic_sign_out.svg' : 'assets/icons/ic_sign_in.svg',
                         title: loggedIn ? 'signOut'.tr : 'signIn'.tr,
                         onTap: loggedIn
                             ? controller.requestSignOut

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/change_password/controller.dart';
 import 'package:hedma/presentation/screens/change_password/widgets/change_password_header.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
@@ -32,14 +31,14 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                 () => AppTextField(
                   controller: controller.currentPasswordController,
                   hint: 'currentPassword'.tr,
-                  prefixIconPath: AppIcons.lock,
+                  prefixIconPath: 'assets/icons/ic_lock.svg',
                   obscureText: controller.obscureCurrentPassword.value,
                   textInputAction: TextInputAction.next,
                   suffixIcon: IconButton(
                     icon: SvgPicture.asset(
                       controller.obscureCurrentPassword.value
-                          ? AppIcons.eyeOff
-                          : AppIcons.eye,
+                          ? 'assets/icons/ic_eye_off.svg'
+                          : 'assets/icons/ic_eye.svg',
                       width: 22,
                       height: 22,
                     ),
@@ -58,14 +57,14 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                 () => AppTextField(
                   controller: controller.passwordController,
                   hint: 'newPassword'.tr,
-                  prefixIconPath: AppIcons.lockConfirm,
+                  prefixIconPath: 'assets/icons/ic_lock_confirm.svg',
                   obscureText: controller.obscurePassword.value,
                   textInputAction: TextInputAction.next,
                   suffixIcon: IconButton(
                     icon: SvgPicture.asset(
                       controller.obscurePassword.value
-                          ? AppIcons.eyeOff
-                          : AppIcons.eye,
+                          ? 'assets/icons/ic_eye_off.svg'
+                          : 'assets/icons/ic_eye.svg',
                       width: 22,
                       height: 22,
                     ),
@@ -87,15 +86,15 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                 () => AppTextField(
                   controller: controller.confirmPasswordController,
                   hint: 'confirmPassword'.tr,
-                  prefixIconPath: AppIcons.lockConfirm,
+                  prefixIconPath: 'assets/icons/ic_lock_confirm.svg',
                   obscureText: controller.obscureConfirm.value,
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (_) => controller.requestChangePassword(),
                   suffixIcon: IconButton(
                     icon: SvgPicture.asset(
                       controller.obscureConfirm.value
-                          ? AppIcons.eyeOff
-                          : AppIcons.eye,
+                          ? 'assets/icons/ic_eye_off.svg'
+                          : 'assets/icons/ic_eye.svg',
                       width: 22,
                       height: 22,
                     ),

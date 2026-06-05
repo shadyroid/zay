@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/app/utils/app_input_formatters.dart';
 import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/presentation/screens/edit_profile/controller.dart';
@@ -48,7 +47,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         AppTextField(
                           controller: controller.nameController,
                           hint: 'fullName'.tr,
-                          prefixIconPath: AppIcons.person,
+                          prefixIconPath: 'assets/icons/ic_person.svg',
                           textInputAction: TextInputAction.next,
                           validator: (v) => v == null || v.trim().isEmpty
                               ? 'nameRequired'.tr
@@ -58,7 +57,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         AppTextField(
                           controller: controller.emailController,
                           hint: 'email'.tr,
-                          prefixIconPath: AppIcons.email,
+                          prefixIconPath: 'assets/icons/ic_email.svg',
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           validator: (v) {
@@ -75,7 +74,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         AppTextField(
                           controller: controller.phoneController,
                           hint: 'mobileNumber'.tr,
-                          prefixIconPath: AppIcons.phone,
+                          prefixIconPath: 'assets/icons/ic_phone.svg',
                           keyboardType: TextInputType.phone,
                           inputFormatters: AppInputFormatters.phone,
                           textInputAction: TextInputAction.next,
@@ -85,7 +84,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         AppTextField(
                           controller: controller.heightController,
                           hint: 'height'.tr,
-                          prefixIconPath: AppIcons.height,
+                          prefixIconPath: 'assets/icons/ic_height.svg',
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
                           ),
@@ -104,7 +103,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         AppTextField(
                           controller: controller.weightController,
                           hint: 'weight'.tr,
-                          prefixIconPath: AppIcons.weight,
+                          prefixIconPath: 'assets/icons/ic_weight.svg',
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
                           ),

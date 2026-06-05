@@ -3,8 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
-import 'package:hedma/presentation/screens/products/widgets/category_chip.dart';
+import 'package:hedma/presentation/widgets/category_item.dart';
 import 'package:hedma/presentation/screens/shop_details/controller.dart';
 import 'package:hedma/presentation/screens/shop_details/widgets/shop_about_section.dart';
 import 'package:hedma/presentation/screens/shop_details/widgets/shop_banner_header.dart';
@@ -63,7 +62,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  SvgPicture.asset(AppIcons.star, width: 16, height: 16),
+                  SvgPicture.asset('assets/icons/ic_star.svg', width: 16, height: 16),
                   const SizedBox(width: 4),
                   Text(
                     rating,
@@ -115,7 +114,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
               itemCount: controller.categories.length,
               itemBuilder: (context, index) {
                 final category = controller.categories[index];
-                return CategoryChip(
+                return CategoryItem(
                   category: category,
                   isSelected:
                       controller.selectedCategoryId.value == category.id,

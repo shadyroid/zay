@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/bottom_sheets/image_sources/widgets/image_source_item.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -39,12 +38,12 @@ class ImageSourcesBottomSheet extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ImageSourceItem(
-              iconPath: AppIcons.cameraOutline,
+              iconPath: 'assets/icons/ic_camera_outline.svg',
               label: 'takeFullPhoto'.tr,
               onTap: () => Get.back(result: ImageSource.camera),
             ),
             ImageSourceItem(
-              iconPath: AppIcons.galleryAdd,
+              iconPath: 'assets/icons/ic_gallery_add.svg',
               label: 'choosePhotoFromGallery'.tr,
               onTap: () => Get.back(result: ImageSource.gallery),
             ),

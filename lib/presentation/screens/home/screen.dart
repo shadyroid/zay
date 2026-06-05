@@ -6,10 +6,10 @@ import 'package:hedma/presentation/screens/home/widgets/home_product_item.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_promo_banner.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_search_bar.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_section_header.dart';
-import 'package:hedma/presentation/screens/home/widgets/home_top_store_item.dart';
-import 'package:hedma/presentation/screens/products/widgets/category_chip.dart';
-import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
+import 'package:hedma/presentation/screens/home/widgets/shop_item.dart';
+import 'package:hedma/presentation/widgets/category_item.dart';
 import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
@@ -47,7 +47,7 @@ class HomeScreen extends GetView<HomeController> {
                   itemCount: controller.categories.length,
                   itemBuilder: (context, index) {
                     final category = controller.categories[index];
-                    return CategoryChip(
+                    return CategoryItem(
                       category: category,
                       isSelected: selectedCategoryId == category.id,
                       onTap: () => controller.onCategoryTap(category),
@@ -71,50 +71,52 @@ class HomeScreen extends GetView<HomeController> {
                       product: product,
                       shopName: controller.shopNameFor(product),
                       isFavorite: product.isFavorite,
-                      onTap: () =>
-                          controller.navigateToProductDetails(product),
+                      onTap: () => controller.navigateToProductDetails(product),
                       onFavoriteTap: () => controller.toggleFavorite(product),
                     );
                   },
                 ),
               ),
               const HomePromoBanner(),
-              HomeSectionHeader(
-                title: 'newArrival'.tr,
-                onSeeAll: controller.onSeeAllNewArrival,
-              ),
-              SizedBox(
-                height: HomeProductItem.listHeight,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: controller.newArrivalProducts.length,
-                  itemBuilder: (context, index) {
-                    final product = controller.newArrivalProducts[index];
-                    return HomeProductItem(
-                      product: product,
-                      shopName: controller.shopNameFor(product),
-                      isFavorite: product.isFavorite,
-                      onTap: () =>
-                          controller.navigateToProductDetails(product),
-                      onFavoriteTap: () => controller.toggleFavorite(product),
-                    );
-                  },
+
+              if (controller.newArrivalProducts.isNotEmpty) ...[
+                HomeSectionHeader(
+                  title: 'newArrival'.tr,
+                  onSeeAll: controller.onSeeAllNewArrival,
                 ),
-              ),
+                SizedBox(
+                  height: HomeProductItem.listHeight,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: controller.newArrivalProducts.length,
+                    itemBuilder: (context, index) {
+                      final product = controller.newArrivalProducts[index];
+                      return HomeProductItem(
+                        product: product,
+                        shopName: controller.shopNameFor(product),
+                        isFavorite: product.isFavorite,
+                        onTap: () =>
+                            controller.navigateToProductDetails(product),
+                        onFavoriteTap: () => controller.toggleFavorite(product),
+                      );
+                    },
+                  ),
+                ),
+              ],
               HomeSectionHeader(
                 title: 'topStores'.tr,
                 onSeeAll: controller.onSeeAllStores,
               ),
               SizedBox(
-                height: HomeTopStoreItem.listHeight,
+                height: 56,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: controller.topStores.length,
                   itemBuilder: (context, index) {
                     final shop = controller.topStores[index];
-                    return HomeTopStoreItem(
+                    return ShopItem(
                       shop: shop,
                       onTap: () => controller.onStoreTap(shop),
                     );

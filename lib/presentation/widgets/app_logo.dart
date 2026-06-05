@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class AppLogo extends StatelessWidget {
   const AppLogo({super.key, this.size = 80});
@@ -10,7 +9,7 @@ class AppLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(
-      AppIcons.logo,
+      'assets/icons/ic_logo.svg',
       width: size,
       height: size,
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 
 class ProductGridItem extends StatelessWidget {
@@ -55,8 +54,8 @@ class ProductGridItem extends StatelessWidget {
                           child: Obx(
                             () => SvgPicture.asset(
                               isFavorite!.value
-                                  ? AppIcons.heartFilled
-                                  : AppIcons.favorite,
+                                  ? 'assets/icons/ic_heart_filled.svg'
+                                  : 'assets/icons/ic_favorite.svg',
                               width: 16,
                               height: 16,
                             ),
@@ -89,7 +88,7 @@ class ProductGridItem extends StatelessWidget {
               ),
               const Spacer(),
               SvgPicture.asset(
-                AppIcons.star,
+                'assets/icons/ic_star.svg',
                 width: 14,
                 height: 14,
               ),
@@ -129,7 +128,7 @@ class _ProductImage extends StatelessWidget {
 
   Widget _placeholder() {
     return SvgPicture.asset(
-      AppIcons.productPlaceholder,
+      'assets/icons/ic_product_placeholder.svg',
       width: double.infinity,
       height: double.infinity,
       fit: BoxFit.cover,

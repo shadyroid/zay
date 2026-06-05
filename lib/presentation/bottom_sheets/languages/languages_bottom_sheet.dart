@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/app/utils/app_languages.dart';
 import 'package:hedma/presentation/bottom_sheets/languages/widgets/language_item.dart';
 
@@ -63,7 +62,7 @@ class LanguagesBottomSheet extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
                     icon: SvgPicture.asset(
-                      AppIcons.close,
+                      'assets/icons/ic_close.svg',
                       width: 20,
                       height: 20,
                     ),

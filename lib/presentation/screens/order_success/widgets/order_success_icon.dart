@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class OrderSuccessIcon extends StatelessWidget {
   const OrderSuccessIcon({super.key});
@@ -19,7 +18,7 @@ class OrderSuccessIcon extends StatelessWidget {
       ),
       child: Center(
         child: SvgPicture.asset(
-          AppIcons.check,
+          'assets/icons/ic_check.svg',
           width: 52,
           height: 52,
           colorFilter: const ColorFilter.mode(

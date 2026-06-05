@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/forget_password/controller.dart';
 import 'package:hedma/presentation/screens/forget_password/widgets/forget_password_header.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
@@ -30,7 +29,7 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
               AppTextField(
                 controller: controller.emailController,
                 hint: 'email'.tr,
-                prefixIconPath: AppIcons.email,
+                prefixIconPath: 'assets/icons/ic_email.svg',
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (_) => controller.requestForgetPassword(),

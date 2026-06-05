@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
 
 class ShopItem extends StatelessWidget {
@@ -45,7 +44,7 @@ class ShopItem extends StatelessWidget {
                   Row(
                     children: [
                       SvgPicture.asset(
-                        AppIcons.star,
+                        'assets/icons/ic_star.svg',
                         width: 14,
                         height: 14,
                       ),

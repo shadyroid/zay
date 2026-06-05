@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class MapSearchBar extends StatelessWidget {
   const MapSearchBar({
@@ -35,7 +34,7 @@ class MapSearchBar extends StatelessWidget {
         children: [
           const SizedBox(width: 14),
           SvgPicture.asset(
-            AppIcons.search,
+            'assets/icons/ic_search.svg',
             width: 20,
             height: 20,
             colorFilter: const ColorFilter.mode(

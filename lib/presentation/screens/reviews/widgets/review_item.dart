@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/review_bean.dart';
 
 class ReviewItem extends StatelessWidget {
@@ -76,7 +75,7 @@ class ReviewStarRating extends StatelessWidget {
         return Padding(
           padding: const EdgeInsetsDirectional.only(end: 2),
           child: SvgPicture.asset(
-            AppIcons.star,
+            'assets/icons/ic_star.svg',
             width: 16,
             height: 16,
             colorFilter: ColorFilter.mode(

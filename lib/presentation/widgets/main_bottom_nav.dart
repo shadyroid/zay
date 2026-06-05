@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class MainBottomNav extends StatelessWidget {
   const MainBottomNav({super.key, required this.currentIndex});
@@ -13,23 +12,23 @@ class MainBottomNav extends StatelessWidget {
 
   static const _items = [
     _NavItemData(
-      iconPath: AppIcons.navHome,
+      iconPath: 'assets/icons/ic_nav_home.svg',
       labelKey: 'home',
       route: Routes.home,
     ),
     _NavItemData(
-      iconPath: AppIcons.navShops,
+      iconPath: 'assets/icons/ic_nav_shops.svg',
       labelKey: 'shops',
       route: Routes.shops,
     ),
     _NavItemData(
-      iconPath: AppIcons.navCart,
+      iconPath: 'assets/icons/ic_nav_cart.svg',
       labelKey: 'cart',
       route: Routes.cart,
       requiresAuth: true,
     ),
     _NavItemData(
-      iconPath: AppIcons.navSettings,
+      iconPath: 'assets/icons/ic_nav_settings.svg',
       labelKey: 'settings',
       route: Routes.settings,
     ),

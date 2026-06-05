@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class ProductImageCarousel extends StatelessWidget {
   const ProductImageCarousel({
@@ -55,8 +54,8 @@ class ProductImageCarousel extends StatelessWidget {
                   child: Obx(
                     () => SvgPicture.asset(
                       isFavorite.value
-                          ? AppIcons.heartFilled
-                          : AppIcons.favorite,
+                          ? 'assets/icons/ic_heart_filled.svg'
+                          : 'assets/icons/ic_favorite.svg',
                       width: 18,
                       height: 18,
                     ),
@@ -98,7 +97,7 @@ class ProductImageCarousel extends StatelessWidget {
       color: AppColors.screenBackground,
       child: Center(
         child: SvgPicture.asset(
-          AppIcons.productPlaceholder,
+          'assets/icons/ic_product_placeholder.svg',
           width: 80,
           height: 80,
         ),

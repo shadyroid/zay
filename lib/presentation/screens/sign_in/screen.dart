@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/screens/sign_in/controller.dart';
 import 'package:hedma/presentation/screens/sign_in/widgets/guest_continue_button.dart';
 import 'package:hedma/presentation/screens/sign_in/widgets/sign_in_welcome_header.dart';
@@ -34,7 +33,7 @@ class SignInScreen extends GetView<SignInController> {
                 AppTextField(
                   controller: controller.emailController,
                   hint: 'email'.tr,
-                  prefixIconPath: AppIcons.email,
+                  prefixIconPath: 'assets/icons/ic_email.svg',
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   validator: (value) {
@@ -52,15 +51,15 @@ class SignInScreen extends GetView<SignInController> {
                   () => AppTextField(
                     controller: controller.passwordController,
                     hint: 'password'.tr,
-                    prefixIconPath: AppIcons.lock,
+                    prefixIconPath: 'assets/icons/ic_lock.svg',
                     obscureText: controller.obscurePassword.value,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) => controller.requestSignIn(),
                     suffixIcon: IconButton(
                       icon: SvgPicture.asset(
                         controller.obscurePassword.value
-                            ? AppIcons.eyeOff
-                            : AppIcons.eye,
+                            ? 'assets/icons/ic_eye_off.svg'
+                            : 'assets/icons/ic_eye.svg',
                         width: 22,
                         height: 22,
                       ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
 import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
@@ -45,7 +44,7 @@ class MapLocationBottomCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SvgPicture.asset(
-                  AppIcons.location,
+                  'assets/icons/ic_location.svg',
                   width: 24,
                   height: 24,
                 ),

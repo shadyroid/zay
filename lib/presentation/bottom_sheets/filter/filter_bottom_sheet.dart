@@ -6,7 +6,7 @@ import 'package:hedma/presentation/bottom_sheets/filter/filter_bottom_sheet_cont
 import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_section_title.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_size_chip.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_store_chip.dart';
-import 'package:hedma/presentation/screens/products/widgets/category_chip.dart';
+import 'package:hedma/presentation/widgets/category_item.dart';
 import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class FilterBottomSheet extends GetView<FilterBottomSheetController> {
@@ -86,7 +86,7 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
                         itemCount: controller.categories.length,
                         itemBuilder: (context, index) {
                           final category = controller.categories[index];
-                          return CategoryChip(
+                          return CategoryItem(
                             category: category,
                             isSelected: selectedCategoryId == category.id,
                             onTap: () => controller.selectCategory(category),

@@ -13,7 +13,7 @@ abstract class BaseController extends GetxController {
 
   void onApiError(BaseResponse response) {
     if (response.statusCode == -1) {
-      Get.toNamed(
+      Get.offNamed(
         Routes.noInternet,
         arguments: {
           'currentRoute': Get.currentRoute,

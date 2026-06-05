@@ -52,9 +52,9 @@ class SettingsController extends BaseController {
     Get.offNamed(Routes.home);
   }
 
-
   Future<void> navigateToEditProfile() async {
-    Get.toNamed(Routes.editProfile);
+    await Get.toNamed(Routes.editProfile);
+    requestProfile();
   }
 
   void navigateToChangePassword() => Get.toNamed(Routes.changePassword);
@@ -80,10 +80,7 @@ class SettingsController extends BaseController {
   void onLanguage() {
     final current =
         _settingsUseCase.getLocale() ?? Get.locale?.languageCode ?? 'en';
-    LanguagesBottomSheet.show(
-      selectedCode: current,
-      onSelected: _setLocale,
-    );
+    LanguagesBottomSheet.show(selectedCode: current, onSelected: _setLocale);
   }
 
   Future<void> _setLocale(String code) async {
@@ -111,15 +108,14 @@ class SettingsController extends BaseController {
     if (!isSuccess(response)) return;
     Get.offAllNamed(Routes.signIn);
   }
+
   Future<void> requestDeleteAccount() async {
     isLoading.value = true;
     final response = await _authUseCase.requestDeleteAccount();
     isLoading.value = false;
     if (!isSuccess(response)) return;
     Get.offAllNamed(Routes.signIn);
-    Get.rawSnackbar(
-      message: response.message?.tr ?? 'deleteAccountSuccess'.tr,
-    );
+    Get.rawSnackbar(message: response.message?.tr ?? 'deleteAccountSuccess'.tr);
   }
 
   void onDeleteAccount() {

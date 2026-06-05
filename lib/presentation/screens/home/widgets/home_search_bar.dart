@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 
 class HomeSearchBar extends StatelessWidget {
   const HomeSearchBar({
@@ -39,7 +38,7 @@ class HomeSearchBar extends StatelessWidget {
                     padding: const EdgeInsetsDirectional.only(start: 8),
                     constraints: const BoxConstraints(),
                     icon: SvgPicture.asset(
-                      AppIcons.search,
+                      'assets/icons/ic_search.svg',
                       width: 20,
                       height: 20,
                     ),
@@ -72,7 +71,7 @@ class HomeSearchBar extends StatelessWidget {
                     padding: const EdgeInsetsDirectional.only(end: 8),
                     constraints: const BoxConstraints(),
                     icon: SvgPicture.asset(
-                      AppIcons.cameraOutline,
+                      'assets/icons/ic_camera_outline.svg',
                       width: 22,
                       height: 22,
                     ),
@@ -94,7 +93,7 @@ class HomeSearchBar extends StatelessWidget {
                 height: 48,
                 child: Center(
                   child: SvgPicture.asset(
-                    AppIcons.filter2,
+                    'assets/icons/ic_filter_2.svg',
                     width: 22,
                     height: 22,
                     colorFilter: const ColorFilter.mode(

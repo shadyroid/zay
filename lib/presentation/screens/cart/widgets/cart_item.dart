@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_icons.dart';
 import 'package:hedma/domain/models/beans/cart_item_bean.dart';
 
 class CartItem extends StatelessWidget {
@@ -66,7 +65,7 @@ class CartItem extends StatelessWidget {
                     GestureDetector(
                       onTap: onRemove,
                       child: SvgPicture.asset(
-                        AppIcons.delete,
+                        'assets/icons/ic_delete.svg',
                         width: 20,
                         height: 20,
                       ),
@@ -122,7 +121,7 @@ class CartItem extends StatelessWidget {
       color: AppColors.screenBackground,
       child: Center(
         child: SvgPicture.asset(
-          AppIcons.productPlaceholder,
+          'assets/icons/ic_product_placeholder.svg',
           width: 32,
           height: 32,
         ),
