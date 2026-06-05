@@ -5,7 +5,7 @@ import 'package:hedma/data/remote/dio_client.dart';
 import 'package:hedma/domain/requests/product_details_request.dart';
 import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
-import 'package:hedma/domain/requests/try_product_request.dart';
+import 'package:hedma/domain/requests/try_on_request.dart';
 
 class ProductsDataSource {
   final DioClient _dioClient = Get.find<DioClient>();
@@ -66,11 +66,11 @@ class ProductsDataSource {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> requestTryProduct(
-    TryProductRequest request,
+  Future<Map<String, dynamic>> requestTryOn(
+    TryOnRequest request,
   ) async {
     final response = await _dioClient.post(
-      Constants.tryProductPath,
+      Constants.tryOnPath,
       data: FormData.fromMap({
         'product_id': request.productId,
         'photo': await MultipartFile.fromFile(

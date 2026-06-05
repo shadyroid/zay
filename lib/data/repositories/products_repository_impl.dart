@@ -9,12 +9,12 @@ import 'package:hedma/domain/models/responses/categories_response.dart';
 import 'package:hedma/domain/models/responses/product_response.dart';
 import 'package:hedma/domain/models/responses/products_response.dart';
 import 'package:hedma/domain/models/responses/sizes_response.dart';
-import 'package:hedma/domain/models/responses/try_product_response.dart';
+import 'package:hedma/domain/models/responses/try_on_response.dart';
 import 'package:hedma/domain/repositories/products_repository.dart';
 import 'package:hedma/domain/requests/product_details_request.dart';
 import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
-import 'package:hedma/domain/requests/try_product_request.dart';
+import 'package:hedma/domain/requests/try_on_request.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsDataSource _productsDataSource = ProductsDataSource();
@@ -136,10 +136,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<TryProductResponse> requestTryProduct(
-    TryProductRequest request,
+  Future<TryOnResponse> requestTryOn(
+    TryOnRequest request,
   ) async {
-    final json = await _productsDataSource.requestTryProduct(request);
-    return TryProductResponse.fromJson(json);
+    final json = await _productsDataSource.requestTryOn(request);
+    return TryOnResponse.fromJson(json);
   }
 }

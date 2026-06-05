@@ -3,8 +3,8 @@ import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/data/remote/dio_client.dart';
 import 'package:hedma/domain/models/enums/review_size_fit.dart';
 import 'package:hedma/domain/requests/add_review_request.dart';
-import 'package:hedma/domain/requests/add_try_out_review_request.dart';
 import 'package:hedma/domain/requests/reviews_request.dart';
+import 'package:hedma/domain/requests/try_on_review_request.dart';
 
 class ReviewsDataSource {
   final DioClient _dioClient = Get.find<DioClient>();
@@ -16,20 +16,6 @@ class ReviewsDataSource {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> requestAddTryOutReview(
-    AddTryOutReviewRequest request,
-  ) async {
-    final response = await _dioClient.post(
-      Constants.addTryOutReviewPath,
-      data: {
-        'product_id': request.productId,
-        'title': request.title,
-        'comment': request.comment,
-        'rating': request.rating,
-      },
-    );
-    return Map<String, dynamic>.from(response.data as Map);
-  }
 
   Future<Map<String, dynamic>> requestAddReview(
     AddReviewRequest request,
@@ -42,6 +28,16 @@ class ReviewsDataSource {
         'comment': request.comment?.trim() ?? '',
         'size_rating': request.sizeFit.apiValue,
       },
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> requestTryOnReview(
+    TryOnReviewRequest request,
+  ) async {
+    final response = await _dioClient.post(
+      '${Constants.tryOnReviewPath}/${request.tryOnId}/review',
+      data: {'rating': request.rate},
     );
     return Map<String, dynamic>.from(response.data as Map);
   }

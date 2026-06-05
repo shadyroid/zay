@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
@@ -7,8 +5,8 @@ import 'package:hedma/app/use_cases/reviews_use_case.dart';
 import 'package:hedma/app/utils/app_auth_guard.dart';
 import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
-import 'package:hedma/domain/requests/add_try_out_review_request.dart';
-import 'package:hedma/domain/requests/try_product_request.dart';
+import 'package:hedma/domain/requests/try_on_request.dart';
+import 'package:hedma/domain/requests/try_on_review_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,6 +16,7 @@ class TryOnController extends BaseController {
 
   late XFile file;
   final imageUrl = RxnString();
+  int? tryOnId;
   late ProductBean product;
   final selectedRating = 1.obs;
 
@@ -26,6 +25,7 @@ class TryOnController extends BaseController {
     super.onInit();
     file = Get.arguments['file'];
     product = Get.arguments['product'];
+    requestTryOn();
   }
 
   void selectRating(int rating) {
@@ -34,34 +34,29 @@ class TryOnController extends BaseController {
   }
 
   Future<void> _submitFitRating(int rating) async {
-    await _reviewsUseCase.requestAddTryOutReview(
-      AddTryOutReviewRequest(
-        productId: product.id,
-        title: 'tryOnFitRating'.tr,
-        comment: 'tryOnFitRatingComment'.tr,
-        rating: rating.toDouble(),
-      ),
-    );
-    // Rating is optional feedback; failures are not surfaced to avoid interrupting try-on.
+    await _reviewsUseCase.requestTryOnReview(TryOnReviewRequest(tryOnId: tryOnId, rate: rating));
   }
 
   Future<void> onTryOnAgain() async {
     final file = await ImagePickerHelper.pickFromBottomSheet();
     if (file == null) return;
-    requestTryProduct();
+    requestTryOn();
   }
-  Future<void> requestTryProduct() async {
+
+  Future<void> requestTryOn() async {
     isLoading.value = true;
-    final response = await _productsUseCase.requestTryProduct(
-      TryProductRequest(productId: product.id, image: file),
+    final response = await _productsUseCase.requestTryOn(
+      TryOnRequest(productId: product.id, image: file),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
+    tryOnId = response.id;
     final url = response.imageUrl;
     if (url != null && url.isNotEmpty) {
       imageUrl.value = url;
     }
   }
+
   Future<void> onAddToCart() async {
     if (!await AppAuthGuard.ensureAuthenticated()) return;
     Get.rawSnackbar(message: 'addedToCart'.tr);

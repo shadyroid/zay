@@ -1,0 +1,23 @@
+import 'package:hedma/domain/models/responses/base_response.dart';
+
+class TryOnResponse extends BaseResponse {
+  final int? id;
+  final String? imageUrl;
+
+  const TryOnResponse({
+    required super.statusCode,
+    super.message,
+    this.id,
+    this.imageUrl,
+  });
+
+  factory TryOnResponse.fromJson(Map<String, dynamic> json) {
+
+    return TryOnResponse(
+      statusCode: json['statusCode'] as int? ?? 200,
+      message: json['message'],
+      id: json['request_id'],
+      imageUrl: json['result_url'],
+    );
+  }
+}

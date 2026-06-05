@@ -35,6 +35,9 @@ class ProductDetailsController extends BaseController {
 
   late final int productId;
 
+  final RxBool isTryOnLoading = false.obs;
+
+
   @override
   void onInit() {
     super.onInit();
@@ -157,12 +160,15 @@ class ProductDetailsController extends BaseController {
   Future<void> onTryOn() async {
     if (!await AppAuthGuard.ensureAuthenticated()) return;
 
+    isTryOnLoading.value = true;
     final file = await ImagePickerHelper.pickFromBottomSheet();
     if (file == null) return;
     await AppAuthGuard.toNamed(
       Routes.tryOn,
       arguments: {'file': file, 'product': product.value},
     );
+    isTryOnLoading.value = false;
+
   }
 
   Future<void> addToCart() async {

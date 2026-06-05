@@ -3,11 +3,11 @@ import 'package:hedma/domain/models/responses/categories_response.dart';
 import 'package:hedma/domain/models/responses/product_response.dart';
 import 'package:hedma/domain/models/responses/products_response.dart';
 import 'package:hedma/domain/models/responses/sizes_response.dart';
-import 'package:hedma/domain/models/responses/try_product_response.dart';
+import 'package:hedma/domain/models/responses/try_on_response.dart';
 import 'package:hedma/domain/requests/product_details_request.dart';
 import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
-import 'package:hedma/domain/requests/try_product_request.dart';
+import 'package:hedma/domain/requests/try_on_request.dart';
 
 abstract class ProductsRepository {
   Future<CategoriesResponse> requestCategories();
@@ -24,5 +24,5 @@ abstract class ProductsRepository {
 
   Future<BaseResponse> requestUnFavorite(ProductIdRequest request);
 
-  Future<TryProductResponse> requestTryProduct(TryProductRequest request);
+  Future<TryOnResponse> requestTryOn(TryOnRequest request);
 }

@@ -1,7 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 
-class TryProductRequest {
-  const TryProductRequest({
+class TryOnRequest {
+  const TryOnRequest({
     required this.productId,
     required this.image,
   });

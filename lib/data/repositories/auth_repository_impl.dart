@@ -27,9 +27,6 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<BaseResponse> requestSignUp(SignUpRequest request) async {
     final json = await _authDataSource.requestSignUp(request);
-    if (json['statusCode'] == 200) {
-      await PrefsManager.setToken(json['token']);
-    }
     return BaseResponse.fromJson(json);
   }
 
@@ -44,6 +41,9 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<BaseResponse> requestVerification(VerificationRequest request) async {
     final json = await _authDataSource.requestVerification(request);
+    if (json['statusCode'] == 200) {
+      await PrefsManager.setToken(json['token']);
+    }
     return BaseResponse.fromJson(json);
   }
 

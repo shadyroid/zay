@@ -66,8 +66,11 @@ class ProductsController extends BaseController {
   }
 
   void selectCategory(CategoryBean category) {
-    if (selectedCategoryId.value == category.id) return;
-    selectedCategoryId.value = category.id;
+    if (selectedCategoryId.value == category.id) {
+      selectedCategoryId.value = null;
+    } else {
+      selectedCategoryId.value = category.id;
+    }
     requestProducts();
   }
 

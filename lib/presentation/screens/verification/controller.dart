@@ -142,10 +142,10 @@ class VerificationController extends BaseController {
       );
       return;
     }
-    if (flow == 'signin') {
-      Get.offNamed(Routes.signIn);
-      return;
-    }
+    // if (flow == 'signin') {
+    //   Get.offNamed(Routes.signIn);
+    //   return;
+    // }
 
     isLoading.value = true;
     final response = await _authUseCase.requestVerification(
@@ -154,7 +154,7 @@ class VerificationController extends BaseController {
     isLoading.value = false;
     if (!isSuccess(response)) return;
 
-    Get.offNamed(Routes.home);
+    Get.offAllNamed(Routes.home);
   }
 
   

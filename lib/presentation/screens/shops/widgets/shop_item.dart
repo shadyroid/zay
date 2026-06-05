@@ -18,7 +18,7 @@ class ShopItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rating = shop.rating ?? '4.5';
-    final tagline = shop.description ?? '';
+    final tagline = shop.slogan ?? '';
 
     return InkWell(
       onTap: onTap,

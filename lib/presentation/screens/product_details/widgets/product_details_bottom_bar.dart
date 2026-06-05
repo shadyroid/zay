@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,11 +9,13 @@ class ProductDetailsBottomBar extends StatelessWidget {
   const ProductDetailsBottomBar({
     super.key,
     required this.price,
+    required this.isTryOnLoading,
     required this.onTryOn,
     required this.onAddToCart,
   });
 
   final String price;
+  final bool isTryOnLoading;
   final VoidCallback onTryOn;
   final VoidCallback onAddToCart;
 
@@ -55,7 +58,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: onTryOn,
-                    icon: SvgPicture.asset(
+                    icon: isTryOnLoading?CupertinoActivityIndicator():SvgPicture.asset(
                       'assets/icons/ic_person_2.svg',
                       width: 20,
                       height: 20,

@@ -1,5 +1,7 @@
 class Constants {
   static const String tokenKey = 'token';
+  static const String tempTokenKey = 'tempToken';
+  static const String isVerified = 'isVerified';
   static const String localeKey = 'locale';
 
   static const String baseUrl = 'https://zaymarketplace.online/api';
@@ -20,8 +22,8 @@ class Constants {
   static const String shopDetailsPath = '/shops';
   static const String wishlistPath = '/wishlist';
   static const String reviewsPath = '/products';
-  static const String addTryOutReviewPath = '/catalog/reviews/add';
-  static const String tryProductPath = '/try-on';
+  static const String tryOnPath = '/try-on';
+  static const String tryOnReviewPath = '/requests';
 
   static const String cartPath = '/cart';
   static const String cartItemsPath = '/cart/items';
