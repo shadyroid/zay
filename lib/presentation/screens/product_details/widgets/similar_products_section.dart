@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_product_item.dart';
 
@@ -29,7 +30,7 @@ class SimilarProductsSection extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
             child: Text(
               'similarTo'.tr,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              style: Get.theme.textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
             ),

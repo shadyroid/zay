@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/screens/map/controller.dart';
@@ -21,7 +22,7 @@ class MapScreen extends GetView<MapController> {
         centerTitle: true,
         title: Text(
           'selectLocation'.tr,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          style: Get.theme.textTheme.titleMedium?.copyWith(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.w700,
               ),

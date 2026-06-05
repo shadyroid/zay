@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class OrderTrackDeliveryCard extends StatelessWidget {
@@ -26,14 +27,14 @@ class OrderTrackDeliveryCard extends StatelessWidget {
         children: [
           Text(
             'estimatedDelivery'.tr,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: Get.theme.textTheme.bodyMedium?.copyWith(
                   color: AppColors.textPrimary,
                 ),
           ),
           const SizedBox(height: 6),
           Text(
             estimatedDelivery,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: Get.theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.secondary,
                 ),

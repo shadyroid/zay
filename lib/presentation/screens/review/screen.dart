@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/screens/review/controller.dart';
 import 'package:hedma/presentation/screens/review/widgets/order_item_review_card.dart';
@@ -27,7 +28,7 @@ class ReviewScreen extends GetView<ReviewController> {
               child: Text(
                 'noItemsToReview'.tr,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                style: Get.theme.textTheme.bodyLarge?.copyWith(
                       color: AppColors.textSecondary,
                     ),
               ),

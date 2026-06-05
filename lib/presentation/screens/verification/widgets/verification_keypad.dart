@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class VerificationKeypad extends StatelessWidget {
@@ -90,7 +91,7 @@ class _KeypadKey extends StatelessWidget {
             child: child ??
                 Text(
                   label!,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  style: Get.theme.textTheme.titleLarge?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w400,
                       ),

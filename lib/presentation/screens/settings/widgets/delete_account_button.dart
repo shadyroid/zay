@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 
 class DeleteAccountButton extends StatelessWidget {
   const DeleteAccountButton({super.key, required this.onPressed});

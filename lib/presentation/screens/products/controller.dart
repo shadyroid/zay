@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
@@ -12,6 +10,7 @@ import 'package:hedma/domain/requests/products_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/filter_bottom_sheet.dart';
 import 'package:hedma/presentation/bottom_sheets/sort/sort_bottom_sheet.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProductsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -27,6 +26,7 @@ class ProductsController extends BaseController {
   int? sizeId;
   double? priceMin;
   double? priceMax;
+  XFile? image;
 
   @override
   void onInit() {
@@ -34,6 +34,7 @@ class ProductsController extends BaseController {
     selectedCategoryId.value = Get.arguments['categoryId'];
     searchQuery.value = Get.arguments['search'];
     shopId = Get.arguments['shopId'];
+    image = Get.arguments['image'];
     requestCategories();
     requestProducts();
   }
@@ -55,6 +56,7 @@ class ProductsController extends BaseController {
         maxPrice: priceMax,
         sortBy: selectedSort.value,
         search: searchQuery.value,
+        image: image,
       ),
     );
     isLoading.value = false;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
@@ -114,7 +115,7 @@ class _OtpBox extends StatelessWidget {
       ),
       child: Text(
         digit,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+        style: Get.theme.textTheme.titleLarge?.copyWith(
               color: AppColors.textPrimary,
               fontWeight: FontWeight.w600,
             ),

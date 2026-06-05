@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class OrderDetailsSectionCard extends StatelessWidget {
@@ -37,7 +38,7 @@ class OrderDetailsSectionCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title!,
-                          style: Theme.of(context)
+                          style: Get.theme
                               .textTheme
                               .titleSmall
                               ?.copyWith(
@@ -53,7 +54,7 @@ class OrderDetailsSectionCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       subtitleText,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
                     ),

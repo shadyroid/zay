@@ -6,12 +6,12 @@ class ProductSellerBanner extends StatelessWidget {
   const ProductSellerBanner({
     super.key,
     required this.shopName,
-    required this.categories,
+    required this.slogan,
     required this.onTap,
   });
 
   final String shopName;
-  final String categories;
+  final String slogan;
   final VoidCallback onTap;
 
   @override
@@ -20,12 +20,12 @@ class ProductSellerBanner extends StatelessWidget {
 
     final initials = shopName.isNotEmpty
         ? shopName
-            .split(' ')
-            .where((w) => w.isNotEmpty)
-            .take(2)
-            .map((w) => w[0])
-            .join()
-            .toUpperCase()
+              .split(' ')
+              .where((w) => w.isNotEmpty)
+              .take(2)
+              .map((w) => w[0])
+              .join()
+              .toUpperCase()
         : '?';
 
     return InkWell(
@@ -46,9 +46,9 @@ class ProductSellerBanner extends StatelessWidget {
               backgroundColor: AppColors.screenBackground,
               child: Text(
                 initials,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                style: Get.theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -56,31 +56,20 @@ class ProductSellerBanner extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: AppColors.textPrimary,
-                          ),
-                      children: [
-                        TextSpan(text: '${'soldBy'.tr} '),
-                        TextSpan(
-                          text: shopName,
-                          style: const TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                      ],
+                  Text(
+                    shopName,
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.textPrimary,
                     ),
                   ),
-                  if (categories.isNotEmpty) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      categories,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
+                  Text(
+                    slogan,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Get.theme.textTheme.bodySmall?.copyWith(
+                      color: AppColors.textSecondary,
                     ),
-                  ],
+                  ),
                 ],
               ),
             ),

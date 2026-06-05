@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 /// Light clothing-outline watermark used behind the success content.
 class OrderSuccessPatternBackground extends StatelessWidget {

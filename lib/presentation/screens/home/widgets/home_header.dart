@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/widgets/profile_avatar.dart';
 
@@ -25,14 +26,14 @@ class HomeHeader extends StatelessWidget {
               children: [
                 Text(
                   'welcomeBack'.tr,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  style: Get.theme.textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   userName.isNotEmpty ? userName : 'guest'.tr,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: Get.theme.textTheme.titleMedium?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w700,
                       ),

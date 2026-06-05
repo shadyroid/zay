@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -19,7 +20,7 @@ class ContactUsHeader extends StatelessWidget {
         Text(
           'contactUsHeadline'.tr,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          style: Get.theme.textTheme.titleLarge?.copyWith(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w700,
               ),
@@ -30,7 +31,7 @@ class ContactUsHeader extends StatelessWidget {
           child: Text(
             'contactUsSubtext'.tr,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: Get.theme.textTheme.bodyMedium?.copyWith(
                   color: AppColors.textSecondary,
                   height: 1.4,
                 ),

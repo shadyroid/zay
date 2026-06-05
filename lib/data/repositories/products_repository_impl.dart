@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:hedma/app/utils/likes_util.dart';
+import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/data/remote/data_sources/cart_data_source.dart';
 import 'package:hedma/data/remote/data_sources/products_data_source.dart';
 import 'package:hedma/domain/models/responses/base_response.dart';
@@ -62,37 +63,39 @@ class ProductsRepositoryImpl implements ProductsRepository {
     ProductDetailsRequest request,
   ) async {
     var json = await _productsDataSource.requestProductDetails(request);
-    final images = json['product']?['images'];
-    json['product']['primary_image'] = images.firstWhere(
-      (e) => e['is_primary'] == true,
-      orElse: () => images.first,
-    )['url'];
-    json['product']['images'] = images.map((e) => e['url']).toList();
     if (json['statusCode'] == 200) {
-      var cartJson = await _cartDataSource.requestCart();
+      final images = json['product']?['images'];
+      json['product']['primary_image'] = images.firstWhere(
+        (e) => e['is_primary'] == true,
+        orElse: () => images.first,
+      )['url'];
+      json['product']['images'] = images.map((e) => e['url']).toList();
+      if (PrefsManager.isLoggedIn) {
+        var cartJson = await _cartDataSource.requestCart();
+        if (cartJson['statusCode'] == 200) {
+          final Map<int, int> result = {};
+          final shops = cartJson['items'];
+          for (final shopData in shops) {
+            final shop = shopData['shop'];
+            if (shop['id'] != json['product']?['shop']?['id']) continue;
 
+            final items = shopData['items'] as List<dynamic>;
 
-      final Map<int, int> result = {};
-      final shops = cartJson['items'];
-      for (final shopData in shops) {
-        final shop = shopData['shop'];
-        if (shop['id'] != json['product']?['shop']?['id']) continue;
+            for (final item in items) {
+              final product = item['product'];
 
-        final items = shopData['items'] as List<dynamic>;
+              if (product['id'] != json['product']?['id']) continue;
 
-        for (final item in items) {
-          final product = item['product'];
+              final sizeId = item['size']['id'];
+              final quantity = item['quantity'];
 
-          if (product['id'] != json['product']?['id']) continue;
-
-          final sizeId = item['size']['id'];
-          final quantity = item['quantity'];
-
-          if (sizeId != null) result[sizeId] = quantity;
+              if (sizeId != null) result[sizeId] = quantity;
+            }
+          }
+          log("message ${result}");
+          json['product']['selectedSizesQuantities'] = result;
         }
       }
-      log("message ${result}");
-      json['product']['selectedSizesQuantities'] = result;
     }
 
     json = {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -72,7 +73,7 @@ class ProductGridItem extends StatelessWidget {
             product.name ?? "",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: Get.theme.textTheme.bodyMedium?.copyWith(
                   color: AppColors.textSecondary,
                 ),
           ),
@@ -81,7 +82,7 @@ class ProductGridItem extends StatelessWidget {
             children: [
               Text(
                 '\$${product.price}',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                style: Get.theme.textTheme.titleSmall?.copyWith(
                       color: AppColors.textPrimary,
                       fontWeight: FontWeight.w700,
                     ),
@@ -95,7 +96,7 @@ class ProductGridItem extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 rating,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                     ),
               ),

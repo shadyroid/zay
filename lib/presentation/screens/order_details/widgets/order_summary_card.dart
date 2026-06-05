@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/beans/order_bean.dart';
 import 'package:hedma/presentation/screens/order_details/widgets/order_details_section_card.dart';
@@ -69,11 +70,11 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
+    final labelStyle = Get.theme.textTheme.bodyMedium?.copyWith(
           color: isTotal ? AppColors.textPrimary : AppColors.textSecondary,
           fontWeight: isTotal ? FontWeight.w700 : FontWeight.w400,
         );
-    final valueStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
+    final valueStyle = Get.theme.textTheme.bodyMedium?.copyWith(
           color: isTotal ? AppColors.secondary : AppColors.textPrimary,
           fontWeight: FontWeight.w700,
         );

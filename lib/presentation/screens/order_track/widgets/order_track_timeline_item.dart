@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -51,7 +52,7 @@ class OrderTrackTimelineItem extends StatelessWidget {
                 children: [
                   Text(
                     step.titleKey.tr,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    style: Get.theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
@@ -60,7 +61,7 @@ class OrderTrackTimelineItem extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       step.subtitleKey.tr,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                             height: 1.4,
                           ),
@@ -70,7 +71,7 @@ class OrderTrackTimelineItem extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       step.timestamp,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -88,7 +89,7 @@ class SignInScreen extends GetView<SignInController> {
                     ),
                     child: Text(
                       'forgotPassword'.tr,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textPrimary,
                             decoration: TextDecoration.underline,
                             decorationColor: AppColors.textPrimary,

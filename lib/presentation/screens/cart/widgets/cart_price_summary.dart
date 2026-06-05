@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class CartPriceSummary extends StatelessWidget {
@@ -59,7 +60,7 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).textTheme.bodyMedium?.copyWith(
+    final style = Get.theme.textTheme.bodyMedium?.copyWith(
           fontWeight: isBold ? FontWeight.w700 : FontWeight.w400,
           color: AppColors.textPrimary,
         );

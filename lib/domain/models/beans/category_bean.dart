@@ -16,7 +16,7 @@ class CategoryBean {
     return CategoryBean(
       id: json['id'],
       name: json['name'],
-      icon: json['icon'],
+      icon: 'https://zaymarketplace.online/storage/${json['icon']}',
       measurementsImage: json['measurements_image'],
     );
   }

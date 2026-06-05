@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/beans/product_size_bean.dart';
-class ProductSizeGuideTable extends StatelessWidget {
-  const ProductSizeGuideTable({super.key, required this.sizes});
+import 'package:hedma/domain/models/beans/size_bean.dart';
 
-  final List<ProductSizeBean>? sizes;
+class ProductSizeGuideTable extends StatelessWidget {
+  const ProductSizeGuideTable({
+    super.key,
+    required this.sizes,
+    required this.measurementsImage,
+  });
+
+  final List<SizeBean>? sizes;
+  final String? measurementsImage;
 
   @override
   Widget build(BuildContext context) {
-    if (sizes==null||sizes!.isEmpty) return const SizedBox.shrink();
+    if (sizes == null || sizes!.isEmpty) return const SizedBox.shrink();
 
     final measurementRows = _buildMeasurementRows(sizes!);
 
@@ -20,10 +26,16 @@ class ProductSizeGuideTable extends StatelessWidget {
         children: [
           Text(
             'sizeGuide'.tr,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+            style: Get.theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
+          if (measurementsImage != null)
+            Image.network(
+              measurementsImage!,
+              width: double.infinity,
+              fit: BoxFit.contain,
+            ),
           const SizedBox(height: 12),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -38,8 +50,8 @@ class ProductSizeGuideTable extends StatelessWidget {
                       color: AppColors.selectedCheck.withValues(alpha: 0.15),
                     ),
                     children: [
-                      _headerCell(context, 'size'.tr),
-                      ...sizes!.map((s) => _headerCell(context, s.label)),
+                      _headerCell('size'.tr),
+                      ...sizes!.map((s) => _headerCell(s.label)),
                     ],
                   ),
                   ...measurementRows.map((row) {
@@ -50,10 +62,10 @@ class ProductSizeGuideTable extends StatelessWidget {
                             : AppColors.screenBackground,
                       ),
                       children: [
-                        _dataCell(context, row.label??"", bold: true),
+                        _dataCell(row.label ?? "", bold: true),
                         ...sizes!.map((size) {
                           final value = row.values[size.id] ?? '-';
-                          return _dataCell(context, value);
+                          return _dataCell(value);
                         }),
                       ],
                     );
@@ -67,11 +79,11 @@ class ProductSizeGuideTable extends StatelessWidget {
     );
   }
 
-  List<_MeasurementRow> _buildMeasurementRows(List<ProductSizeBean> sizes) {
+  List<_MeasurementRow> _buildMeasurementRows(List<SizeBean> sizes) {
     if (sizes.isEmpty) return [];
 
     final ordered = <int?, String?>{};
-    for (final m in sizes.first.measurements) {
+    for (final m in sizes.first.measurements ?? []) {
       ordered[m.id] = m.label;
     }
 
@@ -79,7 +91,7 @@ class ProductSizeGuideTable extends StatelessWidget {
       final values = <int?, String?>{};
       for (final size in sizes) {
         final match = size.measurements
-            .where((m) => m.id == entry.key)
+            ?.where((m) => m.id == entry.key)
             .firstOrNull;
         values[size.id] = match?.value ?? '-';
       }
@@ -87,28 +99,28 @@ class ProductSizeGuideTable extends StatelessWidget {
     }).toList();
   }
 
-  Widget _headerCell(BuildContext context, String text) {
+  Widget _headerCell(String? text) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       child: Text(
-        text,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
-            ),
+        text ?? "",
+        style: Get.theme.textTheme.bodySmall?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: AppColors.textPrimary,
+        ),
       ),
     );
   }
 
-  Widget _dataCell(BuildContext context, String text, {bool bold = false}) {
+  Widget _dataCell(String text, {bool bold = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
-              color: AppColors.textPrimary,
-            ),
+        style: Get.theme.textTheme.bodySmall?.copyWith(
+          fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
+          color: AppColors.textPrimary,
+        ),
       ),
     );
   }

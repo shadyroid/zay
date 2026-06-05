@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/auth_use_case.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
@@ -121,7 +122,7 @@ class HomeController extends BaseController {
   Future<void> onCameraTap() async {
     final file = await ImagePickerHelper.pickFromBottomSheet();
     if (file == null) return;
-    Get.toNamed(Routes.products);
+    Get.toNamed(Routes.products,arguments: {'image':file});
   }
 
   Future<void> onFilterTap() async {

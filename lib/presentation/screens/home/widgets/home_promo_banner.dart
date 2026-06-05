@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -92,7 +93,7 @@ class _PromoTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Get.theme.textTheme.bodyMedium?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w700,
                         height: 1.25,
@@ -101,7 +102,7 @@ class _PromoTile extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  style: Get.theme.textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                         height: 1.35,
                       ),

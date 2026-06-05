@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/verification/controller.dart';
 import 'package:hedma/presentation/screens/verification/widgets/otp_input_boxes.dart';
 import 'package:hedma/presentation/screens/verification/widgets/verification_header.dart';

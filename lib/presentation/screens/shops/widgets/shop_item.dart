@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -34,7 +35,7 @@ class ShopItem extends StatelessWidget {
                 children: [
                   Text(
                     shop.name ?? "",
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    style: Get.theme.textTheme.titleSmall?.copyWith(
                           color: AppColors.textPrimary,
                           fontWeight: FontWeight.w700,
                         ),
@@ -51,16 +52,16 @@ class ShopItem extends StatelessWidget {
                       Text(
                         rating,
                         style:
-                            Theme.of(context).textTheme.bodySmall?.copyWith(
+                            Get.theme.textTheme.bodySmall?.copyWith(
                                   color: AppColors.textPrimary,
                                   fontWeight: FontWeight.w600,
                                 ),
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '(${shop.reviewCount ?? 0} ${'reviews'.tr})',
+                        '(${shop.reviewsCount ?? 0} ${'reviews'.tr})',
                         style:
-                            Theme.of(context).textTheme.bodySmall?.copyWith(
+                            Get.theme.textTheme.bodySmall?.copyWith(
                                   color: AppColors.textSecondary,
                                 ),
                       ),
@@ -72,7 +73,7 @@ class ShopItem extends StatelessWidget {
                       tagline,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
                     ),
@@ -127,7 +128,7 @@ class _ShopLogoPlaceholder extends StatelessWidget {
       child: Center(
         child: Text(
           initial,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          style: Get.theme.textTheme.titleLarge?.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w700,
               ),

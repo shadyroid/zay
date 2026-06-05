@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/widgets/app_text_field.dart';
@@ -32,7 +33,7 @@ class ContactUsLabeledField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Get.theme.textTheme.bodyMedium?.copyWith(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.w600,
               ),

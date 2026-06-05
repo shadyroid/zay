@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/product_sort_option.dart';
 
@@ -25,7 +26,7 @@ class SortOptionItem extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             option.labelKey.tr,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            style: Get.theme.textTheme.bodyLarge?.copyWith(
                   color: AppColors.textPrimary,
                   fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
                 ),

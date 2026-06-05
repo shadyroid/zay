@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -51,7 +52,7 @@ class SortBottomSheet extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'sortBy'.tr,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: Get.theme.textTheme.titleMedium?.copyWith(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.w700,
                           ),

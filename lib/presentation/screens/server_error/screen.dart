@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/server_error/controller.dart';
 import 'package:hedma/presentation/widgets/app_button.dart';
 
@@ -18,7 +19,7 @@ class ServerErrorScreen extends GetView<ServerErrorController> {
             const SizedBox(height: 24),
             Text('serverErrorTitle'.tr,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineSmall),
+                style: Get.theme.textTheme.headlineSmall),
             const SizedBox(height: 8),
             Text('serverErrorSubtitle'.tr, textAlign: TextAlign.center),
             const SizedBox(height: 32),

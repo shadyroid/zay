@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -13,12 +14,12 @@ class ReviewNoteField extends StatelessWidget {
     return TextField(
       controller: controller,
       maxLines: 5,
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+      style: Get.theme.textTheme.bodyMedium?.copyWith(
             color: AppColors.textPrimary,
           ),
       decoration: InputDecoration(
         hintText: 'writeReviewOptional'.tr,
-        hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        hintStyle: Get.theme.textTheme.bodyMedium?.copyWith(
               color: AppColors.hint,
             ),
         prefixIcon: Padding(

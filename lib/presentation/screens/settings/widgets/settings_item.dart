@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
@@ -29,7 +30,7 @@ class SettingsItem extends StatelessWidget {
           ),
           title: Text(
             title,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            style: Get.theme.textTheme.bodyLarge?.copyWith(
                   color: AppColors.textPrimary,
                 ),
           ),

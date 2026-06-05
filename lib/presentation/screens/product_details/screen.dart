@@ -20,9 +20,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: ProductDetailsAppBar(
-        onShare: controller.onShare,
-      ),
+      appBar: ProductDetailsAppBar(onShare: controller.onShare),
       body: Obx(() {
         final product = controller.product.value;
         if (controller.isLoading.value && product == null) {
@@ -67,12 +65,15 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                     ),
                     ProductSellerBanner(
                       shopName: product.shop?.name ?? '',
-                      categories: product.sellerCategories ?? '',
+                      slogan: product.shop?.slogan ?? "",
                       onTap: controller.navigateToShop,
                     ),
                     KeyedSubtree(
                       key: controller.sizeGuideKey,
-                      child: ProductSizeGuideTable(sizes: product.sizes),
+                      child: ProductSizeGuideTable(
+                        sizes: product.sizes,
+                        measurementsImage: product.category?.measurementsImage,
+                      ),
                     ),
                     SimilarProductsSection(
                       products: controller.similarProducts,

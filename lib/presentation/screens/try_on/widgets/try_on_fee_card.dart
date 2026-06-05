@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class TryOnFeeCard extends StatelessWidget {
@@ -40,7 +41,7 @@ class TryOnFeeCard extends StatelessWidget {
                           children: [
                             Text(
                               'virtualTrialFee'.tr,
-                              style: Theme.of(context)
+                              style: Get.theme
                                   .textTheme
                                   .bodyMedium
                                   ?.copyWith(
@@ -50,7 +51,7 @@ class TryOnFeeCard extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(
                               'tryItFree'.tr,
-                              style: Theme.of(context)
+                              style: Get.theme
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(
@@ -62,7 +63,7 @@ class TryOnFeeCard extends StatelessWidget {
                       ),
                       Text(
                         '\$ 0',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: Get.theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
                       ),

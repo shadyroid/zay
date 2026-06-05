@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class HomeSectionHeader extends StatelessWidget {
@@ -21,7 +22,7 @@ class HomeSectionHeader extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Get.theme.textTheme.titleMedium?.copyWith(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w700,
                   ),
@@ -31,7 +32,7 @@ class HomeSectionHeader extends StatelessWidget {
             onTap: onSeeAll,
             child: Text(
               'seeAll'.tr,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.secondary,
                     fontWeight: FontWeight.w600,
                   ),

@@ -10,12 +10,13 @@ import 'package:hedma/domain/models/beans/product_bean.dart';
 import 'package:hedma/domain/requests/add_try_out_review_request.dart';
 import 'package:hedma/domain/requests/try_product_request.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TryOnController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
   final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
 
-  late File file;
+  late XFile file;
   final imageUrl = RxnString();
   late ProductBean product;
   final selectedRating = 1.obs;
@@ -52,7 +53,7 @@ class TryOnController extends BaseController {
   Future<void> requestTryProduct() async {
     isLoading.value = true;
     final response = await _productsUseCase.requestTryProduct(
-      TryProductRequest(productId: product.id, imagePath: file.path),
+      TryProductRequest(productId: product.id, image: file),
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;

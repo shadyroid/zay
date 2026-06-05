@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -57,7 +58,7 @@ class CartItem extends StatelessWidget {
                     Expanded(
                       child: Text(
                         item.name,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        style: Get.theme.textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
                       ),
@@ -76,7 +77,7 @@ class CartItem extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     '${'size'.tr} ${item.sizeLabel}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: Get.theme.textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondary,
                         ),
                   ),
@@ -84,14 +85,14 @@ class CartItem extends StatelessWidget {
                 const SizedBox(height: 6),
                 RichText(
                   text: TextSpan(
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: Get.theme.textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondary,
                         ),
                     children: [
                       TextSpan(text: '${'price'.tr}: '),
                       TextSpan(
                         text: '\$${item.price}',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        style: Get.theme.textTheme.titleSmall?.copyWith(
                               color: AppColors.secondary,
                               fontWeight: FontWeight.w700,
                             ),
@@ -156,7 +157,7 @@ class _QuantitySelector extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               '$quantity',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
             ),

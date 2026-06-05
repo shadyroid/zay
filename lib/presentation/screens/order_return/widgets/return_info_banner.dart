@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class ReturnInfoBanner extends StatelessWidget {
@@ -34,7 +35,7 @@ class ReturnInfoBanner extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              style: Get.theme.textTheme.bodySmall?.copyWith(
                     color: AppColors.orderSuccess,
                     height: 1.45,
                   ),

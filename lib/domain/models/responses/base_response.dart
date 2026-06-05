@@ -7,7 +7,7 @@ class BaseResponse {
     required this.statusCode,
   });
 
-  bool get isSuccess => statusCode == 200;
+  bool get isSuccess => statusCode >= 200 && statusCode < 300;
 
   factory BaseResponse.fromJson(Map<String, dynamic> json) {
     return BaseResponse(

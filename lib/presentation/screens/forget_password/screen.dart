@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/forget_password/controller.dart';
 import 'package:hedma/presentation/screens/forget_password/widgets/forget_password_header.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';

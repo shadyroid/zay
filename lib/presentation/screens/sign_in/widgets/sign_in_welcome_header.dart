@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class SignInWelcomeHeader extends StatelessWidget {
@@ -13,7 +14,7 @@ class SignInWelcomeHeader extends StatelessWidget {
       children: [
         Text(
           'signInTitle'.tr,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          style: Get.theme.textTheme.headlineSmall?.copyWith(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.w700,
               ),
@@ -24,7 +25,7 @@ class SignInWelcomeHeader extends StatelessWidget {
           children: [
             Text(
               'noAccount'.tr,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textSecondary,
                   ),
             ),
@@ -32,7 +33,7 @@ class SignInWelcomeHeader extends StatelessWidget {
               onTap: onCreateAccount,
               child: Text(
                 'createOne'.tr,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                style: Get.theme.textTheme.bodyMedium?.copyWith(
                       color: AppColors.secondary,
                       fontWeight: FontWeight.w600,
                     ),

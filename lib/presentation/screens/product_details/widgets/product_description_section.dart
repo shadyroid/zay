@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class ProductDescriptionSection extends StatelessWidget {
@@ -27,7 +28,7 @@ class ProductDescriptionSection extends StatelessWidget {
             isExpanded || description.length < 120
                 ? description
                 : '${description.substring(0, 120)}...',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: Get.theme.textTheme.bodyMedium?.copyWith(
                   color: AppColors.textSecondary,
                   height: 1.5,
                 ),
@@ -39,7 +40,7 @@ class ProductDescriptionSection extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
                   isExpanded ? 'readLess'.tr : 'readMore'.tr,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Get.theme.textTheme.bodyMedium?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w700,
                       ),

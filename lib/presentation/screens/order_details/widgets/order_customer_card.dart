@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -29,7 +30,7 @@ class OrderCustomerCard extends StatelessWidget {
                     order.customerName.isNotEmpty
                         ? order.customerName
                         : '—',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    style: Get.theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
@@ -55,7 +56,7 @@ class OrderCustomerCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             order.customerAddress,
-                            style: Theme.of(context)
+                            style: Get.theme
                                 .textTheme
                                 .bodySmall
                                 ?.copyWith(
@@ -70,7 +71,7 @@ class OrderCustomerCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       '${'mobile'.tr} : ${order.customerPhone}',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
                     ),

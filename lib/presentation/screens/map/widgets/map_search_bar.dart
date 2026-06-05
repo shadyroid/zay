@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -51,14 +52,14 @@ class MapSearchBar extends StatelessWidget {
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
                 hintText: 'searchLocation'.tr,
-                hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                hintStyle: Get.theme.textTheme.bodyMedium?.copyWith(
                       color: AppColors.hint,
                     ),
                 border: InputBorder.none,
                 isDense: true,
                 contentPadding: const EdgeInsets.symmetric(vertical: 12),
               ),
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textPrimary,
                   ),
             ),

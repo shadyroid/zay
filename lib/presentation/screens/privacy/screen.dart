@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/privacy/controller.dart';
 import 'package:hedma/presentation/widgets/html_content_scaffold.dart';
 

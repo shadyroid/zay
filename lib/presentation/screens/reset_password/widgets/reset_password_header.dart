@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class ResetPasswordHeader extends StatelessWidget {
@@ -12,7 +13,7 @@ class ResetPasswordHeader extends StatelessWidget {
         Text(
           'resetPasswordTitle'.tr,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          style: Get.theme.textTheme.headlineSmall?.copyWith(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.w700,
               ),
@@ -21,7 +22,7 @@ class ResetPasswordHeader extends StatelessWidget {
         Text(
           'resetPasswordSubtitle'.tr,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Get.theme.textTheme.bodyMedium?.copyWith(
                 color: AppColors.textSecondary,
               ),
         ),

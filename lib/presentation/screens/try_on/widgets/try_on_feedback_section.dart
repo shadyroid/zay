@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -24,14 +25,14 @@ class TryOnFeedbackSection extends StatelessWidget {
         children: [
           Text(
             'yourOpinionMatters'.tr,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: Get.theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
           ),
           const SizedBox(height: 6),
           Text(
             'howWellDoesItFit'.tr,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: Get.theme.textTheme.bodyMedium?.copyWith(
                   color: AppColors.textSecondary,
                 ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
@@ -37,7 +38,7 @@ class ShopItem extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   shop.name ?? "",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Get.theme.textTheme.bodyMedium?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight:
                            FontWeight.w500,
@@ -82,16 +83,16 @@ class _ShopIcon extends StatelessWidget {
       return Text(iconUrl, style: const TextStyle(fontSize: 16));
     }
 
-    return SvgPicture.network(
+    return Image.network(
       iconUrl,
       width: 18,
       height: 18,
-      colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-      placeholderBuilder: (context) => SizedBox(
-        width: 18,
-        height: 18,
-        child: AppProgressIndicator(radius: 8, color: color),
-      ),
+      // colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+      // placeholderBuilder: (context) => SizedBox(
+      //   width: 18,
+      //   height: 18,
+      //   child: AppProgressIndicator(radius: 8, color: color),
+      // ),
       errorBuilder: (context, error, stackTrace) => SvgPicture.asset(
         'assets/icons/ic_category_all.svg',
         width: 18,

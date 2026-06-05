@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
@@ -50,7 +51,7 @@ class FilterStoreChip extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   shop.name ?? "",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Get.theme.textTheme.bodyMedium?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w600,
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -41,7 +42,7 @@ class LanguageItem extends StatelessWidget {
             Expanded(
               child: Text(
                 language.labelKey.tr,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                style: Get.theme.textTheme.bodyLarge?.copyWith(
                       color: AppColors.textPrimary,
                     ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/beans/return_reason_bean.dart';
 
@@ -36,7 +37,7 @@ class ReturnReasonCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   reason.label,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Get.theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w500,
                         color: AppColors.textPrimary,
                       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/enums/order_list_filter.dart';
 
@@ -60,7 +61,7 @@ class _FilterChip extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           child: Text(
             label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            style: Get.theme.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: isSelected ? Colors.white : AppColors.textPrimary,
                 ),

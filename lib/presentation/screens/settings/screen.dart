@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/screens/settings/controller.dart';
 import 'package:hedma/presentation/screens/settings/widgets/delete_account_button.dart';

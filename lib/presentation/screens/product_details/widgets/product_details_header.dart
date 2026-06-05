@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -36,7 +37,7 @@ class ProductDetailsHeader extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  style: Get.theme.textTheme.titleLarge?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w700,
                       ),
@@ -44,14 +45,14 @@ class ProductDetailsHeader extends StatelessWidget {
                 const SizedBox(height: 8),
                 RichText(
                   text: TextSpan(
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
                           color: AppColors.textSecondary,
                         ),
                     children: [
                       TextSpan(text: '${'price'.tr}: '),
                       TextSpan(
                         text: '\$$price',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        style: Get.theme.textTheme.titleLarge?.copyWith(
                               color: AppColors.secondary,
                               fontWeight: FontWeight.w700,
                             ),
@@ -66,7 +67,7 @@ class ProductDetailsHeader extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       '$rating ($reviewCount ${'reviews'.tr})',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
                     ),
@@ -112,7 +113,7 @@ class _QuantitySelector extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
               '$quantity',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              style: Get.theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
             ),

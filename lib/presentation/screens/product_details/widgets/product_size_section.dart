@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/beans/product_size_bean.dart';
+import 'package:hedma/domain/models/beans/size_bean.dart';
 
 class ProductSizeSection extends StatelessWidget {
   const ProductSizeSection({
@@ -12,9 +13,9 @@ class ProductSizeSection extends StatelessWidget {
     required this.onSizeGuideTap,
   });
 
-  final List<ProductSizeBean>? sizes;
+  final List<SizeBean>? sizes;
   final int? selectedSizeId;
-  final ValueChanged<int> onSizeSelected;
+  final ValueChanged<int?> onSizeSelected;
   final VoidCallback onSizeGuideTap;
 
   @override
@@ -30,7 +31,7 @@ class ProductSizeSection extends StatelessWidget {
             children: [
               Text(
                 'size'.tr,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                style: Get.theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
               ),
@@ -39,7 +40,7 @@ class ProductSizeSection extends StatelessWidget {
                 onTap: onSizeGuideTap,
                 child: Text(
                   '${'sizeGuide'.tr} >',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Get.theme.textTheme.bodyMedium?.copyWith(
                         color: AppColors.selectedCheck,
                         fontWeight: FontWeight.w600,
                       ),
@@ -54,7 +55,7 @@ class ProductSizeSection extends StatelessWidget {
             children: sizes!.map((size) {
               final isSelected = selectedSizeId == size.id;
               return InkWell(
-                onTap: size.isAvailable ? () => onSizeSelected(size.id) : null,
+                onTap: size.isAvailable == true ? () => onSizeSelected(size.id) : null,
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
                   width: 48,
@@ -65,14 +66,14 @@ class ProductSizeSection extends StatelessWidget {
                         ? AppColors.secondary
                         : AppColors.screenBackground,
                     borderRadius: BorderRadius.circular(10),
-                    border: size.isAvailable
+                    border: size.isAvailable == true
                         ? null
                         : Border.all(color: AppColors.border),
                   ),
                   child: Text(
-                    size.label,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: !size.isAvailable
+                    size.label ?? "",
+                    style: Get.theme.textTheme.titleSmall?.copyWith(
+                          color: size.isAvailable == false
                               ? AppColors.textSecondary.withValues(alpha: 0.5)
                               : isSelected
                                   ? Colors.white

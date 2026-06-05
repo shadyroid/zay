@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class AppBackAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -30,7 +31,7 @@ class AppBackAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? null
           : Text(
               title!,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Get.theme.textTheme.titleMedium?.copyWith(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w700,
                   ),

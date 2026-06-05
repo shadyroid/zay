@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/screens/order_return/controller.dart';
 import 'package:hedma/presentation/screens/order_return/widgets/order_return_app_bar.dart';
@@ -26,7 +27,7 @@ class OrderReturnScreen extends GetView<OrderReturnController> {
                 children: [
                   Text(
                     'returnChooseReason'.tr,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    style: Get.theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
@@ -110,7 +111,7 @@ class _AdditionalNotesSection extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: Get.theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
@@ -118,7 +119,7 @@ class _AdditionalNotesSection extends StatelessWidget {
               TextSpan(text: '${'additionalNotes'.tr} '),
               TextSpan(
                 text: '(${'optional'.tr})',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                style: Get.theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w400,
                       color: AppColors.textSecondary,
                     ),
@@ -130,12 +131,12 @@ class _AdditionalNotesSection extends StatelessWidget {
         TextField(
           controller: controller,
           maxLines: 5,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Get.theme.textTheme.bodyMedium?.copyWith(
                 color: AppColors.textPrimary,
               ),
           decoration: InputDecoration(
             hintText: 'addNotes'.tr,
-            hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            hintStyle: Get.theme.textTheme.bodyMedium?.copyWith(
                   color: AppColors.hint,
                 ),
             contentPadding: const EdgeInsets.all(16),

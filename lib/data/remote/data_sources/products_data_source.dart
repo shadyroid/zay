@@ -1,7 +1,5 @@
-import 'dart:developer';
-
-import 'package:dio/dio.dart' as dio_multipart show MultipartFile;
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/data/remote/dio_client.dart';
 import 'package:hedma/domain/requests/product_details_request.dart';
@@ -23,20 +21,17 @@ class ProductsDataSource {
   }
 
   Future<Map<String, dynamic>> requestProducts(ProductsRequest request) async {
-    if (request.image != null && request.image!.isNotEmpty) {
-      final fields = Map<String, dynamic>.from(request.toQueryParameters());
-      fields['image'] = await dio_multipart.MultipartFile.fromFile(
-        request.image!,
-      );
-      final response = await _dioClient.post(
-        Constants.productsPath,
-        data: fields,
-      );
-      return Map<String, dynamic>.from(response.data as Map);
-    }
-    final response = await _dioClient.get(
+    final response = await _dioClient.post(
       Constants.productsPath,
-      queryParameters: request.toQueryParameters(),
+      data: request.image != null
+          ? FormData.fromMap({
+              'image': await MultipartFile.fromFile(
+                request.image!.path,
+                filename: request.image!.name,
+              ),
+              ...request.toJson(),
+            })
+          : request.toJson(),
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
@@ -56,16 +51,18 @@ class ProductsDataSource {
   }
 
   Future<Map<String, dynamic>> requestFavorite(ProductIdRequest request) async {
-    final response =
-        await _dioClient.post('${Constants.wishlistPath}/${request.productId}');
+    final response = await _dioClient.post(
+      '${Constants.wishlistPath}/${request.productId}',
+    );
     return Map<String, dynamic>.from(response.data as Map);
   }
 
   Future<Map<String, dynamic>> requestUnFavorite(
     ProductIdRequest request,
   ) async {
-    final response =
-        await _dioClient.post('${Constants.wishlistPath}/${request.productId}');
+    final response = await _dioClient.post(
+      '${Constants.wishlistPath}/${request.productId}',
+    );
     return Map<String, dynamic>.from(response.data as Map);
   }
 
@@ -74,13 +71,13 @@ class ProductsDataSource {
   ) async {
     final response = await _dioClient.post(
       Constants.tryProductPath,
-      data: {
+      data: FormData.fromMap({
         'product_id': request.productId,
-        'photo': await dio_multipart.MultipartFile.fromFile(
-          request.imagePath,
-          filename: request.imagePath.split('/').last,
+        'photo': await MultipartFile.fromFile(
+          request.image.path,
+          filename: request.image.name,
         ),
-      },
+      }),
     );
     return Map<String, dynamic>.from(response.data as Map);
   }

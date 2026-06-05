@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class ReviewAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,7 +18,7 @@ class ReviewAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         'ratingAndReview'.tr,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+        style: Get.theme.textTheme.titleMedium?.copyWith(
               color: AppColors.textPrimary,
               fontWeight: FontWeight.w700,
             ),

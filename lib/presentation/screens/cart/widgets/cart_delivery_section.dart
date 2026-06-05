@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -32,7 +33,7 @@ class CartDeliverySection extends StatelessWidget {
           children: [
             Text(
               'orderDeliveryLocation'.tr,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              style: Get.theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
             ),
@@ -57,7 +58,7 @@ class CartDeliverySection extends StatelessWidget {
                             ? locationText!
                             : 'selectLocation'.tr,
                         style:
-                            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            Get.theme.textTheme.bodyMedium?.copyWith(
                                   color: locationText?.isNotEmpty == true
                                       ? AppColors.textPrimary
                                       : AppColors.hint,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EmptyState extends StatelessWidget {
   const EmptyState({
@@ -23,7 +24,7 @@ class EmptyState extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Get.theme.textTheme.titleMedium?.copyWith(
                     color: Colors.grey,
                   ),
             ),

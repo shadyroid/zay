@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/app/utils/product_sort_option.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProductsRequest {
   const ProductsRequest({
@@ -24,7 +27,7 @@ class ProductsRequest {
   final bool? bestSeller;
   final bool? recommended;
   final bool? newArrival;
-  final String? image;
+  final XFile? image;
   final int? similarToId;
   final int? categoryId;
   final int? shopId;
@@ -34,7 +37,7 @@ class ProductsRequest {
   final ProductSortOption? sortBy;
   final String? search;
 
-  Map<String, dynamic> toQueryParameters() {
+  Map<String, dynamic> toJson() {
     final params = <String, dynamic>{};
 
     if (page != null) params['page'] = page;

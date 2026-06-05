@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/filter_bottom_sheet_controller.dart';
@@ -69,7 +70,7 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
               child: Text(
                 'filters'.tr,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: Get.theme.textTheme.titleMedium?.copyWith(
                   color: AppColors.textPrimary,
                   fontWeight: FontWeight.w700,
                 ),
@@ -171,7 +172,7 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
                               children: [
                                 Text(
                                   '\$${priceRange.start.round()}',
-                                  style: Theme.of(context).textTheme.bodyMedium
+                                  style: Get.theme.textTheme.bodyMedium
                                       ?.copyWith(
                                         color: AppColors.textPrimary,
                                         fontWeight: FontWeight.w600,
@@ -179,7 +180,7 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
                                 ),
                                 Text(
                                   '\$${priceRange.end.round()}',
-                                  style: Theme.of(context).textTheme.bodyMedium
+                                  style: Get.theme.textTheme.bodyMedium
                                       ?.copyWith(
                                         color: AppColors.textPrimary,
                                         fontWeight: FontWeight.w600,

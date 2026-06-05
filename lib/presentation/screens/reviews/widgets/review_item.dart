@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -22,14 +23,14 @@ class ReviewItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   review.title.isNotEmpty ? review.title : review.authorName,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  style: Get.theme.textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                 ),
               ),
               Text(
                 review.createdAt,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                     ),
               ),
@@ -41,7 +42,7 @@ class ReviewItem extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               '${'by'.tr} ${review.authorName}',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              style: Get.theme.textTheme.bodySmall?.copyWith(
                     color: AppColors.textSecondary,
                   ),
             ),
@@ -50,7 +51,7 @@ class ReviewItem extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               review.comment,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.45,
                   ),

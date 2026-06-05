@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -31,14 +32,14 @@ class TryOnBottomBar extends StatelessWidget {
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                style: Get.theme.textTheme.bodyMedium?.copyWith(
                       color: AppColors.textSecondary,
                     ),
                 children: [
                   TextSpan(text: '${'price'.tr}: '),
                   TextSpan(
                     text: '\$$price',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: Get.theme.textTheme.titleMedium?.copyWith(
                           color: AppColors.secondary,
                           fontWeight: FontWeight.w700,
                         ),

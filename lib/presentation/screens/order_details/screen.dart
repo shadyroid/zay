@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/screens/order_details/controller.dart';
 import 'package:hedma/presentation/screens/order_details/widgets/order_customer_card.dart';
@@ -29,7 +30,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
           return Center(
             child: Text(
               'emptyOrders'.tr,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              style: Get.theme.textTheme.bodyLarge?.copyWith(
                     color: AppColors.textSecondary,
                   ),
             ),

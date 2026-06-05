@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class ShopAboutSection extends StatelessWidget {
@@ -28,7 +29,7 @@ class ShopAboutSection extends StatelessWidget {
       children: [
         Text(
           'aboutStore'.tr,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          style: Get.theme.textTheme.titleMedium?.copyWith(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.w700,
               ),
@@ -39,7 +40,7 @@ class ShopAboutSection extends StatelessWidget {
           child: Text.rich(
             TextSpan(
               text: displayText,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.4,
                   ),
@@ -47,7 +48,7 @@ class ShopAboutSection extends StatelessWidget {
                 if (hasMore && !isExpanded)
                   TextSpan(
                     text: ' ${'readMore'.tr}',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
                           color: AppColors.secondary,
                           fontWeight: FontWeight.w700,
                         ),

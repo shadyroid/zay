@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/order_status_style.dart';
 
 class OrderStatusBadge extends StatelessWidget {
@@ -22,7 +23,7 @@ class OrderStatusBadge extends StatelessWidget {
       ),
       child: Text(
         style.labelKey.tr,
-        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+        style: Get.theme.textTheme.labelSmall?.copyWith(
               color: style.textColor,
               fontWeight: FontWeight.w600,
             ),

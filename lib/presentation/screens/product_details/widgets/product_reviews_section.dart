@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/beans/review_bean.dart';
 import 'package:hedma/presentation/screens/reviews/widgets/review_item.dart';
@@ -23,7 +24,7 @@ class ProductReviewsSection extends StatelessWidget {
         children: [
           Text(
             'productReviews'.tr,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: Get.theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -36,7 +37,7 @@ class ProductReviewsSection extends StatelessWidget {
                 onPressed: onSeeAll,
                 child: Text(
                   'seeAllReviews'.tr,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  style: Get.theme.textTheme.labelLarge?.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 0.5,

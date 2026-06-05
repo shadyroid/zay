@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/home/controller.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_header.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_product_item.dart';

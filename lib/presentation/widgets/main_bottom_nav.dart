@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
@@ -123,7 +124,7 @@ class _BottomNavItem extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               label,
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              style: Get.theme.textTheme.labelSmall?.copyWith(
                     color: color,
                     fontWeight:
                         isSelected ? FontWeight.w600 : FontWeight.w400,

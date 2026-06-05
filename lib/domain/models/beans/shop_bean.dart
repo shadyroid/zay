@@ -11,7 +11,7 @@ class ShopBean {
   final String? logo;
   final String? banner;
   final String? rating;
-  final int? reviewCount;
+  final int? reviewsCount;
   final List<CategoryBean>? categories;
 
   const ShopBean({
@@ -23,7 +23,7 @@ class ShopBean {
     required this.logo,
     required this.banner,
     required this.rating,
-    required this.reviewCount,
+    required this.reviewsCount,
     required this.categories,
   });
 
@@ -32,12 +32,12 @@ class ShopBean {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      logo: json['logo_url'] ?? json['logo'],//logo_url from shops , logo From product
-      banner: json['cover_url'],//banner_url
-      icon: json['icon_url'],//??
-      slogan: json['slogan'],//??
+      logo: json['logo_url'],
+      banner: json['banner_url'],
+      icon: json['icon_url'],
+      slogan: json['slogan'],
       rating: Parser.parseString(json['avg_rating']),
-      reviewCount: json['review_count'],//??
+      reviewsCount: json['reviews_count'],
       categories: (json['categories'] as List?)?.map((e) => CategoryBean.fromJson(e)).toList(),
     );
   }

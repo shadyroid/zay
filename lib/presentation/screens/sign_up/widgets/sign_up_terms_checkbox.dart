@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class SignUpTermsCheckbox extends StatelessWidget {
@@ -39,7 +40,7 @@ class SignUpTermsCheckbox extends StatelessWidget {
             child: Text.rich(
               TextSpan(
                 text: 'signUpTermsPrefix'.tr,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                       height: 1.4,
                     ),

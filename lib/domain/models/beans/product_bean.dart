@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/likes_util.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
-import 'package:hedma/domain/models/beans/product_size_bean.dart';
 import 'package:hedma/domain/models/beans/shop_bean.dart';
+import 'package:hedma/domain/models/beans/size_bean.dart';
 
 class ProductBean {
   final int? id;
@@ -12,23 +12,23 @@ class ProductBean {
   final List<String>? images;
   final ShopBean? shop;
   final CategoryBean? category;
-  final String? sellerCategories;
   final String? rating;
   final int? reviewCount;
   final String? description;
-  final List<ProductSizeBean>? sizes;
+  final List<SizeBean>? sizes;
   final RxBool isFavorite;
-  final Map<int,int>? selectedSizesQuantities;
+  final Map<int, int>? selectedSizesQuantities;
+  final bool? outOfStock;
 
   ProductBean({
     required this.id,
     required this.name,
     required this.price,
     required this.image,
-    required this.images ,
-    required this.sellerCategories,
+    required this.images,
     required this.shop,
     required this.category,
+    required this.outOfStock,
     required this.rating,
     required this.reviewCount,
     required this.description,
@@ -42,7 +42,8 @@ class ProductBean {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      price: json['base_price'], //original_price, discount_percentage
+      price: json['base_price'],
+      //original_price, discount_percentage
       image: json['primary_image'],
       images: (json['images'] as List?)?.map((e) => e.toString()).toList(),
       rating: json['avg_rating'],
@@ -53,29 +54,23 @@ class ProductBean {
       category: json['category'] != null
           ? CategoryBean.fromJson(json['category'] as Map<String, dynamic>)
           : null,
+      outOfStock: json['out_of_stock'],
       isFavorite: LikesUtil.productLike(
         json['id'],
         isFavorite: json['is_favorite'],
       ),
-
       //From cart
       selectedSizesQuantities: json['selectedSizesQuantities'],
 
-      sellerCategories: json['sellerCategories'] as String?,
       sizes: _parseSizes(json['sizes']),
-
     );
   }
 
-
-
-
-  static List<ProductSizeBean> _parseSizes(dynamic raw) {
+  static List<SizeBean> _parseSizes(dynamic raw) {
     if (raw is! List) return const [];
     return raw
         .whereType<Map>()
-        .map((e) => ProductSizeBean.fromJson(Map<String, dynamic>.from(e)))
+        .map((e) => SizeBean.fromJson(Map<String, dynamic>.from(e)))
         .toList();
   }
-
 }

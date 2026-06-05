@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/screens/order_success/controller.dart';
 import 'package:hedma/presentation/screens/order_success/widgets/order_success_icon.dart';
@@ -36,7 +37,7 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
                           'congratulations'.tr,
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.headlineMedium?.copyWith(
+                              Get.theme.textTheme.headlineMedium?.copyWith(
                                     color: AppColors.textPrimary,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -45,7 +46,7 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
                         Text(
                           'orderConfirmedLine1'.tr,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          style: Get.theme.textTheme.bodyLarge?.copyWith(
                                 color: AppColors.textSecondary,
                                 height: 1.4,
                               ),
@@ -53,7 +54,7 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
                         Text(
                           'orderConfirmedLine2'.tr,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          style: Get.theme.textTheme.bodyLarge?.copyWith(
                                 color: AppColors.textSecondary,
                                 height: 1.4,
                               ),

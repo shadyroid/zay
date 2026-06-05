@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -26,7 +27,7 @@ class GuestContinueButton extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               'continueAsGuest'.tr,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.secondary,
                     decoration: TextDecoration.underline,
                     decorationColor: AppColors.secondary,

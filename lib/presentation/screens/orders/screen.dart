@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -84,7 +85,7 @@ class _OrdersEmptyState extends StatelessWidget {
             Text(
               'emptyOrders'.tr,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Get.theme.textTheme.titleMedium?.copyWith(
                     color: AppColors.textSecondary,
                   ),
             ),

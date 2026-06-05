@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/favorite/controller.dart';
 import 'package:hedma/presentation/screens/favorite/widgets/favorite_empty_state.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';

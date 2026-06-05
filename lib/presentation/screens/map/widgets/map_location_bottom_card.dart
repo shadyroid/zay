@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -64,7 +65,7 @@ class MapLocationBottomCard extends StatelessWidget {
                               hasAddress
                                   ? address
                                   : 'selectLocation'.tr,
-                              style: Theme.of(context)
+                              style: Get.theme
                                   .textTheme
                                   .titleSmall
                                   ?.copyWith(

@@ -1,9 +1,11 @@
+import 'package:image_picker/image_picker.dart';
+
 class TryProductRequest {
   const TryProductRequest({
     required this.productId,
-    required this.imagePath,
+    required this.image,
   });
 
   final int? productId;
-  final String imagePath;
+  final XFile image;
 }

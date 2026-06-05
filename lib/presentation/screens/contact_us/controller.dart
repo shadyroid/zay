@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/settings_use_case.dart';
 import 'package:hedma/app/utils/egyptian_phone_util.dart';
 import 'package:hedma/domain/requests/contact_us_request.dart';
@@ -27,7 +28,6 @@ class ContactUsController extends BaseController {
 
   Future<void> requestContactUs() async {
     if (formKey.currentState?.validate() != true) return;
-
     isLoading.value = true;
     final response = await _settingsUseCase.requestContactUs(
       ContactUsRequest(
@@ -40,7 +40,6 @@ class ContactUsController extends BaseController {
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
-
     Get.back();
     Get.rawSnackbar(message: response.message ?? 'messageSent'.tr);
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 
 class FilterSectionTitle extends StatelessWidget {
@@ -12,7 +13,7 @@ class FilterSectionTitle extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 10),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+        style: Get.theme.textTheme.titleSmall?.copyWith(
               color: AppColors.textPrimary,
               fontWeight: FontWeight.w700,
             ),

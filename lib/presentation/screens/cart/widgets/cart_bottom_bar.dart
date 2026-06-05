@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
@@ -31,14 +32,14 @@ class CartBottomBar extends StatelessWidget {
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                style: Get.theme.textTheme.bodyMedium?.copyWith(
                       color: AppColors.textSecondary,
                     ),
                 children: [
                   TextSpan(text: '${'price'.tr}: '),
                   TextSpan(
                     text: '\$${total.toStringAsFixed(0)}',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: Get.theme.textTheme.titleLarge?.copyWith(
                           color: AppColors.secondary,
                           fontWeight: FontWeight.w700,
                         ),

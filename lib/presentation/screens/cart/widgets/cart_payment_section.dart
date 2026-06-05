@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -23,7 +24,7 @@ class CartPaymentSection extends StatelessWidget {
         children: [
           Text(
             'paymentMethod'.tr,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: Get.theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
           ),
@@ -84,7 +85,7 @@ class _PaymentOption extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Get.theme.textTheme.bodyLarge,
               ),
             ),
             _RadioDot(isSelected: isSelected),

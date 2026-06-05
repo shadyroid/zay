@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -24,12 +25,12 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
           title: shop?.name ?? 'shops'.tr,
           onShare: controller.onShare,
         ),
-        body: _buildBody(context, shop),
+        body: _buildBody(shop),
       );
     });
   }
 
-  Widget _buildBody(BuildContext context, ShopBean? shop) {
+  Widget _buildBody(ShopBean? shop) {
     if (controller.isLoading.value && shop == null) {
       return const Center(child: AppProgressIndicator());
     }
@@ -38,7 +39,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
     }
 
     final rating = shop.rating ?? '4.5';
-    final reviewCount = shop.reviewCount ?? 0;
+    final reviewCount = shop.reviewsCount ?? 0;
     final tagline = shop.description ?? '';
     final about = shop.slogan ?? shop.description ?? '';
 
@@ -52,7 +53,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
               delegate: SliverChildListDelegate([
                 Text(
                   shop.name ?? "",
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  style: Get.theme.textTheme.titleLarge?.copyWith(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w700,
                   ),
@@ -68,14 +69,14 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
                     const SizedBox(width: 4),
                     Text(
                       rating,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      style: Get.theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       '($reviewCount ${'reviews'.tr})',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -85,7 +86,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
                   const SizedBox(height: 6),
                   Text(
                     tagline,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -106,7 +107,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
               sliver: SliverToBoxAdapter(
                 child: Text(
                   'categories'.tr,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: Get.theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -142,7 +143,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
                   children: [
                     Text(
                       'bestSeller'.tr,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: Get.theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -151,7 +152,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
                       onPressed: controller.navigateToAllProducts,
                       child: Text(
                         'seeAll'.tr,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        style: Get.theme.textTheme.bodyMedium?.copyWith(
                           color: AppColors.secondary,
                           fontWeight: FontWeight.w600,
                         ),

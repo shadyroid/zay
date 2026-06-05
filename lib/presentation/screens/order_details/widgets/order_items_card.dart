@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -76,7 +77,7 @@ class _OrderLineItemRow extends StatelessWidget {
                     : '${'product'.tr} #${item.productId}',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                style: Get.theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: AppColors.textPrimary,
                     ),
@@ -84,7 +85,7 @@ class _OrderLineItemRow extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 sizeQty,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                     ),
               ),
@@ -92,7 +93,7 @@ class _OrderLineItemRow extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   '\$${item.unitPrice}',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  style: Get.theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.secondary,
                       ),

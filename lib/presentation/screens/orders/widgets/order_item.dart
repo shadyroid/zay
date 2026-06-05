@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
@@ -42,7 +43,7 @@ class OrderItem extends StatelessWidget {
                     Expanded(
                       child: Text(
                         '${'orderId'.tr} : ${order.id}',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        style: Get.theme.textTheme.bodySmall?.copyWith(
                               color: AppColors.textSecondary,
                             ),
                       ),
@@ -74,7 +75,7 @@ class OrderItem extends StatelessWidget {
                                 : '${'order'.tr} #${order.id}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
+                            style: Get.theme
                                 .textTheme
                                 .titleSmall
                                 ?.copyWith(
@@ -85,7 +86,7 @@ class OrderItem extends StatelessWidget {
                           const SizedBox(height: 6),
                           Text(
                             sizeQty,
-                            style: Theme.of(context)
+                            style: Get.theme
                                 .textTheme
                                 .bodySmall
                                 ?.copyWith(
@@ -95,7 +96,7 @@ class OrderItem extends StatelessWidget {
                           const SizedBox(height: 6),
                           Text(
                             order.date,
-                            style: Theme.of(context)
+                            style: Get.theme
                                 .textTheme
                                 .bodySmall
                                 ?.copyWith(
@@ -105,7 +106,7 @@ class OrderItem extends StatelessWidget {
                           const SizedBox(height: 8),
                           Text(
                             '\$${order.total}',
-                            style: Theme.of(context)
+                            style: Get.theme
                                 .textTheme
                                 .titleSmall
                                 ?.copyWith(

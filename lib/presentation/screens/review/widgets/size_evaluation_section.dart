@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/domain/models/enums/review_size_fit.dart';
 
@@ -20,7 +21,7 @@ class SizeEvaluationSection extends StatelessWidget {
       children: [
         Text(
           'sizeEvaluationQuestion'.tr,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+          style: Get.theme.textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
               ),
@@ -46,7 +47,7 @@ class SizeEvaluationSection extends StatelessWidget {
                         child: Text(
                           fit.labelKey.tr,
                           style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              Get.theme.textTheme.bodyMedium?.copyWith(
                                     color: AppColors.textPrimary,
                                     fontWeight: FontWeight.w500,
                                   ),
