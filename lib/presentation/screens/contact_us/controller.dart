@@ -45,5 +45,5 @@ class ContactUsController extends BaseController {
     Get.rawSnackbar(message: response.message ?? 'messageSent'.tr);
   }
 
-  void goBack() => Get.back();
+  
 }

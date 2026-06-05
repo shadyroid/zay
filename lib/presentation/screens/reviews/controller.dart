@@ -34,5 +34,5 @@ class ReviewsController extends BaseController {
     reviews.assignAll(response.data ?? []);
   }
 
-  void goBack() => Get.back();
+  
 }

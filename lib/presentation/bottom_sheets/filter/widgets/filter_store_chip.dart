@@ -45,7 +45,7 @@ class FilterStoreChip extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   clipBehavior: Clip.antiAlias,
-                  child: _ShopLogo(url: shop.logoUrl ?? shop.iconUrl),
+                  child: _ShopLogo(url: shop.logo ?? shop.icon),
                 ),
                 const SizedBox(width: 10),
                 Text(

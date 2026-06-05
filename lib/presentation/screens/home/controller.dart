@@ -9,13 +9,11 @@ import 'package:hedma/app/utils/image_picker_helper.dart';
 import 'package:hedma/data/preferences/prefs_manager.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
-import 'package:hedma/domain/models/beans/product_filters.dart';
+import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/domain/requests/product_id_request.dart';
 import 'package:hedma/domain/requests/products_request.dart';
-import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/presentation/base/base_controller.dart';
 import 'package:hedma/presentation/bottom_sheets/filter/filter_bottom_sheet.dart';
-import 'package:hedma/presentation/screens/products/controller.dart';
 
 class HomeController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -112,27 +110,10 @@ class HomeController extends BaseController {
     if (!isSuccess(response)) return;
   }
 
-  void navigateToProducts({
-    int? categoryId,
-    ProductFilters? filters,
-    String? search,
-  }) {
-    if (Get.isRegistered<ProductsController>()) {
-      Get.delete<ProductsController>();
-    }
-    Get.toNamed(
-      Routes.products,
-      arguments: <String, dynamic>{
-        'categoryId': ?categoryId,
-        'filters': ?filters,
-        'search': ?search,
-      },
-    );
-  }
-
   void onSearchSubmit() {
     final query = searchController.text.trim();
-    navigateToProducts(search: query.isEmpty ? null : query);
+    var search = query.isEmpty ? null : query;
+    Get.toNamed(Routes.products, arguments: {'search': search});
   }
 
   void onSearchIconTap() => onSearchSubmit();
@@ -140,28 +121,26 @@ class HomeController extends BaseController {
   Future<void> onCameraTap() async {
     final file = await ImagePickerHelper.pickFromBottomSheet();
     if (file == null) return;
-    navigateToProducts();
+    Get.toNamed(Routes.products);
   }
 
   Future<void> onFilterTap() async {
-    final result = await FilterBottomSheet.show(
-      initial: ProductFilters.initial,
-    );
+    final result = await FilterBottomSheet.show();
     if (result == null) return;
-    navigateToProducts(filters: result);
+    Get.toNamed(Routes.products, arguments: result);
   }
 
   void onCategoryTap(CategoryBean category) {
-    navigateToProducts(categoryId: category.id);
+    Get.toNamed(Routes.products, arguments: {'categoryId': category.id});
   }
 
   void navigateToProductDetails(ProductBean product) {
     Get.toNamed(Routes.productDetails, arguments: {'productId': product.id});
   }
 
-  void onSeeAllRecommended() => navigateToProducts();
+  void onSeeAllRecommended() => Get.toNamed(Routes.products);
 
-  void onSeeAllNewArrival() => navigateToProducts();
+  void onSeeAllNewArrival() => Get.toNamed(Routes.products);
 
   void onSeeAllStores() => Get.toNamed(Routes.shops);
 

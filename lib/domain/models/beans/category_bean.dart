@@ -1,19 +1,23 @@
+//Done Review Need BE Edits
 class CategoryBean {
   final int? id;
   final String? name;
-  final String? iconUrl;
+  final String? icon;
+  final String? measurementsImage;
 
   const CategoryBean({
     required this.id,
     required this.name,
-    required this.iconUrl,
+    required this.icon,
+    required this.measurementsImage,
   });
 
   factory CategoryBean.fromJson(Map<String, dynamic> json) {
     return CategoryBean(
       id: json['id'],
       name: json['name'],
-      iconUrl: json['icon'],
+      icon: json['icon'],
+      measurementsImage: json['measurements_image'],
     );
   }
 

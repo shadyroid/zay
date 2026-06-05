@@ -47,7 +47,7 @@ class OrdersController extends BaseController {
     }
   }
 
-  void goBack() => Get.back();
+  
 
   void navigateToOrderDetails(OrderBean order) {
     AppAuthGuard.toNamed(

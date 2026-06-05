@@ -33,7 +33,7 @@ class OrderDetailsController extends BaseController {
     order.value = response.data;
   }
 
-  void goBack() => Get.back();
+  
 
   Future<void> navigateToTrack() async {
     await AppAuthGuard.toNamed(

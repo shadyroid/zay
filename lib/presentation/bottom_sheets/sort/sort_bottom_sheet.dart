@@ -11,10 +11,10 @@ class SortBottomSheet extends StatelessWidget {
     required this.selectedOption,
   });
 
-  final ProductSortOption selectedOption;
+  final ProductSortOption? selectedOption;
 
   static Future<ProductSortOption?> show({
-    required ProductSortOption selectedOption,
+    required ProductSortOption? selectedOption,
   }) {
     return Get.bottomSheet<ProductSortOption?>(
       SortBottomSheet(selectedOption: selectedOption),

@@ -31,7 +31,7 @@ class ShopItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _ShopIcon(
-                  iconUrl: shop.logoUrl ?? shop.iconUrl ?? "",
+                  iconUrl: shop.logo ?? shop.icon ?? "",
                   color: AppColors.textPrimary,
                 ),
                 const SizedBox(width: 8),

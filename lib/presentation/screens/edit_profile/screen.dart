@@ -57,6 +57,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                         AppTextField(
                           controller: controller.emailController,
                           hint: 'email'.tr,
+                          readOnly: true,
                           prefixIconPath: 'assets/icons/ic_email.svg',
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,

@@ -53,5 +53,5 @@ class ResetPasswordController extends BaseController {
     Get.rawSnackbar(message: 'resetPasswordSuccess'.tr);
   }
 
-  void goBack() => Get.back();
+  
 }

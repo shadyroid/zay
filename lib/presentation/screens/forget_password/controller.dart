@@ -33,5 +33,5 @@ class ForgetPasswordController extends BaseController {
     );
   }
 
-  void goBack() => Get.back();
+  
 }

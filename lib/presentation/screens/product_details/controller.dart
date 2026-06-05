@@ -67,7 +67,6 @@ class ProductDetailsController extends BaseController {
   }
 
   Future<void> requestProductDetails() async {
-    if (productId.isEmpty) return;
     isLoading.value = true;
     final response = await _productsUseCase.requestProductDetails(
       ProductDetailsRequest(productId: productId),
@@ -81,7 +80,6 @@ class ProductDetailsController extends BaseController {
   }
 
   Future<void> requestReviews() async {
-    if (productId.isEmpty) return;
     final response = await _reviewsUseCase.requestReviews(
       ReviewsRequest(productId: productId),
     );
@@ -151,7 +149,7 @@ class ProductDetailsController extends BaseController {
     if (!await AppAuthGuard.ensureAuthenticated()) return;
 
     final file = await ImagePickerHelper.pickFromBottomSheet();
-    if (file == null || productId.isEmpty) return;
+    if (file == null) return;
 
     isLoading.value = true;
     final response = await _productsUseCase.requestTryProduct(
@@ -178,7 +176,7 @@ class ProductDetailsController extends BaseController {
 
     final p = product.value;
     final sizeId = selectedSizeId.value;
-    if (p == null || productId.isEmpty) return;
+    if (p == null) return;
 
     if (p.sizes.isNotEmpty && (sizeId == null || sizeId.isEmpty)) {
       Get.rawSnackbar(message: 'selectSizeRequired'.tr);
@@ -227,5 +225,5 @@ class ProductDetailsController extends BaseController {
     );
   }
 
-  void goBack() => Get.back();
+  
 }

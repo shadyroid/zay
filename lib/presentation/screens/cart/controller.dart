@@ -159,5 +159,5 @@ class CartController extends BaseController {
     );
   }
 
-  void goBack() => Get.back();
+  
 }

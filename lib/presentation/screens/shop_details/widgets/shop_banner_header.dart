@@ -9,8 +9,6 @@ class ShopBannerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bannerUrl = shop.bannerUrl ?? shop.imageUrl;
-    final logoUrl = shop.logoUrl ?? shop.imageUrl;
 
     return SizedBox(
       height: 200,
@@ -19,9 +17,9 @@ class ShopBannerHeader extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         children: [
           Positioned.fill(
-            child: bannerUrl != null && bannerUrl.isNotEmpty
+            child: shop.banner != null
                 ? Image.network(
-                    bannerUrl,
+                    shop.banner!,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
                         const ColoredBox(color: Color(0xFFE8E8E8)),
@@ -47,9 +45,9 @@ class ShopBannerHeader extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(11),
-                child: logoUrl != null && logoUrl.isNotEmpty
+                child: shop.logo != null
                     ? Image.network(
-                        logoUrl,
+                        shop.logo!,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             _logoPlaceholder(),

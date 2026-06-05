@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hedma/app/utils/app_assets.dart';
 
 class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({
@@ -48,7 +47,7 @@ class ProfileAvatar extends StatelessWidget {
 
   Widget _placeholder() {
     return SvgPicture.asset(
-      AppAssets.profileAvatar,
+      'assets/images/ic_profile_avatar.svg',
       width: size,
       height: size,
       fit: BoxFit.cover,

@@ -46,7 +46,7 @@ class OrderReturnController extends BaseController {
     selectedReasonValue.value = reason.value;
   }
 
-  void goBack() => Get.back();
+  
 
   Future<void> requestOrderReturn() async {
     if (orderId.isEmpty) return;

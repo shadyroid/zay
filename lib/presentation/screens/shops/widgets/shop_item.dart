@@ -17,7 +17,6 @@ class ShopItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rating = shop.rating ?? '4.5';
-    final reviewCount = shop.reviewCount ?? 0;
     final tagline = shop.description ?? '';
 
     return InkWell(
@@ -27,7 +26,7 @@ class ShopItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ShopLogo(imageUrl: shop.imageUrl, name: shop.name ?? ""),
+            _ShopLogo(imageUrl: shop.logo, name: shop.name ?? ""),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
@@ -59,7 +58,7 @@ class ShopItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '($reviewCount ${'reviews'.tr})',
+                        '(${shop.reviewCount ?? 0} ${'reviews'.tr})',
                         style:
                             Theme.of(context).textTheme.bodySmall?.copyWith(
                                   color: AppColors.textSecondary,

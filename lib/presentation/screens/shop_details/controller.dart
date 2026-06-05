@@ -95,7 +95,7 @@ class ShopDetailsController extends BaseController {
 
   void navigateToAllProducts() => Get.toNamed(Routes.products);
 
-  void goBack() => Get.back();
+  
 
   void onShare() {
     Get.rawSnackbar(message: 'shareComingSoon'.tr);

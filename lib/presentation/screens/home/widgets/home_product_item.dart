@@ -50,7 +50,7 @@ class HomeProductItem extends StatelessWidget {
                     Positioned.fill(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: _ProductImage(imageUrl: product.imageUrl),
+                        child: _ProductImage(imageUrl: product.image),
                       ),
                     ),
                     PositionedDirectional(

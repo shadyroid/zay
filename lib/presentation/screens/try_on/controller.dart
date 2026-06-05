@@ -75,5 +75,5 @@ class TryOnController extends BaseController {
     Get.rawSnackbar(message: 'shareComingSoon'.tr);
   }
 
-  void goBack() => Get.back();
+  
 }

@@ -181,7 +181,7 @@ class MapController extends BaseController {
     );
   }
 
-  void goBack() => Get.back();
+  
 
   void hideSuggestions() {
     showSuggestions.value = false;

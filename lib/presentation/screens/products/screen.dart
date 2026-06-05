@@ -102,7 +102,7 @@ class ProductsScreen extends GetView<ProductsController> {
                 bottom: 16,
                 child: ProductsActionBar(
                   onFilters: controller.onFilters,
-                  onSort: controller.onSort,
+                  onSort: controller.onSortTap,
                 ),
               ),
             ],

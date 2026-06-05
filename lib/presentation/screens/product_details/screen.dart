@@ -39,7 +39,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ProductImageCarousel(
-                      images: product.imageUrls ?? [],
+                      images: product.images ?? [],
                       currentIndex: controller.imageIndex.value,
                       isFavorite: product.isFavorite,
                       onFavoriteTap: controller.toggleFavorite,

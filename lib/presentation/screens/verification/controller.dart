@@ -156,5 +156,5 @@ class VerificationController extends BaseController {
     Get.offNamed(Routes.home);
   }
 
-  void goBack() => Get.back();
+  
 }

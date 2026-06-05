@@ -36,7 +36,7 @@ class CategoryItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _CategoryIcon(
-                  iconUrl: category.iconUrl ?? "",
+                  iconUrl: category.icon ?? "",
                   color: foreground,
                 ),
                 const SizedBox(width: 8),

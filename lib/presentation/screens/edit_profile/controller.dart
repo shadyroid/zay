@@ -91,5 +91,5 @@ class EditProfileController extends BaseController {
     Get.rawSnackbar(message: response.message?.tr ?? 'profileSaved'.tr);
   }
 
-  void goBack() => Get.back();
+  
 }

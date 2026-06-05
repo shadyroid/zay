@@ -36,5 +36,5 @@ class FavoriteController extends BaseController {
     favorites.removeWhere((p) => p.id == product.id);
   }
 
-  void goBack() => Get.back();
+  
 }

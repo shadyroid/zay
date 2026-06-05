@@ -20,7 +20,6 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
         child: Form(
           key: controller.formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Center(child: AppLogo()),
               const SizedBox(height: 32),

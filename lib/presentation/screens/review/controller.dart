@@ -115,5 +115,5 @@ class ReviewController extends BaseController {
     Get.rawSnackbar(message: 'reviewSubmitted'.tr);
   }
 
-  void goBack() => Get.back();
+  
 }

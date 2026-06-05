@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
 import 'package:hedma/app/use_cases/shops_use_case.dart';
+import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/domain/models/beans/category_bean.dart';
-import 'package:hedma/domain/models/beans/product_filters.dart';
+
 import 'package:hedma/domain/models/beans/shop_bean.dart';
 import 'package:hedma/domain/models/beans/size_bean.dart';
+
 class FilterBottomSheetController extends GetxController {
-  FilterBottomSheetController({required ProductFilters initial}) {
-    selectedCategoryId.value = null;
-    selectedShopId.value = initial.shopId;
-    selectedSizeId.value = initial.sizeId;
-    priceRange.value = RangeValues(initial.priceMin, initial.priceMax);
+  FilterBottomSheetController({
+    int? categoryId,
+    int? shopId,
+    int? sizeId,
+    double? priceMin,
+    double? priceMax,
+  }) {
+    selectedCategoryId.value = categoryId;
+    selectedShopId.value = shopId;
+    selectedSizeId.value = sizeId;
+    selectedPriceMin.value = priceMin;
+    selectedPriceMax.value = priceMax;
   }
 
-  static const double priceMinBound = 0;
-  static const double priceMaxBound = 250;
+
 
   final ProductsUseCase _productsUseCase = Get.isRegistered<ProductsUseCase>()
       ? Get.find<ProductsUseCase>()
@@ -30,8 +38,8 @@ class FilterBottomSheetController extends GetxController {
   final selectedCategoryId = RxnInt();
   final selectedShopId = RxnInt();
   final selectedSizeId = RxnInt();
-  final priceRange =
-      const RangeValues(priceMinBound, priceMaxBound).obs;
+  final selectedPriceMin = RxnDouble();
+  final selectedPriceMax = RxnDouble();
 
   @override
   void onInit() {
@@ -41,11 +49,7 @@ class FilterBottomSheetController extends GetxController {
 
   Future<void> _loadFilterData() async {
     isLoading.value = true;
-    await Future.wait([
-      _requestCategories(),
-      _requestShops(),
-      _requestSizes(),
-    ]);
+    await Future.wait([_requestCategories(), _requestShops(), _requestSizes()]);
     isLoading.value = false;
   }
 
@@ -76,28 +80,19 @@ class FilterBottomSheetController extends GetxController {
   }
 
   void selectSize(SizeBean size) {
-    selectedSizeId.value =
-        selectedSizeId.value == size.id ? null : size.id;
+    selectedSizeId.value = selectedSizeId.value == size.id ? null : size.id;
   }
 
   void onPriceChanged(RangeValues values) {
-    priceRange.value = values;
+    selectedPriceMin.value = values.start;
+    selectedPriceMax.value = values.end;
   }
 
   void clearFilters() {
     selectedCategoryId.value = null;
     selectedShopId.value = null;
     selectedSizeId.value = null;
-    priceRange.value = const RangeValues(priceMinBound, priceMaxBound);
-  }
-
-  ProductFilters buildFilters() {
-    return ProductFilters(
-      categoryId: selectedCategoryId.value,
-      shopId: selectedShopId.value,
-      sizeId: selectedSizeId.value,
-      priceMin: priceRange.value.start,
-      priceMax: priceRange.value.end,
-    );
+    selectedPriceMin.value = Constants.priceMinBound;
+    selectedPriceMax.value = Constants.priceMaxBound;
   }
 }

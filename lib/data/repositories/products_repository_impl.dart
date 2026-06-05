@@ -106,8 +106,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
     }
     json = {
       "statusCode": json['statusCode'],
-      "data": json['wishlist'],
+      "data": json['wishlist'].map((entry) => entry['product']).toList(),
     };
+
     LikesUtil.syncProductsFromList(json['data']);
     return ProductsResponse.fromJson(json);
   }

@@ -1,3 +1,4 @@
+import 'package:hedma/app/utils/constants.dart';
 import 'package:hedma/app/utils/product_sort_option.dart';
 
 class ProductsRequest {
@@ -49,8 +50,14 @@ class ProductsRequest {
     }
     if (shopId != null) params['shop_id'] = shopId;
     if (sizeId != null) params['size_id'] = sizeId;
-    if (minPrice != null) params['min_price'] = minPrice;
-    if (maxPrice != null) params['max_price'] = maxPrice;
+    final isDefaultRange = minPrice == Constants.priceMinBound &&
+        maxPrice == Constants.priceMaxBound;
+
+    if (!isDefaultRange) {
+      if (minPrice != null) params['min_price'] = minPrice;
+      if (maxPrice != null) params['max_price'] = maxPrice;
+    }
+
     if (sortBy != null) params['sort_by'] = sortBy!.apiValue;
     if (search != null && search!.trim().isNotEmpty) {
       params['search'] = search!.trim();

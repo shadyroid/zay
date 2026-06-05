@@ -21,5 +21,5 @@ class AboutUsController extends BaseController {
     content.value = response.data ?? '';
   }
 
-  void goBack() => Get.back();
+  
 }

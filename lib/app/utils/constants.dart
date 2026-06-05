@@ -47,4 +47,6 @@ class Constants {
   static const String iosStoreUrl = 'https://zaymarketplace.online';
 
   static const int splashDelaySeconds = 2;
+  static const double priceMinBound = 0;
+  static const double priceMaxBound = 10000;
 }

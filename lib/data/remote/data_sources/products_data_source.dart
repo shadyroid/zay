@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart' as dio_multipart show MultipartFile;
 import 'package:get/get.dart';
 import 'package:hedma/app/utils/constants.dart';
@@ -34,7 +36,6 @@ class ProductsDataSource {
       );
       return Map<String, dynamic>.from(response.data as Map);
     }
-
     final response = await _dioClient.get(
       Constants.productsPath,
       queryParameters: request.toQueryParameters(),

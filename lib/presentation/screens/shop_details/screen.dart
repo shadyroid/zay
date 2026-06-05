@@ -42,7 +42,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
     final rating = shop.rating ?? '4.5';
     final reviewCount = shop.reviewCount ?? 0;
     final tagline = shop.description ?? '';
-    final about = shop.about ?? shop.description ?? '';
+    final about = shop.slogan ?? shop.description ?? '';
 
     return Obx(
       () => CustomScrollView(

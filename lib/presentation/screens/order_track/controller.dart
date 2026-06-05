@@ -40,5 +40,5 @@ class OrderTrackController extends BaseController {
     steps.assignAll(data.steps ?? []);
   }
 
-  void goBack() => Get.back();
+  
 }
