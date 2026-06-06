@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hedma/app/routes/routes.dart';
 import 'package:hedma/app/use_cases/products_use_case.dart';
@@ -28,13 +31,23 @@ class ProductsController extends BaseController {
   double? priceMax;
   XFile? image;
 
+  final isSearchMode = ValueNotifier<bool>(false);
+  final searchText = ValueNotifier<String>('');
+
+
   @override
   void onInit() {
     super.onInit();
-    selectedCategoryId.value = Get.arguments['categoryId'];
-    searchQuery.value = Get.arguments['search'];
-    shopId = Get.arguments['shopId'];
-    image = Get.arguments['image'];
+    selectedCategoryId.value = Get.arguments?['categoryId'];
+    searchQuery.value = Get.arguments?['search'];
+    if (searchQuery.value != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        searchText.value = searchQuery.value!;
+        isSearchMode.value = true;
+      });
+    }
+    shopId = Get.arguments?['shopId'];
+    image = Get.arguments?['image'];
     requestCategories();
     requestProducts();
   }

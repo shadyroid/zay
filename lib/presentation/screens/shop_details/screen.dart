@@ -10,7 +10,7 @@ import 'package:hedma/presentation/screens/shop_details/widgets/shop_banner_head
 import 'package:hedma/presentation/screens/shop_details/widgets/shop_details_app_bar.dart';
 import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 import 'package:hedma/presentation/widgets/category_item.dart';
-import 'package:hedma/presentation/widgets/product_grid_item.dart';
+import 'package:hedma/presentation/widgets/product_item.dart';
 
 class ShopDetailsScreen extends GetView<ShopDetailsController> {
   const ShopDetailsScreen({super.key});
@@ -173,7 +173,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
                 ),
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final product = controller.bestSellerProducts[index];
-                  return ProductGridItem(
+                  return ProductItem(
                     product: product,
                     isFavorite: product.isFavorite,
                     onTap: () => controller.navigateToProductDetails(product),

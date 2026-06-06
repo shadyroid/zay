@@ -24,12 +24,12 @@ class OrderSummaryCard extends StatelessWidget {
           children: [
             _SummaryRow(
               label: itemLabel,
-              value: '\$${order.subtotal}',
+              value: '£${order.subtotal}',
             ),
             const SizedBox(height: 10),
             _SummaryRow(
               label: 'shipping'.tr,
-              value: '\$ ${order.shippingFee}',
+              value: '£ ${order.shippingFee}',
             ),
             const SizedBox(height: 10),
             _SummaryRow(
@@ -47,7 +47,7 @@ class OrderSummaryCard extends StatelessWidget {
             ),
             _SummaryRow(
               label: 'total'.tr,
-              value: '\$ ${order.total}',
+              value: '£ ${order.total}',
               isTotal: true,
             ),
           ],

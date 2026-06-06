@@ -23,6 +23,7 @@ class HomeController extends BaseController {
 
   final searchController = TextEditingController();
   final userName = ''.obs;
+  final profileImagePath = RxnString();
   final categories = <CategoryBean>[].obs;
   final recommendedProducts = <ProductBean>[].obs;
   final newArrivalProducts = <ProductBean>[].obs;
@@ -59,6 +60,7 @@ class HomeController extends BaseController {
     final response = await _authUseCase.requestProfile();
     if (!isSuccess(response)) return;
     userName.value = response.data?.name ?? '';
+    profileImagePath.value = response.data?.avatarUrl;
   }
 
   Future<void> _requestCategories() async {
@@ -93,10 +95,6 @@ class HomeController extends BaseController {
       ..addEntries(shops.map((s) => MapEntry(s.id, s.name)));
   }
 
-  String shopNameFor(ProductBean product) {
-    if (product.shop?.id == null) return '';
-    return _shopNames[product.shop!.id] ?? '';
-  }
 
   Future<void> toggleFavorite(ProductBean product) async {
     if (!await AppAuthGuard.ensureAuthenticated()) return;

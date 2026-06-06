@@ -17,7 +17,7 @@ class Parser {
 
   static double? parseDouble(dynamic json) {
     if (json == null) return null;
-    if (json is String) return double.parse(json);
+    if (json is String) return double.parse(json.replaceAll(',', ''));
     if (json is int) return json.toDouble();
 
     return json;

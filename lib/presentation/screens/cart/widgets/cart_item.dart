@@ -91,7 +91,7 @@ class CartItem extends StatelessWidget {
                     children: [
                       TextSpan(text: '${'price'.tr}: '),
                       TextSpan(
-                        text: '\$${item.price}',
+                        text: '£${item.price}',
                         style: Get.theme.textTheme.titleSmall?.copyWith(
                               color: AppColors.secondary,
                               fontWeight: FontWeight.w700,

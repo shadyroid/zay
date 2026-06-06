@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:hedma/app/utils/app_colors.dart';
 import 'package:hedma/presentation/widgets/profile_avatar.dart';
 
 class SettingsProfileHeader extends StatelessWidget {
-  const SettingsProfileHeader({super.key, required this.name});
+  const SettingsProfileHeader({super.key, required this.name,required this.imagePath});
 
   final String name;
+  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ProfileAvatar(size: 88),
+        ProfileAvatar(size: 88, imagePath: imagePath),
         const SizedBox(height: 12),
         Text(
           name.isEmpty ? 'fullName'.tr : name,
           style: Get.theme.textTheme.titleMedium?.copyWith(
-                color: AppColors.textPrimary,
-                fontWeight: FontWeight.w700,
-              ),
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ],
     );

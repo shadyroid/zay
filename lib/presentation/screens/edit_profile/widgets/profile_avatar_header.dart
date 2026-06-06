@@ -21,15 +21,15 @@ class ProfileAvatarHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            ProfileAvatar(size: 100, imagePath: imagePath),
-            PositionedDirectional(
-              end: 0,
-              bottom: 0,
-              child: GestureDetector(
-                onTap: onEditPhoto,
+        GestureDetector(
+          onTap: onEditPhoto,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              ProfileAvatar(size: 100, imagePath: imagePath),
+              PositionedDirectional(
+                end: 0,
+                bottom: 0,
                 child: Container(
                   width: 32,
                   height: 32,
@@ -46,8 +46,8 @@ class ProfileAvatarHeader extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 12),
         Text(

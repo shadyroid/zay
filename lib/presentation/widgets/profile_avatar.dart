@@ -48,7 +48,7 @@ class ProfileAvatar extends StatelessWidget {
 
   Widget _placeholder() {
     return SvgPicture.asset(
-      'assets/images/ic_profile_avatar.svg',
+      'assets/icons/ic_profile_avatar.svg',
       width: size,
       height: size,
       fit: BoxFit.cover,

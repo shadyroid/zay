@@ -16,6 +16,7 @@ class SettingsController extends BaseController {
   final SettingsUseCase _settingsUseCase = Get.put(SettingsUseCase());
 
   final displayName = ''.obs;
+  final profileImagePath = RxnString();
   final isLoggedIn = false.obs;
 
   @override
@@ -43,6 +44,7 @@ class SettingsController extends BaseController {
     final response = await _authUseCase.requestProfile();
     if (!isSuccess(response)) return;
     displayName.value = response.data?.name ?? '';
+    profileImagePath.value = response.data?.avatarUrl;
   }
 
   void goBack() {

@@ -38,7 +38,7 @@ class CartBottomBar extends StatelessWidget {
                 children: [
                   TextSpan(text: '${'price'.tr}: '),
                   TextSpan(
-                    text: '\$${total.toStringAsFixed(0)}',
+                    text: '£${total.toStringAsFixed(0)}',
                     style: Get.theme.textTheme.titleLarge?.copyWith(
                           color: AppColors.secondary,
                           fontWeight: FontWeight.w700,

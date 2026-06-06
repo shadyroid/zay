@@ -100,7 +100,7 @@ class OrderItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '\$${order.total}',
+                            '£${order.total}',
                             style: Get.theme
                                 .textTheme
                                 .titleSmall

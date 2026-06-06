@@ -62,7 +62,7 @@ class TryOnFeeCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '\$ 0',
+                        '£ 0',
                         style: Get.theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),

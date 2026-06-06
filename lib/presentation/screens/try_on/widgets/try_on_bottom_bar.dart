@@ -12,7 +12,7 @@ class TryOnBottomBar extends StatelessWidget {
     required this.onAddToCart,
   });
 
-  final String? price;
+  final double? price;
   final VoidCallback onTryOnAgain;
   final VoidCallback onAddToCart;
 
@@ -38,7 +38,7 @@ class TryOnBottomBar extends StatelessWidget {
                 children: [
                   TextSpan(text: '${'price'.tr}: '),
                   TextSpan(
-                    text: '\$$price',
+                    text: '£${price?.toStringAsFixed(2)}',
                     style: Get.theme.textTheme.titleMedium?.copyWith(
                           color: AppColors.secondary,
                           fontWeight: FontWeight.w700,

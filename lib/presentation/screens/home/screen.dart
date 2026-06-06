@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/home/controller.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_header.dart';
-import 'package:hedma/presentation/screens/home/widgets/home_product_item.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_promo_banner.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_search_bar.dart';
 import 'package:hedma/presentation/screens/home/widgets/home_section_header.dart';
 import 'package:hedma/presentation/screens/home/widgets/shop_item.dart';
-import 'package:hedma/presentation/widgets/category_item.dart';
 import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:hedma/presentation/widgets/category_item.dart';
 import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
+import 'package:hedma/presentation/widgets/product_item.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
@@ -31,7 +30,10 @@ class HomeScreen extends GetView<HomeController> {
           return ListView(
             padding: const EdgeInsets.only(bottom: 16),
             children: [
-              HomeHeader(userName: controller.userName.value),
+              HomeHeader(
+                userName: controller.userName.value,
+                imagePath: controller.profileImagePath.value,
+              ),
               HomeSearchBar(
                 controller: controller.searchController,
                 onSearchSubmit: controller.onSearchSubmit,
@@ -61,21 +63,26 @@ class HomeScreen extends GetView<HomeController> {
                 onSeeAll: controller.onSeeAllRecommended,
               ),
               SizedBox(
-                height: HomeProductItem.listHeight,
-                child: ListView.builder(
+                height: (150 / 0.78) + 78,
+                child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: controller.recommendedProducts.length,
                   itemBuilder: (context, index) {
                     final product = controller.recommendedProducts[index];
-                    return HomeProductItem(
-                      product: product,
-                      shopName: controller.shopNameFor(product),
-                      isFavorite: product.isFavorite,
-                      onTap: () => controller.navigateToProductDetails(product),
-                      onFavoriteTap: () => controller.toggleFavorite(product),
+                    return SizedBox(
+                      width: 150,
+                      child: ProductItem(
+                        product: product,
+                        isFavorite: product.isFavorite,
+                        onTap: () =>
+                            controller.navigateToProductDetails(product),
+                        onFavoriteTap: () => controller.toggleFavorite(product),
+                      ),
                     );
                   },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      SizedBox(width: 12),
                 ),
               ),
               const HomePromoBanner(),
@@ -86,22 +93,27 @@ class HomeScreen extends GetView<HomeController> {
                   onSeeAll: controller.onSeeAllNewArrival,
                 ),
                 SizedBox(
-                  height: HomeProductItem.listHeight,
-                  child: ListView.builder(
+                  height: (150 / 0.78) + 78,
+                  child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: controller.newArrivalProducts.length,
                     itemBuilder: (context, index) {
                       final product = controller.newArrivalProducts[index];
-                      return HomeProductItem(
-                        product: product,
-                        shopName: controller.shopNameFor(product),
-                        isFavorite: product.isFavorite,
-                        onTap: () =>
-                            controller.navigateToProductDetails(product),
-                        onFavoriteTap: () => controller.toggleFavorite(product),
+                      return SizedBox(
+                        width: 150,
+                        child: ProductItem(
+                          product: product,
+                          isFavorite: product.isFavorite,
+                          onTap: () =>
+                              controller.navigateToProductDetails(product),
+                          onFavoriteTap: () =>
+                              controller.toggleFavorite(product),
+                        ),
                       );
                     },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        SizedBox(width: 12),
                   ),
                 ),
               ],

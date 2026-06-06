@@ -28,17 +28,17 @@ class CartPriceSummary extends StatelessWidget {
         children: [
           _SummaryRow(
             label: '${'subtotal'.tr} ($itemCount ${'items'.tr})',
-            value: '\$${subtotal.toStringAsFixed(0)}',
+            value: '£${subtotal.toStringAsFixed(0)}',
           ),
           const SizedBox(height: 8),
           _SummaryRow(
             label: 'shipping'.tr,
-            value: '\$ ${shipping.toStringAsFixed(0)}',
+            value: '£ ${shipping.toStringAsFixed(0)}',
           ),
           const SizedBox(height: 8),
           _SummaryRow(
             label: 'total'.tr,
-            value: '\$ ${total.toStringAsFixed(0)}',
+            value: '£ ${total.toStringAsFixed(0)}',
             isBold: true,
           ),
         ],

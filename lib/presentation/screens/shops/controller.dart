@@ -7,6 +7,7 @@ import 'package:hedma/presentation/base/base_controller.dart';
 class ShopsController extends BaseController {
   final ShopsUseCase _shopsUseCase = Get.put(ShopsUseCase());
 
+  final allShops = <ShopBean>[].obs;
   final shops = <ShopBean>[].obs;
 
   @override
@@ -20,6 +21,7 @@ class ShopsController extends BaseController {
     final response = await _shopsUseCase.requestShops();
     isLoading.value = false;
     if (!isSuccess(response)) return;
+    allShops.assignAll(response.data ?? []);
     shops.assignAll(response.data ?? []);
   }
 
@@ -29,7 +31,11 @@ class ShopsController extends BaseController {
 
   void goBack() => Get.offNamed(Routes.home);
 
-  void onSearch() {
-    Get.rawSnackbar(message: 'searchComingSoon'.tr);
+  void onSearch(String text) {
+    shops.value = allShops
+        .where((shop) =>
+        (shop.name ?? '').toLowerCase()
+            .contains(text.toLowerCase()))
+        .toList();
   }
 }

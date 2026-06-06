@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hedma/presentation/screens/favorite/controller.dart';
 import 'package:hedma/presentation/screens/favorite/widgets/favorite_empty_state.dart';
 import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/product_grid_item.dart';
+import 'package:hedma/presentation/widgets/product_item.dart';
 import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
 
 class FavoriteScreen extends GetView<FavoriteController> {
@@ -37,7 +37,7 @@ class FavoriteScreen extends GetView<FavoriteController> {
             itemCount: controller.favorites.length,
             itemBuilder: (context, index) {
               final product = controller.favorites[index];
-              return ProductGridItem(
+              return ProductItem(
                 product: product,
                 isFavorite: product.isFavorite,
                 onTap: () => controller.navigateToProductDetails(product),

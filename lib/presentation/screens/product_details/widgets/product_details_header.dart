@@ -17,7 +17,7 @@ class ProductDetailsHeader extends StatelessWidget {
   });
 
   final String name;
-  final String price;
+  final double? price;
   final String rating;
   final int reviewCount;
   final int quantity;
@@ -51,7 +51,7 @@ class ProductDetailsHeader extends StatelessWidget {
                     children: [
                       TextSpan(text: '${'price'.tr}: '),
                       TextSpan(
-                        text: '\$$price',
+                        text: '£${price?.toStringAsFixed(2)}',
                         style: Get.theme.textTheme.titleLarge?.copyWith(
                               color: AppColors.secondary,
                               fontWeight: FontWeight.w700,

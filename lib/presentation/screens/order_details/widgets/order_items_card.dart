@@ -74,7 +74,7 @@ class _OrderLineItemRow extends StatelessWidget {
               if (item.unitPrice!=null) ...[
                 const SizedBox(height: 8),
                 Text(
-                  '\$${item.unitPrice}',
+                  '£${item.unitPrice}',
                   style: Get.theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppColors.secondary,

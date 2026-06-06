@@ -171,7 +171,7 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '\$${priceRange.start.round()}',
+                                  '£${priceRange.start.round()}',
                                   style: Get.theme.textTheme.bodyMedium
                                       ?.copyWith(
                                         color: AppColors.textPrimary,
@@ -179,7 +179,7 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
                                       ),
                                 ),
                                 Text(
-                                  '\$${priceRange.end.round()}',
+                                  '£${priceRange.end.round()}',
                                   style: Get.theme.textTheme.bodyMedium
                                       ?.copyWith(
                                         color: AppColors.textPrimary,

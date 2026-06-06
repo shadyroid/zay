@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:hedma/domain/models/beans/product_bean.dart';
-import 'package:hedma/presentation/screens/home/widgets/home_product_item.dart';
+
+import 'package:hedma/presentation/widgets/product_item.dart';
 
 class SimilarProductsSection extends StatelessWidget {
   const SimilarProductsSection({
     super.key,
     required this.products,
-    required this.shopNameFor,
     required this.onProductTap,
     required this.onFavoriteTap,
   });
 
   final List<ProductBean> products;
-  final String Function(ProductBean) shopNameFor;
   final ValueChanged<ProductBean> onProductTap;
   final ValueChanged<ProductBean> onFavoriteTap;
 
@@ -36,26 +35,29 @@ class SimilarProductsSection extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: HomeProductItem.listHeight,
-            child: ListView.builder(
+            height: (150 / 0.78) + 78,
+            child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: products.length,
               itemBuilder: (context, index) {
                 final product = products[index];
-                return HomeProductItem(
-                  product: product,
-                  shopName: shopNameFor(product),
-                  isFavorite: product.isFavorite,
-                  onTap: () => onProductTap(product),
-                  onFavoriteTap: () => onFavoriteTap(product),
+                return SizedBox(
+                  width: 150,
+                  child: ProductItem(
+                    product: product,
+                    isFavorite: product.isFavorite,
+                    onTap: () => onProductTap(product),
+                    onFavoriteTap: () => onFavoriteTap(product),
+                  ),
                 );
               },
+              separatorBuilder: (BuildContext context, int index) => SizedBox(width: 12),
+
             ),
           ),
         ],
       );
     });
-
   }
 }

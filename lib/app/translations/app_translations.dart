@@ -310,6 +310,7 @@ class AppTranslations extends Translations {
     'noInternetSubtitle': 'Please check your connection and try again',
     'serverErrorTitle': 'Server Error',
     'serverErrorSubtitle': 'Something went wrong on our end. Please try again',
+    'outOfStock': 'OUT OF STOCK',
   };
 
   static const _ar = {
@@ -610,5 +611,6 @@ class AppTranslations extends Translations {
     'noInternetSubtitle': 'يرجى التحقق من الاتصال والمحاولة مرة أخرى',
     'serverErrorTitle': 'خطأ في الخادم',
     'serverErrorSubtitle': 'حدث خطأ من جانبنا. يرجى المحاولة مرة أخرى',
+    'outOfStock': 'إنتهى من المخزن',
   };
 }

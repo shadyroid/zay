@@ -45,7 +45,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                     ),
                     ProductDetailsHeader(
                       name: product.name ?? "",
-                      price: product.price ?? "",
+                      price: product.price,
                       rating: product.rating ?? '5.0',
                       reviewCount: product.reviewCount ?? 0,
                       quantity: controller.quantity.value,
@@ -75,12 +75,13 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                         measurementsImage: product.category?.measurementsImage,
                       ),
                     ),
+                    if(controller.similarProducts.isNotEmpty)
                     SimilarProductsSection(
                       products: controller.similarProducts,
-                      shopNameFor: (p) => p.shop?.name ?? '',
                       onProductTap: controller.navigateToProduct,
                       onFavoriteTap: controller.toggleFavoriteFor,
                     ),
+                    if(controller.reviews.isNotEmpty)
                     ProductReviewsSection(
                       reviews: controller.reviews,
                       onSeeAll: controller.onSeeAllReviews,
@@ -91,7 +92,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               ),
             ),
             ProductDetailsBottomBar(
-              price: product.price ?? "",
+              price: product.price,
               onTryOn: controller.onTryOn,
               isTryOnLoading: controller.isTryOnLoading.value,
               onAddToCart: controller.addToCart,

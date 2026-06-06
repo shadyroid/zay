@@ -92,7 +92,6 @@ class ProductsRepositoryImpl implements ProductsRepository {
               if (sizeId != null) result[sizeId] = quantity;
             }
           }
-          log("message ${result}");
           json['product']['selectedSizesQuantities'] = result;
         }
       }
