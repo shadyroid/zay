@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/use_cases/order_use_case.dart';
-import 'package:hedma/domain/models/beans/order_bean.dart';
-import 'package:hedma/domain/models/beans/order_track_step_bean.dart';
-import 'package:hedma/domain/requests/order_details_request.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/use_cases/order_use_case.dart';
+import 'package:zay/domain/models/beans/order_bean.dart';
+import 'package:zay/domain/models/beans/order_track_step_bean.dart';
+import 'package:zay/domain/requests/order_details_request.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class OrderTrackController extends BaseController {
   final OrderUseCase _orderUseCase = Get.put(OrderUseCase());

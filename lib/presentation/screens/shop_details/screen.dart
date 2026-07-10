@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/beans/shop_bean.dart';
-import 'package:hedma/presentation/screens/shop_details/controller.dart';
-import 'package:hedma/presentation/screens/shop_details/widgets/shop_about_section.dart';
-import 'package:hedma/presentation/screens/shop_details/widgets/shop_banner_header.dart';
-import 'package:hedma/presentation/screens/shop_details/widgets/shop_details_app_bar.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
-import 'package:hedma/presentation/widgets/category_item.dart';
-import 'package:hedma/presentation/widgets/product_item.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/presentation/screens/shop_details/controller.dart';
+import 'package:zay/presentation/screens/shop_details/widgets/shop_about_section.dart';
+import 'package:zay/presentation/screens/shop_details/widgets/shop_banner_header.dart';
+import 'package:zay/presentation/screens/shop_details/widgets/shop_details_app_bar.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/widgets/category_item.dart';
+import 'package:zay/presentation/widgets/product_item.dart';
 
 class ShopDetailsScreen extends GetView<ShopDetailsController> {
   const ShopDetailsScreen({super.key});

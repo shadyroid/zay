@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/product_sort_option.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/product_sort_option.dart';
 
 class SortOptionItem extends StatelessWidget {
   const SortOptionItem({

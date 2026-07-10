@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/use_cases/products_use_case.dart';
-import 'package:hedma/domain/models/beans/product_bean.dart';
-import 'package:hedma/domain/requests/product_id_request.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/use_cases/products_use_case.dart';
+import 'package:zay/domain/models/beans/product_bean.dart';
+import 'package:zay/domain/requests/product_id_request.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class FavoriteController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());

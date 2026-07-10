@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/orders/controller.dart';
+import 'package:zay/presentation/screens/orders/controller.dart';
 
 class OrdersBinding extends Bindings {
   @override

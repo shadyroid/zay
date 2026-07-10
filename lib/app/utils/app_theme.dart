@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hedma/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_colors.dart';
 
 abstract final class AppTheme {
   static ThemeData light() {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/presentation/screens/order_details/controller.dart';
-import 'package:hedma/presentation/screens/order_details/widgets/order_customer_card.dart';
-import 'package:hedma/presentation/screens/order_details/widgets/order_details_actions.dart';
-import 'package:hedma/presentation/screens/order_details/widgets/order_details_app_bar.dart';
-import 'package:hedma/presentation/screens/order_details/widgets/order_items_card.dart';
-import 'package:hedma/presentation/screens/order_details/widgets/order_summary_card.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/screens/order_details/controller.dart';
+import 'package:zay/presentation/screens/order_details/widgets/order_customer_card.dart';
+import 'package:zay/presentation/screens/order_details/widgets/order_details_actions.dart';
+import 'package:zay/presentation/screens/order_details/widgets/order_details_app_bar.dart';
+import 'package:zay/presentation/screens/order_details/widgets/order_items_card.dart';
+import 'package:zay/presentation/screens/order_details/widgets/order_summary_card.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class OrderDetailsScreen extends GetView<OrderDetailsController> {
   const OrderDetailsScreen({super.key});

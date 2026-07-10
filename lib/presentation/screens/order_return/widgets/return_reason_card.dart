@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/beans/return_reason_bean.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/beans/return_reason_bean.dart';
 
 class ReturnReasonCard extends StatelessWidget {
   const ReturnReasonCard({

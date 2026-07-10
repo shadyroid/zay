@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/remote/dio_client.dart';
-import 'package:hedma/domain/requests/product_details_request.dart';
-import 'package:hedma/domain/requests/product_id_request.dart';
-import 'package:hedma/domain/requests/products_request.dart';
-import 'package:hedma/domain/requests/try_on_request.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/data/remote/dio_client.dart';
+import 'package:zay/domain/requests/product_details_request.dart';
+import 'package:zay/domain/requests/product_id_request.dart';
+import 'package:zay/domain/requests/products_request.dart';
+import 'package:zay/domain/requests/try_on_request.dart';
 
 class ProductsDataSource {
   final DioClient _dioClient = Get.find<DioClient>();

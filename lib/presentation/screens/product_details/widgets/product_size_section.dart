@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/beans/size_bean.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/beans/size_bean.dart';
 
 class ProductSizeSection extends StatelessWidget {
   const ProductSizeSection({

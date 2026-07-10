@@ -1,4 +1,4 @@
-import 'package:hedma/app/utils/constants.dart';
+import 'package:zay/app/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsManager {

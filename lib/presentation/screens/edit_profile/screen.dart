@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_input_formatters.dart';
-import 'package:hedma/app/utils/egyptian_phone_util.dart';
-import 'package:hedma/presentation/screens/edit_profile/controller.dart';
-import 'package:hedma/presentation/screens/edit_profile/widgets/profile_avatar_header.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
-import 'package:hedma/presentation/widgets/app_text_field.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/app/utils/app_input_formatters.dart';
+import 'package:zay/app/utils/egyptian_phone_util.dart';
+import 'package:zay/presentation/screens/edit_profile/controller.dart';
+import 'package:zay/presentation/screens/edit_profile/widgets/profile_avatar_header.dart';
+import 'package:zay/presentation/widgets/app_back_app_bar.dart';
+import 'package:zay/presentation/widgets/app_button.dart';
+import 'package:zay/presentation/widgets/app_text_field.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class EditProfileScreen extends GetView<EditProfileController> {
   const EditProfileScreen({super.key});

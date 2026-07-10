@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:hedma/data/repositories/reviews_repository_impl.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
-import 'package:hedma/domain/models/responses/reviews_response.dart';
-import 'package:hedma/domain/repositories/reviews_repository.dart';
-import 'package:hedma/domain/requests/add_review_request.dart';
-import 'package:hedma/domain/requests/reviews_request.dart';
-import 'package:hedma/domain/requests/try_on_request.dart';
-import 'package:hedma/domain/requests/try_on_review_request.dart';
+import 'package:zay/data/repositories/reviews_repository_impl.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/responses/reviews_response.dart';
+import 'package:zay/domain/repositories/reviews_repository.dart';
+import 'package:zay/domain/requests/add_review_request.dart';
+import 'package:zay/domain/requests/reviews_request.dart';
+import 'package:zay/domain/requests/try_on_request.dart';
+import 'package:zay/domain/requests/try_on_review_request.dart';
 
 class ReviewsUseCase {
   final ReviewsRepository _reviewsRepository = Get.put(ReviewsRepositoryImpl());

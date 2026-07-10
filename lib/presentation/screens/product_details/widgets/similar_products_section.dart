@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/domain/models/beans/product_bean.dart';
+import 'package:zay/domain/models/beans/product_bean.dart';
 
-import 'package:hedma/presentation/widgets/product_item.dart';
+import 'package:zay/presentation/widgets/product_item.dart';
 
 class SimilarProductsSection extends StatelessWidget {
   const SimilarProductsSection({

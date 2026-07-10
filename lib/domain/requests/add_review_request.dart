@@ -1,4 +1,4 @@
-import 'package:hedma/domain/models/enums/review_size_fit.dart';
+import 'package:zay/domain/models/enums/review_size_fit.dart';
 
 class AddReviewRequest {
   const AddReviewRequest({

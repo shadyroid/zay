@@ -1,5 +1,5 @@
-import 'package:hedma/app/utils/parser.dart';
-import 'package:hedma/domain/models/beans/category_bean.dart';
+import 'package:zay/app/utils/parser.dart';
+import 'package:zay/domain/models/beans/category_bean.dart';
 
 //Done Review Need BE Edits
 class ShopBean {

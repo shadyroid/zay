@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart' as dio_multipart show FormData, MultipartFile;
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/remote/dio_client.dart';
-import 'package:hedma/domain/requests/change_password_request.dart';
-import 'package:hedma/domain/requests/forget_password_request.dart';
-import 'package:hedma/domain/requests/resend_verification_code_request.dart';
-import 'package:hedma/domain/requests/reset_password_request.dart';
-import 'package:hedma/domain/requests/sign_in_request.dart';
-import 'package:hedma/domain/requests/sign_up_request.dart';
-import 'package:hedma/domain/requests/update_profile_request.dart';
-import 'package:hedma/domain/requests/verification_request.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/data/remote/dio_client.dart';
+import 'package:zay/domain/requests/change_password_request.dart';
+import 'package:zay/domain/requests/forget_password_request.dart';
+import 'package:zay/domain/requests/resend_verification_code_request.dart';
+import 'package:zay/domain/requests/reset_password_request.dart';
+import 'package:zay/domain/requests/sign_in_request.dart';
+import 'package:zay/domain/requests/sign_up_request.dart';
+import 'package:zay/domain/requests/update_profile_request.dart';
+import 'package:zay/domain/requests/verification_request.dart';
 
 class AuthDataSource {
   final DioClient _dioClient = Get.find<DioClient>();

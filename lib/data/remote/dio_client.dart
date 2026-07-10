@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:dio/dio.dart' hide FormData;
 import 'package:dio/dio.dart' as dio_multipart show FormData;
 import 'package:get/get.dart' hide Response, FormData;
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/preferences/prefs_manager.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/data/preferences/prefs_manager.dart';
 
 class DioClient extends GetxService {
   late Dio _dio;

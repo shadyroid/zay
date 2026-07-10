@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/order_status_style.dart';
+import 'package:zay/app/utils/order_status_style.dart';
 
 class OrderStatusBadge extends StatelessWidget {
   const OrderStatusBadge({

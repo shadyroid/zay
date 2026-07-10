@@ -1,6 +1,6 @@
-import 'package:hedma/domain/models/responses/shop_response.dart';
-import 'package:hedma/domain/models/responses/shops_response.dart';
-import 'package:hedma/domain/requests/shop_details_request.dart';
+import 'package:zay/domain/models/responses/shop_response.dart';
+import 'package:zay/domain/models/responses/shops_response.dart';
+import 'package:zay/domain/requests/shop_details_request.dart';
 
 abstract class ShopsRepository {
   Future<ShopsResponse> requestShops();

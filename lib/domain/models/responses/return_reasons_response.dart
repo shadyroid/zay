@@ -1,5 +1,5 @@
-import 'package:hedma/domain/models/beans/return_reason_bean.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/beans/return_reason_bean.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
 
 class ReturnReasonsResponse extends BaseResponse {
   final List<ReturnReasonBean>? data;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/use_cases/products_use_case.dart';
-import 'package:hedma/app/use_cases/shops_use_case.dart';
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/domain/models/beans/category_bean.dart';
+import 'package:zay/app/use_cases/products_use_case.dart';
+import 'package:zay/app/use_cases/shops_use_case.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/domain/models/beans/category_bean.dart';
 
-import 'package:hedma/domain/models/beans/shop_bean.dart';
-import 'package:hedma/domain/models/beans/size_bean.dart';
+import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/domain/models/beans/size_bean.dart';
 
 class FilterBottomSheetController extends GetxController {
   FilterBottomSheetController({

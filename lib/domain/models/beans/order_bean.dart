@@ -1,8 +1,8 @@
-import 'package:hedma/app/utils/parser.dart';
-import 'package:hedma/domain/models/beans/location_bean.dart';
-import 'package:hedma/domain/models/beans/order_product_bean.dart';
-import 'package:hedma/domain/models/beans/order_track_step_bean.dart';
-import 'package:hedma/domain/models/beans/shop_bean.dart';
+import 'package:zay/app/utils/parser.dart';
+import 'package:zay/domain/models/beans/location_bean.dart';
+import 'package:zay/domain/models/beans/order_product_bean.dart';
+import 'package:zay/domain/models/beans/order_track_step_bean.dart';
+import 'package:zay/domain/models/beans/shop_bean.dart';
 
 class OrderBean {
   final int? id;

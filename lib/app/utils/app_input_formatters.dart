@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:hedma/app/utils/egyptian_phone_util.dart';
+import 'package:zay/app/utils/egyptian_phone_util.dart';
 
 abstract final class AppInputFormatters {
   static final List<TextInputFormatter> decimal = [

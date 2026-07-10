@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:hedma/data/repositories/settings_repository_impl.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
-import 'package:hedma/domain/models/responses/content_response.dart';
-import 'package:hedma/domain/repositories/settings_repository.dart';
-import 'package:hedma/domain/requests/contact_us_request.dart';
+import 'package:zay/data/repositories/settings_repository_impl.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/responses/content_response.dart';
+import 'package:zay/domain/repositories/settings_repository.dart';
+import 'package:zay/domain/requests/contact_us_request.dart';
 
 class SettingsUseCase {
   final SettingsRepository _settingsRepository =

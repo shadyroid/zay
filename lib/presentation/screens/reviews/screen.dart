@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/reviews/controller.dart';
-import 'package:hedma/presentation/screens/reviews/widgets/review_item.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
-import 'package:hedma/presentation/widgets/empty_state.dart';
+import 'package:zay/presentation/screens/reviews/controller.dart';
+import 'package:zay/presentation/screens/reviews/widgets/review_item.dart';
+import 'package:zay/presentation/widgets/app_back_app_bar.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/widgets/empty_state.dart';
 
 class ReviewsScreen extends GetView<ReviewsController> {
   const ReviewsScreen({super.key});

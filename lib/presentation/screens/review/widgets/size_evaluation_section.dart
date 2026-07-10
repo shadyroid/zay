@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/enums/review_size_fit.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/enums/review_size_fit.dart';
 
 class SizeEvaluationSection extends StatelessWidget {
   const SizeEvaluationSection({

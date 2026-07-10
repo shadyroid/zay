@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/verification/controller.dart';
-import 'package:hedma/presentation/screens/verification/widgets/otp_input_boxes.dart';
-import 'package:hedma/presentation/screens/verification/widgets/verification_header.dart';
-import 'package:hedma/presentation/screens/verification/widgets/verification_keypad.dart';
-import 'package:hedma/presentation/screens/verification/widgets/verification_timer_row.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
-import 'package:hedma/presentation/widgets/app_logo.dart';
-import 'package:hedma/presentation/widgets/auth_form_layout.dart';
+import 'package:zay/presentation/screens/verification/controller.dart';
+import 'package:zay/presentation/screens/verification/widgets/otp_input_boxes.dart';
+import 'package:zay/presentation/screens/verification/widgets/verification_header.dart';
+import 'package:zay/presentation/screens/verification/widgets/verification_keypad.dart';
+import 'package:zay/presentation/screens/verification/widgets/verification_timer_row.dart';
+import 'package:zay/presentation/widgets/app_back_app_bar.dart';
+import 'package:zay/presentation/widgets/app_button.dart';
+import 'package:zay/presentation/widgets/app_logo.dart';
+import 'package:zay/presentation/widgets/auth_form_layout.dart';
 
 class VerificationScreen extends GetView<VerificationController> {
   const VerificationScreen({super.key});

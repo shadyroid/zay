@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/no_internet/controller.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
+import 'package:zay/presentation/screens/no_internet/controller.dart';
+import 'package:zay/presentation/widgets/app_button.dart';
 
 class NoInternetScreen extends GetView<NoInternetController> {
   const NoInternetScreen({super.key});

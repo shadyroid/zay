@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/beans/shop_bean.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class ShopItem extends StatelessWidget {
   const ShopItem({

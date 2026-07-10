@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/likes_util.dart';
-import 'package:hedma/app/utils/parser.dart';
-import 'package:hedma/domain/models/beans/category_bean.dart';
-import 'package:hedma/domain/models/beans/shop_bean.dart';
-import 'package:hedma/domain/models/beans/size_bean.dart';
+import 'package:zay/app/utils/likes_util.dart';
+import 'package:zay/app/utils/parser.dart';
+import 'package:zay/domain/models/beans/category_bean.dart';
+import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/domain/models/beans/size_bean.dart';
 
 class ProductBean {
   final int? id;

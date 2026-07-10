@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/use_cases/auth_use_case.dart';
-import 'package:hedma/domain/requests/forget_password_request.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/use_cases/auth_use_case.dart';
+import 'package:zay/domain/requests/forget_password_request.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class ForgetPasswordController extends BaseController {
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());

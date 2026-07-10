@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
-import 'package:hedma/data/repositories/order_repository_impl.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
-import 'package:hedma/domain/models/responses/order_response.dart';
-import 'package:hedma/domain/models/responses/return_reasons_response.dart';
-import 'package:hedma/domain/models/responses/orders_response.dart';
-import 'package:hedma/domain/repositories/order_repository.dart';
-import 'package:hedma/domain/requests/create_order_request.dart';
-import 'package:hedma/domain/requests/order_details_request.dart';
-import 'package:hedma/domain/requests/order_return_request.dart';
+import 'package:zay/data/repositories/order_repository_impl.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/responses/order_response.dart';
+import 'package:zay/domain/models/responses/return_reasons_response.dart';
+import 'package:zay/domain/models/responses/orders_response.dart';
+import 'package:zay/domain/repositories/order_repository.dart';
+import 'package:zay/domain/requests/create_order_request.dart';
+import 'package:zay/domain/requests/order_details_request.dart';
+import 'package:zay/domain/requests/order_return_request.dart';
 
 class OrderUseCase {
   final OrderRepository _orderRepository = Get.put(OrderRepositoryImpl());

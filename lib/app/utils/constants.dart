@@ -43,9 +43,9 @@ class Constants {
   static const String privacyPath = '/pages/privacy';
   static const String contactUsPath = '/pages/contact-us';
 
-  static const String appName = 'Hedma';
+  static const String appName = 'ZAY';
   static const String androidStoreUrl =
-      'https://play.google.com/store/apps/details?id=com.hedma';
+      'https://play.google.com/store/apps/details?id=com.zay';
   static const String iosStoreUrl = 'https://zaymarketplace.online';
 
   static const int splashDelaySeconds = 2;

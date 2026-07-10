@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/favorite/controller.dart';
-import 'package:hedma/presentation/screens/favorite/widgets/favorite_empty_state.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/product_item.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/screens/favorite/controller.dart';
+import 'package:zay/presentation/screens/favorite/widgets/favorite_empty_state.dart';
+import 'package:zay/presentation/widgets/app_back_app_bar.dart';
+import 'package:zay/presentation/widgets/product_item.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class FavoriteScreen extends GetView<FavoriteController> {
   const FavoriteScreen({super.key});

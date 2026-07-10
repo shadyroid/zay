@@ -8,7 +8,7 @@ class AppTranslations extends Translations {
       };
 
   static const _en = {
-    'appName': 'Hedma',
+    'appName': 'ZAY',
     'splashTagline': 'Shop smarter, live better',
     'warning': 'Something went wrong',
     'signInTitle': 'Welcome back!',
@@ -107,7 +107,7 @@ class AppTranslations extends Translations {
     'arabic': 'Arabic',
     'english': 'English',
     'shareApp': 'Share The App',
-    'shareAppSubject': 'Try Hedma — fashion shopping made easy',
+    'shareAppSubject': 'Try ZAY — fashion shopping made easy',
     'shareAppMessage':
         'Discover @appName — shop fashion with virtual try-on, top stores, and fast checkout.\n\nDownload the app:\nAndroid: @androidUrl\niOS: @iosUrl',
     'notificationsComingSoon': 'Notifications coming soon',
@@ -228,11 +228,11 @@ class AppTranslations extends Translations {
     'socialLinkComingSoon': 'Social link coming soon',
     'aboutUs': 'About Us',
     'aboutUsContent':
-        'Hedma is your one-stop shop for quality products from trusted stores. Shop smarter, live better.',
+        'ZAY is your one-stop shop for quality products from trusted stores. Shop smarter, live better.',
     'terms': 'Terms And Conditions',
     'privacy': 'Privacy Policy',
     'termsContent':
-        'By using Hedma, you agree to our terms of service and privacy policy. Please read carefully before continuing.',
+        'By using ZAY, you agree to our terms of service and privacy policy. Please read carefully before continuing.',
     'orders': 'Orders',
     'order': 'Order',
     'orderDetails': 'Order Details',
@@ -412,7 +412,7 @@ class AppTranslations extends Translations {
     'arabic': 'العربية',
     'english': 'English',
     'shareApp': 'مشاركة التطبيق',
-    'shareAppSubject': 'جرّب Hedma — تسوق الأزياء بسهولة',
+    'shareAppSubject': 'جرّب ZAY — تسوق الأزياء بسهولة',
     'shareAppMessage':
         'اكتشف @appName — تسوق الأزياء مع تجربة افتراضية ومتاجر مميزة ودفع سريع.\n\nحمّل التطبيق:\nأندرويد: @androidUrl\niOS: @iosUrl',
     'notificationsComingSoon': 'الإشعارات قريباً',

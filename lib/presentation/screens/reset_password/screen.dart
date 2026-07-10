@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/reset_password/controller.dart';
-import 'package:hedma/presentation/screens/reset_password/widgets/reset_password_header.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
-import 'package:hedma/presentation/widgets/app_logo.dart';
-import 'package:hedma/presentation/widgets/app_text_field.dart';
-import 'package:hedma/presentation/widgets/auth_form_layout.dart';
+import 'package:zay/presentation/screens/reset_password/controller.dart';
+import 'package:zay/presentation/screens/reset_password/widgets/reset_password_header.dart';
+import 'package:zay/presentation/widgets/app_back_app_bar.dart';
+import 'package:zay/presentation/widgets/app_button.dart';
+import 'package:zay/presentation/widgets/app_logo.dart';
+import 'package:zay/presentation/widgets/app_text_field.dart';
+import 'package:zay/presentation/widgets/auth_form_layout.dart';
 
 class ResetPasswordScreen extends GetView<ResetPasswordController> {
   const ResetPasswordScreen({super.key});

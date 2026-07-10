@@ -1,9 +1,9 @@
-import 'package:hedma/data/remote/data_sources/cart_data_source.dart';
-import 'package:hedma/domain/models/responses/cart_response.dart';
-import 'package:hedma/domain/repositories/cart_repository.dart';
-import 'package:hedma/domain/requests/add_cart_item_request.dart';
-import 'package:hedma/domain/requests/delete_cart_item_request.dart';
-import 'package:hedma/domain/requests/update_cart_item_request.dart';
+import 'package:zay/data/remote/data_sources/cart_data_source.dart';
+import 'package:zay/domain/models/responses/cart_response.dart';
+import 'package:zay/domain/repositories/cart_repository.dart';
+import 'package:zay/domain/requests/add_cart_item_request.dart';
+import 'package:zay/domain/requests/delete_cart_item_request.dart';
+import 'package:zay/domain/requests/update_cart_item_request.dart';
 
 class CartRepositoryImpl implements CartRepository {
   final CartDataSource _cartDataSource = CartDataSource();

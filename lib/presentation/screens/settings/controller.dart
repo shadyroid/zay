@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/use_cases/auth_use_case.dart';
-import 'package:hedma/app/use_cases/settings_use_case.dart';
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/preferences/prefs_manager.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
-import 'package:hedma/presentation/bottom_sheets/languages/languages_bottom_sheet.dart';
-import 'package:hedma/presentation/widgets/app_alert_dialog.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/use_cases/auth_use_case.dart';
+import 'package:zay/app/use_cases/settings_use_case.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/data/preferences/prefs_manager.dart';
+import 'package:zay/presentation/base/base_controller.dart';
+import 'package:zay/presentation/bottom_sheets/languages/languages_bottom_sheet.dart';
+import 'package:zay/presentation/widgets/app_alert_dialog.dart';
 import 'package:share_plus/share_plus.dart';
 
 class SettingsController extends BaseController {

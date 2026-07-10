@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "62585206493",
-    "project_id": "hedma-8f41f",
-    "storage_bucket": "hedma-8f41f.firebasestorage.app"
+    "project_number": "945540396376",
+    "project_id": "zay-app",
+    "storage_bucket": "zay-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:62585206493:android:c9e43429edf2eee2900d34",
+        "mobilesdk_app_id": "1:945540396376:android:929f750a712dd0767f212d",
         "android_client_info": {
-          "package_name": "com.hedma"
+          "package_name": "com.zay"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDoOZM9EdzZheO55asgGDt3Fa3N40LZY68"
+          "current_key": "AIzaSyCl17JMFp4Yi4MwSZHs-AflhjDs6QoifQI"
         }
       ],
       "services": {

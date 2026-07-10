@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_colors.dart';
 
 class ProductDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProductDetailsAppBar({

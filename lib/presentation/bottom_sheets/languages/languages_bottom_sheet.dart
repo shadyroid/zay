@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_languages.dart';
-import 'package:hedma/presentation/bottom_sheets/languages/widgets/language_item.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_languages.dart';
+import 'package:zay/presentation/bottom_sheets/languages/widgets/language_item.dart';
 
 class LanguagesBottomSheet extends StatelessWidget {
   const LanguagesBottomSheet({

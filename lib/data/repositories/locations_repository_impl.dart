@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hedma/data/remote/data_sources/locations_data_source.dart';
-import 'package:hedma/domain/models/beans/location_bean.dart';
-import 'package:hedma/domain/models/responses/location_details_response.dart';
-import 'package:hedma/domain/models/responses/locations_response.dart';
-import 'package:hedma/domain/repositories/locations_repository.dart';
+import 'package:zay/data/remote/data_sources/locations_data_source.dart';
+import 'package:zay/domain/models/beans/location_bean.dart';
+import 'package:zay/domain/models/responses/location_details_response.dart';
+import 'package:zay/domain/models/responses/locations_response.dart';
+import 'package:zay/domain/repositories/locations_repository.dart';
 
 class LocationsRepositoryImpl implements LocationsRepository {
   final LocationsDataSource _dataSource = LocationsDataSource();

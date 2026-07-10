@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/about_us/controller.dart';
-import 'package:hedma/presentation/widgets/html_content_scaffold.dart';
+import 'package:zay/presentation/screens/about_us/controller.dart';
+import 'package:zay/presentation/widgets/html_content_scaffold.dart';
 
 class AboutUsScreen extends GetView<AboutUsController> {
   const AboutUsScreen({super.key});

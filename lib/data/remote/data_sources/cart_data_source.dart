@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/remote/dio_client.dart';
-import 'package:hedma/domain/requests/add_cart_item_request.dart';
-import 'package:hedma/domain/requests/delete_cart_item_request.dart';
-import 'package:hedma/domain/requests/update_cart_item_request.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/data/remote/dio_client.dart';
+import 'package:zay/domain/requests/add_cart_item_request.dart';
+import 'package:zay/domain/requests/delete_cart_item_request.dart';
+import 'package:zay/domain/requests/update_cart_item_request.dart';
 
 class CartDataSource {
   final DioClient _dioClient = Get.find<DioClient>();

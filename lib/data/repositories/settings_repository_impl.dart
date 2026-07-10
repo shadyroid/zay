@@ -1,9 +1,9 @@
-import 'package:hedma/data/remote/data_sources/settings_data_source.dart';
-import 'package:hedma/data/preferences/prefs_manager.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
-import 'package:hedma/domain/models/responses/content_response.dart';
-import 'package:hedma/domain/repositories/settings_repository.dart';
-import 'package:hedma/domain/requests/contact_us_request.dart';
+import 'package:zay/data/remote/data_sources/settings_data_source.dart';
+import 'package:zay/data/preferences/prefs_manager.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/responses/content_response.dart';
+import 'package:zay/domain/repositories/settings_repository.dart';
+import 'package:zay/domain/requests/contact_us_request.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
   final SettingsDataSource _settingsDataSource = SettingsDataSource();

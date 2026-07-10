@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/presentation/screens/order_success/controller.dart';
-import 'package:hedma/presentation/screens/order_success/widgets/order_success_icon.dart';
-import 'package:hedma/presentation/screens/order_success/widgets/order_success_pattern_background.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/screens/order_success/controller.dart';
+import 'package:zay/presentation/screens/order_success/widgets/order_success_icon.dart';
+import 'package:zay/presentation/screens/order_success/widgets/order_success_pattern_background.dart';
 
 class OrderSuccessScreen extends GetView<OrderSuccessController> {
   const OrderSuccessScreen({super.key});

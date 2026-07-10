@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/app_input_formatters.dart';
-import 'package:hedma/app/utils/egyptian_phone_util.dart';
-import 'package:hedma/presentation/widgets/app_text_field.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_input_formatters.dart';
+import 'package:zay/app/utils/egyptian_phone_util.dart';
+import 'package:zay/presentation/widgets/app_text_field.dart';
 
 class CartDeliverySection extends StatelessWidget {
   const CartDeliverySection({

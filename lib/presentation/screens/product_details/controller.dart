@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/use_cases/cart_use_case.dart';
-import 'package:hedma/app/use_cases/products_use_case.dart';
-import 'package:hedma/app/use_cases/reviews_use_case.dart';
-import 'package:hedma/app/utils/app_auth_guard.dart';
-import 'package:hedma/app/utils/image_picker_helper.dart';
-import 'package:hedma/domain/models/beans/product_bean.dart';
-import 'package:hedma/domain/models/beans/review_bean.dart';
-import 'package:hedma/domain/requests/add_cart_item_request.dart';
-import 'package:hedma/domain/requests/product_details_request.dart';
-import 'package:hedma/domain/requests/product_id_request.dart';
-import 'package:hedma/domain/requests/products_request.dart';
-import 'package:hedma/domain/requests/reviews_request.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/use_cases/cart_use_case.dart';
+import 'package:zay/app/use_cases/products_use_case.dart';
+import 'package:zay/app/use_cases/reviews_use_case.dart';
+import 'package:zay/app/utils/app_auth_guard.dart';
+import 'package:zay/app/utils/image_picker_helper.dart';
+import 'package:zay/domain/models/beans/product_bean.dart';
+import 'package:zay/domain/models/beans/review_bean.dart';
+import 'package:zay/domain/requests/add_cart_item_request.dart';
+import 'package:zay/domain/requests/product_details_request.dart';
+import 'package:zay/domain/requests/product_id_request.dart';
+import 'package:zay/domain/requests/products_request.dart';
+import 'package:zay/domain/requests/reviews_request.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class ProductDetailsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());

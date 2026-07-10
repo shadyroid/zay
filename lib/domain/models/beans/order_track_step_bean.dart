@@ -1,5 +1,5 @@
-import 'package:hedma/domain/models/enums/order_track_step_icon.dart';
-import 'package:hedma/domain/models/enums/order_track_step_state.dart';
+import 'package:zay/domain/models/enums/order_track_step_icon.dart';
+import 'package:zay/domain/models/enums/order_track_step_state.dart';
 
 class OrderTrackStepBean {
   const OrderTrackStepBean({

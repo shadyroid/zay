@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/utils/app_auth_guard.dart';
-import 'package:hedma/app/utils/app_colors.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/utils/app_auth_guard.dart';
+import 'package:zay/app/utils/app_colors.dart';
 
 class MainBottomNav extends StatelessWidget {
   const MainBottomNav({super.key, required this.currentIndex});

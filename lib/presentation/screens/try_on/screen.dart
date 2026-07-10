@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/presentation/screens/try_on/controller.dart';
-import 'package:hedma/presentation/screens/try_on/widgets/try_on_app_bar.dart';
-import 'package:hedma/presentation/screens/try_on/widgets/try_on_bottom_bar.dart';
-import 'package:hedma/presentation/screens/try_on/widgets/try_on_fee_card.dart';
-import 'package:hedma/presentation/screens/try_on/widgets/try_on_feedback_section.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/screens/try_on/controller.dart';
+import 'package:zay/presentation/screens/try_on/widgets/try_on_app_bar.dart';
+import 'package:zay/presentation/screens/try_on/widgets/try_on_bottom_bar.dart';
+import 'package:zay/presentation/screens/try_on/widgets/try_on_fee_card.dart';
+import 'package:zay/presentation/screens/try_on/widgets/try_on_feedback_section.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class TryOnScreen extends GetView<TryOnController> {
   const TryOnScreen({super.key});

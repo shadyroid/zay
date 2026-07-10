@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_input_formatters.dart';
-import 'package:hedma/app/utils/egyptian_phone_util.dart';
-import 'package:hedma/presentation/screens/contact_us/controller.dart';
-import 'package:hedma/presentation/screens/contact_us/widgets/contact_us_header.dart';
-import 'package:hedma/presentation/screens/contact_us/widgets/contact_us_labeled_field.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
+import 'package:zay/app/utils/app_input_formatters.dart';
+import 'package:zay/app/utils/egyptian_phone_util.dart';
+import 'package:zay/presentation/screens/contact_us/controller.dart';
+import 'package:zay/presentation/screens/contact_us/widgets/contact_us_header.dart';
+import 'package:zay/presentation/screens/contact_us/widgets/contact_us_labeled_field.dart';
+import 'package:zay/presentation/widgets/app_back_app_bar.dart';
+import 'package:zay/presentation/widgets/app_button.dart';
 
 class ContactUsScreen extends GetView<ContactUsController> {
   const ContactUsScreen({super.key});

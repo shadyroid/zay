@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/use_cases/auth_use_case.dart';
-import 'package:hedma/domain/requests/resend_verification_code_request.dart';
-import 'package:hedma/domain/requests/verification_request.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/use_cases/auth_use_case.dart';
+import 'package:zay/domain/requests/resend_verification_code_request.dart';
+import 'package:zay/domain/requests/verification_request.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class VerificationController extends BaseController {
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());

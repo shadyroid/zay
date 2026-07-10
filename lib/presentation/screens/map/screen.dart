@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/presentation/screens/map/controller.dart';
-import 'package:hedma/presentation/screens/map/widgets/map_location_bottom_card.dart';
-import 'package:hedma/presentation/screens/map/widgets/map_place_suggestions.dart';
-import 'package:hedma/presentation/screens/map/widgets/map_search_bar.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/screens/map/controller.dart';
+import 'package:zay/presentation/screens/map/widgets/map_location_bottom_card.dart';
+import 'package:zay/presentation/screens/map/widgets/map_place_suggestions.dart';
+import 'package:zay/presentation/screens/map/widgets/map_search_bar.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 class MapScreen extends GetView<MapController> {
   const MapScreen({super.key});
 

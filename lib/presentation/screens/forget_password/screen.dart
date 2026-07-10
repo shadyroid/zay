@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/forget_password/controller.dart';
-import 'package:hedma/presentation/screens/forget_password/widgets/forget_password_header.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
-import 'package:hedma/presentation/widgets/app_logo.dart';
-import 'package:hedma/presentation/widgets/app_text_field.dart';
-import 'package:hedma/presentation/widgets/auth_form_layout.dart';
+import 'package:zay/presentation/screens/forget_password/controller.dart';
+import 'package:zay/presentation/screens/forget_password/widgets/forget_password_header.dart';
+import 'package:zay/presentation/widgets/app_back_app_bar.dart';
+import 'package:zay/presentation/widgets/app_button.dart';
+import 'package:zay/presentation/widgets/app_logo.dart';
+import 'package:zay/presentation/widgets/app_text_field.dart';
+import 'package:zay/presentation/widgets/auth_form_layout.dart';
 
 class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
   const ForgetPasswordScreen({super.key});

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/home/controller.dart';
-import 'package:hedma/presentation/screens/home/widgets/home_header.dart';
-import 'package:hedma/presentation/screens/home/widgets/home_promo_banner.dart';
-import 'package:hedma/presentation/screens/home/widgets/home_search_bar.dart';
-import 'package:hedma/presentation/screens/home/widgets/home_section_header.dart';
-import 'package:hedma/presentation/screens/home/widgets/shop_item.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
-import 'package:hedma/presentation/widgets/category_item.dart';
-import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
-import 'package:hedma/presentation/widgets/product_item.dart';
+import 'package:zay/presentation/screens/home/controller.dart';
+import 'package:zay/presentation/screens/home/widgets/home_header.dart';
+import 'package:zay/presentation/screens/home/widgets/home_promo_banner.dart';
+import 'package:zay/presentation/screens/home/widgets/home_search_bar.dart';
+import 'package:zay/presentation/screens/home/widgets/home_section_header.dart';
+import 'package:zay/presentation/screens/home/widgets/shop_item.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/widgets/category_item.dart';
+import 'package:zay/presentation/widgets/main_bottom_nav.dart';
+import 'package:zay/presentation/widgets/product_item.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});

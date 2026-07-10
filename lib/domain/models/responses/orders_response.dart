@@ -1,5 +1,5 @@
-import 'package:hedma/domain/models/beans/order_bean.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/beans/order_bean.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
 
 class OrdersResponse extends BaseResponse {
   final List<OrderBean>? data;

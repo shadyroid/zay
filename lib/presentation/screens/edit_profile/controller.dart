@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/use_cases/auth_use_case.dart';
-import 'package:hedma/app/utils/egyptian_phone_util.dart';
-import 'package:hedma/domain/requests/update_profile_request.dart';
-import 'package:hedma/app/utils/image_picker_helper.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/use_cases/auth_use_case.dart';
+import 'package:zay/app/utils/egyptian_phone_util.dart';
+import 'package:zay/domain/requests/update_profile_request.dart';
+import 'package:zay/app/utils/image_picker_helper.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class EditProfileController extends BaseController {
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/presentation/widgets/profile_avatar.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/widgets/profile_avatar.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({

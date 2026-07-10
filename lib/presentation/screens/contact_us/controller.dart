@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/use_cases/settings_use_case.dart';
-import 'package:hedma/app/utils/egyptian_phone_util.dart';
-import 'package:hedma/domain/requests/contact_us_request.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/use_cases/settings_use_case.dart';
+import 'package:zay/app/utils/egyptian_phone_util.dart';
+import 'package:zay/domain/requests/contact_us_request.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class ContactUsController extends BaseController {
   final SettingsUseCase _settingsUseCase = Get.put(SettingsUseCase());

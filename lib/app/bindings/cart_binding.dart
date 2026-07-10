@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/cart/controller.dart';
+import 'package:zay/presentation/screens/cart/controller.dart';
 
 class CartBinding extends Bindings {
   @override

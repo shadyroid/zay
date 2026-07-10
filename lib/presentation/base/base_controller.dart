@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
 
 abstract class BaseController extends GetxController {
   final RxBool isLoading = false.obs;

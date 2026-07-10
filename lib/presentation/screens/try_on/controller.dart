@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/use_cases/products_use_case.dart';
-import 'package:hedma/app/use_cases/reviews_use_case.dart';
-import 'package:hedma/app/utils/app_auth_guard.dart';
-import 'package:hedma/app/utils/image_picker_helper.dart';
-import 'package:hedma/domain/models/beans/product_bean.dart';
-import 'package:hedma/domain/requests/try_on_request.dart';
-import 'package:hedma/domain/requests/try_on_review_request.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/use_cases/products_use_case.dart';
+import 'package:zay/app/use_cases/reviews_use_case.dart';
+import 'package:zay/app/utils/app_auth_guard.dart';
+import 'package:zay/app/utils/image_picker_helper.dart';
+import 'package:zay/domain/models/beans/product_bean.dart';
+import 'package:zay/domain/requests/try_on_request.dart';
+import 'package:zay/domain/requests/try_on_review_request.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TryOnController extends BaseController {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_colors.dart';
 
 class ReturnInfoBanner extends StatelessWidget {
   const ReturnInfoBanner({super.key, this.message});

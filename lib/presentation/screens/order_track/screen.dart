@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/presentation/screens/order_details/widgets/order_items_card.dart';
-import 'package:hedma/presentation/screens/order_track/controller.dart';
-import 'package:hedma/presentation/screens/order_track/widgets/order_track_app_bar.dart';
-import 'package:hedma/presentation/screens/order_track/widgets/order_track_delivery_card.dart';
-import 'package:hedma/presentation/screens/order_track/widgets/order_track_timeline_card.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/screens/order_details/widgets/order_items_card.dart';
+import 'package:zay/presentation/screens/order_track/controller.dart';
+import 'package:zay/presentation/screens/order_track/widgets/order_track_app_bar.dart';
+import 'package:zay/presentation/screens/order_track/widgets/order_track_delivery_card.dart';
+import 'package:zay/presentation/screens/order_track/widgets/order_track_timeline_card.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class OrderTrackScreen extends GetView<OrderTrackController> {
   const OrderTrackScreen({super.key});

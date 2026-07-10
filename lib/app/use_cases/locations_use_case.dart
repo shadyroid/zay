@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hedma/data/repositories/locations_repository_impl.dart';
-import 'package:hedma/domain/models/responses/location_details_response.dart';
-import 'package:hedma/domain/models/responses/locations_response.dart';
-import 'package:hedma/domain/repositories/locations_repository.dart';
+import 'package:zay/data/repositories/locations_repository_impl.dart';
+import 'package:zay/domain/models/responses/location_details_response.dart';
+import 'package:zay/domain/models/responses/locations_response.dart';
+import 'package:zay/domain/repositories/locations_repository.dart';
 
 class LocationsUseCase {
   final LocationsRepository _repository = Get.put(LocationsRepositoryImpl());

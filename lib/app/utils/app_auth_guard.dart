@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/data/preferences/prefs_manager.dart';
-import 'package:hedma/presentation/widgets/app_alert_dialog.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/data/preferences/prefs_manager.dart';
+import 'package:zay/presentation/widgets/app_alert_dialog.dart';
 
 class AppAuthGuard {
   AppAuthGuard._();

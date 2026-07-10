@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/remote/dio_client.dart';
-import 'package:hedma/domain/requests/shop_details_request.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/data/remote/dio_client.dart';
+import 'package:zay/domain/requests/shop_details_request.dart';
 
 class ShopsDataSource {
   final DioClient _dioClient = Get.find<DioClient>();

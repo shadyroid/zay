@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/domain/models/beans/order_product_bean.dart';
-import 'package:hedma/domain/models/enums/review_size_fit.dart';
+import 'package:zay/domain/models/beans/order_product_bean.dart';
+import 'package:zay/domain/models/enums/review_size_fit.dart';
 
 class OrderItemReviewDraft {
   OrderItemReviewDraft({required this.item})

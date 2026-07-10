@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:hedma/data/repositories/cart_repository_impl.dart';
-import 'package:hedma/domain/models/responses/cart_response.dart';
-import 'package:hedma/domain/repositories/cart_repository.dart';
-import 'package:hedma/domain/requests/add_cart_item_request.dart';
-import 'package:hedma/domain/requests/delete_cart_item_request.dart';
-import 'package:hedma/domain/requests/update_cart_item_request.dart';
+import 'package:zay/data/repositories/cart_repository_impl.dart';
+import 'package:zay/domain/models/responses/cart_response.dart';
+import 'package:zay/domain/repositories/cart_repository.dart';
+import 'package:zay/domain/requests/add_cart_item_request.dart';
+import 'package:zay/domain/requests/delete_cart_item_request.dart';
+import 'package:zay/domain/requests/update_cart_item_request.dart';
 
 class CartUseCase {
   final CartRepository _cartRepository = Get.put(CartRepositoryImpl());

@@ -1,5 +1,5 @@
-import 'package:hedma/domain/models/beans/category_bean.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/beans/category_bean.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
 
 class CategoriesResponse extends BaseResponse {
   final List<CategoryBean>? data;

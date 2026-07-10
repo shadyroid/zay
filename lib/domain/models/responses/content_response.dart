@@ -1,4 +1,4 @@
-import 'package:hedma/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
 
 class ContentResponse extends BaseResponse {
   final String? data;

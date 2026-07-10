@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hedma/app/use_cases/locations_use_case.dart';
-import 'package:hedma/domain/models/beans/location_bean.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/app/use_cases/locations_use_case.dart';
+import 'package:zay/domain/models/beans/location_bean.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class MapController extends BaseController {
   static const LatLng _defaultCenter = LatLng(30.0444, 31.2357);

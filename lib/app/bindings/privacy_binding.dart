@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/privacy/controller.dart';
+import 'package:zay/presentation/screens/privacy/controller.dart';
 
 class PrivacyBinding extends Bindings {
   @override

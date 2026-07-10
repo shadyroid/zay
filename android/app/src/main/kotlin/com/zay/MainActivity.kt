@@ -1,4 +1,4 @@
-package com.hedma
+package com.zay
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-import 'package:hedma/domain/models/beans/measurement_bean.dart';
+import 'package:zay/domain/models/beans/measurement_bean.dart';
 
 class SizeBean {
   final int? id;

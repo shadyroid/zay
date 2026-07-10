@@ -1,16 +1,16 @@
 import 'package:get/get.dart';
-import 'package:hedma/data/repositories/auth_repository_impl.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
-import 'package:hedma/domain/models/responses/profile_response.dart';
-import 'package:hedma/domain/repositories/auth_repository.dart';
-import 'package:hedma/domain/requests/change_password_request.dart';
-import 'package:hedma/domain/requests/forget_password_request.dart';
-import 'package:hedma/domain/requests/resend_verification_code_request.dart';
-import 'package:hedma/domain/requests/reset_password_request.dart';
-import 'package:hedma/domain/requests/sign_in_request.dart';
-import 'package:hedma/domain/requests/sign_up_request.dart';
-import 'package:hedma/domain/requests/update_profile_request.dart';
-import 'package:hedma/domain/requests/verification_request.dart';
+import 'package:zay/data/repositories/auth_repository_impl.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/responses/profile_response.dart';
+import 'package:zay/domain/repositories/auth_repository.dart';
+import 'package:zay/domain/requests/change_password_request.dart';
+import 'package:zay/domain/requests/forget_password_request.dart';
+import 'package:zay/domain/requests/resend_verification_code_request.dart';
+import 'package:zay/domain/requests/reset_password_request.dart';
+import 'package:zay/domain/requests/sign_in_request.dart';
+import 'package:zay/domain/requests/sign_up_request.dart';
+import 'package:zay/domain/requests/update_profile_request.dart';
+import 'package:zay/domain/requests/verification_request.dart';
 
 class AuthUseCase {
   final AuthRepository _authRepository = Get.put(AuthRepositoryImpl());

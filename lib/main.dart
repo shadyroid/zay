@@ -2,12 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/routes/routes.dart';
-import 'package:hedma/app/translations/app_translations.dart';
-import 'package:hedma/app/utils/app_theme.dart';
-import 'package:hedma/data/preferences/prefs_manager.dart';
-import 'package:hedma/data/remote/dio_client.dart';
-import 'package:hedma/firebase_options.dart';
+import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/translations/app_translations.dart';
+import 'package:zay/app/utils/app_theme.dart';
+import 'package:zay/data/preferences/prefs_manager.dart';
+import 'package:zay/data/remote/dio_client.dart';
+import 'package:zay/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,16 +16,16 @@ Future<void> main() async {
   );
   await PrefsManager.init();
   Get.put(DioClient(), permanent: true);
-  runApp(const HedmaApp());
+  runApp(const MyApp());
 }
 
-class HedmaApp extends StatelessWidget {
-  const HedmaApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Hedma',
+      title: 'ZAY',
       debugShowCheckedModeBanner: false,
       translations: AppTranslations(),
       locale: Locale(PrefsManager.locale ?? 'en'),

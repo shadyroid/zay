@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/beans/order_bean.dart';
-import 'package:hedma/presentation/screens/orders/widgets/order_status_badge.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/beans/order_bean.dart';
+import 'package:zay/presentation/screens/orders/widgets/order_status_badge.dart';
 
 class OrderItem extends StatelessWidget {
   const OrderItem({

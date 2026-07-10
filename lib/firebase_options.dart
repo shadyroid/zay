@@ -50,19 +50,18 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDoOZM9EdzZheO55asgGDt3Fa3N40LZY68',
-    appId: '1:62585206493:android:c9e43429edf2eee2900d34',
-    messagingSenderId: '62585206493',
-    projectId: 'hedma-8f41f',
-    storageBucket: 'hedma-8f41f.firebasestorage.app',
+    apiKey: 'AIzaSyCl17JMFp4Yi4MwSZHs-AflhjDs6QoifQI',
+    appId: '1:945540396376:android:929f750a712dd0767f212d',
+    messagingSenderId: '945540396376',
+    projectId: 'zay-app',
+    storageBucket: 'zay-app.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCctiejAaCmiyTMA3SoDDIM9OrW67399zE',
-    appId: '1:62585206493:ios:224937bb9e58ccd8900d34',
-    messagingSenderId: '62585206493',
-    projectId: 'hedma-8f41f',
-    storageBucket: 'hedma-8f41f.firebasestorage.app',
-    iosBundleId: 'com.hedma',
+    apiKey: 'AIzaSyDh8DrMA40-QDfXpm6EkM_4SxA-Jt4a94w',
+    appId: '1:945540396376:ios:96901a5d9f0778a17f212d',
+    messagingSenderId: '945540396376',
+    projectId: 'zay-app',
+    storageBucket: 'zay-app.firebasestorage.app',
+    iosBundleId: 'com.zay',
   );
 }

@@ -1,10 +1,10 @@
-import 'package:hedma/data/remote/data_sources/reviews_data_source.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
-import 'package:hedma/domain/models/responses/reviews_response.dart';
-import 'package:hedma/domain/repositories/reviews_repository.dart';
-import 'package:hedma/domain/requests/add_review_request.dart';
-import 'package:hedma/domain/requests/reviews_request.dart';
-import 'package:hedma/domain/requests/try_on_review_request.dart';
+import 'package:zay/data/remote/data_sources/reviews_data_source.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/responses/reviews_response.dart';
+import 'package:zay/domain/repositories/reviews_repository.dart';
+import 'package:zay/domain/requests/add_review_request.dart';
+import 'package:zay/domain/requests/reviews_request.dart';
+import 'package:zay/domain/requests/try_on_review_request.dart';
 
 class ReviewsRepositoryImpl implements ReviewsRepository {
   final ReviewsDataSource _reviewsDataSource = ReviewsDataSource();

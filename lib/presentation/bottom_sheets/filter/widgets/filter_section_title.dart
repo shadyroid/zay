@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_colors.dart';
 
 class FilterSectionTitle extends StatelessWidget {
   const FilterSectionTitle({super.key, required this.title});

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/base/base_controller.dart';
+import 'package:zay/presentation/base/base_controller.dart';
 
 class ServerErrorController extends BaseController {
   void retry() {

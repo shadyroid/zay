@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/settings/controller.dart';
+import 'package:zay/presentation/screens/settings/controller.dart';
 
 class SettingsBinding extends Bindings {
   @override

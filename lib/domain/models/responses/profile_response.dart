@@ -1,5 +1,5 @@
-import 'package:hedma/domain/models/beans/user_bean.dart';
-import 'package:hedma/domain/models/responses/base_response.dart';
+import 'package:zay/domain/models/beans/user_bean.dart';
+import 'package:zay/domain/models/responses/base_response.dart';
 
 class ProfileResponse extends BaseResponse {
   final UserBean? data;

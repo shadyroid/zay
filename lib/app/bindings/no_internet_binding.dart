@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/no_internet/controller.dart';
+import 'package:zay/presentation/screens/no_internet/controller.dart';
 
 class NoInternetBinding extends Bindings {
   @override

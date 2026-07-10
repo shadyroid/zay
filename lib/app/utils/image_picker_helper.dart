@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:hedma/presentation/bottom_sheets/image_sources/image_sources_bottom_sheet.dart';
+import 'package:zay/presentation/bottom_sheets/image_sources/image_sources_bottom_sheet.dart';
 
 abstract final class ImagePickerHelper {
   static final ImagePicker _picker = ImagePicker();

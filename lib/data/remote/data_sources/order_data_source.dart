@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/data/remote/dio_client.dart';
-import 'package:hedma/domain/requests/create_order_request.dart';
-import 'package:hedma/domain/requests/order_details_request.dart';
-import 'package:hedma/domain/requests/order_return_request.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/data/remote/dio_client.dart';
+import 'package:zay/domain/requests/create_order_request.dart';
+import 'package:zay/domain/requests/order_details_request.dart';
+import 'package:zay/domain/requests/order_return_request.dart';
 
 class OrderDataSource {
   final DioClient _dioClient = Get.find<DioClient>();

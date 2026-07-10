@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/server_error/controller.dart';
-import 'package:hedma/presentation/widgets/app_button.dart';
+import 'package:zay/presentation/screens/server_error/controller.dart';
+import 'package:zay/presentation/widgets/app_button.dart';
 
 class ServerErrorScreen extends GetView<ServerErrorController> {
   const ServerErrorScreen({super.key});

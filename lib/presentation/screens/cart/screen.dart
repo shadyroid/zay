@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/cart/controller.dart';
-import 'package:hedma/presentation/screens/cart/widgets/cart_bottom_bar.dart';
-import 'package:hedma/presentation/screens/cart/widgets/cart_delivery_section.dart';
-import 'package:hedma/presentation/screens/cart/widgets/cart_item.dart';
-import 'package:hedma/presentation/screens/cart/widgets/cart_payment_section.dart';
-import 'package:hedma/presentation/screens/cart/widgets/cart_price_summary.dart';
-import 'package:hedma/presentation/widgets/app_back_app_bar.dart';
-import 'package:hedma/presentation/widgets/empty_state.dart';
-import 'package:hedma/presentation/widgets/main_bottom_nav.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/screens/cart/controller.dart';
+import 'package:zay/presentation/screens/cart/widgets/cart_bottom_bar.dart';
+import 'package:zay/presentation/screens/cart/widgets/cart_delivery_section.dart';
+import 'package:zay/presentation/screens/cart/widgets/cart_item.dart';
+import 'package:zay/presentation/screens/cart/widgets/cart_payment_section.dart';
+import 'package:zay/presentation/screens/cart/widgets/cart_price_summary.dart';
+import 'package:zay/presentation/widgets/app_back_app_bar.dart';
+import 'package:zay/presentation/widgets/empty_state.dart';
+import 'package:zay/presentation/widgets/main_bottom_nav.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class CartScreen extends GetView<CartController> {
   const CartScreen({super.key});

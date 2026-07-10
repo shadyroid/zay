@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/contact_us/controller.dart';
+import 'package:zay/presentation/screens/contact_us/controller.dart';
 
 class ContactUsBinding extends Bindings {
   @override

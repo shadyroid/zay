@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/app/utils/constants.dart';
-import 'package:hedma/presentation/bottom_sheets/filter/filter_bottom_sheet_controller.dart';
-import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_section_title.dart';
-import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_size_chip.dart';
-import 'package:hedma/presentation/bottom_sheets/filter/widgets/filter_store_chip.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
-import 'package:hedma/presentation/widgets/category_item.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/presentation/bottom_sheets/filter/filter_bottom_sheet_controller.dart';
+import 'package:zay/presentation/bottom_sheets/filter/widgets/filter_section_title.dart';
+import 'package:zay/presentation/bottom_sheets/filter/widgets/filter_size_chip.dart';
+import 'package:zay/presentation/bottom_sheets/filter/widgets/filter_store_chip.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/widgets/category_item.dart';
 
 class FilterBottomSheet extends GetView<FilterBottomSheetController> {
   const FilterBottomSheet({super.key});

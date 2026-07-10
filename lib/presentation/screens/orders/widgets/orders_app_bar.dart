@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_colors.dart';
 
 class OrdersAppBar extends StatelessWidget implements PreferredSizeWidget {
   const OrdersAppBar({super.key});

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/terms/controller.dart';
+import 'package:zay/presentation/screens/terms/controller.dart';
 
 class TermsBinding extends Bindings {
   @override

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/product_details/controller.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_description_section.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_details_app_bar.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_details_bottom_bar.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_details_header.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_image_carousel.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_reviews_section.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_seller_banner.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_size_guide_table.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/product_size_section.dart';
-import 'package:hedma/presentation/screens/product_details/widgets/similar_products_section.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/screens/product_details/controller.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_description_section.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_details_app_bar.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_details_bottom_bar.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_details_header.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_image_carousel.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_reviews_section.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_seller_banner.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_size_guide_table.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_size_section.dart';
+import 'package:zay/presentation/screens/product_details/widgets/similar_products_section.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
   const ProductDetailsScreen({super.key});

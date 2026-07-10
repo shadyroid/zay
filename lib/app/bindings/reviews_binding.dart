@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/reviews/controller.dart';
+import 'package:zay/presentation/screens/reviews/controller.dart';
 
 class ReviewsBinding extends Bindings {
   @override

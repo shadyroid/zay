@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hedma/presentation/screens/sign_in/controller.dart';
+import 'package:zay/presentation/screens/sign_in/controller.dart';
 
 class SignInBinding extends Bindings {
   @override

@@ -2,12 +2,12 @@ import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/presentation/screens/products/controller.dart';
-import 'package:hedma/presentation/screens/products/widgets/products_action_bar.dart';
-import 'package:hedma/presentation/widgets/app_progress_indicator.dart';
-import 'package:hedma/presentation/widgets/category_item.dart';
-import 'package:hedma/presentation/widgets/product_item.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/screens/products/controller.dart';
+import 'package:zay/presentation/screens/products/widgets/products_action_bar.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/widgets/category_item.dart';
+import 'package:zay/presentation/widgets/product_item.dart';
 
 class ProductsScreen extends GetView<ProductsController> {
   const ProductsScreen({super.key});

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hedma/app/utils/app_colors.dart';
-import 'package:hedma/domain/models/enums/review_size_fit.dart';
-import 'package:hedma/presentation/screens/review/models/order_item_review_draft.dart';
-import 'package:hedma/presentation/screens/review/widgets/product_rating_section.dart';
-import 'package:hedma/presentation/screens/review/widgets/review_note_field.dart';
-import 'package:hedma/presentation/screens/review/widgets/size_evaluation_section.dart';
+import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/enums/review_size_fit.dart';
+import 'package:zay/presentation/screens/review/models/order_item_review_draft.dart';
+import 'package:zay/presentation/screens/review/widgets/product_rating_section.dart';
+import 'package:zay/presentation/screens/review/widgets/review_note_field.dart';
+import 'package:zay/presentation/screens/review/widgets/size_evaluation_section.dart';
 
 class OrderItemReviewCard extends StatelessWidget {
   const OrderItemReviewCard({

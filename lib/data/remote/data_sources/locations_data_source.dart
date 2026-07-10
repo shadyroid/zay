@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:hedma/app/utils/google_maps_config.dart';
+import 'package:zay/app/utils/google_maps_config.dart';
 
 class LocationsDataSource {
   LocationsDataSource() {
