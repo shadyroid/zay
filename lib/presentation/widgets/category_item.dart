@@ -19,90 +19,36 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foreground = isSelected ? Colors.white : AppColors.textPrimary;
-    final background =
-        isSelected ? AppColors.primary : AppColors.screenBackground;
+    final color = isSelected ? AppColors.primary : Colors.black;
 
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(end: 8),
-      child: Material(
-        color: background,
-        borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(24),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _CategoryIcon(
-                  iconUrl: category.icon ?? "",
-                  color: foreground,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  category.name ?? "",
-                  style: Get.theme.textTheme.bodyMedium?.copyWith(
-                        color: foreground,
-                        fontWeight:
-                            isSelected ? FontWeight.w600 : FontWeight.w500,
-                      ),
-                ),
-              ],
+    return IconButton(
+      onPressed: onTap,
+      icon: IntrinsicWidth(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              category.name ?? "",
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
+                color: color,
+                fontWeight:
+                isSelected ? FontWeight.w600 : FontWeight.w500,
+              ),
             ),
-          ),
+            const SizedBox(height: 4),
+            if(isSelected)...[
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                height: 2,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(1),
+                ),
+              ),
+            ]
+
+          ],
         ),
-      ),
-    );
-  }
-}
-
-class _CategoryIcon extends StatelessWidget {
-  const _CategoryIcon({required this.iconUrl, required this.color});
-
-  final String iconUrl;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    if (iconUrl.isEmpty) {
-      return SvgPicture.asset(
-        'assets/icons/ic_category_all.svg',
-        width: 18,
-        height: 18,
-        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-      );
-    }
-
-    if (iconUrl.startsWith('assets/')) {
-      return SvgPicture.asset(
-        iconUrl,
-        width: 18,
-        height: 18,
-        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-      );
-    }
-
-    if (!iconUrl.startsWith('http')) {
-      return Text(iconUrl, style: const TextStyle(fontSize: 16));
-    }
-
-    return Image.network(
-      iconUrl,
-      width: 18,
-      height: 18,
-      // colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-      // placeholderBuilder: (context) => SizedBox(
-      //   width: 18,
-      //   height: 18,
-      //   child: AppProgressIndicator(radius: 8, color: color),
-      // ),
-      errorBuilder: (context, error, stackTrace) => SvgPicture.asset(
-        'assets/icons/ic_category_all.svg',
-        width: 18,
-        height: 18,
-        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
       ),
     );
   }

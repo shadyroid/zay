@@ -42,22 +42,18 @@ class HomeScreen extends GetView<HomeController> {
                 onFilterTap: controller.onFilterTap,
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                height: 56,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: controller.categories.length,
-                  itemBuilder: (context, index) {
-                    final category = controller.categories[index];
-                    return CategoryItem(
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(children: [
+                  for(var category in controller.categories)
+                    CategoryItem(
                       category: category,
                       isSelected: selectedCategoryId == category.id,
                       onTap: () => controller.onCategoryTap(category),
-                    );
-                  },
-                ),
+                    )
+                ],),
               ),
+
               HomeSectionHeader(
                 title: 'recommendedForYou'.tr,
                 onSeeAll: controller.onSeeAllRecommended,
