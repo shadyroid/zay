@@ -34,7 +34,7 @@ class SignInWelcomeHeader extends StatelessWidget {
               child: Text(
                 'createOne'.tr,
                 style: Get.theme.textTheme.bodyMedium?.copyWith(
-                      color: AppColors.secondary,
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w600,
                     ),
               ),

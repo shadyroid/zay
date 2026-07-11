@@ -15,41 +15,8 @@ class SplashScreen extends GetView<SplashController> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: AppColors.backgroundGradient,
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(),
-                AppLogo(),
-                const SizedBox(height: 32),
-                Text(
-                  'appName'.tr,
-                  style: Get.theme.textTheme.headlineLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2,
-                      ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'splashTagline'.tr,
-                  textAlign: TextAlign.center,
-                  style: Get.theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.white70,
-                      ),
-                ),
-                const Spacer(),
-                const AppProgressIndicator(color: Colors.white),
-                const SizedBox(height: 48),
-              ],
-            ),
-          ),
-        ),
+        color: Colors.white,
+        child: Center(child: AppLogo()),
       ),
     );
   }

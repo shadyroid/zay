@@ -147,10 +147,10 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
                         children: [
                           SliderTheme(
                             data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: AppColors.secondary,
+                              activeTrackColor: AppColors.primary,
                               inactiveTrackColor: AppColors.screenBackground,
-                              thumbColor: AppColors.secondary,
-                              overlayColor: AppColors.secondary.withValues(
+                              thumbColor: AppColors.primary,
+                              overlayColor: AppColors.primary.withValues(
                                 alpha: 0.12,
                               ),
                               rangeThumbShape: const RoundRangeSliderThumbShape(
@@ -235,7 +235,7 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
                           },
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.secondary,
+                          backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(

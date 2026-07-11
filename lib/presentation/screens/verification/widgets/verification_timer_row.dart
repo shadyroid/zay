@@ -45,7 +45,7 @@ class VerificationTimerRow extends StatelessWidget {
             'resendCode'.tr,
             style: Get.theme.textTheme.bodyMedium?.copyWith(
                   color: canResend
-                      ? AppColors.secondary
+                      ? AppColors.primary
                       : AppColors.textSecondary,
                   fontWeight: canResend ? FontWeight.w600 : FontWeight.w400,
                 ),

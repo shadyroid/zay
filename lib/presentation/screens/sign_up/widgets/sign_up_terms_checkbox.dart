@@ -48,7 +48,7 @@ class SignUpTermsCheckbox extends StatelessWidget {
                   TextSpan(
                     text: 'signUpTermsLink'.tr,
                     style: const TextStyle(
-                      color: AppColors.secondary,
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w600,
                     ),
                     recognizer: TapGestureRecognizer()..onTap = onTermsTap,

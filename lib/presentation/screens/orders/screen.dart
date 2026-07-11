@@ -33,7 +33,7 @@ class OrdersScreen extends GetView<OrdersController> {
               if (controller.isLoading.value) {
                 return const Center(
                   child: AppProgressIndicator(
-                    color: AppColors.secondary,
+                    color: AppColors.primary,
                   ),
                 );
               }

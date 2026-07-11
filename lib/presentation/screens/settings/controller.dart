@@ -82,7 +82,7 @@ class SettingsController extends BaseController {
 
   void onLanguage() {
     final current =
-        _settingsUseCase.getLocale() ?? Get.locale?.languageCode ?? 'en';
+        _settingsUseCase.getLocale() ?? Get.locale?.languageCode ?? 'ar';
     LanguagesBottomSheet.show(selectedCode: current, onSelected: _setLocale);
   }
 

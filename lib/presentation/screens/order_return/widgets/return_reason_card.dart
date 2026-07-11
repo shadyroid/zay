@@ -28,7 +28,7 @@ class ReturnReasonCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isSelected ? AppColors.secondary : AppColors.border,
+              color: isSelected ? AppColors.primary : AppColors.border,
               width: isSelected ? 1.5 : 1,
             ),
           ),
@@ -66,7 +66,7 @@ class _ReturnRadioDot extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: isSelected ? AppColors.secondary : AppColors.border,
+          color: isSelected ? AppColors.primary : AppColors.border,
           width: 2,
         ),
       ),
@@ -76,7 +76,7 @@ class _ReturnRadioDot extends StatelessWidget {
                 width: 12,
                 height: 12,
                 decoration: const BoxDecoration(
-                  color: AppColors.secondary,
+                  color: AppColors.primary,
                   shape: BoxShape.circle,
                 ),
               ),

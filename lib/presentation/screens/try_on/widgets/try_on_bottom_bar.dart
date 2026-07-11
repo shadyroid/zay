@@ -40,7 +40,7 @@ class TryOnBottomBar extends StatelessWidget {
                   TextSpan(
                     text: '£${price?.toStringAsFixed(2)}',
                     style: Get.theme.textTheme.titleMedium?.copyWith(
-                          color: AppColors.secondary,
+                          color: AppColors.primary,
                           fontWeight: FontWeight.w700,
                         ),
                   ),
@@ -58,13 +58,13 @@ class TryOnBottomBar extends StatelessWidget {
                       width: 20,
                       height: 20,
                       colorFilter: const ColorFilter.mode(
-                        AppColors.secondary,
+                        AppColors.primary,
                         BlendMode.srcIn,
                       ),
                     ),
                     label: Text('tryOnAgain'.tr),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.secondary,
+                      foregroundColor: AppColors.primary,
                       side: const BorderSide(color: AppColors.border),
                       backgroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -89,7 +89,7 @@ class TryOnBottomBar extends StatelessWidget {
                     ),
                     label: Text('addToCart'.tr),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
+                      backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 14),

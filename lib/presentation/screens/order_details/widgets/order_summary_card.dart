@@ -75,7 +75,7 @@ class _SummaryRow extends StatelessWidget {
           fontWeight: isTotal ? FontWeight.w700 : FontWeight.w400,
         );
     final valueStyle = Get.theme.textTheme.bodyMedium?.copyWith(
-          color: isTotal ? AppColors.secondary : AppColors.textPrimary,
+          color: isTotal ? AppColors.primary : AppColors.textPrimary,
           fontWeight: FontWeight.w700,
         );
 

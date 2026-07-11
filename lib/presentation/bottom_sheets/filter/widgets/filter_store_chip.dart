@@ -19,7 +19,7 @@ class FilterStoreChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderColor =
-        isSelected ? AppColors.secondary : Colors.transparent;
+        isSelected ? AppColors.primary : Colors.transparent;
 
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 10),

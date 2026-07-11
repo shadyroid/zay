@@ -28,9 +28,9 @@ class GuestContinueButton extends StatelessWidget {
             Text(
               'continueAsGuest'.tr,
               style: Get.theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.secondary,
+                    color: AppColors.primary,
                     decoration: TextDecoration.underline,
-                    decorationColor: AppColors.secondary,
+                    decorationColor: AppColors.primary,
                     fontWeight: FontWeight.w500,
                   ),
             ),

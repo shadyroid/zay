@@ -44,7 +44,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
                     TextSpan(
                       text: '£${price?.toStringAsFixed(2)}',
                       style: Get.theme.textTheme.titleMedium?.copyWith(
-                            color: AppColors.secondary,
+                            color: AppColors.primary,
                             fontWeight: FontWeight.w700,
                           ),
                     ),
@@ -89,7 +89,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
                     ),
                     label: Text('addToCart'.tr),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
+                      backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 14),

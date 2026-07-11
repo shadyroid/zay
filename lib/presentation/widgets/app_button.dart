@@ -48,7 +48,7 @@ class AppButton extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             gradient: gradient,
-            borderRadius: BorderRadius.circular(32),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: ElevatedButton(
             onPressed: isLoading ? null : onPressed,
@@ -56,7 +56,7 @@ class AppButton extends StatelessWidget {
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: BorderRadius.circular(16),
               ),
             ),
             child: child,
@@ -76,7 +76,7 @@ class AppButton extends StatelessWidget {
           foregroundColor: Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(32),
+            borderRadius: BorderRadius.circular(16),
           ),
         ),
         child: child,

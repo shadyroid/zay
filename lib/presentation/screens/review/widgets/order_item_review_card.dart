@@ -83,7 +83,7 @@ class OrderItemReviewCard extends StatelessWidget {
                         '£${item.unitPrice}',
                         style: Get.theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w700,
-                              color: AppColors.secondary,
+                              color: AppColors.primary,
                             ),
                       ),
                     ],

@@ -32,7 +32,7 @@ class DioClient extends GetxService {
           options.headers['accept'] = 'application/json';
           options.headers['Accept'] = 'application/json';
 
-          final locale = PrefsManager.locale ?? Get.locale?.languageCode ?? 'en';
+          final locale = PrefsManager.locale ?? Get.locale?.languageCode ?? 'ar';
           options.headers['Accept-Language'] = locale;
           options.headers['Lang'] = locale == 'ar' ? 'rtl' : 'ltr';
 

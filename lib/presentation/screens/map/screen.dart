@@ -54,7 +54,7 @@ class MapScreen extends GetView<MapController> {
                 color: Color(0x33FFFFFF),
                 child: Center(
                   child: AppProgressIndicator(
-                    color: AppColors.secondary,
+                    color: AppColors.primary,
                   ),
                 ),
               ),

@@ -21,7 +21,7 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final foreground = isSelected ? Colors.white : AppColors.textPrimary;
     final background =
-        isSelected ? AppColors.secondary : AppColors.screenBackground;
+        isSelected ? AppColors.primary : AppColors.screenBackground;
 
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 8),

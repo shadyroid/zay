@@ -93,7 +93,7 @@ class CartItem extends StatelessWidget {
                       TextSpan(
                         text: '£${item.price}',
                         style: Get.theme.textTheme.titleSmall?.copyWith(
-                              color: AppColors.secondary,
+                              color: AppColors.primary,
                               fontWeight: FontWeight.w700,
                             ),
                       ),

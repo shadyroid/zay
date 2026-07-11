@@ -36,7 +36,7 @@ class OrderTrackDeliveryCard extends StatelessWidget {
             estimatedDelivery,
             style: Get.theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: AppColors.secondary,
+                  color: AppColors.primary,
                 ),
           ),
         ],

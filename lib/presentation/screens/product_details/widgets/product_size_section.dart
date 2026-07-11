@@ -63,7 +63,7 @@ class ProductSizeSection extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? AppColors.secondary
+                        ? AppColors.primary
                         : AppColors.screenBackground,
                     borderRadius: BorderRadius.circular(10),
                     border: size.isAvailable == true

@@ -49,7 +49,7 @@ class ShopAboutSection extends StatelessWidget {
                   TextSpan(
                     text: ' ${'readMore'.tr}',
                     style: Get.theme.textTheme.bodyMedium?.copyWith(
-                          color: AppColors.secondary,
+                          color: AppColors.primary,
                           fontWeight: FontWeight.w700,
                         ),
                   ),

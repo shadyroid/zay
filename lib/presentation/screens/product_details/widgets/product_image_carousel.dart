@@ -80,7 +80,7 @@ class ProductImageCarousel extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 3),
                     decoration: BoxDecoration(
                       color: active
-                          ? AppColors.secondary
+                          ? AppColors.primary
                           : AppColors.border,
                       shape: BoxShape.circle,
                     ),

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract final class AppColors {
-  static const Color primary = Color(0xFF643D32);
-  static const Color secondary = Color(0xFF8B3E14);
+  static const Color primary = Color(0xFF001264);
 
   static const Color textPrimary = Color(0xFF1A1A1A);
   static const Color textSecondary = Color(0xFF6B6B6B);
@@ -18,12 +17,12 @@ abstract final class AppColors {
   static const LinearGradient backgroundGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [primary, secondary],
+    colors: [primary, primary],
   );
 
   static const LinearGradient buttonGradient = LinearGradient(
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
-    colors: [secondary, primary],
+    colors: [primary, primary],
   );
 }

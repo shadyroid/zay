@@ -40,7 +40,7 @@ class CartBottomBar extends StatelessWidget {
                   TextSpan(
                     text: '£${total.toStringAsFixed(0)}',
                     style: Get.theme.textTheme.titleLarge?.copyWith(
-                          color: AppColors.secondary,
+                          color: AppColors.primary,
                           fontWeight: FontWeight.w700,
                         ),
                   ),
@@ -54,10 +54,10 @@ class CartBottomBar extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: isLoading ? null : onPayNow,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondary,
+                  backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
                   disabledBackgroundColor:
-                      AppColors.secondary.withValues(alpha: 0.6),
+                      AppColors.primary.withValues(alpha: 0.6),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(28),

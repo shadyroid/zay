@@ -53,7 +53,7 @@ class ProductDetailsHeader extends StatelessWidget {
                       TextSpan(
                         text: '£${price?.toStringAsFixed(2)}',
                         style: Get.theme.textTheme.titleLarge?.copyWith(
-                              color: AppColors.secondary,
+                              color: AppColors.primary,
                               fontWeight: FontWeight.w700,
                             ),
                       ),

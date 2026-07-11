@@ -98,7 +98,7 @@ class _OutlinedActionButton extends StatelessWidget {
                 width: 20,
                 height: 20,
                 colorFilter: const ColorFilter.mode(
-                  AppColors.secondary,
+                  AppColors.primary,
                   BlendMode.srcIn,
                 ),
               ),
@@ -109,7 +109,7 @@ class _OutlinedActionButton extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Get.theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.secondary,
+                        color: AppColors.primary,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -136,7 +136,7 @@ class _FilledActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.secondary,
+      color: AppColors.primary,
       borderRadius: BorderRadius.circular(28),
       child: InkWell(
         onTap: onTap,

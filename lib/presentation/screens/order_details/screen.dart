@@ -21,7 +21,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
       body: Obx(() {
         if (controller.isLoading.value && controller.order.value == null) {
           return const Center(
-            child: AppProgressIndicator(color: AppColors.secondary),
+            child: AppProgressIndicator(color: AppColors.primary),
           );
         }
 

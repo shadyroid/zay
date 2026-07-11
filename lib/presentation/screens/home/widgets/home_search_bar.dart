@@ -84,7 +84,7 @@ class HomeSearchBar extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Material(
-            color: AppColors.secondary,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(14),
             child: InkWell(
               onTap: onFilterTap,

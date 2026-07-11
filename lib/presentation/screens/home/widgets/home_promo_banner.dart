@@ -81,7 +81,7 @@ class _PromoTile extends StatelessWidget {
               width: 24,
               height: 24,
               colorFilter: const ColorFilter.mode(
-                AppColors.secondary,
+                AppColors.primary,
                 BlendMode.srcIn,
               ),
             ),

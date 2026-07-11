@@ -55,7 +55,7 @@ class MapLocationBottomCard extends StatelessWidget {
                       ? const Padding(
                           padding: EdgeInsets.symmetric(vertical: 8),
                           child: AppProgressIndicator(
-                            color: AppColors.secondary,
+                            color: AppColors.primary,
                           ),
                         )
                       : Column(
@@ -83,7 +83,7 @@ class MapLocationBottomCard extends StatelessWidget {
             const SizedBox(height: 20),
             AppButton(
               text: 'pickLocation'.tr,
-              backgroundColor: AppColors.secondary,
+              backgroundColor: AppColors.primary,
               isLoading: isLoading,
               onPressed: isLoading ? null : onPickLocation,
             ),

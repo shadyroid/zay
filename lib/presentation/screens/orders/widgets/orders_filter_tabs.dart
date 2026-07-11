@@ -52,7 +52,7 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isSelected ? AppColors.secondary : AppColors.screenBackground,
+      color: isSelected ? AppColors.primary : AppColors.screenBackground,
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         onTap: onTap,

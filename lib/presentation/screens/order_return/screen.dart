@@ -41,7 +41,7 @@ class OrderReturnScreen extends GetView<OrderReturnController> {
                           padding: EdgeInsets.symmetric(vertical: 24),
                           child: Center(
                             child: AppProgressIndicator(
-                              color: AppColors.secondary,
+                              color: AppColors.primary,
                             ),
                           ),
                         );
@@ -86,7 +86,7 @@ class OrderReturnScreen extends GetView<OrderReturnController> {
               child: Obx(
                 () => AppButton(
                   text: 'returnConfirmation'.tr,
-                  backgroundColor: AppColors.secondary,
+                  backgroundColor: AppColors.primary,
                   isLoading: controller.isLoading.value,
                   onPressed: controller.requestOrderReturn,
                 ),
@@ -150,7 +150,7 @@ class _AdditionalNotesSection extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.secondary),
+              borderSide: const BorderSide(color: AppColors.primary),
             ),
           ),
         ),

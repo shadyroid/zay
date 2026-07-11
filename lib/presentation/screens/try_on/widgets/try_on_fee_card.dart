@@ -25,7 +25,7 @@ class TryOnFeeCard extends StatelessWidget {
             children: [
               Container(
                 width: _accentWidth,
-                color: AppColors.secondary,
+                color: AppColors.primary,
               ),
               Expanded(
                 child: Padding(

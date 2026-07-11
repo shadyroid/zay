@@ -8,7 +8,7 @@ abstract final class AppTheme {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       primary: AppColors.primary,
-      secondary: AppColors.secondary,
+      secondary: AppColors.primary,
     );
     final base = ThemeData(
       useMaterial3: true,
@@ -30,7 +30,7 @@ abstract final class AppTheme {
         ),
       ),
       navigationBarTheme: base.navigationBarTheme.copyWith(
-        indicatorColor: AppColors.secondary.withValues(alpha: 0.25),
+        indicatorColor: AppColors.primary.withValues(alpha: 0.25),
         labelTextStyle: WidgetStatePropertyAll(
           GoogleFonts.cairo(fontSize: 12),
         ),

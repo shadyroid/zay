@@ -22,7 +22,7 @@ class OrderTrackScreen extends GetView<OrderTrackController> {
             controller.steps.isEmpty &&
             controller.order.value == null) {
           return const Center(
-            child: AppProgressIndicator(color: AppColors.secondary),
+            child: AppProgressIndicator(color: AppColors.primary),
           );
         }
 
