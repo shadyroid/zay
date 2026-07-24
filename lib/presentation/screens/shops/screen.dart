@@ -1,5 +1,6 @@
 import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/presentation/screens/shops/controller.dart';
@@ -31,7 +32,19 @@ class ShopsScreen extends GetView<ShopsController> {
               ),
             ),
             actions: [
-              AppBarSearchButton(searchActiveButtonColor: Colors.white),
+              IconButton(
+                onPressed: () =>
+                    AppBarWithSearchSwitch.of(context)?.triggerSearch(),
+                icon: SvgPicture.asset(
+                  'assets/icons/ic_search.svg',
+                  width: 22,
+                  height: 22,
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.textPrimary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
             ],
           );
         },

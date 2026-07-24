@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/presentation/widgets/profile_avatar.dart';
 
@@ -8,10 +9,14 @@ class HomeHeader extends StatelessWidget {
     super.key,
     required this.userName,
     required this.imagePath,
+    required this.onSearchTap,
+    required this.onNotificationsTap,
   });
 
   final String userName;
   final String? imagePath;
+  final VoidCallback onSearchTap;
+  final VoidCallback onNotificationsTap;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,27 @@ class HomeHeader extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          IconButton(
+            onPressed: onSearchTap,
+            icon: SvgPicture.asset(
+              'assets/icons/ic_search.svg',
+              width: 22,
+              height: 22,
+              colorFilter: const ColorFilter.mode(
+                AppColors.textPrimary,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: onNotificationsTap,
+            icon: Badge(
+              backgroundColor: Colors.red,
+              child: SvgPicture.asset(
+                'assets/icons/ic_notifications.svg',
+              ),
             ),
           ),
         ],

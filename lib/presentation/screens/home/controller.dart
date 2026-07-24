@@ -15,7 +15,6 @@ import 'package:zay/domain/models/beans/shop_bean.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
-import 'package:zay/presentation/bottom_sheets/filter/filter_bottom_sheet.dart';
 
 class HomeController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -24,6 +23,8 @@ class HomeController extends BaseController {
   final AdsUseCase _adsUseCase = Get.put(AdsUseCase());
 
   final searchController = TextEditingController();
+  final searchFocusNode = FocusNode();
+  final isSearchExpanded = false.obs;
   final userName = ''.obs;
   final profileImagePath = RxnString();
   final ads = <AdBean>[].obs;
@@ -45,6 +46,7 @@ class HomeController extends BaseController {
   @override
   void onClose() {
     searchController.dispose();
+    searchFocusNode.dispose();
     super.onClose();
   }
 
@@ -139,10 +141,22 @@ class HomeController extends BaseController {
     Get.toNamed(Routes.products,arguments: {'image':file});
   }
 
-  Future<void> onFilterTap() async {
-    final result = await FilterBottomSheet.show();
-    if (result == null) return;
-    Get.toNamed(Routes.products, arguments: result);
+  void onSearchToggle() {
+    isSearchExpanded.toggle();
+    if (isSearchExpanded.value) {
+      Future.delayed(const Duration(milliseconds: 200), () {
+        if (isSearchExpanded.value) {
+          searchFocusNode.requestFocus();
+        }
+      });
+    } else {
+      searchController.clear();
+      searchFocusNode.unfocus();
+    }
+  }
+
+  void onNotificationsTap() {
+    Get.rawSnackbar(message: 'notificationsComingSoon'.tr);
   }
 
   void onCategoryTap(CategoryBean category) {

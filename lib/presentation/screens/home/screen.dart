@@ -35,13 +35,22 @@ class HomeScreen extends GetView<HomeController> {
               HomeHeader(
                 userName: controller.userName.value,
                 imagePath: controller.profileImagePath.value,
+                onSearchTap: controller.onSearchToggle,
+                onNotificationsTap: controller.onNotificationsTap,
               ),
-              HomeSearchBar(
-                controller: controller.searchController,
-                onSearchSubmit: controller.onSearchSubmit,
-                onSearchIconTap: controller.onSearchIconTap,
-                onCameraTap: controller.onCameraTap,
-                onFilterTap: controller.onFilterTap,
+              AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+                alignment: Alignment.topCenter,
+                child: controller.isSearchExpanded.value
+                    ? HomeSearchBar(
+                        controller: controller.searchController,
+                        focusNode: controller.searchFocusNode,
+                        onSearchSubmit: controller.onSearchSubmit,
+                        onSearchIconTap: controller.onSearchIconTap,
+                        onCameraTap: controller.onCameraTap,
+                      )
+                    : const SizedBox(width: double.infinity),
               ),
               const SizedBox(height: 16),
               HorizontalListView.builder(
@@ -72,6 +81,7 @@ class HomeScreen extends GetView<HomeController> {
                   final product = controller.recommendedProducts[index];
                   return SizedBox(
                     width: 150,
+                    height: (150 / 0.78) + 78,
                     child: ProductItem(
                       product: product,
                       isFavorite: product.isFavorite,
@@ -96,6 +106,7 @@ class HomeScreen extends GetView<HomeController> {
                     final product = controller.newArrivalProducts[index];
                     return SizedBox(
                       width: 150,
+                      height: (150 / 0.78) + 78,
                       child: ProductItem(
                         product: product,
                         isFavorite: product.isFavorite,
