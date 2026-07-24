@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/app/utils/constants.dart';
 import 'package:zay/presentation/bottom_sheets/filter/filter_bottom_sheet_controller.dart';
@@ -9,6 +8,7 @@ import 'package:zay/presentation/bottom_sheets/filter/widgets/filter_size_chip.d
 import 'package:zay/presentation/bottom_sheets/filter/widgets/filter_store_chip.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/category_item.dart';
+import 'package:zay/presentation/widgets/horizontal_list_view.dart' show HorizontalListView;
 
 class FilterBottomSheet extends GetView<FilterBottomSheetController> {
   const FilterBottomSheet({super.key});
@@ -90,55 +90,43 @@ class FilterBottomSheet extends GetView<FilterBottomSheetController> {
                   padding: const EdgeInsets.only(bottom: 16),
                   children: [
                     FilterSectionTitle(title: 'categories'.tr),
-                    SizedBox(
-                      height: 48,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        itemCount: controller.categories.length,
-                        itemBuilder: (context, index) {
-                          final category = controller.categories[index];
-                          return CategoryItem(
-                            category: category,
-                            isSelected: selectedCategoryId == category.id,
-                            onTap: () => controller.selectCategory(category),
-                          );
-                        },
-                      ),
+                    HorizontalListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      itemCount: controller.categories.length,
+                      itemBuilder: (context, index) {
+                        final category = controller.categories[index];
+                        return CategoryItem(
+                          category: category,
+                          isSelected: selectedCategoryId == category.id,
+                          onTap: () => controller.selectCategory(category),
+                        );
+                      },
                     ),
                     FilterSectionTitle(title: 'stores'.tr),
-                    SizedBox(
-                      height: 64,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        itemCount: controller.shops.length,
-                        itemBuilder: (context, index) {
-                          final shop = controller.shops[index];
-                          return FilterStoreChip(
-                            shop: shop,
-                            isSelected: selectedShopId == shop.id,
-                            onTap: () => controller.selectShop(shop),
-                          );
-                        },
-                      ),
+                    HorizontalListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      itemCount: controller.shops.length,
+                      itemBuilder: (context, index) {
+                        final shop = controller.shops[index];
+                        return FilterStoreChip(
+                          shop: shop,
+                          isSelected: selectedShopId == shop.id,
+                          onTap: () => controller.selectShop(shop),
+                        );
+                      },
                     ),
                     FilterSectionTitle(title: 'size'.tr),
-                    SizedBox(
-                      height: 48,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        itemCount: controller.sizes.length,
-                        itemBuilder: (context, index) {
-                          final size = controller.sizes[index];
-                          return FilterSizeChip(
-                            size: size,
-                            isSelected: selectedSizeId == size.id,
-                            onTap: () => controller.selectSize(size),
-                          );
-                        },
-                      ),
+                    HorizontalListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      itemCount: controller.sizes.length,
+                      itemBuilder: (context, index) {
+                        final size = controller.sizes[index];
+                        return FilterSizeChip(
+                          size: size,
+                          isSelected: selectedSizeId == size.id,
+                          onTap: () => controller.selectSize(size),
+                        );
+                      },
                     ),
                     FilterSectionTitle(title: 'price'.tr),
                     Padding(

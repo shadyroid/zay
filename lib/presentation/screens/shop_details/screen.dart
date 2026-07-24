@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
 import 'package:zay/presentation/screens/shop_details/controller.dart';
@@ -10,6 +9,7 @@ import 'package:zay/presentation/screens/shop_details/widgets/shop_banner_header
 import 'package:zay/presentation/screens/shop_details/widgets/shop_details_app_bar.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/category_item.dart';
+import 'package:zay/presentation/widgets/horizontal_list_view.dart';
 import 'package:zay/presentation/widgets/product_item.dart';
 
 class ShopDetailsScreen extends GetView<ShopDetailsController> {
@@ -115,22 +115,18 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
             ),
 
             SliverToBoxAdapter(
-              child: SizedBox(
-                height: 48,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: controller.shop.value?.categories?.length,
-                  itemBuilder: (context, index) {
-                    final category = controller.shop.value!.categories![index];
-                    return CategoryItem(
-                      category: category,
-                      isSelected:
-                          controller.selectedCategoryId.value == category.id,
-                      onTap: () => controller.selectCategory(category),
-                    );
-                  },
-                ),
+              child: HorizontalListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: controller.shop.value?.categories?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final category = controller.shop.value!.categories![index];
+                  return CategoryItem(
+                    category: category,
+                    isSelected:
+                        controller.selectedCategoryId.value == category.id,
+                    onTap: () => controller.selectCategory(category),
+                  );
+                },
               ),
             ),
           ],

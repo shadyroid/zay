@@ -312,6 +312,7 @@ class AppTranslations extends Translations {
     'serverErrorTitle': 'Server Error',
     'serverErrorSubtitle': 'Something went wrong on our end. Please try again',
     'outOfStock': 'OUT OF STOCK',
+    'all_items': 'All Items',
   };
 
   static const _ar = {
@@ -614,5 +615,6 @@ class AppTranslations extends Translations {
     'serverErrorTitle': 'خطأ في الخادم',
     'serverErrorSubtitle': 'حدث خطأ من جانبنا. يرجى المحاولة مرة أخرى',
     'outOfStock': 'إنتهى من المخزن',
+    'all_items': 'الكل',
   };
 }

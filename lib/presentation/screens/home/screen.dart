@@ -9,6 +9,7 @@ import 'package:zay/presentation/screens/home/widgets/home_section_header.dart';
 import 'package:zay/presentation/screens/home/widgets/shop_item.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/category_item.dart';
+import 'package:zay/presentation/widgets/horizontal_list_view.dart';
 import 'package:zay/presentation/widgets/main_bottom_nav.dart';
 import 'package:zay/presentation/widgets/product_item.dart';
 
@@ -43,16 +44,17 @@ class HomeScreen extends GetView<HomeController> {
                 onFilterTap: controller.onFilterTap,
               ),
               const SizedBox(height: 16),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  for(var category in controller.categories)
-                    CategoryItem(
-                      category: category,
-                      isSelected: selectedCategoryId == category.id,
-                      onTap: () => controller.onCategoryTap(category),
-                    )
-                ],),
+              HorizontalListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: controller.categories.length,
+                itemBuilder: (context, index) {
+                  final category = controller.categories[index];
+                  return CategoryItem(
+                    category: category,
+                    isSelected: selectedCategoryId == category.id,
+                    onTap: () => controller.onCategoryTap(category),
+                  );
+                },
               ),
               HomeAdsCarousel(
                 ads: controller.ads,
@@ -63,14 +65,35 @@ class HomeScreen extends GetView<HomeController> {
                 title: 'recommendedForYou'.tr,
                 onSeeAll: controller.onSeeAllRecommended,
               ),
-              SizedBox(
-                height: (150 / 0.78) + 78,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
+              HorizontalListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: controller.recommendedProducts.length,
+                itemBuilder: (context, index) {
+                  final product = controller.recommendedProducts[index];
+                  return SizedBox(
+                    width: 150,
+                    child: ProductItem(
+                      product: product,
+                      isFavorite: product.isFavorite,
+                      onTap: () =>
+                          controller.navigateToProductDetails(product),
+                      onFavoriteTap: () => controller.toggleFavorite(product),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(width: 12),
+              ),
+              const HomePromoBanner(),
+              if (controller.newArrivalProducts.isNotEmpty) ...[
+                HomeSectionHeader(
+                  title: 'newArrival'.tr,
+                  onSeeAll: controller.onSeeAllNewArrival,
+                ),
+                HorizontalListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: controller.recommendedProducts.length,
+                  itemCount: controller.newArrivalProducts.length,
                   itemBuilder: (context, index) {
-                    final product = controller.recommendedProducts[index];
+                    final product = controller.newArrivalProducts[index];
                     return SizedBox(
                       width: 150,
                       child: ProductItem(
@@ -78,64 +101,29 @@ class HomeScreen extends GetView<HomeController> {
                         isFavorite: product.isFavorite,
                         onTap: () =>
                             controller.navigateToProductDetails(product),
-                        onFavoriteTap: () => controller.toggleFavorite(product),
+                        onFavoriteTap: () =>
+                            controller.toggleFavorite(product),
                       ),
                     );
                   },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      SizedBox(width: 12),
-                ),
-              ),
-              const HomePromoBanner(),
-
-              if (controller.newArrivalProducts.isNotEmpty) ...[
-                HomeSectionHeader(
-                  title: 'newArrival'.tr,
-                  onSeeAll: controller.onSeeAllNewArrival,
-                ),
-                SizedBox(
-                  height: (150 / 0.78) + 78,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: controller.newArrivalProducts.length,
-                    itemBuilder: (context, index) {
-                      final product = controller.newArrivalProducts[index];
-                      return SizedBox(
-                        width: 150,
-                        child: ProductItem(
-                          product: product,
-                          isFavorite: product.isFavorite,
-                          onTap: () =>
-                              controller.navigateToProductDetails(product),
-                          onFavoriteTap: () =>
-                              controller.toggleFavorite(product),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        SizedBox(width: 12),
-                  ),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 12),
                 ),
               ],
               HomeSectionHeader(
                 title: 'topStores'.tr,
                 onSeeAll: controller.onSeeAllStores,
               ),
-              SizedBox(
-                height: 56,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: controller.topStores.length,
-                  itemBuilder: (context, index) {
-                    final shop = controller.topStores[index];
-                    return ShopItem(
-                      shop: shop,
-                      onTap: () => controller.onStoreTap(shop),
-                    );
-                  },
-                ),
+              HorizontalListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: controller.topStores.length,
+                itemBuilder: (context, index) {
+                  final shop = controller.topStores[index];
+                  return ShopItem(
+                    shop: shop,
+                    onTap: () => controller.onStoreTap(shop),
+                  );
+                },
               ),
             ],
           );

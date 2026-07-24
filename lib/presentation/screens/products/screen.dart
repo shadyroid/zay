@@ -9,6 +9,7 @@ import 'package:zay/presentation/screens/products/widgets/products_action_bar.da
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/category_item.dart';
 import 'package:zay/presentation/widgets/empty_state.dart';
+import 'package:zay/presentation/widgets/horizontal_list_view.dart';
 import 'package:zay/presentation/widgets/product_item.dart';
 
 class ProductsScreen extends GetView<ProductsController> {
@@ -48,25 +49,22 @@ class ProductsScreen extends GetView<ProductsController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(
-                height: 48,
-                child: Obx(
-                  () => ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: controller.categories.length,
-                    itemBuilder: (context, index) {
-                      final category = controller.categories[index];
-                      return CategoryItem(
-                        category: category,
-                        isSelected:
-                            controller.selectedCategoryId.value == category.id,
-                        onTap: () => controller.selectCategory(category),
-                      );
-                    },
-                  ),
-                ),
-              ),
+              Obx(() {
+                final selectedCategoryId = controller.selectedCategoryId.value;
+                final categories = controller.categories.toList();
+                return HorizontalListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    final category = categories[index];
+                    return CategoryItem(
+                      category: category,
+                      isSelected: selectedCategoryId == category.id,
+                      onTap: () => controller.selectCategory(category),
+                    );
+                  },
+                );
+              }),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                 child: Obx(

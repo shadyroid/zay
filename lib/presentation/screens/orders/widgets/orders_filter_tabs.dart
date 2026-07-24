@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/enums/order_list_filter.dart';
+import 'package:zay/presentation/widgets/horizontal_list_view.dart';
 
 class OrdersFilterTabs extends StatelessWidget {
   const OrdersFilterTabs({
@@ -16,24 +16,20 @@ class OrdersFilterTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        itemCount: OrderListFilter.values.length,
-        separatorBuilder: (context, index) => const SizedBox(width: 8),
-        itemBuilder: (context, index) {
-          final filter = OrderListFilter.values[index];
-          final isSelected = filter == selectedFilter;
+    return HorizontalListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      itemCount: OrderListFilter.values.length,
+      separatorBuilder: (context, index) => const SizedBox(width: 8),
+      itemBuilder: (context, index) {
+        final filter = OrderListFilter.values[index];
+        final isSelected = filter == selectedFilter;
 
-          return _FilterChip(
-            label: filter.translationKey.tr,
-            isSelected: isSelected,
-            onTap: () => onFilterSelected(filter),
-          );
-        },
-      ),
+        return _FilterChip(
+          label: filter.translationKey.tr,
+          isSelected: isSelected,
+          onTap: () => onFilterSelected(filter),
+        );
+      },
     );
   }
 }

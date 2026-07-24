@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
-
+import 'package:zay/presentation/widgets/horizontal_list_view.dart';
 import 'package:zay/presentation/widgets/product_item.dart';
 
 class SimilarProductsSection extends StatelessWidget {
@@ -34,27 +33,22 @@ class SimilarProductsSection extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: (150 / 0.78) + 78,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                return SizedBox(
-                  width: 150,
-                  child: ProductItem(
-                    product: product,
-                    isFavorite: product.isFavorite,
-                    onTap: () => onProductTap(product),
-                    onFavoriteTap: () => onFavoriteTap(product),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) => SizedBox(width: 12),
-
-            ),
+          HorizontalListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return SizedBox(
+                width: 150,
+                child: ProductItem(
+                  product: product,
+                  isFavorite: product.isFavorite,
+                  onTap: () => onProductTap(product),
+                  onFavoriteTap: () => onFavoriteTap(product),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(width: 12),
           ),
         ],
       );

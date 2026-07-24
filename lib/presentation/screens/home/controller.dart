@@ -77,7 +77,10 @@ class HomeController extends BaseController {
   Future<void> _requestCategories() async {
     final response = await _productsUseCase.requestCategories();
     if (!isSuccess(response)) return;
-    categories.assignAll(response.data ?? []);
+    if(response.data?.isNotEmpty == true) {
+      categories.add(CategoryBean.fromJson({"name": "all_items".tr}));
+      categories.addAll(response.data ?? []);
+    }
   }
 
   Future<void> _requestRecommended() async {
