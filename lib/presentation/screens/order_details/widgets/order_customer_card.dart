@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/order_bean.dart';
 import 'package:zay/presentation/screens/order_details/widgets/order_details_section_card.dart';
@@ -82,35 +81,6 @@ class OrderCustomerCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _CustomerAvatar extends StatelessWidget {
-  const _CustomerAvatar({this.imageUrl});
-
-  final String? imageUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    final url = imageUrl;
-    return CircleAvatar(
-      radius: 28,
-      backgroundColor: AppColors.screenBackground,
-      backgroundImage: url != null && url.isNotEmpty
-          ? NetworkImage(url)
-          : null,
-      child: url == null || url.isEmpty
-          ? SvgPicture.asset(
-              'assets/icons/ic_person.svg',
-              width: 28,
-              height: 28,
-              colorFilter: const ColorFilter.mode(
-                AppColors.hint,
-                BlendMode.srcIn,
-              ),
-            )
-          : null,
     );
   }
 }

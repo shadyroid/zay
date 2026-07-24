@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/app/utils/app_languages.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class LanguageItem extends StatelessWidget {
   const LanguageItem({
@@ -25,17 +25,16 @@ class LanguageItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         child: Row(
           children: [
-            ClipOval(
-              child: Image.network(
-                language.flagUrl,
+            AppImage.network(
+              language.flagUrl,
+              width: 32,
+              height: 32,
+              fit: BoxFit.cover,
+              shape: AppImageShape.circle,
+              errorWidget: Container(
                 width: 32,
                 height: 32,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  width: 32,
-                  height: 32,
-                  color: AppColors.border,
-                ),
+                color: AppColors.border,
               ),
             ),
             const SizedBox(width: 14),

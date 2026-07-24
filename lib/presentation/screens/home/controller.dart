@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/use_cases/ads_use_case.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/use_cases/shops_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
 import 'package:zay/app/utils/image_picker_helper.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
+import 'package:zay/domain/models/beans/ad_bean.dart';
 import 'package:zay/domain/models/beans/category_bean.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
@@ -20,10 +21,13 @@ class HomeController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
   final ShopsUseCase _shopsUseCase = Get.put(ShopsUseCase());
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());
+  final AdsUseCase _adsUseCase = Get.put(AdsUseCase());
 
   final searchController = TextEditingController();
   final userName = ''.obs;
   final profileImagePath = RxnString();
+  final ads = <AdBean>[].obs;
+  final currentAdIndex = 0.obs;
   final categories = <CategoryBean>[].obs;
   final recommendedProducts = <ProductBean>[].obs;
   final newArrivalProducts = <ProductBean>[].obs;
@@ -48,6 +52,7 @@ class HomeController extends BaseController {
     isLoading.value = true;
     await Future.wait([
       if (PrefsManager.isLoggedIn) _requestProfile(),
+      _requestAds(),
       _requestCategories(),
       _requestRecommended(),
       _requestNewArrivals(),
@@ -61,6 +66,12 @@ class HomeController extends BaseController {
     if (!isSuccess(response)) return;
     userName.value = response.data?.name ?? '';
     profileImagePath.value = response.data?.avatarUrl;
+  }
+
+  Future<void> _requestAds() async {
+    final response = await _adsUseCase.requestAds();
+    if (!isSuccess(response)) return;
+    ads.assignAll(response.data ?? []);
   }
 
   Future<void> _requestCategories() async {
@@ -108,6 +119,8 @@ class HomeController extends BaseController {
           );
     if (!isSuccess(response)) return;
   }
+
+  void onAdPageChanged(int index) => currentAdIndex.value = index;
 
   void onSearchSubmit() {
     final query = searchController.text.trim();

@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
@@ -19,11 +18,12 @@ class ProductsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
 
   final categories = <CategoryBean>[].obs;
-  final products = <ProductBean>[].obs;
   final selectedCategoryId = RxnInt();
   final selectedSort = Rxn<ProductSortOption>();
   final searchQuery = RxnString();
   final totalCount = 0.obs;
+
+  late final PagingController<int, ProductBean> pagingController;
 
   int? shopId;
   int? sizeId;
@@ -33,7 +33,6 @@ class ProductsController extends BaseController {
 
   final isSearchMode = ValueNotifier<bool>(false);
   final searchText = ValueNotifier<String>('');
-
 
   @override
   void onInit() {
@@ -48,8 +47,27 @@ class ProductsController extends BaseController {
     }
     shopId = Get.arguments?['shopId'];
     image = Get.arguments?['image'];
+    pagingController = PagingController<int, ProductBean>(
+      getNextPageKey: (state) {
+        if (state.lastPageIsEmpty) return null;
+        final lastPage = state.pages?.lastOrNull;
+        if (lastPage != null &&
+            lastPage.length < ProductsRequest.pageSizeDefault) {
+          return null;
+        }
+        return state.nextIntPageKey;
+      },
+      fetchPage: requestProducts,
+    );
     requestCategories();
-    requestProducts();
+  }
+
+  @override
+  void onClose() {
+    pagingController.dispose();
+    isSearchMode.dispose();
+    searchText.dispose();
+    super.onClose();
   }
 
   Future<void> requestCategories() async {
@@ -58,10 +76,11 @@ class ProductsController extends BaseController {
     categories.assignAll(response.data ?? []);
   }
 
-  Future<void> requestProducts() async {
-    isLoading.value = true;
+  Future<List<ProductBean>> requestProducts(int pageKey) async {
     final response = await _productsUseCase.requestProducts(
       ProductsRequest(
+        page: pageKey,
+        pageSize: ProductsRequest.pageSizeDefault,
         categoryId: selectedCategoryId.value,
         shopId: shopId,
         sizeId: sizeId,
@@ -72,10 +91,13 @@ class ProductsController extends BaseController {
         image: image,
       ),
     );
-    isLoading.value = false;
-    if (!isSuccess(response)) return;
-    products.assignAll(response.data ?? []);
-    totalCount.value = response.totalCount ?? products.length;
+    if (!isSuccess(response)) {
+      throw Exception(response.message ?? 'warning'.tr);
+    }
+    if (pageKey == 1) {
+      totalCount.value = response.totalCount ?? response.data?.length ?? 0;
+    }
+    return response.data ?? [];
   }
 
   void selectCategory(CategoryBean category) {
@@ -84,7 +106,7 @@ class ProductsController extends BaseController {
     } else {
       selectedCategoryId.value = category.id;
     }
-    requestProducts();
+    pagingController.refresh();
   }
 
   Future<void> onSortTap() async {
@@ -93,7 +115,7 @@ class ProductsController extends BaseController {
     );
     if (option == null || option == selectedSort.value) return;
     selectedSort.value = option;
-    requestProducts();
+    pagingController.refresh();
   }
 
   Future<void> toggleFavorite(ProductBean product) async {
@@ -113,8 +135,13 @@ class ProductsController extends BaseController {
     Get.toNamed(Routes.productDetails, arguments: {'productId': product.id});
   }
 
-  void onSearch() {
-    Get.rawSnackbar(message: 'searchComingSoon'.tr);
+  void onSearchSubmitted(String text) {
+    searchQuery.value = text;
+    pagingController.refresh();
+  }
+
+  Future<void> onPullToRefresh() async {
+    pagingController.refresh();
   }
 
   Future<void> onFilters() async {
@@ -131,6 +158,6 @@ class ProductsController extends BaseController {
     sizeId = result['sizeId'];
     priceMin = result['priceMin'];
     priceMax = result['priceMax'];
-    requestProducts();
+    pagingController.refresh();
   }
 }

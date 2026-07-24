@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class ShopBannerHeader extends StatelessWidget {
   const ShopBannerHeader({super.key, required this.shop});
@@ -19,11 +19,10 @@ class ShopBannerHeader extends StatelessWidget {
         children: [
           Positioned.fill(
             child: shop.banner != null
-                ? Image.network(
+                ? AppImage.network(
                     shop.banner!,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const ColoredBox(color: Color(0xFFE8E8E8)),
+                    errorWidget: const ColoredBox(color: Color(0xFFE8E8E8)),
                   )
                 : const ColoredBox(color: Color(0xFFE8E8E8)),
           ),
@@ -45,11 +44,10 @@ class ShopBannerHeader extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(11),
               child: shop.logo != null
-                  ? Image.network(
+                  ? AppImage.network(
                       shop.logo!,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          _logoPlaceholder(),
+                      errorWidget: _logoPlaceholder(),
                     )
                   : _logoPlaceholder(),
             ),

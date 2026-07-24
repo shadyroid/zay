@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/order_bean.dart';
 import 'package:zay/domain/models/beans/order_product_bean.dart';
 import 'package:zay/presentation/screens/order_details/widgets/order_details_section_card.dart';
 import 'package:zay/presentation/screens/orders/widgets/order_status_badge.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class OrderItemsCard extends StatelessWidget {
   const OrderItemsCard({super.key, required this.order});
@@ -100,12 +100,12 @@ class _ProductImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final url = imageUrl;
     if (url != null && url.isNotEmpty) {
-      return Image.network(
+      return AppImage.network(
         url,
         width: size,
         height: size,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => _placeholder(),
+        errorWidget: _placeholder(),
       );
     }
     return _placeholder();

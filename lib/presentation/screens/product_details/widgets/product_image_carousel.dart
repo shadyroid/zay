@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class ProductImageCarousel extends StatelessWidget {
   const ProductImageCarousel({
@@ -31,11 +31,11 @@ class ProductImageCarousel extends StatelessWidget {
             onPageChanged: onPageChanged,
             itemBuilder: (context, index) {
               if (images.isEmpty) return _placeholder();
-              return Image.network(
+              return AppImage.network(
                 images[index],
                 fit: BoxFit.cover,
                 width: double.infinity,
-                errorBuilder: (_, __, ___) => _placeholder(),
+                errorWidget: _placeholder(),
               );
             },
           ),

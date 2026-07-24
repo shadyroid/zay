@@ -1,10 +1,10 @@
-import 'dart:io';
-
 import 'package:zay/app/utils/constants.dart';
 import 'package:zay/app/utils/product_sort_option.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductsRequest {
+  static const pageSizeDefault = 20;
+
   const ProductsRequest({
     this.page,
     this.pageSize,

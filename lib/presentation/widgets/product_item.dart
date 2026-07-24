@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({
@@ -215,12 +215,12 @@ class _ProductImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageUrl != null && imageUrl!.isNotEmpty) {
-      return Image.network(
+      return AppImage.network(
         imageUrl!,
         width: double.infinity,
         height: double.infinity,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => _placeholder(),
+        errorWidget: _placeholder(),
       );
     }
     return _placeholder();

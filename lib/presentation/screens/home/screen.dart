@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zay/presentation/screens/home/controller.dart';
+import 'package:zay/presentation/screens/home/widgets/home_ads_carousel.dart';
 import 'package:zay/presentation/screens/home/widgets/home_header.dart';
 import 'package:zay/presentation/screens/home/widgets/home_promo_banner.dart';
 import 'package:zay/presentation/screens/home/widgets/home_search_bar.dart';
@@ -53,7 +54,11 @@ class HomeScreen extends GetView<HomeController> {
                     )
                 ],),
               ),
-
+              HomeAdsCarousel(
+                ads: controller.ads,
+                currentIndex: controller.currentAdIndex.value,
+                onPageChanged: controller.onAdPageChanged,
+              ),
               HomeSectionHeader(
                 title: 'recommendedForYou'.tr,
                 onSeeAll: controller.onSeeAllRecommended,

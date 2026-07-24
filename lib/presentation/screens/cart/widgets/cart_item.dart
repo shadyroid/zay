@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/cart_item_bean.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({
@@ -38,11 +38,12 @@ class CartItem extends StatelessWidget {
               width: 72,
               height: 72,
               child: item.imageUrl != null && item.imageUrl!.isNotEmpty
-                  ? Image.network(
+                  ? AppImage.network(
                       item.imageUrl!,
+                      width: 72,
+                      height: 72,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          _placeholder(),
+                      errorWidget: _placeholder(),
                     )
                   : _placeholder(),
             ),

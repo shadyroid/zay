@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({
@@ -16,12 +14,10 @@ class ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipOval(
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: _buildImage(),
-      ),
+    return SizedBox(
+      width: size,
+      height: size,
+      child: _buildImage(),
     );
   }
 
@@ -32,17 +28,23 @@ class ProfileAvatar extends StatelessWidget {
     }
 
     if (path.startsWith('http')) {
-      return Image.network(
+      return AppImage.network(
         path,
+        width: size,
+        height: size,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => _placeholder(),
+        shape: AppImageShape.circle,
+        errorWidget: _placeholder(),
       );
     }
 
-    return Image.file(
-      File(path),
+    return AppImage.file(
+      path,
+      width: size,
+      height: size,
       fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) => _placeholder(),
+      shape: AppImageShape.circle,
+      errorWidget: _placeholder(),
     );
   }
 

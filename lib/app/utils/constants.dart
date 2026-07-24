@@ -14,6 +14,7 @@ class Constants {
   static const String resetPasswordPath = '/auth/reset-password';
   static const String signOutPath = '/auth/logout';
 
+  static const String adsPath = '/ads';
   static const String productsPath = '/products';
   static const String categoriesPath = '/categories';
   static const String sizesPath = '/sizes';

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
-import 'package:zay/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class ShopItem extends StatelessWidget {
   const ShopItem({
@@ -83,17 +83,12 @@ class _ShopIcon extends StatelessWidget {
       return Text(iconUrl, style: const TextStyle(fontSize: 16));
     }
 
-    return Image.network(
+    return AppImage.network(
       iconUrl,
       width: 18,
       height: 18,
-      // colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-      // placeholderBuilder: (context) => SizedBox(
-      //   width: 18,
-      //   height: 18,
-      //   child: AppProgressIndicator(radius: 8, color: color),
-      // ),
-      errorBuilder: (context, error, stackTrace) => SvgPicture.asset(
+      colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+      errorWidget: SvgPicture.asset(
         'assets/icons/ic_category_all.svg',
         width: 18,
         height: 18,

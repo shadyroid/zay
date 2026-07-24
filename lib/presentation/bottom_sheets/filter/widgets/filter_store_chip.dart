@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class FilterStoreChip extends StatelessWidget {
   const FilterStoreChip({
@@ -76,20 +76,14 @@ class _ShopLogo extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    if (url!.contains('.svg')) {
-      return Padding(
-        padding: const EdgeInsets.all(10),
-        child: SvgPicture.network(
-          url!,
-          fit: BoxFit.contain,
-        ),
-      );
-    }
-
-    return Image.network(
-      url!,
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+    final isSvg = AppImage.isSvg(url!);
+    return Padding(
+      padding: EdgeInsets.all(isSvg ? 10 : 0),
+      child: AppImage.network(
+        url!,
+        fit: isSvg ? BoxFit.contain : BoxFit.cover,
+        errorWidget: const SizedBox.shrink(),
+      ),
     );
   }
 }

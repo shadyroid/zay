@@ -1,12 +1,14 @@
 import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/presentation/screens/products/controller.dart';
 import 'package:zay/presentation/screens/products/widgets/products_action_bar.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/category_item.dart';
+import 'package:zay/presentation/widgets/empty_state.dart';
 import 'package:zay/presentation/widgets/product_item.dart';
 
 class ProductsScreen extends GetView<ProductsController> {
@@ -35,31 +37,21 @@ class ProductsScreen extends GetView<ProductsController> {
               ),
             ),
             actions: [
-              AppBarSearchButton(searchActiveButtonColor:Colors.white),
+              AppBarSearchButton(searchActiveButtonColor: Colors.white),
             ],
           );
         },
-
-        onSubmitted: (text) {
-          controller.searchQuery.value = text;
-          controller.requestProducts();
-        },
+        onSubmitted: controller.onSearchSubmitted,
       ),
-      body: Obx(() {
-        if (controller.isLoading.value && controller.products.isEmpty) {
-          return const Center(child: AppProgressIndicator());
-        }
-
-        final selectedCategoryId = controller.selectedCategoryId.value;
-
-        return Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  height: 48,
-                  child: ListView.builder(
+      body: Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 48,
+                child: Obx(
+                  () => ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: controller.categories.length,
@@ -67,15 +59,18 @@ class ProductsScreen extends GetView<ProductsController> {
                       final category = controller.categories[index];
                       return CategoryItem(
                         category: category,
-                        isSelected: selectedCategoryId == category.id,
+                        isSelected:
+                            controller.selectedCategoryId.value == category.id,
                         onTap: () => controller.selectCategory(category),
                       );
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                  child: Text(
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: Obx(
+                  () => Text(
                     '${controller.totalCount.value} ${'items'.tr}',
                     style: Get.theme.textTheme.titleMedium?.copyWith(
                       color: AppColors.textPrimary,
@@ -83,45 +78,63 @@ class ProductsScreen extends GetView<ProductsController> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: GridView.builder(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 12,
-                          crossAxisSpacing: 12,
-                          childAspectRatio: 0.72,
+              ),
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: controller.onPullToRefresh,
+                  child: PagingListener<int, ProductBean>(
+                    controller: controller.pagingController,
+                    builder: (context, state, fetchNextPage) =>
+                        PagedGridView<int, ProductBean>(
+                      state: state,
+                      fetchNextPage: fetchNextPage,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        childAspectRatio: 0.72,
+                      ),
+                      showNewPageProgressIndicatorAsGridChild: false,
+                      builderDelegate: PagedChildBuilderDelegate<ProductBean>(
+                        itemBuilder: (context, product, index) => ProductItem(
+                          product: product,
+                          isFavorite: product.isFavorite,
+                          onTap: () =>
+                              controller.navigateToProductDetails(product),
+                          onFavoriteTap: () async {
+                            await controller.toggleFavorite(product);
+                          },
                         ),
-                    itemCount: controller.products.length,
-                    itemBuilder: (context, index) {
-                      final product = controller.products[index];
-                      return ProductItem(
-                        product: product,
-                        isFavorite: product.isFavorite,
-                        onTap: () =>
-                            controller.navigateToProductDetails(product),
-                        onFavoriteTap: () async {
-                          await controller.toggleFavorite(product);
-                        },
-                      );
-                    },
+                        firstPageProgressIndicatorBuilder: (_) =>
+                            const Center(child: AppProgressIndicator()),
+                        newPageProgressIndicatorBuilder: (_) => const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          child: Center(child: AppProgressIndicator()),
+                        ),
+                        noItemsFoundIndicatorBuilder: (_) => EmptyState(
+                          message: 'noProducts'.tr,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 16,
-              child: ProductsActionBar(
-                onFilters: controller.onFilters,
-                onSort: controller.onSortTap,
               ),
+            ],
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 16,
+            child: ProductsActionBar(
+              onFilters: controller.onFilters,
+              onSort: controller.onSortTap,
             ),
-          ],
-        );
-      }),
+          ),
+        ],
+      ),
     );
   }
 }

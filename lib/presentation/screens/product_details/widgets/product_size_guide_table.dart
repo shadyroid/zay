@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/size_bean.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class ProductSizeGuideTable extends StatelessWidget {
   const ProductSizeGuideTable({
@@ -31,7 +32,7 @@ class ProductSizeGuideTable extends StatelessWidget {
             ),
           ),
           if (measurementsImage != null)
-            Image.network(
+            AppImage.network(
               measurementsImage!,
               width: double.infinity,
               fit: BoxFit.contain,

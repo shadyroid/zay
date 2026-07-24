@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class ShopItem extends StatelessWidget {
   const ShopItem({
@@ -96,20 +96,21 @@ class _ShopLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: SizedBox(
+    if (imageUrl != null && imageUrl!.isNotEmpty) {
+      return AppImage.network(
+        imageUrl!,
         width: 64,
         height: 64,
-        child: imageUrl != null && imageUrl!.isNotEmpty
-            ? Image.network(
-                imageUrl!,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    _ShopLogoPlaceholder(name: name),
-              )
-            : _ShopLogoPlaceholder(name: name),
-      ),
+        fit: BoxFit.cover,
+        shape: AppImageShape.rounded,
+        borderRadius: 12,
+        errorWidget: _ShopLogoPlaceholder(name: name),
+      );
+    }
+    return SizedBox(
+      width: 64,
+      height: 64,
+      child: _ShopLogoPlaceholder(name: name),
     );
   }
 }
