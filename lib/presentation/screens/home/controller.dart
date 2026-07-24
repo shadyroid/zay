@@ -167,7 +167,7 @@ class HomeController extends BaseController {
   }
 
   void onNotificationsTap() {
-    Get.rawSnackbar(message: 'notificationsComingSoon'.tr);
+    AppAuthGuard.toNamed(Routes.notifications);
   }
 
   void onCategoryTap(CategoryBean category) {

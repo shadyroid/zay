@@ -24,7 +24,7 @@ class SignInWelcomeHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'noAccount'.tr,
+              '${'noAccount'.tr} ',
               style: Get.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textSecondary,
                   ),

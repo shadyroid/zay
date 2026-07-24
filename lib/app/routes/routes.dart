@@ -8,6 +8,7 @@ import 'package:zay/app/bindings/favorite_binding.dart';
 import 'package:zay/app/bindings/forget_password_binding.dart';
 import 'package:zay/app/bindings/home_binding.dart';
 import 'package:zay/app/bindings/no_internet_binding.dart';
+import 'package:zay/app/bindings/notifications_binding.dart';
 import 'package:zay/app/bindings/order_details_binding.dart';
 import 'package:zay/app/bindings/map_binding.dart';
 import 'package:zay/app/bindings/order_return_binding.dart';
@@ -39,6 +40,7 @@ import 'package:zay/presentation/screens/favorite/screen.dart';
 import 'package:zay/presentation/screens/forget_password/screen.dart';
 import 'package:zay/presentation/screens/home/screen.dart';
 import 'package:zay/presentation/screens/no_internet/screen.dart';
+import 'package:zay/presentation/screens/notifications/screen.dart';
 import 'package:zay/presentation/screens/order_details/screen.dart';
 import 'package:zay/presentation/screens/map/screen.dart';
 import 'package:zay/presentation/screens/order_return/screen.dart';
@@ -92,6 +94,7 @@ class Routes {
   static const String orderReturn = '/orderReturn';
   static const String review = '/review';
   static const String reviews = '/reviews';
+  static const String notifications = '/notifications';
   static const String noInternet = '/noInternet';
   static const String serverError = '/serverError';
 
@@ -188,6 +191,11 @@ class Routes {
       name: reviews,
       page: () => const ReviewsScreen(),
       binding: ReviewsBinding(),
+    ),
+    GetPage(
+      name: notifications,
+      page: () => const NotificationsScreen(),
+      binding: NotificationsBinding(),
     ),
     GetPage(
       name: noInternet,

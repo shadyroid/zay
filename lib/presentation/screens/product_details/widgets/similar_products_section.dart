@@ -40,6 +40,7 @@ class SimilarProductsSection extends StatelessWidget {
               final product = products[index];
               return SizedBox(
                 width: 150,
+                height: (150 / 0.78) + 78,
                 child: ProductItem(
                   product: product,
                   isFavorite: product.isFavorite,

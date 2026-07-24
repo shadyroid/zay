@@ -111,6 +111,10 @@ class AppTranslations extends Translations {
     'shareAppMessage':
         'Discover @appName — shop fashion with virtual try-on, top stores, and fast checkout.\n\nDownload the app:\nAndroid: @androidUrl\niOS: @iosUrl',
     'notificationsComingSoon': 'Notifications coming soon',
+    'notifications': 'Notification',
+    'noNotifications': 'No notifications yet',
+    'today': 'Today',
+    'yesterday': 'Yesterday',
     'deleteAccount': 'Delete Account',
     'deleteAccountConfirm':
         'This will permanently delete your account and all associated data. This action cannot be undone. Continue?',
@@ -421,6 +425,10 @@ class AppTranslations extends Translations {
     'shareAppMessage':
         'اكتشف @appName — تسوق الأزياء مع تجربة افتراضية ومتاجر مميزة ودفع سريع.\n\nحمّل التطبيق:\nأندرويد: @androidUrl\niOS: @iosUrl',
     'notificationsComingSoon': 'الإشعارات قريباً',
+    'notifications': 'الإشعارات',
+    'noNotifications': 'لا توجد إشعارات بعد',
+    'today': 'اليوم',
+    'yesterday': 'أمس',
     'deleteAccount': 'حذف الحساب',
     'deleteAccountConfirm':
         'سيتم حذف حسابك وجميع بياناتك نهائياً. لا يمكن التراجع عن هذا الإجراء. هل تريد المتابعة؟',
