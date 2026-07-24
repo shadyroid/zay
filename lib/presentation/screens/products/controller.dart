@@ -30,6 +30,7 @@ class ProductsController extends BaseController {
   double? priceMin;
   double? priceMax;
   XFile? image;
+  String? type;
 
   final isSearchMode = ValueNotifier<bool>(false);
   final searchText = ValueNotifier<String>('');
@@ -47,6 +48,7 @@ class ProductsController extends BaseController {
     }
     shopId = Get.arguments?['shopId'];
     image = Get.arguments?['image'];
+    type = Get.arguments?['type'];
     pagingController = PagingController<int, ProductBean>(
       getNextPageKey: (state) {
         if (state.lastPageIsEmpty) return null;
@@ -89,6 +91,7 @@ class ProductsController extends BaseController {
         sortBy: selectedSort.value,
         search: searchQuery.value,
         image: image,
+        type: type,
       ),
     );
     if (!isSuccess(response)) {

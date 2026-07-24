@@ -15,6 +15,7 @@ import 'package:zay/domain/models/beans/shop_bean.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
+import 'package:zay/presentation/bottom_sheets/types/types_bottom_sheet.dart';
 
 class HomeController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -136,9 +137,19 @@ class HomeController extends BaseController {
   void onSearchIconTap() => onSearchSubmit();
 
   Future<void> onCameraTap() async {
+    final type = await TypesBottomSheet.show();
+    if (type == null) return;
+
     final file = await ImagePickerHelper.pickFromBottomSheet();
     if (file == null) return;
-    Get.toNamed(Routes.products,arguments: {'image':file});
+
+    Get.toNamed(
+      Routes.products,
+      arguments: {
+        'image': file,
+        'type': type.id,
+      },
+    );
   }
 
   void onSearchToggle() {

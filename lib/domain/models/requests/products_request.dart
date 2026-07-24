@@ -20,6 +20,7 @@ class ProductsRequest {
     this.maxPrice,
     this.sortBy,
     this.search,
+    this.type,
   });
 
   final int? page;
@@ -36,6 +37,7 @@ class ProductsRequest {
   final double? maxPrice;
   final ProductSortOption? sortBy;
   final String? search;
+  final String? type;
 
   Map<String, dynamic> toJson() {
     final params = <String, dynamic>{};
@@ -50,6 +52,9 @@ class ProductsRequest {
     }
     if (categoryId != null) {
       params['category_id'] = categoryId;
+    }
+    if (type != null && type!.isNotEmpty) {
+      params['category'] = type;
     }
     if (shopId != null) params['shop_id'] = shopId;
     if (sizeId != null) params['size_id'] = sizeId;
