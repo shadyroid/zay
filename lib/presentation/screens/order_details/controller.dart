@@ -3,7 +3,7 @@ import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/order_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
 import 'package:zay/domain/models/beans/order_bean.dart';
-import 'package:zay/domain/requests/order_details_request.dart';
+import 'package:zay/domain/models/requests/order_details_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 
 class OrderDetailsController extends BaseController {

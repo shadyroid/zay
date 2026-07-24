@@ -2,14 +2,14 @@ import 'package:dio/dio.dart' as dio_multipart show FormData, MultipartFile;
 import 'package:get/get.dart';
 import 'package:zay/app/utils/constants.dart';
 import 'package:zay/data/remote/dio_client.dart';
-import 'package:zay/domain/requests/change_password_request.dart';
-import 'package:zay/domain/requests/forget_password_request.dart';
-import 'package:zay/domain/requests/resend_verification_code_request.dart';
-import 'package:zay/domain/requests/reset_password_request.dart';
-import 'package:zay/domain/requests/sign_in_request.dart';
-import 'package:zay/domain/requests/sign_up_request.dart';
-import 'package:zay/domain/requests/update_profile_request.dart';
-import 'package:zay/domain/requests/verification_request.dart';
+import 'package:zay/domain/models/requests/change_password_request.dart';
+import 'package:zay/domain/models/requests/forget_password_request.dart';
+import 'package:zay/domain/models/requests/resend_verification_code_request.dart';
+import 'package:zay/domain/models/requests/reset_password_request.dart';
+import 'package:zay/domain/models/requests/sign_in_request.dart';
+import 'package:zay/domain/models/requests/sign_up_request.dart';
+import 'package:zay/domain/models/requests/update_profile_request.dart';
+import 'package:zay/domain/models/requests/verification_request.dart';
 
 class AuthDataSource {
   final DioClient _dioClient = Get.find<DioClient>();

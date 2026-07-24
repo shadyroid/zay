@@ -11,10 +11,10 @@ import 'package:zay/domain/models/responses/products_response.dart';
 import 'package:zay/domain/models/responses/sizes_response.dart';
 import 'package:zay/domain/models/responses/try_on_response.dart';
 import 'package:zay/domain/repositories/products_repository.dart';
-import 'package:zay/domain/requests/product_details_request.dart';
-import 'package:zay/domain/requests/product_id_request.dart';
-import 'package:zay/domain/requests/products_request.dart';
-import 'package:zay/domain/requests/try_on_request.dart';
+import 'package:zay/domain/models/requests/product_details_request.dart';
+import 'package:zay/domain/models/requests/product_id_request.dart';
+import 'package:zay/domain/models/requests/products_request.dart';
+import 'package:zay/domain/models/requests/try_on_request.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsDataSource _productsDataSource = ProductsDataSource();

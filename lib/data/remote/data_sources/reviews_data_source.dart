@@ -2,9 +2,9 @@ import 'package:get/get.dart';
 import 'package:zay/app/utils/constants.dart';
 import 'package:zay/data/remote/dio_client.dart';
 import 'package:zay/domain/models/enums/review_size_fit.dart';
-import 'package:zay/domain/requests/add_review_request.dart';
-import 'package:zay/domain/requests/reviews_request.dart';
-import 'package:zay/domain/requests/try_on_review_request.dart';
+import 'package:zay/domain/models/requests/add_review_request.dart';
+import 'package:zay/domain/models/requests/reviews_request.dart';
+import 'package:zay/domain/models/requests/try_on_review_request.dart';
 
 class ReviewsDataSource {
   final DioClient _dioClient = Get.find<DioClient>();

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
-import 'package:zay/domain/requests/product_id_request.dart';
+import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 
 class FavoriteController extends BaseController {

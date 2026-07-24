@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
-import 'package:zay/domain/requests/change_password_request.dart';
+import 'package:zay/domain/models/requests/change_password_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 
 class ChangePasswordController extends BaseController {

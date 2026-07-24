@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:zay/app/utils/constants.dart';
 import 'package:zay/data/remote/dio_client.dart';
-import 'package:zay/domain/requests/contact_us_request.dart';
+import 'package:zay/domain/models/requests/contact_us_request.dart';
 
 class SettingsDataSource {
   final DioClient _dioClient = Get.find<DioClient>();

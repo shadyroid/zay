@@ -9,11 +9,11 @@ import 'package:zay/app/utils/app_auth_guard.dart';
 import 'package:zay/app/utils/image_picker_helper.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/beans/review_bean.dart';
-import 'package:zay/domain/requests/add_cart_item_request.dart';
-import 'package:zay/domain/requests/product_details_request.dart';
-import 'package:zay/domain/requests/product_id_request.dart';
-import 'package:zay/domain/requests/products_request.dart';
-import 'package:zay/domain/requests/reviews_request.dart';
+import 'package:zay/domain/models/requests/add_cart_item_request.dart';
+import 'package:zay/domain/models/requests/product_details_request.dart';
+import 'package:zay/domain/models/requests/product_id_request.dart';
+import 'package:zay/domain/models/requests/products_request.dart';
+import 'package:zay/domain/models/requests/reviews_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 
 class ProductDetailsController extends BaseController {

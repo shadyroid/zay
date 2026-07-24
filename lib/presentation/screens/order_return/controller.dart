@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/use_cases/order_use_case.dart';
 import 'package:zay/domain/models/beans/return_reason_bean.dart';
-import 'package:zay/domain/requests/order_return_request.dart';
+import 'package:zay/domain/models/requests/order_return_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 
 class OrderReturnController extends BaseController {

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
-import 'package:zay/domain/requests/forget_password_request.dart';
+import 'package:zay/domain/models/requests/forget_password_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 
 class ForgetPasswordController extends BaseController {

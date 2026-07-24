@@ -8,9 +8,9 @@ import 'package:zay/app/utils/egyptian_phone_util.dart';
 import 'package:zay/app/utils/payment_method.dart';
 import 'package:zay/domain/models/beans/cart_item_bean.dart';
 import 'package:zay/domain/models/beans/location_bean.dart';
-import 'package:zay/domain/requests/create_order_request.dart';
-import 'package:zay/domain/requests/delete_cart_item_request.dart';
-import 'package:zay/domain/requests/update_cart_item_request.dart';
+import 'package:zay/domain/models/requests/create_order_request.dart';
+import 'package:zay/domain/models/requests/delete_cart_item_request.dart';
+import 'package:zay/domain/models/requests/update_cart_item_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 
 class CartController extends BaseController {

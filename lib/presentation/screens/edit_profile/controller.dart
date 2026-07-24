@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
 import 'package:zay/app/utils/egyptian_phone_util.dart';
-import 'package:zay/domain/requests/update_profile_request.dart';
+import 'package:zay/domain/models/requests/update_profile_request.dart';
 import 'package:zay/app/utils/image_picker_helper.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 

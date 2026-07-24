@@ -11,8 +11,8 @@ import 'package:zay/data/preferences/prefs_manager.dart';
 import 'package:zay/domain/models/beans/category_bean.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
-import 'package:zay/domain/requests/product_id_request.dart';
-import 'package:zay/domain/requests/products_request.dart';
+import 'package:zay/domain/models/requests/product_id_request.dart';
+import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/bottom_sheets/filter/filter_bottom_sheet.dart';
 

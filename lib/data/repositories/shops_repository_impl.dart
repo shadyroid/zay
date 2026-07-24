@@ -2,7 +2,7 @@ import 'package:zay/data/remote/data_sources/shops_data_source.dart';
 import 'package:zay/domain/models/responses/shop_response.dart';
 import 'package:zay/domain/models/responses/shops_response.dart';
 import 'package:zay/domain/repositories/shops_repository.dart';
-import 'package:zay/domain/requests/shop_details_request.dart';
+import 'package:zay/domain/models/requests/shop_details_request.dart';
 
 class ShopsRepositoryImpl implements ShopsRepository {
   final ShopsDataSource _shopsDataSource = ShopsDataSource();
