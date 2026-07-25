@@ -48,6 +48,8 @@ class Constants {
   static const String contactUsPath = '/pages/contact-us';
 
   static const String appName = 'ZAY';
+  /// Host used for App Links / Universal Links (no scheme).
+  static const String deepLinkHost = 'zaymarketplace.online';
   static const String androidStoreUrl =
       'https://play.google.com/store/apps/details?id=com.zay';
   static const String iosStoreUrl = 'https://zaymarketplace.online';

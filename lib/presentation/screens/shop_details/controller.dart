@@ -3,6 +3,7 @@ import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/use_cases/shops_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
+import 'package:zay/app/utils/deep_links_util.dart';
 import 'package:zay/domain/models/beans/category_bean.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
@@ -85,7 +86,10 @@ class ShopDetailsController extends BaseController {
 
   void navigateToAllProducts() => Get.toNamed(Routes.products);
 
-  void onShare() {
-    Get.rawSnackbar(message: 'shareComingSoon'.tr);
+  Future<void> onShare() async {
+    await DeepLinksUtil.shareShop(
+      shopId: shopId,
+      shopName: shop.value?.name,
+    );
   }
 }

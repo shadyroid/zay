@@ -4,6 +4,7 @@ import 'package:zay/app/use_cases/cart_use_case.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/use_cases/reviews_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
+import 'package:zay/app/utils/deep_links_util.dart';
 import 'package:zay/app/utils/image_picker_helper.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/beans/review_bean.dart';
@@ -204,8 +205,11 @@ class ProductDetailsController extends BaseController {
     Get.offNamed(Routes.productDetails, arguments: {'productId': item.id},preventDuplicates: false);
   }
 
-  void onShare() {
-    Get.rawSnackbar(message: 'shareComingSoon'.tr);
+  Future<void> onShare() async {
+    await DeepLinksUtil.shareProduct(
+      productId: productId,
+      productName: product.value?.name,
+    );
   }
 
   void onSeeAllReviews() {

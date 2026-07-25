@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/utils/constants.dart';
+import 'package:zay/app/utils/deep_links_util.dart';
 import 'package:zay/app/utils/notifications_util.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
 import 'package:zay/presentation/base/base_controller.dart';
@@ -23,8 +24,10 @@ class SplashController extends BaseController {
     if (PrefsManager.token != null && PrefsManager.token!.isNotEmpty) {
       Get.offNamed(Routes.home);
       NotificationsUtil.handelInitialLink();
+      DeepLinksUtil.handleInitialLink();
       return;
     }
     Get.offNamed(Routes.signIn);
+    DeepLinksUtil.handleInitialLink();
   }
 }

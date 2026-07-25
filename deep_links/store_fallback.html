@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZAY</title>
+  <script>
+    (function () {
+      var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      var androidStore = 'https://play.google.com/store/apps/details?id=com.zay';
+      // Replace with your App Store URL once published
+      var iosStore = 'https://apps.apple.com/app/idYOUR_APP_ID';
+      // Give Universal Links a brief chance to hand off to the app
+      setTimeout(function () {
+        window.location.href = isIOS ? iosStore : androidStore;
+      }, 800);
+    })();
+  </script>
+</head>
+<body>
+  <p>Opening ZAY… If nothing happens, <a id="store" href="#">get the app</a>.</p>
+  <script>
+    document.getElementById('store').href =
+      /iPhone|iPad|iPod/i.test(navigator.userAgent)
+        ? 'https://apps.apple.com/app/idYOUR_APP_ID'
+        : 'https://play.google.com/store/apps/details?id=com.zay';
+  </script>
+</body>
+</html>

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/translations/app_translations.dart';
 import 'package:zay/app/utils/app_theme.dart';
+import 'package:zay/app/utils/deep_links_util.dart';
 import 'package:zay/app/utils/notifications_util.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
 import 'package:zay/data/remote/dio_client.dart';
@@ -24,6 +25,7 @@ Future<void> main() async {
   };
   await PrefsManager.init();
   await NotificationsUtil.init();
+  await DeepLinksUtil.init();
   Get.put(DioClient(), permanent: true);
   runApp(const MyApp());
 }
