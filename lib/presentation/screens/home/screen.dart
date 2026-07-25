@@ -38,6 +38,8 @@ class HomeScreen extends GetView<HomeController> {
                 HomeHeader(
                   userName: controller.userName.value,
                   imagePath: controller.profileImagePath.value,
+                  unreadNotificationsCount:
+                      controller.unreadNotificationsCount.value,
                   onSearchTap: controller.onSearchToggle,
                   onNotificationsTap: controller.onNotificationsTap,
                 ).animateEntrance(),

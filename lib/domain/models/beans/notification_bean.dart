@@ -35,6 +35,26 @@ class NotificationBean {
     );
   }
 
+  NotificationBean copyWith({
+    String? id,
+    String? title,
+    String? body,
+    String? imageUrl,
+    bool? isRead,
+    String? createdAt,
+    Map<String, dynamic>? data,
+  }) {
+    return NotificationBean(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      imageUrl: imageUrl ?? this.imageUrl,
+      isRead: isRead ?? this.isRead,
+      createdAt: createdAt ?? this.createdAt,
+      data: data ?? this.data,
+    );
+  }
+
   DateTime? get _createdAtDate => DateTime.tryParse(createdAt ?? '')?.toLocal();
 
   /// Header label used to group notifications by day.

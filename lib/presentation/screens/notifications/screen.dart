@@ -20,63 +20,93 @@ class NotificationsScreen extends GetView<NotificationsController> {
       appBar: AppBackAppBar(
         title: 'notifications'.tr,
         showDivider: true,
+        actions: [
+          TextButton(
+            onPressed: controller.requestReadNotifications,
+            child: Text(
+              'markAllAsRead'.tr,
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
+                color: AppColors.selectedCheck,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
-      body: RefreshIndicator(
-        onRefresh: controller.onPullToRefresh,
-        child: PagingListener<int, NotificationBean>(
-          controller: controller.pagingController,
-          builder: (context, state, fetchNextPage) {
-            final items = state.pages?.expand((page) => page).toList() ?? [];
+      body: Obx(() {
+        return Stack(
+          children: [
+            RefreshIndicator(
+              onRefresh: controller.onPullToRefresh,
+              child: PagingListener<int, NotificationBean>(
+                controller: controller.pagingController,
+                builder: (context, state, fetchNextPage) {
+                  final items =
+                      state.pages?.expand((page) => page).toList() ?? [];
 
-            return PagedListView<int, NotificationBean>(
-              state: state,
-              fetchNextPage: fetchNextPage,
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-              builderDelegate: PagedChildBuilderDelegate<NotificationBean>(
-                itemBuilder: (context, notification, index) {
-                  final showDateHeader = index == 0 ||
-                      notification.dateGroupLabel !=
-                          items[index - 1].dateGroupLabel;
+                  return PagedListView<int, NotificationBean>(
+                    state: state,
+                    fetchNextPage: fetchNextPage,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                    builderDelegate:
+                        PagedChildBuilderDelegate<NotificationBean>(
+                      itemBuilder: (context, notification, index) {
+                        final showDateHeader = index == 0 ||
+                            notification.dateGroupLabel !=
+                                items[index - 1].dateGroupLabel;
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (showDateHeader &&
-                          notification.dateGroupLabel.isNotEmpty) ...[
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(4, 16, 4, 12),
-                          child: Text(
-                            notification.dateGroupLabel,
-                            style: Get.theme.textTheme.titleSmall?.copyWith(
-                              color: AppColors.textPrimary,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ],
-                      NotificationItem(notification: notification)
-                          .animateStagger(index),
-                      const SizedBox(height: 12),
-                    ],
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (showDateHeader &&
+                                notification.dateGroupLabel.isNotEmpty) ...[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(4, 16, 4, 12),
+                                child: Text(
+                                  notification.dateGroupLabel,
+                                  style:
+                                      Get.theme.textTheme.titleSmall?.copyWith(
+                                    color: AppColors.textPrimary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            NotificationItem(
+                              notification: notification,
+                              onTap: () =>
+                                  controller.onNotificationTap(notification),
+                            ).animateStagger(index),
+                            const SizedBox(height: 12),
+                          ],
+                        );
+                      },
+                      firstPageProgressIndicatorBuilder: (_) =>
+                          const Center(child: AppProgressIndicator()),
+                      newPageProgressIndicatorBuilder: (_) => const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Center(child: AppProgressIndicator()),
+                      ),
+                      noItemsFoundIndicatorBuilder: (_) => EmptyState(
+                        message: 'noNotifications'.tr,
+                        icon: Icons.notifications_none_outlined,
+                      ),
+                    ),
                   );
                 },
-                firstPageProgressIndicatorBuilder: (_) =>
-                    const Center(child: AppProgressIndicator()),
-                newPageProgressIndicatorBuilder: (_) => const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Center(child: AppProgressIndicator()),
-                ),
-                noItemsFoundIndicatorBuilder: (_) => EmptyState(
-                  message: 'noNotifications'.tr,
-                  icon: Icons.notifications_none_outlined,
-                ),
               ),
-            );
-          },
-        ),
-      ),
+            ),
+            if (controller.isLoading.value)
+              const ColoredBox(
+                color: Color(0x33000000),
+                child: Center(child: AppProgressIndicator()),
+              ),
+          ],
+        );
+      }),
     );
   }
 }

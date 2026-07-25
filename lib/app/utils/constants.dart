@@ -17,6 +17,11 @@ class Constants {
   static const String citiesPath = '/cities';
   static const String adsPath = '/ads';
   static const String notificationsPath = '/notifications';
+  static const String notificationsUnreadCountPath =
+      '/notifications/unread-count';
+  static const String notificationsMarkAllReadPath =
+      '/notifications/mark-all-read';
+  static const String notificationsReadPath = '/notifications';
   static const String productsPath = '/products';
   static const String categoriesPath = '/categories';
   static const String sizesPath = '/sizes';

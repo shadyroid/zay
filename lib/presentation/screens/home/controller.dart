@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/ads_use_case.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
+import 'package:zay/app/use_cases/notifications_use_case.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/use_cases/shops_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
@@ -22,12 +23,15 @@ class HomeController extends BaseController {
   final ShopsUseCase _shopsUseCase = Get.put(ShopsUseCase());
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());
   final AdsUseCase _adsUseCase = Get.put(AdsUseCase());
+  final NotificationsUseCase _notificationsUseCase =
+      Get.put(NotificationsUseCase());
 
   final searchController = TextEditingController();
   final searchFocusNode = FocusNode();
   final isSearchExpanded = false.obs;
   final userName = ''.obs;
   final profileImagePath = RxnString();
+  final unreadNotificationsCount = 0.obs;
   final ads = <AdBean>[].obs;
   final currentAdIndex = 0.obs;
   final categories = <CategoryBean>[].obs;
@@ -55,6 +59,7 @@ class HomeController extends BaseController {
     isLoading.value = true;
     await Future.wait([
       if (PrefsManager.isLoggedIn) _requestProfile(),
+      if (PrefsManager.isLoggedIn) requestNotificationsCount(),
       _requestAds(),
       _requestCategories(),
       _requestRecommended(),
@@ -62,6 +67,16 @@ class HomeController extends BaseController {
       _requestTopStores(),
     ]);
     isLoading.value = false;
+  }
+
+  Future<void> requestNotificationsCount() async {
+    if (!PrefsManager.isLoggedIn) {
+      unreadNotificationsCount.value = 0;
+      return;
+    }
+    final response = await _notificationsUseCase.requestNotificationsCount();
+    if (!isSuccess(response)) return;
+    unreadNotificationsCount.value = response.unreadCount;
   }
 
   Future<void> _requestProfile() async {
@@ -166,8 +181,9 @@ class HomeController extends BaseController {
     }
   }
 
-  void onNotificationsTap() {
-    AppAuthGuard.toNamed(Routes.notifications);
+  Future<void> onNotificationsTap() async {
+    await AppAuthGuard.toNamed(Routes.notifications);
+    await requestNotificationsCount();
   }
 
   void onCategoryTap(CategoryBean category) {

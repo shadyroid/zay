@@ -6,60 +6,69 @@ import 'package:zay/domain/models/beans/notification_bean.dart';
 import 'package:zay/presentation/widgets/app_image.dart';
 
 class NotificationItem extends StatelessWidget {
-  const NotificationItem({super.key, required this.notification});
+  const NotificationItem({
+    super.key,
+    required this.notification,
+    this.onTap,
+  });
 
   final NotificationBean notification;
+  final VoidCallback? onTap;
 
   static const double _avatarSize = 48;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.screenBackground,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildAvatar(),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  notification.title ?? '',
-                  style: Get.theme.textTheme.bodyLarge?.copyWith(
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.w600,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.screenBackground,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildAvatar(),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    notification.title ?? '',
+                    style: Get.theme.textTheme.bodyLarge?.copyWith(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  notification.body ?? '',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Get.theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                    height: 1.4,
+                  const SizedBox(height: 6),
+                  Text(
+                    notification.body ?? '',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.textSecondary,
+                      height: 1.4,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          if (!notification.isRead)
-            Container(
-              width: 8,
-              height: 8,
-              margin: const EdgeInsetsDirectional.only(start: 8, top: 4),
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
+                ],
               ),
             ),
-        ],
+            if (!notification.isRead)
+              Container(
+                width: 8,
+                height: 8,
+                margin: const EdgeInsetsDirectional.only(start: 8, top: 4),
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

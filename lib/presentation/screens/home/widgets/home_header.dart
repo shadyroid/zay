@@ -9,12 +9,14 @@ class HomeHeader extends StatelessWidget {
     super.key,
     required this.userName,
     required this.imagePath,
+    required this.unreadNotificationsCount,
     required this.onSearchTap,
     required this.onNotificationsTap,
   });
 
   final String userName;
   final String? imagePath;
+  final int unreadNotificationsCount;
   final VoidCallback onSearchTap;
   final VoidCallback onNotificationsTap;
 
@@ -62,7 +64,18 @@ class HomeHeader extends StatelessWidget {
           IconButton(
             onPressed: onNotificationsTap,
             icon: Badge(
+              isLabelVisible: unreadNotificationsCount > 0,
               backgroundColor: Colors.red,
+              label: Text(
+                unreadNotificationsCount > 99
+                    ? '99+'
+                    : '$unreadNotificationsCount',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               child: SvgPicture.asset(
                 'assets/icons/ic_notifications.svg',
               ),
