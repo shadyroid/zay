@@ -4,6 +4,7 @@ import 'package:zay/domain/models/responses/base_response.dart';
 import 'package:zay/domain/models/responses/profile_response.dart';
 import 'package:zay/domain/repositories/auth_repository.dart';
 import 'package:zay/domain/models/requests/change_password_request.dart';
+import 'package:zay/domain/models/requests/delete_account_request.dart';
 import 'package:zay/domain/models/requests/forget_password_request.dart';
 import 'package:zay/domain/models/requests/resend_verification_code_request.dart';
 import 'package:zay/domain/models/requests/reset_password_request.dart';
@@ -45,6 +46,6 @@ class AuthUseCase {
   Future<BaseResponse> requestChangePassword(ChangePasswordRequest request) =>
       _authRepository.requestChangePassword(request);
 
-  Future<BaseResponse> requestDeleteAccount() =>
-      _authRepository.requestDeleteAccount();
+  Future<BaseResponse> requestDeleteAccount(DeleteAccountRequest request) =>
+      _authRepository.requestDeleteAccount(request);
 }

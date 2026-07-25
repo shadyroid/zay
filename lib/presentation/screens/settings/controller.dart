@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
 import 'package:zay/app/use_cases/settings_use_case.dart';
 import 'package:zay/app/utils/constants.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
+import 'package:zay/domain/models/requests/delete_account_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/bottom_sheets/languages/languages_bottom_sheet.dart';
 import 'package:zay/presentation/widgets/app_alert_dialog.dart';
@@ -112,22 +112,29 @@ class SettingsController extends BaseController {
     Get.offAllNamed(Routes.signIn);
   }
 
-  Future<void> requestDeleteAccount() async {
+  Future<void> requestDeleteAccount(String password) async {
     isLoading.value = true;
-    final response = await _authUseCase.requestDeleteAccount();
+    final response = await _authUseCase.requestDeleteAccount(
+      DeleteAccountRequest(password: password),
+    );
     isLoading.value = false;
     if (!isSuccess(response)) return;
     Get.offAllNamed(Routes.signIn);
     Get.rawSnackbar(message: response.message?.tr ?? 'deleteAccountSuccess'.tr);
   }
 
-  void onDeleteAccount() {
-    AppAlertDialog.showConfirm(
+  Future<void> onDeleteAccount() async {
+    final password = await AppAlertDialog.showPasswordConfirm(
       title: 'deleteAccount'.tr,
       message: 'deleteAccountConfirm'.tr,
       confirmText: 'deleteAccount'.tr,
       isDestructive: true,
-      onConfirm: requestDeleteAccount,
     );
+    if (password == null) return;
+    if (password.trim().isEmpty) {
+      Get.rawSnackbar(message: 'currentPasswordRequired'.tr);
+      return;
+    }
+    await requestDeleteAccount(password);
   }
 }

@@ -18,41 +18,38 @@ class SimilarProductsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (products.isEmpty) return const SizedBox.shrink();
+    if (products.isEmpty) return const SizedBox.shrink();
 
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
-            child: Text(
-              'similarTo'.tr,
-              style: Get.theme.textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
+          child: Text(
+            'similarTo'.tr,
+            style: Get.theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w700,
             ),
           ),
-          HorizontalListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              final product = products[index];
-              return SizedBox(
-                width: 150,
-                height: (150 / 0.78) + 78,
-                child: ProductItem(
-                  product: product,
-                  isFavorite: product.isFavorite,
-                  onTap: () => onProductTap(product),
-                  onFavoriteTap: () => onFavoriteTap(product),
-                ),
-              );
-            },
-            separatorBuilder: (context, index) => const SizedBox(width: 12),
-          ),
-        ],
-      );
-    });
+        ),
+        HorizontalListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            final product = products[index];
+            return SizedBox(
+              width: 150,
+              child: ProductItem(
+                product: product,
+                isFavorite: product.isFavorite,
+                onTap: () => onProductTap(product),
+                onFavoriteTap: () => onFavoriteTap(product),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) => const SizedBox(width: 12),
+        ),
+      ],
+    );
   }
 }

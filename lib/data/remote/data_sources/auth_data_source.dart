@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:zay/app/utils/constants.dart';
 import 'package:zay/data/remote/dio_client.dart';
 import 'package:zay/domain/models/requests/change_password_request.dart';
+import 'package:zay/domain/models/requests/delete_account_request.dart';
 import 'package:zay/domain/models/requests/forget_password_request.dart';
 import 'package:zay/domain/models/requests/resend_verification_code_request.dart';
 import 'package:zay/domain/models/requests/reset_password_request.dart';
@@ -144,8 +145,15 @@ class AuthDataSource {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> requestDeleteAccount() async {
-    final response = await _dioClient.delete(Constants.deleteAccountPath);
+  Future<Map<String, dynamic>> requestDeleteAccount(
+    DeleteAccountRequest request,
+  ) async {
+    final response = await _dioClient.post(
+      Constants.deleteAccountPath,
+      data: {
+        'password': request.password,
+      },
+    );
     return Map<String, dynamic>.from(response.data as Map);
   }
 }

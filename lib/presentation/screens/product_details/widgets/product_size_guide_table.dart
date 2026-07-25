@@ -32,10 +32,13 @@ class ProductSizeGuideTable extends StatelessWidget {
             ),
           ),
           if (measurementsImage != null)
-            AppImage.network(
-              measurementsImage!,
-              width: double.infinity,
-              fit: BoxFit.contain,
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: AppImage.network(
+                measurementsImage!,
+                width: double.infinity,
+                fit: BoxFit.contain,
+              ),
             ),
           const SizedBox(height: 12),
           SingleChildScrollView(

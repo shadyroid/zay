@@ -51,6 +51,7 @@ class ShopDetailsController extends BaseController {
         categoryId: selectedCategoryId.value,
         bestSeller: true,
         pageSize: 4,
+        page: 1,
       ),
     );
     if (!isSuccess(response)) return;

@@ -131,13 +131,24 @@ class AppImage extends StatelessWidget {
     final highlight = shimmerHighlightColor ??
         (isDark ? const Color(0xFF4A5568) : const Color(0xFFF7FAFC));
 
-    return Shimmer.fromColors(
-      baseColor: base,
-      highlightColor: highlight,
-      child: ColoredBox(
-        color: base,
-        child: const SizedBox.expand(),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final hasBoundedSize = constraints.hasBoundedWidth &&
+            constraints.hasBoundedHeight &&
+            constraints.maxWidth.isFinite &&
+            constraints.maxHeight.isFinite;
+
+        return Shimmer.fromColors(
+          baseColor: base,
+          highlightColor: highlight,
+          child: ColoredBox(
+            color: base,
+            child: hasBoundedSize
+                ? const SizedBox.expand()
+                : SizedBox(width: width ?? 48, height: height ?? 48),
+          ),
+        );
+      },
     );
   }
 

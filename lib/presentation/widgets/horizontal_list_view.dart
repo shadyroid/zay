@@ -76,25 +76,17 @@ class HorizontalListView extends StatelessWidget {
       }
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          controller: controller,
-          scrollDirection: Axis.horizontal,
-          reverse: reverse,
-          physics: physics,
-          padding: padding,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: constraints.maxWidth,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: children,
-            ),
-          ),
-        );
-      },
+    return SingleChildScrollView(
+      controller: controller,
+      scrollDirection: Axis.horizontal,
+      reverse: reverse,
+      physics: physics,
+      padding: padding,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      ),
     );
   }
 }
