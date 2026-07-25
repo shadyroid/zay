@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' as dio_multipart show FormData, MultipartFile;
 import 'package:get/get.dart';
 import 'package:zay/app/utils/constants.dart';
+import 'package:zay/app/utils/notifications_util.dart';
 import 'package:zay/data/remote/dio_client.dart';
 import 'package:zay/domain/models/requests/change_password_request.dart';
 import 'package:zay/domain/models/requests/delete_account_request.dart';
@@ -21,6 +22,7 @@ class AuthDataSource {
       data: {
         'email': request.email,
         'password': request.password,
+        'fcm_token': await NotificationsUtil.getToken() ?? '',
       },
     );
     return Map<String, dynamic>.from(response.data as Map);
@@ -37,6 +39,7 @@ class AuthDataSource {
         'password_confirmation': request.passwordConfirmation,
         'height': request.height,
         'weight': request.weight,
+        'fcm_token': await NotificationsUtil.getToken() ?? '',
       },
     );
     return Map<String, dynamic>.from(response.data as Map);
