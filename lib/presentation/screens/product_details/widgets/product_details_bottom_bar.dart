@@ -10,12 +10,14 @@ class ProductDetailsBottomBar extends StatelessWidget {
     super.key,
     required this.price,
     required this.isTryOnLoading,
+    required this.isOutOfStock,
     required this.onTryOn,
     required this.onAddToCart,
   });
 
   final double? price;
   final bool isTryOnLoading;
+  final bool isOutOfStock;
   final VoidCallback onTryOn;
   final VoidCallback onAddToCart;
 
@@ -77,20 +79,24 @@ class ProductDetailsBottomBar extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: onAddToCart,
+                    onPressed: isOutOfStock ? null : onAddToCart,
                     icon: SvgPicture.asset(
                       'assets/icons/ic_nav_cart.svg',
                       width: 20,
                       height: 20,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
+                      colorFilter: ColorFilter.mode(
+                        isOutOfStock ? AppColors.textSecondary : Colors.white,
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: Text('addToCart'.tr),
+                    label: Text(
+                      isOutOfStock ? 'outOfStock'.tr : 'addToCart'.tr,
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
+                      disabledBackgroundColor: AppColors.border,
+                      disabledForegroundColor: AppColors.textSecondary,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(

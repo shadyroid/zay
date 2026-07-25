@@ -86,6 +86,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               price: product.price,
               onTryOn: controller.onTryOn,
               isTryOnLoading: controller.isTryOnLoading.value,
+              isOutOfStock: product.isOutOfStock == true,
               onAddToCart: controller.addToCart,
             ),
           ],

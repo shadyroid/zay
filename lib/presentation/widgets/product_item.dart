@@ -117,7 +117,7 @@ class ProductItem extends StatelessWidget {
     );
 
     return InkWell(
-      onTap: isOutOfStock ? null : onTap,
+      onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: LayoutBuilder(
         builder: (context, constraints) {

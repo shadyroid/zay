@@ -168,6 +168,11 @@ class ProductDetailsController extends BaseController {
     final sizeId = selectedSizeId.value;
     if (p == null) return;
 
+    if (p.isOutOfStock == true) {
+      Get.rawSnackbar(message: 'outOfStock'.tr);
+      return;
+    }
+
     if (p.sizes?.isNotEmpty == true && sizeId == null) {
       Get.rawSnackbar(message: 'selectSizeRequired'.tr);
       return;
@@ -196,7 +201,7 @@ class ProductDetailsController extends BaseController {
   }
 
   void navigateToProduct(ProductBean item) {
-    Get.toNamed(Routes.productDetails, arguments: {'productId': item.id});
+    Get.offNamed(Routes.productDetails, arguments: {'productId': item.id},preventDuplicates: false);
   }
 
   void onShare() {
