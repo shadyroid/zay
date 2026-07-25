@@ -58,6 +58,7 @@ import 'package:zay/presentation/screens/shop_details/screen.dart';
 import 'package:zay/presentation/screens/shops/screen.dart';
 import 'package:zay/presentation/screens/sign_in/screen.dart';
 import 'package:zay/presentation/screens/sign_up/screen.dart';
+import 'package:zay/presentation/screens/size_guide/screen.dart';
 import 'package:zay/presentation/screens/splash/screen.dart';
 import 'package:zay/presentation/screens/privacy/screen.dart';
 import 'package:zay/presentation/screens/terms/screen.dart';
@@ -73,6 +74,7 @@ class Routes {
   static const String resetPassword = '/resetPassword';
   static const String home = '/home';
   static const String productDetails = '/productDetails';
+  static const String sizeGuide = '/sizeGuide';
   static const String tryOn = '/tryOn';
   static const String products = '/products';
   static const String shops = '/shops';
@@ -122,6 +124,10 @@ class Routes {
       name: productDetails,
       page: () => const ProductDetailsScreen(),
       binding: ProductDetailsBinding(),
+    ),
+    GetPage(
+      name: sizeGuide,
+      page: () => const SizeGuideScreen(),
     ),
     GetPage(
       name: tryOn,

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/cart_use_case.dart';
@@ -21,9 +19,6 @@ class ProductDetailsController extends BaseController {
   final CartUseCase _cartUseCase = Get.put(CartUseCase());
   final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
 
-  final scrollController = ScrollController();
-  final sizeGuideKey = GlobalKey();
-
   final product = Rxn<ProductBean>();
   final reviews = <ReviewBean>[].obs;
   final similarProducts = <ProductBean>[].obs;
@@ -37,18 +32,11 @@ class ProductDetailsController extends BaseController {
 
   final RxBool isTryOnLoading = false.obs;
 
-
   @override
   void onInit() {
     super.onInit();
     productId = Get.arguments['productId'];
     _loadScreen();
-  }
-
-  @override
-  void onClose() {
-    scrollController.dispose();
-    super.onClose();
   }
 
   Future<void> _loadScreen() async {
@@ -147,13 +135,15 @@ class ProductDetailsController extends BaseController {
 
   void onImageChanged(int index) => imageIndex.value = index;
 
-  void scrollToSizeGuide() {
-    final context = sizeGuideKey.currentContext;
-    if (context == null) return;
-    Scrollable.ensureVisible(
-      context,
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeInOut,
+  void openSizeGuide() {
+    final p = product.value;
+    if (p?.sizes == null || p!.sizes!.isEmpty) return;
+    Get.toNamed(
+      Routes.sizeGuide,
+      arguments: {
+        'sizes': p.sizes,
+        'measurementsImage': p.category?.measurementsImage,
+      },
     );
   }
 

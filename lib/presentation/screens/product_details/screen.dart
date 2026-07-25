@@ -8,7 +8,6 @@ import 'package:zay/presentation/screens/product_details/widgets/product_details
 import 'package:zay/presentation/screens/product_details/widgets/product_image_carousel.dart';
 import 'package:zay/presentation/screens/product_details/widgets/product_reviews_section.dart';
 import 'package:zay/presentation/screens/product_details/widgets/product_seller_banner.dart';
-import 'package:zay/presentation/screens/product_details/widgets/product_size_guide_table.dart';
 import 'package:zay/presentation/screens/product_details/widgets/product_size_section.dart';
 import 'package:zay/presentation/screens/product_details/widgets/similar_products_section.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
@@ -32,7 +31,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                controller: controller.scrollController,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -61,31 +59,24 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       sizes: product.sizes,
                       selectedSizeId: controller.selectedSizeId.value,
                       onSizeSelected: controller.selectSize,
-                      onSizeGuideTap: controller.scrollToSizeGuide,
+                      onSizeGuideTap: controller.openSizeGuide,
                     ),
                     ProductSellerBanner(
                       shopName: product.shop?.name ?? '',
                       slogan: product.shop?.slogan ?? "",
                       onTap: controller.navigateToShop,
                     ),
-                    KeyedSubtree(
-                      key: controller.sizeGuideKey,
-                      child: ProductSizeGuideTable(
-                        sizes: product.sizes,
-                        measurementsImage: product.category?.measurementsImage,
+                    if (controller.similarProducts.isNotEmpty)
+                      SimilarProductsSection(
+                        products: controller.similarProducts,
+                        onProductTap: controller.navigateToProduct,
+                        onFavoriteTap: controller.toggleFavoriteFor,
                       ),
-                    ),
-                    if(controller.similarProducts.isNotEmpty)
-                    SimilarProductsSection(
-                      products: controller.similarProducts,
-                      onProductTap: controller.navigateToProduct,
-                      onFavoriteTap: controller.toggleFavoriteFor,
-                    ),
-                    if(controller.reviews.isNotEmpty)
-                    ProductReviewsSection(
-                      reviews: controller.reviews,
-                      onSeeAll: controller.onSeeAllReviews,
-                    ),
+                    if (controller.reviews.isNotEmpty)
+                      ProductReviewsSection(
+                        reviews: controller.reviews,
+                        onSeeAll: controller.onSeeAllReviews,
+                      ),
                     const SizedBox(height: 24),
                   ],
                 ),
