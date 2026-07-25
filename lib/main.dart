@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/translations/app_translations.dart';
@@ -28,6 +31,11 @@ Future<void> main() async {
   await NotificationsUtil.init();
   await DeepLinksUtil.init();
   Get.put(DioClient(), permanent: true);
+  if (Platform.isAndroid) {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.immersiveSticky,
+    );
+  }
   runApp(const MyApp());
 }
 

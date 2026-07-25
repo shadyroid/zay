@@ -57,7 +57,10 @@ class FilterBottomSheetController extends GetxController {
   Future<void> _requestCategories() async {
     final response = await _productsUseCase.requestCategories();
     if (response.statusCode != 200) return;
-    categories.assignAll(response.data ?? []);
+    if(response.data?.isNotEmpty == true) {
+      categories.add(CategoryBean.fromJson({"name": "all_items".tr}));
+      categories.addAll(response.data ?? []);
+    }
   }
 
   Future<void> _requestShops() async {

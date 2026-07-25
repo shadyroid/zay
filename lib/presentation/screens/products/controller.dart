@@ -75,7 +75,10 @@ class ProductsController extends BaseController {
   Future<void> requestCategories() async {
     final response = await _productsUseCase.requestCategories();
     if (!isSuccess(response)) return;
-    categories.assignAll(response.data ?? []);
+    if(response.data?.isNotEmpty == true) {
+      categories.add(CategoryBean.fromJson({"name": "all_items".tr}));
+      categories.addAll(response.data ?? []);
+    }
   }
 
   Future<List<ProductBean>> requestProducts(int pageKey) async {
