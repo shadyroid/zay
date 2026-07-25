@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/presentation/widgets/app_image.dart';
 
@@ -12,12 +13,16 @@ class ProductItem extends StatelessWidget {
     required this.onTap,
     this.isFavorite,
     this.onFavoriteTap,
+    this.animationIndex,
   });
 
   final ProductBean product;
   final VoidCallback onTap;
   final RxBool? isFavorite;
   final VoidCallback? onFavoriteTap;
+
+  /// When set, plays a staggered entrance animation.
+  final int? animationIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +106,17 @@ class ProductItem extends StatelessWidget {
                 ),
                 child: Center(
                   child: Obx(
-                    () => SvgPicture.asset(
-                      isFavorite!.value
-                          ? 'assets/icons/ic_heart_filled.svg'
-                          : 'assets/icons/ic_favorite.svg',
-                      width: 16,
-                      height: 16,
+                    () => AnimatedScale(
+                      scale: isFavorite!.value ? 1.15 : 1.0,
+                      duration: AppMotion.fast,
+                      curve: Curves.easeOutBack,
+                      child: SvgPicture.asset(
+                        isFavorite!.value
+                            ? 'assets/icons/ic_heart_filled.svg'
+                            : 'assets/icons/ic_favorite.svg',
+                        width: 16,
+                        height: 16,
+                      ),
                     ),
                   ),
                 ),
@@ -116,7 +126,7 @@ class ProductItem extends StatelessWidget {
       ],
     );
 
-    return InkWell(
+    Widget content = AnimatedPress(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: LayoutBuilder(
@@ -195,6 +205,12 @@ class ProductItem extends StatelessWidget {
         },
       ),
     );
+
+    if (animationIndex != null) {
+      content = content.animateStagger(animationIndex!);
+    }
+
+    return content;
   }
 }
 

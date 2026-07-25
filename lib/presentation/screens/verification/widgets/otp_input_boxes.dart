@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class OtpInputBoxes extends StatelessWidget {
   const OtpInputBoxes({
@@ -102,7 +103,9 @@ class _OtpBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: AppMotion.fast,
+      curve: AppMotion.standard,
       height: size,
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -112,13 +115,32 @@ class _OtpBox extends StatelessWidget {
           color: isFocused ? AppColors.primary : AppColors.border,
           width: isFocused ? 1.5 : 1,
         ),
+        boxShadow: isFocused
+            ? [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.12),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ]
+            : null,
       ),
-      child: Text(
-        digit,
-        style: Get.theme.textTheme.titleLarge?.copyWith(
-              color: AppColors.textPrimary,
-              fontWeight: FontWeight.w600,
-            ),
+      child: AnimatedSwitcher(
+        duration: AppMotion.instant,
+        transitionBuilder: (child, animation) {
+          return ScaleTransition(
+            scale: animation,
+            child: FadeTransition(opacity: animation, child: child),
+          );
+        },
+        child: Text(
+          digit,
+          key: ValueKey(digit),
+          style: Get.theme.textTheme.titleLarge?.copyWith(
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }

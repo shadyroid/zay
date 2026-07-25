@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/screens/product_details/controller.dart';
 import 'package:zay/presentation/screens/product_details/widgets/product_description_section.dart';
 import 'package:zay/presentation/screens/product_details/widgets/product_details_app_bar.dart';
@@ -49,33 +51,45 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       quantity: controller.quantity.value,
                       onIncrement: controller.incrementQuantity,
                       onDecrement: controller.decrementQuantity,
+                    ).animateEntrance(
+                      delay: const Duration(milliseconds: 60),
                     ),
                     ProductDescriptionSection(
                       description: product.description ?? '',
                       isExpanded: controller.isDescriptionExpanded.value,
                       onToggle: controller.toggleDescription,
+                    ).animateEntrance(
+                      delay: const Duration(milliseconds: 100),
                     ),
                     ProductSizeSection(
                       sizes: product.sizes,
                       selectedSizeId: controller.selectedSizeId.value,
                       onSizeSelected: controller.selectSize,
                       onSizeGuideTap: controller.openSizeGuide,
+                    ).animateEntrance(
+                      delay: const Duration(milliseconds: 140),
                     ),
                     ProductSellerBanner(
                       shopName: product.shop?.name ?? '',
                       slogan: product.shop?.slogan ?? "",
                       onTap: controller.navigateToShop,
+                    ).animateEntrance(
+                      delay: const Duration(milliseconds: 180),
                     ),
                     if (controller.similarProducts.isNotEmpty)
                       SimilarProductsSection(
                         products: controller.similarProducts,
                         onProductTap: controller.navigateToProduct,
                         onFavoriteTap: controller.toggleFavoriteFor,
+                      ).animateEntrance(
+                        delay: const Duration(milliseconds: 220),
                       ),
                     if (controller.reviews.isNotEmpty)
                       ProductReviewsSection(
                         reviews: controller.reviews,
                         onSeeAll: controller.onSeeAllReviews,
+                      ).animateEntrance(
+                        delay: const Duration(milliseconds: 260),
                       ),
                     const SizedBox(height: 24),
                   ],
@@ -88,7 +102,12 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               isTryOnLoading: controller.isTryOnLoading.value,
               isOutOfStock: product.isOutOfStock == true,
               onAddToCart: controller.addToCart,
-            ),
+            ).animate().slideY(
+                  begin: 0.3,
+                  end: 0,
+                  duration: AppMotion.normal,
+                  curve: AppMotion.standard,
+                ).fadeIn(duration: AppMotion.normal),
           ],
         );
       }),

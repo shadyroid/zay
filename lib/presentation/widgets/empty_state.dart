@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class EmptyState extends StatelessWidget {
   const EmptyState({
@@ -19,15 +20,15 @@ class EmptyState extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 64, color: Colors.grey),
+            Icon(icon, size: 64, color: Colors.grey).animateScaleIn(begin: 0.8),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
               style: Get.theme.textTheme.titleMedium?.copyWith(
-                    color: Colors.grey,
-                  ),
-            ),
+                color: Colors.grey,
+              ),
+            ).animateEntrance(delay: const Duration(milliseconds: 80)),
           ],
         ),
       ),

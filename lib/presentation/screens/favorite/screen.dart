@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/screens/favorite/controller.dart';
 import 'package:zay/presentation/screens/favorite/widgets/favorite_empty_state.dart';
 import 'package:zay/presentation/widgets/app_back_app_bar.dart';
-import 'package:zay/presentation/widgets/product_item.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/widgets/product_item.dart';
 
 class FavoriteScreen extends GetView<FavoriteController> {
   const FavoriteScreen({super.key});
@@ -18,15 +18,18 @@ class FavoriteScreen extends GetView<FavoriteController> {
         title: 'favoriteTitle'.tr,
         showDivider: true,
       ),
-      body: Obx(
-        () {
-          if (controller.isLoading.value) {
-            return const Center(child: AppProgressIndicator());
-          }
-          if (controller.favorites.isEmpty) {
-            return const FavoriteEmptyState();
-          }
-          return GridView.builder(
+      body: Obx(() {
+        Widget child;
+        if (controller.isLoading.value) {
+          child = const Center(
+            key: ValueKey('fav-loading'),
+            child: AppProgressIndicator(),
+          );
+        } else if (controller.favorites.isEmpty) {
+          child = const FavoriteEmptyState(key: ValueKey('fav-empty'));
+        } else {
+          child = GridView.builder(
+            key: const ValueKey('fav-grid'),
             padding: const EdgeInsets.all(16),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -39,14 +42,16 @@ class FavoriteScreen extends GetView<FavoriteController> {
               final product = controller.favorites[index];
               return ProductItem(
                 product: product,
+                animationIndex: index,
                 isFavorite: product.isFavorite,
                 onTap: () => controller.navigateToProductDetails(product),
                 onFavoriteTap: () => controller.removeFavorite(product),
               );
             },
           );
-        },
-      ),
+        }
+        return AnimatedStateSwitcher(child: child);
+      }),
     );
   }
 }

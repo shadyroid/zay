@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/enums/order_list_filter.dart';
 import 'package:zay/presentation/widgets/horizontal_list_view.dart';
 
@@ -48,19 +49,26 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isSelected ? AppColors.primary : AppColors.screenBackground,
-      borderRadius: BorderRadius.circular(20),
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
-        child: Padding(
+        child: AnimatedContainer(
+          duration: AppMotion.fast,
+          curve: AppMotion.standard,
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          child: Text(
-            label,
-            style: Get.theme.textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: isSelected ? Colors.white : AppColors.textPrimary,
-                ),
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primary : AppColors.screenBackground,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: AnimatedDefaultTextStyle(
+            duration: AppMotion.fast,
+            curve: AppMotion.standard,
+            style: (Get.theme.textTheme.bodySmall ?? const TextStyle()).copyWith(
+              fontWeight: FontWeight.w600,
+              color: isSelected ? Colors.white : AppColors.textPrimary,
+            ),
+            child: Text(label),
           ),
         ),
       ),

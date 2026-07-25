@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/app/utils/payment_method.dart';
 
 class CartPaymentSection extends StatelessWidget {
@@ -103,7 +103,9 @@ class _RadioDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: AppMotion.fast,
+      curve: AppMotion.standard,
       width: 22,
       height: 22,
       decoration: BoxDecoration(
@@ -113,18 +115,21 @@ class _RadioDot extends StatelessWidget {
           width: 2,
         ),
       ),
-      child: isSelected
-          ? Center(
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            )
-          : null,
+      child: AnimatedScale(
+        scale: isSelected ? 1 : 0,
+        duration: AppMotion.fast,
+        curve: Curves.easeOutBack,
+        child: Center(
+          child: Container(
+            width: 12,
+            height: 12,
+            decoration: const BoxDecoration(
+              color: AppColors.primary,
+              shape: BoxShape.circle,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

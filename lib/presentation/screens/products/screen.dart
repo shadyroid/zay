@@ -112,6 +112,7 @@ class ProductsScreen extends GetView<ProductsController> {
                       builderDelegate: PagedChildBuilderDelegate<ProductBean>(
                         itemBuilder: (context, product, index) => ProductItem(
                           product: product,
+                          animationIndex: index,
                           isFavorite: product.isFavorite,
                           onTap: () =>
                               controller.navigateToProductDetails(product),

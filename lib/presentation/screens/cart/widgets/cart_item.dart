@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/beans/cart_item_bean.dart';
 import 'package:zay/presentation/widgets/app_image.dart';
 
@@ -12,16 +13,18 @@ class CartItem extends StatelessWidget {
     required this.onRemove,
     required this.onIncrement,
     required this.onDecrement,
+    this.animationIndex,
   });
 
   final CartItemBean item;
   final VoidCallback onRemove;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
+  final int? animationIndex;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    Widget card = Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -116,6 +119,11 @@ class CartItem extends StatelessWidget {
         ],
       ),
     );
+
+    if (animationIndex != null) {
+      card = card.animateStagger(animationIndex!);
+    }
+    return card;
   }
 
   Widget _placeholder() {
@@ -156,11 +164,21 @@ class _QuantitySelector extends StatelessWidget {
           _QtyButton(icon: Icons.remove, onTap: onDecrement),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              '$quantity',
-              style: Get.theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+            child: AnimatedSwitcher(
+              duration: AppMotion.instant,
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(
+                  scale: animation,
+                  child: FadeTransition(opacity: animation, child: child),
+                );
+              },
+              child: Text(
+                '$quantity',
+                key: ValueKey(quantity),
+                style: Get.theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
           _QtyButton(icon: Icons.add, onTap: onIncrement),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
 import 'package:zay/presentation/widgets/app_image.dart';
 
@@ -18,9 +19,6 @@ class FilterStoreChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor =
-        isSelected ? AppColors.primary : Colors.transparent;
-
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 10),
       child: Material(
@@ -29,11 +27,16 @@ class FilterStoreChip extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(16),
-          child: Container(
+          child: AnimatedContainer(
+            duration: AppMotion.fast,
+            curve: AppMotion.standard,
             padding: const EdgeInsets.fromLTRB(8, 8, 14, 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: borderColor, width: 1.5),
+              border: Border.all(
+                color: isSelected ? AppColors.primary : Colors.transparent,
+                width: 1.5,
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -52,9 +55,9 @@ class FilterStoreChip extends StatelessWidget {
                 Text(
                   shop.name ?? "",
                   style: Get.theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),

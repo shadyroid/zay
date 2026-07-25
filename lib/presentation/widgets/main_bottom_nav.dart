@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class MainBottomNav extends StatelessWidget {
   const MainBottomNav({super.key, required this.currentIndex});
@@ -115,20 +115,27 @@ class _BottomNavItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgPicture.asset(
-              iconPath,
-              width: 22,
-              height: 22,
-              colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+            AnimatedScale(
+              scale: isSelected ? 1.12 : 1.0,
+              duration: AppMotion.fast,
+              curve: Curves.easeOutBack,
+              child: SvgPicture.asset(
+                iconPath,
+                width: 22,
+                height: 22,
+                colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+              ),
             ),
             const SizedBox(height: 4),
-            Text(
-              label,
-              style: Get.theme.textTheme.labelSmall?.copyWith(
-                    color: color,
-                    fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.w400,
-                  ),
+            AnimatedDefaultTextStyle(
+              duration: AppMotion.fast,
+              curve: AppMotion.standard,
+              style: (Get.theme.textTheme.labelSmall ?? const TextStyle())
+                  .copyWith(
+                color: color,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+              ),
+              child: Text(label),
             ),
           ],
         ),

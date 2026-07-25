@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class ProductDescriptionSection extends StatelessWidget {
   const ProductDescriptionSection({
@@ -24,14 +24,19 @@ class ProductDescriptionSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            isExpanded || description.length < 120
-                ? description
-                : '${description.substring(0, 120)}...',
-            style: Get.theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondary,
-                  height: 1.5,
-                ),
+          AnimatedSize(
+            duration: AppMotion.normal,
+            curve: AppMotion.emphasized,
+            alignment: Alignment.topCenter,
+            child: Text(
+              isExpanded || description.length < 120
+                  ? description
+                  : '${description.substring(0, 120)}...',
+              style: Get.theme.textTheme.bodyMedium?.copyWith(
+                color: AppColors.textSecondary,
+                height: 1.5,
+              ),
+            ),
           ),
           if (description.length >= 120)
             GestureDetector(
@@ -41,9 +46,9 @@ class ProductDescriptionSection extends StatelessWidget {
                 child: Text(
                   isExpanded ? 'readLess'.tr : 'readMore'.tr,
                   style: Get.theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),

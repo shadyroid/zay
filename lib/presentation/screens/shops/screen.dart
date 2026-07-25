@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/screens/shops/controller.dart';
 import 'package:zay/presentation/screens/shops/widgets/shop_item.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
@@ -60,17 +61,23 @@ class ShopsScreen extends GetView<ShopsController> {
         if (controller.isLoading.value) {
           return const Center(child: AppProgressIndicator());
         }
-        return ListView.separated(
-          itemCount: controller.shops.length,
-          separatorBuilder: (context, index) =>
-              const Divider(height: 1, thickness: 1, color: AppColors.border),
-          itemBuilder: (_, index) {
-            final shop = controller.shops[index];
-            return ShopItem(
-              shop: shop,
-              onTap: () => controller.navigateToShopDetails(shop),
-            );
-          },
+        return AnimatedStateSwitcher(
+          child: ListView.separated(
+            key: ValueKey(controller.shops.length),
+            itemCount: controller.shops.length,
+            separatorBuilder: (context, index) => const Divider(
+              height: 1,
+              thickness: 1,
+              color: AppColors.border,
+            ),
+            itemBuilder: (_, index) {
+              final shop = controller.shops[index];
+              return ShopItem(
+                shop: shop,
+                onTap: () => controller.navigateToShopDetails(shop),
+              ).animateStagger(index);
+            },
+          ),
         );
       }),
       bottomNavigationBar: const MainBottomNav(currentIndex: 1),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/screens/order_success/controller.dart';
 import 'package:zay/presentation/screens/order_success/widgets/order_success_icon.dart';
 import 'package:zay/presentation/screens/order_success/widgets/order_success_pattern_background.dart';
@@ -23,7 +24,9 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
           behavior: HitTestBehavior.opaque,
           child: Stack(
             children: [
-              const OrderSuccessPatternBackground(),
+              const OrderSuccessPatternBackground()
+                  .animate()
+                  .fadeIn(duration: AppMotion.slow),
               SafeArea(
                 child: Center(
                   child: Padding(
@@ -31,33 +34,46 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const OrderSuccessIcon(),
+                        const OrderSuccessIcon()
+                            .animate()
+                            .fadeIn(duration: AppMotion.normal)
+                            .scale(
+                              begin: const Offset(0.4, 0.4),
+                              end: const Offset(1, 1),
+                              duration: AppMotion.slow,
+                              curve: Curves.easeOutBack,
+                            ),
                         const SizedBox(height: 28),
                         Text(
                           'congratulations'.tr,
                           textAlign: TextAlign.center,
-                          style:
-                              Get.theme.textTheme.headlineMedium?.copyWith(
-                                    color: AppColors.textPrimary,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                          style: Get.theme.textTheme.headlineMedium?.copyWith(
+                            color: AppColors.textPrimary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ).animateEntrance(
+                          delay: const Duration(milliseconds: 180),
                         ),
                         const SizedBox(height: 12),
                         Text(
                           'orderConfirmedLine1'.tr,
                           textAlign: TextAlign.center,
                           style: Get.theme.textTheme.bodyLarge?.copyWith(
-                                color: AppColors.textSecondary,
-                                height: 1.4,
-                              ),
+                            color: AppColors.textSecondary,
+                            height: 1.4,
+                          ),
+                        ).animateEntrance(
+                          delay: const Duration(milliseconds: 280),
                         ),
                         Text(
                           'orderConfirmedLine2'.tr,
                           textAlign: TextAlign.center,
                           style: Get.theme.textTheme.bodyLarge?.copyWith(
-                                color: AppColors.textSecondary,
-                                height: 1.4,
-                              ),
+                            color: AppColors.textSecondary,
+                            height: 1.4,
+                          ),
+                        ).animateEntrance(
+                          delay: const Duration(milliseconds: 340),
                         ),
                       ],
                     ),

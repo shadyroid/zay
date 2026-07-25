@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/screens/orders/controller.dart';
 import 'package:zay/presentation/screens/orders/widgets/order_item.dart';
 import 'package:zay/presentation/screens/orders/widgets/orders_app_bar.dart';
@@ -30,31 +30,36 @@ class OrdersScreen extends GetView<OrdersController> {
           const SizedBox(height: 16),
           Expanded(
             child: Obx(() {
+              Widget child;
               if (controller.isLoading.value) {
-                return const Center(
-                  child: AppProgressIndicator(
-                    color: AppColors.primary,
-                  ),
+                child = const Center(
+                  key: ValueKey('orders-loading'),
+                  child: AppProgressIndicator(color: AppColors.primary),
                 );
-              }
-
-              final orders = controller.filteredOrders;
-              if (orders.isEmpty) {
-                return _OrdersEmptyState();
-              }
-
-              return ListView.separated(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                itemCount: orders.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  final order = orders[index];
-                  return OrderItem(
-                    order: order,
-                    onTap: () => controller.navigateToOrderDetails(order),
+              } else {
+                final orders = controller.filteredOrders;
+                if (orders.isEmpty) {
+                  child = const _OrdersEmptyState(key: ValueKey('orders-empty'));
+                } else {
+                  child = ListView.separated(
+                    key: ValueKey(
+                      'orders-${controller.selectedFilter.value}-${orders.length}',
+                    ),
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                    itemCount: orders.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final order = orders[index];
+                      return OrderItem(
+                        order: order,
+                        onTap: () => controller.navigateToOrderDetails(order),
+                      ).animateStagger(index);
+                    },
                   );
-                },
-              );
+                }
+              }
+              return AnimatedStateSwitcher(child: child);
             }),
           ),
         ],
@@ -64,6 +69,8 @@ class OrdersScreen extends GetView<OrdersController> {
 }
 
 class _OrdersEmptyState extends StatelessWidget {
+  const _OrdersEmptyState({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -80,15 +87,15 @@ class _OrdersEmptyState extends StatelessWidget {
                 AppColors.hint,
                 BlendMode.srcIn,
               ),
-            ),
+            ).animateScaleIn(begin: 0.8),
             const SizedBox(height: 16),
             Text(
               'emptyOrders'.tr,
               textAlign: TextAlign.center,
               style: Get.theme.textTheme.titleMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-            ),
+                color: AppColors.textSecondary,
+              ),
+            ).animateEntrance(delay: const Duration(milliseconds: 80)),
           ],
         ),
       ),

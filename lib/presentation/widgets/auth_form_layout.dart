@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class AuthFormLayout extends StatelessWidget {
   const AuthFormLayout({
@@ -19,9 +19,8 @@ class AuthFormLayout extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final minHeight = constraints.maxHeight.isFinite
-            ? constraints.maxHeight
-            : 0.0;
+        final minHeight =
+            constraints.maxHeight.isFinite ? constraints.maxHeight : 0.0;
 
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
@@ -36,7 +35,7 @@ class AuthFormLayout extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               widthFactor: 1,
-              child: child,
+              child: child.animateEntrance(),
             ),
           ),
         );

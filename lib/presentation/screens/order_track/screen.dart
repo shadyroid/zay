@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/screens/order_details/widgets/order_items_card.dart';
 import 'package:zay/presentation/screens/order_track/controller.dart';
 import 'package:zay/presentation/screens/order_track/widgets/order_track_app_bar.dart';
@@ -36,15 +36,20 @@ class OrderTrackScreen extends GetView<OrderTrackController> {
               if (controller.estimatedDelivery.value.isNotEmpty)
                 OrderTrackDeliveryCard(
                   estimatedDelivery: controller.estimatedDelivery.value,
-                ),
+                ).animateEntrance(),
               if (controller.estimatedDelivery.value.isNotEmpty)
                 const SizedBox(height: 12),
               if (order != null) ...[
-                OrderItemsCard(order: order),
+                OrderItemsCard(order: order).animateEntrance(
+                  delay: const Duration(milliseconds: 80),
+                ),
                 const SizedBox(height: 12),
               ],
               if (controller.steps.isNotEmpty)
-                OrderTrackTimelineCard(steps: controller.steps),
+                OrderTrackTimelineCard(steps: controller.steps)
+                    .animateEntrance(
+                  delay: const Duration(milliseconds: 140),
+                ),
             ],
           ),
         );

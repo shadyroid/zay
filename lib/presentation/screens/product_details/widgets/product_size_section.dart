@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/beans/size_bean.dart';
 
 class ProductSizeSection extends StatelessWidget {
@@ -20,7 +20,7 @@ class ProductSizeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (sizes==null||sizes!.isEmpty) return const SizedBox.shrink();
+    if (sizes == null || sizes!.isEmpty) return const SizedBox.shrink();
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
@@ -32,8 +32,8 @@ class ProductSizeSection extends StatelessWidget {
               Text(
                 'size'.tr,
                 style: Get.theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               const Spacer(),
               GestureDetector(
@@ -41,9 +41,9 @@ class ProductSizeSection extends StatelessWidget {
                 child: Text(
                   '${'sizeGuide'.tr} >',
                   style: Get.theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.selectedCheck,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    color: AppColors.selectedCheck,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],
@@ -54,32 +54,44 @@ class ProductSizeSection extends StatelessWidget {
             runSpacing: 10,
             children: sizes!.map((size) {
               final isSelected = selectedSizeId == size.id;
+              final available = size.isAvailable == true;
               return InkWell(
-                onTap: size.isAvailable == true ? () => onSizeSelected(size.id) : null,
+                onTap: available ? () => onSizeSelected(size.id) : null,
                 borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  width: 48,
-                  height: 48,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? AppColors.primary
-                        : AppColors.screenBackground,
-                    borderRadius: BorderRadius.circular(10),
-                    border: size.isAvailable == true
-                        ? null
-                        : Border.all(color: AppColors.border),
-                  ),
-                  child: Text(
-                    size.label ?? "",
-                    style: Get.theme.textTheme.titleSmall?.copyWith(
-                          color: size.isAvailable == false
-                              ? AppColors.textSecondary.withValues(alpha: 0.5)
-                              : isSelected
-                                  ? Colors.white
-                                  : AppColors.textPrimary,
-                          fontWeight: FontWeight.w600,
-                        ),
+                child: AnimatedScale(
+                  scale: isSelected ? 1.05 : 1.0,
+                  duration: AppMotion.fast,
+                  curve: AppMotion.standard,
+                  child: AnimatedContainer(
+                    duration: AppMotion.fast,
+                    curve: AppMotion.standard,
+                    width: 48,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? AppColors.primary
+                          : AppColors.screenBackground,
+                      borderRadius: BorderRadius.circular(10),
+                      border: available
+                          ? null
+                          : Border.all(color: AppColors.border),
+                    ),
+                    child: AnimatedDefaultTextStyle(
+                      duration: AppMotion.fast,
+                      curve: AppMotion.standard,
+                      style:
+                          (Get.theme.textTheme.titleSmall ?? const TextStyle())
+                              .copyWith(
+                        color: !available
+                            ? AppColors.textSecondary.withValues(alpha: 0.5)
+                            : isSelected
+                                ? Colors.white
+                                : AppColors.textPrimary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      child: Text(size.label ?? ""),
+                    ),
                   ),
                 ),
               );

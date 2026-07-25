@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/translations/app_translations.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/app/utils/app_theme.dart';
 import 'package:zay/app/utils/deep_links_util.dart';
 import 'package:zay/app/utils/notifications_util.dart';
@@ -44,6 +45,8 @@ class MyApp extends StatelessWidget {
       initialRoute: Routes.splash,
       getPages: Routes.pages,
       theme: AppTheme.light(),
+      defaultTransition: AppMotion.pageTransition,
+      transitionDuration: AppMotion.page,
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
       ],

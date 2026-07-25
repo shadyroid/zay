@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class ProductDetailsHeader extends StatelessWidget {
   const ProductDetailsHeader({
@@ -111,11 +111,21 @@ class _QuantitySelector extends StatelessWidget {
           _QtyButton(icon: Icons.remove, onTap: onDecrement),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Text(
-              '$quantity',
-              style: Get.theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+            child: AnimatedSwitcher(
+              duration: AppMotion.instant,
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(
+                  scale: animation,
+                  child: FadeTransition(opacity: animation, child: child),
+                );
+              },
+              child: Text(
+                '$quantity',
+                key: ValueKey(quantity),
+                style: Get.theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
           _QtyButton(icon: Icons.add, onTap: onIncrement),

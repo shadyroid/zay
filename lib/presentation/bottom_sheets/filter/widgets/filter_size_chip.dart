@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/beans/size_bean.dart';
 
 class FilterSizeChip extends StatelessWidget {
@@ -24,21 +25,33 @@ class FilterSizeChip extends StatelessWidget {
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 10),
       child: Material(
-        color: background,
-        borderRadius: BorderRadius.circular(12),
+        color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(12),
-          child: SizedBox(
-            width: 48,
-            height: 48,
-            child: Center(
-              child: Text(
-                size.label ?? "",
-                style: Get.theme.textTheme.titleSmall?.copyWith(
-                      color: foreground,
-                      fontWeight: FontWeight.w600,
-                    ),
+          child: AnimatedScale(
+            scale: isSelected ? 1.06 : 1.0,
+            duration: AppMotion.fast,
+            curve: AppMotion.standard,
+            child: AnimatedContainer(
+              duration: AppMotion.fast,
+              curve: AppMotion.standard,
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: background,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: AnimatedDefaultTextStyle(
+                  duration: AppMotion.fast,
+                  style: (Get.theme.textTheme.titleSmall ?? const TextStyle())
+                      .copyWith(
+                    color: foreground,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  child: Text(size.label ?? ""),
+                ),
               ),
             ),
           ),

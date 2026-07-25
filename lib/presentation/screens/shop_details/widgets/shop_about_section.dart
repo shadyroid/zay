@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class ShopAboutSection extends StatelessWidget {
   const ShopAboutSection({
@@ -30,30 +30,35 @@ class ShopAboutSection extends StatelessWidget {
         Text(
           'aboutStore'.tr,
           style: Get.theme.textTheme.titleMedium?.copyWith(
-                color: AppColors.textPrimary,
-                fontWeight: FontWeight.w700,
-              ),
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         const SizedBox(height: 8),
         GestureDetector(
           onTap: hasMore && !isExpanded ? onReadMore : null,
-          child: Text.rich(
-            TextSpan(
-              text: displayText,
-              style: Get.theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                    height: 1.4,
-                  ),
-              children: [
-                if (hasMore && !isExpanded)
-                  TextSpan(
-                    text: ' ${'readMore'.tr}',
-                    style: Get.theme.textTheme.bodyMedium?.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w700,
-                        ),
-                  ),
-              ],
+          child: AnimatedSize(
+            duration: AppMotion.normal,
+            curve: AppMotion.emphasized,
+            alignment: Alignment.topCenter,
+            child: Text.rich(
+              TextSpan(
+                text: displayText,
+                style: Get.theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.textSecondary,
+                  height: 1.4,
+                ),
+                children: [
+                  if (hasMore && !isExpanded)
+                    TextSpan(
+                      text: ' ${'readMore'.tr}',
+                      style: Get.theme.textTheme.bodyMedium?.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         ),

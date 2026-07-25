@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
 class AppButton extends StatelessWidget {
@@ -23,23 +23,39 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveBackgroundColor = backgroundColor ?? AppColors.primary;
 
-    final child = isLoading
-        ? const SizedBox(
-            width: 24,
-            height: 24,
-            child: AppProgressIndicator(
-              radius: 10,
-              color: Colors.white,
+    final child = AnimatedSwitcher(
+      duration: AppMotion.fast,
+      switchInCurve: AppMotion.standard,
+      switchOutCurve: AppMotion.emphasized,
+      transitionBuilder: (child, animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.92, end: 1).animate(animation),
+            child: child,
+          ),
+        );
+      },
+      child: isLoading
+          ? const SizedBox(
+              key: ValueKey('loading'),
+              width: 24,
+              height: 24,
+              child: AppProgressIndicator(
+                radius: 10,
+                color: Colors.white,
+              ),
+            )
+          : Text(
+              key: const ValueKey('label'),
+              text,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
-          )
-        : Text(
-            text,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          );
+    );
 
     if (gradient != null) {
       return SizedBox(
@@ -72,7 +88,8 @@ class AppButton extends StatelessWidget {
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: effectiveBackgroundColor,
-          disabledBackgroundColor: effectiveBackgroundColor.withValues(alpha: 0.6),
+          disabledBackgroundColor:
+              effectiveBackgroundColor.withValues(alpha: 0.6),
           foregroundColor: Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(

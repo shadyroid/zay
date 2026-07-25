@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class SettingsItem extends StatelessWidget {
   const SettingsItem({
@@ -10,16 +11,18 @@ class SettingsItem extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.showDivider = true,
+    this.animationIndex,
   });
 
   final String iconPath;
   final String title;
   final VoidCallback onTap;
   final bool showDivider;
+  final int? animationIndex;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    Widget tile = Column(
       children: [
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
@@ -31,8 +34,8 @@ class SettingsItem extends StatelessWidget {
           title: Text(
             title,
             style: Get.theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.textPrimary,
-                ),
+              color: AppColors.textPrimary,
+            ),
           ),
           trailing: const Icon(
             Icons.arrow_forward_ios,
@@ -51,5 +54,10 @@ class SettingsItem extends StatelessWidget {
           ),
       ],
     );
+
+    if (animationIndex != null) {
+      tile = tile.animateStagger(animationIndex!);
+    }
+    return tile;
   }
 }

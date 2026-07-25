@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/beans/notification_bean.dart';
 import 'package:zay/presentation/screens/notifications/controller.dart';
 import 'package:zay/presentation/screens/notifications/widgets/notification_item.dart';
@@ -55,7 +56,8 @@ class NotificationsScreen extends GetView<NotificationsController> {
                           ),
                         ),
                       ],
-                      NotificationItem(notification: notification),
+                      NotificationItem(notification: notification)
+                          .animateStagger(index),
                       const SizedBox(height: 12),
                     ],
                   );

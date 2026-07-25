@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/beans/ad_bean.dart';
 import 'package:zay/presentation/widgets/app_image.dart';
 
@@ -45,7 +46,8 @@ class HomeAdsCarousel extends StatelessWidget {
               children: List.generate(ads.length, (index) {
                 final active = index == currentIndex;
                 return AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
+                  duration: AppMotion.fast,
+                  curve: AppMotion.standard,
                   width: active ? 20 : 6,
                   height: 6,
                   margin: const EdgeInsets.symmetric(horizontal: 3),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_motion.dart';
 
 class FavoriteEmptyState extends StatelessWidget {
   const FavoriteEmptyState({super.key});
@@ -23,15 +23,15 @@ class FavoriteEmptyState extends StatelessWidget {
                 AppColors.hint,
                 BlendMode.srcIn,
               ),
-            ),
+            ).animateScaleIn(begin: 0.8),
             const SizedBox(height: 16),
             Text(
               'emptyFavorites'.tr,
               textAlign: TextAlign.center,
               style: Get.theme.textTheme.titleMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-            ),
+                color: AppColors.textSecondary,
+              ),
+            ).animateEntrance(delay: const Duration(milliseconds: 80)),
           ],
         ),
       ),
