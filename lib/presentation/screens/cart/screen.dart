@@ -37,7 +37,7 @@ class CartScreen extends GetView<CartController> {
 
         final itemCount = controller.itemCount;
         final subtotal = controller.subtotal;
-        final shipping = CartController.shippingFee;
+        final shipping = controller.shippingFee.value;
         final total = controller.total;
         final paymentMethod = controller.paymentMethod.value;
         final deliveryAddress = controller.deliveryAddress.value;

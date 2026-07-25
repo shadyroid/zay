@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:zay/app/use_cases/locations_use_case.dart';
 import 'package:zay/domain/models/beans/location_bean.dart';
@@ -20,6 +19,7 @@ class MapController extends BaseController {
   final locations = <LocationBean>[].obs;
   final showSuggestions = false.obs;
   final isResolvingAddress = false.obs;
+  List<dynamic>? _addressComponents;
 
   GoogleMapController? _mapController;
   Timer? _searchDebounce;
@@ -88,9 +88,11 @@ class MapController extends BaseController {
       );
       if (!isSuccess(response) || response.data?.address == null) {
         address.value = '';
+        _addressComponents = null;
         return;
       }
       address.value = response.data!.address!;
+      _addressComponents = response.data!.addressComponents;
     } finally {
       isResolvingAddress.value = false;
     }
@@ -149,9 +151,10 @@ class MapController extends BaseController {
     LocationBean location, {
     bool animate = false,
   }) async {
-    address.value = location.address??"";
-    latitude.value = location.lat??0.0;
-    longitude.value = location.lng??0.0;
+    address.value = location.address ?? "";
+    latitude.value = location.lat ?? 0.0;
+    longitude.value = location.lng ?? 0.0;
+    _addressComponents = location.addressComponents;
     _skipNextCameraIdle = true;
 
     final controller = _mapController;
@@ -178,6 +181,7 @@ class MapController extends BaseController {
         address: address.value,
         lat: latitude.value,
         lng: longitude.value,
+        addressComponents: _addressComponents,
       ),
     );
   }

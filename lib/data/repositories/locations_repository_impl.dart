@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:zay/data/remote/data_sources/locations_data_source.dart';
@@ -130,10 +128,16 @@ class LocationsRepositoryImpl implements LocationsRepository {
     final lat = (coordinates?['lat'] as num?)?.toDouble();
     final lng = (coordinates?['lng'] as num?)?.toDouble();
     final address = result['formatted_address'] as String? ?? '';
+    final components = result['address_components'] as List<dynamic>?;
 
     if (lat == null || lng == null || address.isEmpty) return null;
 
-    return LocationBean(address: address, lat: lat, lng: lng);
+    return LocationBean(
+      address: address,
+      lat: lat,
+      lng: lng,
+      addressComponents: components,
+    );
   }
 
   LocationBean? _parseGeocodeResponse(Map<String, dynamic>? google) {
@@ -150,10 +154,16 @@ class LocationsRepositoryImpl implements LocationsRepository {
     final location = geometry?['location'] as Map<String, dynamic>?;
     final lat = (location?['lat'] as num?)?.toDouble();
     final lng = (location?['lng'] as num?)?.toDouble();
+    final components = result['address_components'] as List<dynamic>?;
 
     if (address.isEmpty || lat == null || lng == null) return null;
 
-    return LocationBean(address: address, lat: lat, lng: lng);
+    return LocationBean(
+      address: address,
+      lat: lat,
+      lng: lng,
+      addressComponents: components,
+    );
   }
 
   Future<bool> _requestLocationPermission() async {

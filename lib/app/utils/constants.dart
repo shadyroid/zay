@@ -14,6 +14,7 @@ class Constants {
   static const String resetPasswordPath = '/auth/reset-password';
   static const String signOutPath = '/auth/logout';
 
+  static const String citiesPath = '/cities';
   static const String adsPath = '/ads';
   static const String notificationsPath = '/notifications';
   static const String productsPath = '/products';
@@ -35,6 +36,7 @@ class Constants {
   static const String orderDetailsPath = '/orders';
   static const String orderReturnPath = '/returns/order';
   static const String returnReasonsPath = '/returns/reasons';
+  static const String shippingCalculatePath = '/shipping/calculate';
 
   static const String profilePath = '/profile';
   static const String changePasswordPath = '/profile/password';
