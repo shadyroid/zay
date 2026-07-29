@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCl17JMFp4Yi4MwSZHs-AflhjDs6QoifQI',
-    appId: '1:945540396376:android:929f750a712dd0767f212d',
+    appId: '1:945540396376:android:198ea8cb115b20137f212d',
     messagingSenderId: '945540396376',
     projectId: 'zay-app',
     storageBucket: 'zay-app.firebasestorage.app',

@@ -30,7 +30,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.zay"
+        applicationId = "com.zay.marketplace"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
