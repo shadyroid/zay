@@ -5,10 +5,10 @@ import 'package:zay/domain/models/responses/base_response.dart';
 import 'package:zay/domain/models/responses/notifications_count_response.dart';
 import 'package:zay/domain/models/responses/notifications_response.dart';
 import 'package:zay/domain/repositories/notifications_repository.dart';
+import 'package:get/get.dart';
 
 class NotificationsRepositoryImpl implements NotificationsRepository {
-  final NotificationsDataSource _notificationsDataSource =
-      NotificationsDataSource();
+ final NotificationsDataSource _notificationsDataSource = Get.put(NotificationsDataSource());
 
   @override
   Future<NotificationsResponse> requestNotifications(

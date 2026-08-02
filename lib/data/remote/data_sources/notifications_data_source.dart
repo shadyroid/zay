@@ -5,8 +5,7 @@ import 'package:zay/domain/models/requests/notifications_request.dart';
 import 'package:zay/domain/models/requests/read_notification_request.dart';
 
 class NotificationsDataSource {
-  final DioClient _dioClient = Get.find<DioClient>();
-
+  final DioClient _dioClient = Get.put(DioClient());
   Future<Map<String, dynamic>> requestNotifications(
     NotificationsRequest request,
   ) async {

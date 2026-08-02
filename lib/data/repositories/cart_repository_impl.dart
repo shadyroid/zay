@@ -4,9 +4,10 @@ import 'package:zay/domain/repositories/cart_repository.dart';
 import 'package:zay/domain/models/requests/add_cart_item_request.dart';
 import 'package:zay/domain/models/requests/delete_cart_item_request.dart';
 import 'package:zay/domain/models/requests/update_cart_item_request.dart';
+import 'package:get/get.dart';
 
 class CartRepositoryImpl implements CartRepository {
-  final CartDataSource _cartDataSource = CartDataSource();
+ final CartDataSource _cartDataSource = Get.put(CartDataSource());
 
   @override
   Future<CartResponse> requestCart() async {

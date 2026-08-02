@@ -5,9 +5,10 @@ import 'package:zay/domain/repositories/reviews_repository.dart';
 import 'package:zay/domain/models/requests/add_review_request.dart';
 import 'package:zay/domain/models/requests/reviews_request.dart';
 import 'package:zay/domain/models/requests/try_on_review_request.dart';
+import 'package:get/get.dart';
 
 class ReviewsRepositoryImpl implements ReviewsRepository {
-  final ReviewsDataSource _reviewsDataSource = ReviewsDataSource();
+ final ReviewsDataSource _reviewsDataSource = Get.put(ReviewsDataSource());
 
   @override
   Future<ReviewsResponse> requestReviews(ReviewsRequest request) async {

@@ -4,9 +4,10 @@ import 'package:zay/domain/models/responses/base_response.dart';
 import 'package:zay/domain/models/responses/content_response.dart';
 import 'package:zay/domain/repositories/settings_repository.dart';
 import 'package:zay/domain/models/requests/contact_us_request.dart';
+import 'package:get/get.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
-  final SettingsDataSource _settingsDataSource = SettingsDataSource();
+ final SettingsDataSource _settingsDataSource = Get.put(SettingsDataSource());
 
   @override
   Future<ContentResponse> requestAboutUs() async {

@@ -1,9 +1,10 @@
+import 'package:get/get.dart';
 import 'package:zay/data/remote/data_sources/ads_data_source.dart';
 import 'package:zay/domain/models/responses/ads_response.dart';
 import 'package:zay/domain/repositories/ads_repository.dart';
 
 class AdsRepositoryImpl implements AdsRepository {
-  final AdsDataSource _adsDataSource = AdsDataSource();
+ final AdsDataSource _adsDataSource = Get.put(AdsDataSource());
 
   @override
   Future<AdsResponse> requestAds() async {

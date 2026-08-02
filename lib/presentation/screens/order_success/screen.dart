@@ -75,6 +75,41 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
                         ).animateEntrance(
                           delay: const Duration(milliseconds: 340),
                         ),
+                        if (controller.isCardPayment) ...[
+                          const SizedBox(height: 24),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE8F6EF),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(
+                                  Icons.info_outline,
+                                  size: 22,
+                                  color: AppColors.orderSuccess,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    'orderCardPaymentPendingApproval'.tr,
+                                    textAlign: TextAlign.start,
+                                    style: Get.theme.textTheme.bodySmall
+                                        ?.copyWith(
+                                      color: AppColors.orderSuccess,
+                                      height: 1.45,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ).animateEntrance(
+                            delay: const Duration(milliseconds: 420),
+                          ),
+                        ],
                       ],
                     ),
                   ),

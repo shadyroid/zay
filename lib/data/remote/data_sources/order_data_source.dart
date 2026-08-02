@@ -8,7 +8,7 @@ import 'package:zay/domain/models/requests/order_return_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
 
 class OrderDataSource {
-  final DioClient _dioClient = Get.find<DioClient>();
+  final DioClient _dioClient = Get.put(DioClient());
 
   Future<Map<String, dynamic>> requestCreateOrder(
     CreateOrderRequest request,

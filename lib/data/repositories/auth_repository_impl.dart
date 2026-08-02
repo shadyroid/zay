@@ -12,9 +12,10 @@ import 'package:zay/domain/models/requests/sign_in_request.dart';
 import 'package:zay/domain/models/requests/sign_up_request.dart';
 import 'package:zay/domain/models/requests/update_profile_request.dart';
 import 'package:zay/domain/models/requests/verification_request.dart';
+import 'package:get/get.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthDataSource _authDataSource = AuthDataSource();
+ final AuthDataSource _authDataSource = Get.put(AuthDataSource());
 
   @override
   Future<BaseResponse> requestSignIn(SignInRequest request) async {

@@ -29,7 +29,6 @@ Future<void> main() async {
   await PrefsManager.init();
   await NotificationsUtil.init();
   await DeepLinksUtil.init();
-  Get.put(DioClient(), permanent: true);
   if (Platform.isAndroid) {
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky,

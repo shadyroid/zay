@@ -272,6 +272,9 @@ class CartController extends BaseController {
     isLoading.value = false;
     if (!isSuccess(response)) return;
 
-    Get.offNamed(Routes.orderSuccess);
+    Get.offNamed(
+      Routes.orderSuccess,
+      arguments: {'paymentMethod': paymentMethod.value.apiValue},
+    );
   }
 }

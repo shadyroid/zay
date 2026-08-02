@@ -32,11 +32,15 @@ class VerificationScreen extends GetView<VerificationController> {
                   const VerificationHeader(),
                   const SizedBox(height: 32),
                   Obx(
-                    () => OtpInputBoxes(
-                      code: controller.otpCode.value,
-                      controller: controller.otpTextController,
-                      focusNode: controller.otpFocusNode,
-                      length: VerificationController.otpLength,
+                    () => Directionality(
+                      
+                      textDirection: TextDirection.ltr,
+                      child: OtpInputBoxes(
+                        code: controller.otpCode.value,
+                        controller: controller.otpTextController,
+                        focusNode: controller.otpFocusNode,
+                        length: VerificationController.otpLength,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 32),

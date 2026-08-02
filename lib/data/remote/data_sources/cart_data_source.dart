@@ -6,7 +6,7 @@ import 'package:zay/domain/models/requests/delete_cart_item_request.dart';
 import 'package:zay/domain/models/requests/update_cart_item_request.dart';
 
 class CartDataSource {
-  final DioClient _dioClient = Get.find<DioClient>();
+  final DioClient _dioClient = Get.put(DioClient());
 
   Future<Map<String, dynamic>> requestCart() async {
     final response = await _dioClient.get(Constants.cartPath);

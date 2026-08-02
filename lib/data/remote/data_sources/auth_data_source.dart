@@ -14,7 +14,7 @@ import 'package:zay/domain/models/requests/update_profile_request.dart';
 import 'package:zay/domain/models/requests/verification_request.dart';
 
 class AuthDataSource {
-  final DioClient _dioClient = Get.find<DioClient>();
+  final DioClient _dioClient = Get.put(DioClient());
 
   Future<Map<String, dynamic>> requestSignIn(SignInRequest request) async {
     final response = await _dioClient.post(

@@ -217,6 +217,8 @@ class AppTranslations extends Translations {
     'congratulations': 'Congratulations',
     'orderConfirmedLine1': 'Your Order Has Been Confirmed',
     'orderConfirmedLine2': 'Successfully',
+    'orderCardPaymentPendingApproval':
+        'Please wait for the shop to approve your order. If the shop rejects it, your money will be refunded.',
     'orderPlacedSuccess': 'Order placed successfully!',
     'orderSuccessSubtitle': 'Thank you for your purchase.',
     'orderId': 'Order ID',
@@ -538,6 +540,8 @@ class AppTranslations extends Translations {
     'congratulations': 'تهانينا',
     'orderConfirmedLine1': 'تم تأكيد طلبك',
     'orderConfirmedLine2': 'بنجاح',
+    'orderCardPaymentPendingApproval':
+        'يرجى انتظار موافقة المتجر على طلبك. في حال رفض المتجر للطلب، سيتم استرداد المبلغ.',
     'orderPlacedSuccess': 'تم تقديم الطلب بنجاح!',
     'orderSuccessSubtitle': 'شكراً لشرائك.',
     'orderId': 'رقم الطلب',

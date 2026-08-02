@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/domain/models/responses/base_response.dart';
@@ -23,7 +25,8 @@ abstract class BaseController extends GetxController {
       return;
     }
     if (response.statusCode == -2) {
-      Get.toNamed(
+      log("message ${response.message}");
+      Get.offNamed(
         Routes.serverError,
         arguments: {
           'currentRoute': Get.currentRoute,

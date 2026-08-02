@@ -7,7 +7,7 @@ import 'package:zay/domain/models/requests/reviews_request.dart';
 import 'package:zay/domain/models/requests/try_on_review_request.dart';
 
 class ReviewsDataSource {
-  final DioClient _dioClient = Get.find<DioClient>();
+  final DioClient _dioClient = Get.put(DioClient());
 
   Future<Map<String, dynamic>> requestReviews(ReviewsRequest request) async {
     final response = await _dioClient.get(

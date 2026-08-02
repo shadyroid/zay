@@ -9,9 +9,10 @@ import 'package:zay/domain/models/requests/create_order_request.dart';
 import 'package:zay/domain/models/requests/order_details_request.dart';
 import 'package:zay/domain/models/requests/order_return_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
+import 'package:get/get.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
-  final OrderDataSource _orderDataSource = OrderDataSource();
+ final OrderDataSource _orderDataSource = Get.put(OrderDataSource());
 
   @override
   Future<BaseResponse> requestCreateOrder(CreateOrderRequest request) async {

@@ -5,9 +5,10 @@ import 'package:zay/domain/models/beans/location_bean.dart';
 import 'package:zay/domain/models/responses/location_details_response.dart';
 import 'package:zay/domain/models/responses/locations_response.dart';
 import 'package:zay/domain/repositories/locations_repository.dart';
+import 'package:get/get.dart';
 
 class LocationsRepositoryImpl implements LocationsRepository {
-  final LocationsDataSource _dataSource = LocationsDataSource();
+ final LocationsDataSource _dataSource = Get.put(LocationsDataSource());
 
   static const _autocompleteLimit = 5;
 
@@ -27,8 +28,8 @@ class LocationsRepositoryImpl implements LocationsRepository {
     }
 
     final positionData = positionJson['data'] as Map<String, dynamic>?;
-    final lat = (positionData?['latitude'] as num?)?.toDouble();
-    final lng = (positionData?['longitude'] as num?)?.toDouble();
+    final lat = (positionData?['lat'] as num?)?.toDouble();
+    final lng = (positionData?['lng'] as num?)?.toDouble();
     if (lat == null || lng == null) {
       return const LocationDetailsResponse(
         statusCode: -2,

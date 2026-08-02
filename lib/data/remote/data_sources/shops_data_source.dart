@@ -4,7 +4,7 @@ import 'package:zay/data/remote/dio_client.dart';
 import 'package:zay/domain/models/requests/shop_details_request.dart';
 
 class ShopsDataSource {
-  final DioClient _dioClient = Get.find<DioClient>();
+  final DioClient _dioClient = Get.put(DioClient());
 
   Future<Map<String, dynamic>> requestShops() async {
     final response = await _dioClient.get(Constants.shopsPath);

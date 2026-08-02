@@ -15,10 +15,11 @@ import 'package:zay/domain/models/requests/product_details_request.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/domain/models/requests/try_on_request.dart';
+import 'package:get/get.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
-  final ProductsDataSource _productsDataSource = ProductsDataSource();
-  final CartDataSource _cartDataSource = CartDataSource();
+ final ProductsDataSource _productsDataSource = Get.put(ProductsDataSource());
+ final CartDataSource _cartDataSource = Get.put(CartDataSource());
 
   @override
   Future<CategoriesResponse> requestCategories() async {

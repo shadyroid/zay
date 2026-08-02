@@ -151,55 +151,7 @@ class ProductItem extends StatelessWidget {
                   color: isOutOfStock ? Colors.grey : AppColors.textSecondary,
                 ),
               ),
-              const SizedBox(height: 2),
-              Row(
-                children: [
-                  Expanded(
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 4,
-                      runSpacing: 2,
-                      children: [
-                        Text(
-                          '£${currentPrice.toStringAsFixed(2)}',
-                          style: Get.theme.textTheme.titleSmall?.copyWith(
-                            color: isOutOfStock
-                                ? Colors.grey
-                                : AppColors.textPrimary,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        if (hasDiscount && !isOutOfStock)
-                          Text(
-                            '£${originalPrice.toStringAsFixed(2)}',
-                            style: Get.theme.textTheme.bodySmall?.copyWith(
-                              color: Colors.grey,
-                              decoration: TextDecoration.lineThrough,
-                              fontSize: 11,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/ic_star.svg',
-                        width: 14,
-                        height: 14,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        rating,
-                        style: Get.theme.textTheme.bodySmall?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+
             ],
           );
         },

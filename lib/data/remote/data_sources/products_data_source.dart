@@ -8,7 +8,7 @@ import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/domain/models/requests/try_on_request.dart';
 
 class ProductsDataSource {
-  final DioClient _dioClient = Get.find<DioClient>();
+  final DioClient _dioClient = Get.put(DioClient());
 
   Future<Map<String, dynamic>> requestCategories() async {
     final response = await _dioClient.get(Constants.categoriesPath);
