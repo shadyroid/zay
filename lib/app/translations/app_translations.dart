@@ -219,6 +219,9 @@ class AppTranslations extends Translations {
     'orderConfirmedLine2': 'Successfully',
     'orderCardPaymentPendingApproval':
         'Please wait for the shop to approve your order. If the shop rejects it, your money will be refunded.',
+    'orderCardPaymentPendingPay':
+        'Payment is still pending. Open the order from My Orders and tap Pay to complete payment.',
+    'paymentLinkOpenFailed': 'Could not open the payment page. Please try again.',
     'orderPlacedSuccess': 'Order placed successfully!',
     'orderSuccessSubtitle': 'Thank you for your purchase.',
     'orderId': 'Order ID',
@@ -542,6 +545,9 @@ class AppTranslations extends Translations {
     'orderConfirmedLine2': 'بنجاح',
     'orderCardPaymentPendingApproval':
         'يرجى انتظار موافقة المتجر على طلبك. في حال رفض المتجر للطلب، سيتم استرداد المبلغ.',
+    'orderCardPaymentPendingPay':
+        'الدفع لم يكتمل بعد. افتح الطلب من قائمة الطلبات واضغط على ادفع الآن لإتمام الدفع.',
+    'paymentLinkOpenFailed': 'تعذر فتح صفحة الدفع. يرجى المحاولة مرة أخرى.',
     'orderPlacedSuccess': 'تم تقديم الطلب بنجاح!',
     'orderSuccessSubtitle': 'شكراً لشرائك.',
     'orderId': 'رقم الطلب',

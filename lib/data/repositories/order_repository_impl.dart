@@ -1,28 +1,72 @@
+import 'package:zay/app/utils/payment_method.dart';
 import 'package:zay/data/remote/data_sources/order_data_source.dart';
 import 'package:zay/domain/models/responses/base_response.dart';
 import 'package:zay/domain/models/responses/order_response.dart';
 import 'package:zay/domain/models/responses/orders_response.dart';
+import 'package:zay/domain/models/responses/payment_initiate_response.dart';
+import 'package:zay/domain/models/responses/payment_status_response.dart';
 import 'package:zay/domain/models/responses/return_reasons_response.dart';
 import 'package:zay/domain/models/responses/summary_response.dart';
 import 'package:zay/domain/repositories/order_repository.dart';
 import 'package:zay/domain/models/requests/create_order_request.dart';
 import 'package:zay/domain/models/requests/order_details_request.dart';
 import 'package:zay/domain/models/requests/order_return_request.dart';
+import 'package:zay/domain/models/requests/payment_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
 import 'package:get/get.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
- final OrderDataSource _orderDataSource = Get.put(OrderDataSource());
+  final OrderDataSource _orderDataSource = Get.put(OrderDataSource());
 
   @override
-  Future<BaseResponse> requestCreateOrder(CreateOrderRequest request) async {
+  Future<OrderResponse> requestCreateOrder(CreateOrderRequest request) async {
     var json = await _orderDataSource.requestCreateOrder(request);
+    final order = json['order'];
+    String? paymentUrl;
+    String? paymentStatus;
+
+    if (request.paymentMethod == PaymentMethod.card.apiValue &&
+        order is Map &&
+        order['id'] != null) {
+      final initiateJson = await _orderDataSource.requestInitiatePayment(
+        PaymentRequest(orderId: order['id'] as int),
+      );
+      final initiate = PaymentInitiateResponse.fromJson(initiateJson);
+      if (initiate.isSuccess) {
+        paymentUrl = initiate.paymentUrl;
+        paymentStatus = initiate.paymentStatus;
+      } else {
+        return OrderResponse(
+          statusCode: initiate.statusCode,
+          message: initiate.message,
+        );
+      }
+    }
+
     json = {
       "statusCode": json['statusCode'],
       "message": json['message'],
-      "data": json['order'],
+      "data": order,
+      "payment_url": paymentUrl,
+      "payment_status": paymentStatus,
     };
     return OrderResponse.fromJson(json);
+  }
+
+  @override
+  Future<PaymentInitiateResponse> requestInitiatePayment(
+    PaymentRequest request,
+  ) async {
+    final json = await _orderDataSource.requestInitiatePayment(request);
+    return PaymentInitiateResponse.fromJson(json);
+  }
+
+  @override
+  Future<PaymentStatusResponse> requestPaymentStatus(
+    PaymentRequest request,
+  ) async {
+    final json = await _orderDataSource.requestPaymentStatus(request);
+    return PaymentStatusResponse.fromJson(json);
   }
 
   @override

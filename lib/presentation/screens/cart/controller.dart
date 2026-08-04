@@ -7,12 +7,14 @@ import 'package:zay/app/use_cases/cities_use_case.dart';
 import 'package:zay/app/use_cases/order_use_case.dart';
 import 'package:zay/app/utils/address_city_area_parser.dart';
 import 'package:zay/app/utils/egyptian_phone_util.dart';
+import 'package:zay/app/utils/payment_browser.dart';
 import 'package:zay/app/utils/payment_method.dart';
 import 'package:zay/domain/models/beans/cart_item_bean.dart';
 import 'package:zay/domain/models/beans/city_bean.dart';
 import 'package:zay/domain/models/beans/location_bean.dart';
 import 'package:zay/domain/models/requests/create_order_request.dart';
 import 'package:zay/domain/models/requests/delete_cart_item_request.dart';
+import 'package:zay/domain/models/requests/payment_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
 import 'package:zay/domain/models/requests/update_cart_item_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
@@ -269,12 +271,44 @@ class CartController extends BaseController {
         paymentMethod: paymentMethod.value.apiValue,
       ),
     );
-    isLoading.value = false;
-    if (!isSuccess(response)) return;
+
+    if (!isSuccess(response)) {
+      isLoading.value = false;
+      return;
+    }
+
+    var paymentStatus = response.paymentStatus;
+    final paymentUrl = response.paymentUrl;
+    final orderId = response.data?.id;
+
+    if (paymentMethod.value == PaymentMethod.card &&
+        paymentUrl != null &&
+        paymentUrl.isNotEmpty &&
+        orderId != null) {
+      isLoading.value = false;
+      final opened = await PaymentBrowser.openAndWaitForReturn(paymentUrl);
+      if (!opened) {
+        Get.rawSnackbar(message: 'paymentLinkOpenFailed'.tr);
+      }
+
+      isLoading.value = true;
+      final statusResponse = await _orderUseCase.requestPaymentStatus(
+        PaymentRequest(orderId: orderId),
+      );
+      isLoading.value = false;
+      if (isSuccess(statusResponse)) {
+        paymentStatus = statusResponse.paymentStatus;
+      }
+    } else {
+      isLoading.value = false;
+    }
 
     Get.offNamed(
       Routes.orderSuccess,
-      arguments: {'paymentMethod': paymentMethod.value.apiValue},
+      arguments: {
+        'paymentMethod': paymentMethod.value.apiValue,
+        'paymentStatus': paymentStatus,
+      },
     );
   }
 }

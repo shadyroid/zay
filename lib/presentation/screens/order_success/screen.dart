@@ -81,25 +81,33 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFE8F6EF),
+                              color: controller.isPaymentPending
+                                  ? const Color(0xFFFFF4E5)
+                                  : const Color(0xFFE8F6EF),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.info_outline,
                                   size: 22,
-                                  color: AppColors.orderSuccess,
+                                  color: controller.isPaymentPending
+                                      ? const Color(0xFFC47A00)
+                                      : AppColors.orderSuccess,
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Text(
-                                    'orderCardPaymentPendingApproval'.tr,
+                                    controller.isPaymentPending
+                                        ? 'orderCardPaymentPendingPay'.tr
+                                        : 'orderCardPaymentPendingApproval'.tr,
                                     textAlign: TextAlign.start,
                                     style: Get.theme.textTheme.bodySmall
                                         ?.copyWith(
-                                      color: AppColors.orderSuccess,
+                                      color: controller.isPaymentPending
+                                          ? const Color(0xFF8A5A00)
+                                          : AppColors.orderSuccess,
                                       height: 1.45,
                                     ),
                                   ),

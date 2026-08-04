@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 
 class OrderDetailsActions extends StatelessWidget {
@@ -10,11 +9,13 @@ class OrderDetailsActions extends StatelessWidget {
     required this.onReturn,
     required this.onTrack,
     this.onReview,
+    this.onPay,
   });
 
   final VoidCallback onReturn;
   final VoidCallback onTrack;
   final VoidCallback? onReview;
+  final VoidCallback? onPay;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,14 @@ class OrderDetailsActions extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (onPay != null) ...[
+              _FilledActionButton(
+                icon: 'assets/icons/ic_card.svg',
+                label: 'payNow'.tr,
+                onTap: onPay!,
+              ),
+              const SizedBox(height: 12),
+            ],
             Row(
               children: [
                 Expanded(

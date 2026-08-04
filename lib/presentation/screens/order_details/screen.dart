@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/presentation/screens/order_details/controller.dart';
 import 'package:zay/presentation/screens/order_details/widgets/order_customer_card.dart';
@@ -57,6 +56,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
               onReturn: controller.navigateToReturn,
               onTrack: controller.navigateToTrack,
               onReview: order.isCompleted ? controller.navigateToReview : null,
+              onPay: order.needsPayment ? controller.onPay : null,
             ),
           ],
         );

@@ -5,6 +5,7 @@ import 'package:zay/data/remote/dio_client.dart';
 import 'package:zay/domain/models/requests/create_order_request.dart';
 import 'package:zay/domain/models/requests/order_details_request.dart';
 import 'package:zay/domain/models/requests/order_return_request.dart';
+import 'package:zay/domain/models/requests/payment_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
 
 class OrderDataSource {
@@ -26,6 +27,24 @@ class OrderDataSource {
         'payment_method': request.paymentMethod,
         'notes': request.notes?.trim() ?? '',
       },
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> requestInitiatePayment(
+    PaymentRequest request,
+  ) async {
+    final response = await _dioClient.post(
+      '${Constants.paymentInitiatePath}/${request.orderId}',
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> requestPaymentStatus(
+    PaymentRequest request,
+  ) async {
+    final response = await _dioClient.get(
+      '${Constants.paymentStatusPath}/${request.orderId}',
     );
     return Map<String, dynamic>.from(response.data as Map);
   }

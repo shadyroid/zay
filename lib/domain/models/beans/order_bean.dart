@@ -1,7 +1,5 @@
-import 'package:zay/app/utils/parser.dart';
 import 'package:zay/domain/models/beans/location_bean.dart';
 import 'package:zay/domain/models/beans/order_product_bean.dart';
-import 'package:zay/domain/models/beans/order_track_step_bean.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
 
 class OrderBean {
@@ -13,6 +11,7 @@ class OrderBean {
   final String? total;
   final String? status;
   final String? paymentMethod;
+  final String? paymentStatus;
   final LocationBean? location;
   final String? createdAt;
   // final String productName;
@@ -36,6 +35,7 @@ class OrderBean {
     required this.total,
     required this.status,
     required this.paymentMethod,
+    this.paymentStatus,
     required this.location,
     required this.createdAt,
     required this.customerName,
@@ -57,6 +57,33 @@ class OrderBean {
 
   bool get isReturned => status?.toLowerCase() == 'returned';
 
+  bool get isCardPayment => paymentMethod == 'card';
+
+  bool get needsPayment {
+    if (!isCardPayment) return false;
+    final value = paymentStatus?.toLowerCase();
+    return value != 'paid' && value != 'captured' && value != 'success';
+  }
+
+  OrderBean copyWith({String? paymentStatus}) {
+    return OrderBean(
+      id: id,
+      refNumber: refNumber,
+      shop: shop,
+      subtotal: subtotal,
+      shippingFee: shippingFee,
+      total: total,
+      status: status,
+      paymentMethod: paymentMethod,
+      paymentStatus: paymentStatus ?? this.paymentStatus,
+      location: location,
+      createdAt: createdAt,
+      customerName: customerName,
+      customerPhone: customerPhone,
+      items: items,
+    );
+  }
+
   factory OrderBean.fromJson(Map<String, dynamic> json) {
 
     return OrderBean(
@@ -69,6 +96,7 @@ class OrderBean {
       status: json['status'],
       //status_label
       paymentMethod: json['payment_method'],
+      paymentStatus: json['payment_status'] as String?,
       location: json['shipping_address'] != null
           ? LocationBean.fromJson(json['shipping_address'])
           : null,

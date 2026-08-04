@@ -42,6 +42,8 @@ class Constants {
   static const String orderReturnPath = '/returns/order';
   static const String returnReasonsPath = '/returns/reasons';
   static const String shippingCalculatePath = '/shipping/calculate';
+  static const String paymentInitiatePath = '/payment/initiate';
+  static const String paymentStatusPath = '/payment/status';
 
   static const String profilePath = '/profile';
   static const String changePasswordPath = '/profile/password';
