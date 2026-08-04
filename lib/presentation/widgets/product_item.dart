@@ -143,13 +143,36 @@ class ProductItem extends StatelessWidget {
               else
                 AspectRatio(aspectRatio: 0.78, child: image),
               const SizedBox(height: 6),
-              Text(
-                product.name ?? "",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Get.theme.textTheme.bodyMedium?.copyWith(
-                  color: isOutOfStock ? Colors.grey : AppColors.textSecondary,
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      product.name ?? "",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Get.theme.textTheme.bodyMedium?.copyWith(
+                        color: isOutOfStock ? Colors.grey : AppColors.textSecondary,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/ic_star.svg',
+                        width: 14,
+                        height: 14,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        rating,
+                        style: Get.theme.textTheme.bodySmall?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
 
             ],
