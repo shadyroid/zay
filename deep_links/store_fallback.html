@@ -7,7 +7,7 @@
   <script>
     (function () {
       var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-      var androidStore = 'https://play.google.com/store/apps/details?id=com.zay';
+      var androidStore = 'https://play.google.com/store/apps/details?id=com.zay.marketplace';
       // Replace with your App Store URL once published
       var iosStore = 'https://apps.apple.com/app/idYOUR_APP_ID';
       // Give Universal Links a brief chance to hand off to the app
@@ -23,7 +23,7 @@
     document.getElementById('store').href =
       /iPhone|iPad|iPod/i.test(navigator.userAgent)
         ? 'https://apps.apple.com/app/idYOUR_APP_ID'
-        : 'https://play.google.com/store/apps/details?id=com.zay';
+        : 'https://play.google.com/store/apps/details?id=com.zay.marketplace';
   </script>
 </body>
 </html>

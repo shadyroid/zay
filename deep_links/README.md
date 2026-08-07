@@ -73,19 +73,19 @@ keytool -list -v -keystore /path/to/your-release.keystore -alias YOUR_ALIAS
 
 Use the **SHA256** value (colons optional; Google accepts both forms).
 
-Package name must stay: `com.zay`
+Package name must stay: `com.zay.marketplace`
 
 ### 2. `apple-app-site-association` (iOS)
 
 Replace `TEAM_ID` with your Apple Developer Team ID:
 
 ```text
-"appID": "XXXXXXXXXX.com.zay"
+"appID": "XXXXXXXXXX.com.zay.marketplace"
 ```
 
 Find Team ID: [Apple Developer → Membership](https://developer.apple.com/account) → Team ID.
 
-Bundle ID must stay: `com.zay`
+Bundle ID must stay: `com.zay.marketplace`
 
 ### 3. `store_fallback.html`
 
@@ -98,7 +98,7 @@ https://apps.apple.com/app/id1234567890
 Play Store is already:
 
 ```text
-https://play.google.com/store/apps/details?id=com.zay
+https://play.google.com/store/apps/details?id=com.zay.marketplace
 ```
 
 ---
@@ -182,7 +182,7 @@ Also open in a browser (app uninstalled):
 ### Android
 
 ```bash
-adb shell pm get-app-links com.zay
+adb shell pm get-app-links com.zay.marketplace
 ```
 
 Domain should show as verified. Or use Android Studio → App Links Assistant.
@@ -191,7 +191,7 @@ Test:
 
 ```bash
 adb shell am start -a android.intent.action.VIEW \
-  -d "https://zaymarketplace.online/product/1" com.zay
+  -d "https://zaymarketplace.online/product/1" com.zay.marketplace
 ```
 
 ### iOS
@@ -261,7 +261,7 @@ Force `Content-Type: application/json` for `apple-app-site-association`.
 **4) Placeholders**
 
 - Android SHA-256 fingerprints in `assetlinks.json`  
-- Apple `TEAM_ID` in AASA → `TEAM_ID.com.zay`  
+- Apple `TEAM_ID` in AASA → `TEAM_ID.com.zay.marketplace`  
 - Real App Store URL in `store_fallback.html`  
 
 Files are attached from the mobile repo `deep_links/` folder.

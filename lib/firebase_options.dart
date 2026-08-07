@@ -50,18 +50,18 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCl17JMFp4Yi4MwSZHs-AflhjDs6QoifQI',
+    apiKey: 'AIzaSyD63-K8d3YvJ1E9h4WnNRF0Rg_3zjdjzx0',
     appId: '1:945540396376:android:198ea8cb115b20137f212d',
     messagingSenderId: '945540396376',
     projectId: 'zay-app',
     storageBucket: 'zay-app.firebasestorage.app',
   );
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDh8DrMA40-QDfXpm6EkM_4SxA-Jt4a94w',
-    appId: '1:945540396376:ios:96901a5d9f0778a17f212d',
+    apiKey: 'AIzaSyCoGOX-qA72_ljwzyUMdR1_vTrchc86VN4',
+    appId: '1:945540396376:ios:541523127902e2a77f212d',
     messagingSenderId: '945540396376',
     projectId: 'zay-app',
     storageBucket: 'zay-app.firebasestorage.app',
-    iosBundleId: 'com.zay',
+    iosBundleId: 'com.zay.marketplace',
   );
 }

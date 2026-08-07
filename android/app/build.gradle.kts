@@ -17,7 +17,7 @@ val keystoreProperties = Properties().apply {
     }
 }
 android {
-    namespace = "com.zay"
+    namespace = "com.zay.marketplace"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

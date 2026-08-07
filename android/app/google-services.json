@@ -7,28 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:945540396376:android:929f750a712dd0767f212d",
-        "android_client_info": {
-          "package_name": "com.zay"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCl17JMFp4Yi4MwSZHs-AflhjDs6QoifQI"
-        },
-        {
-          "current_key": "AIzaSyD63-K8d3YvJ1E9h4WnNRF0Rg_3zjdjzx0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:945540396376:android:198ea8cb115b20137f212d",
         "android_client_info": {
           "package_name": "com.zay.marketplace"
@@ -36,9 +14,6 @@
       },
       "oauth_client": [],
       "api_key": [
-        {
-          "current_key": "AIzaSyCl17JMFp4Yi4MwSZHs-AflhjDs6QoifQI"
-        },
         {
           "current_key": "AIzaSyD63-K8d3YvJ1E9h4WnNRF0Rg_3zjdjzx0"
         }

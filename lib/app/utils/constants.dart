@@ -58,7 +58,7 @@ class Constants {
   /// Host used for App Links / Universal Links (no scheme).
   static const String deepLinkHost = 'zaymarketplace.online';
   static const String androidStoreUrl =
-      'https://play.google.com/store/apps/details?id=com.zay';
+      'https://play.google.com/store/apps/details?id=com.zay.marketplace';
   static const String iosStoreUrl = 'https://zaymarketplace.online';
 
   static const int splashDelaySeconds = 2;

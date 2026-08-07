@@ -3,10 +3,10 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.zay",
+      "package_name": "com.zay.marketplace",
       "sha256_cert_fingerprints": [
         "B6:00:29:14:80:F8:49:6C:16:C6:F5:B1:78:9F:C9:33:1A:F9:87:80:57:26:85:5E:FE:BA:A0:5D:75:08:FB:4B",
-        "REPLACE_WITH_YOUR_DEBUG_SHA256"
+        "56:3F:E7:42:B4:10:0A:CA:0B:BB:B4:0E:CD:21:F9:3A:8E:DF:7F:64:37:5F:DD:FA:F7:C8:09:5D:9A:85:7B:3A"
       ]
     }
   }

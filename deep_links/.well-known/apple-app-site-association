@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appID": "TEAM_ID.com.zay",
+        "appID": "TEAM_ID.com.zay.marketplace",
         "paths": ["/product/*", "/shop/*", "/products/*", "/shops/*"]
       }
     ]
