@@ -23,6 +23,7 @@ class TryOnController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    isLoading.value = true;
     file = Get.arguments['file'];
     product = Get.arguments['product'];
     requestTryOn();
