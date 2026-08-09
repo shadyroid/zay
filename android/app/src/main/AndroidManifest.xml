@@ -57,7 +57,7 @@
             android:value="2" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCl17JMFp4Yi4MwSZHs-AflhjDs6QoifQI"/>
+            android:value="AIzaSyD63-K8d3YvJ1E9h4WnNRF0Rg_3zjdjzx0"/>
         <!-- Default channel/icon used by Firebase Cloud Messaging when the
              system automatically displays a notification (app in background
              or terminated) for messages that include a `notification` payload. -->
