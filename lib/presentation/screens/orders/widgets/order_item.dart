@@ -140,6 +140,7 @@ class _OrderProductImage extends StatelessWidget {
         height: size,
         fit: BoxFit.cover,
         errorWidget: _placeholder(),
+        viewerImages: [url],
       );
     }
     return _placeholder();

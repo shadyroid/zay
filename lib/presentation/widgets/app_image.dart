@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:zay/app/utils/images_viewer.dart';
 
 enum AppImageShape { rectangle, rounded, circle }
 
@@ -20,6 +21,8 @@ class AppImage extends StatelessWidget {
     this.shimmerBaseColor,
     this.shimmerHighlightColor,
     this.errorWidget,
+    this.viewerImages,
+    this.viewerIndex = 0,
   }) : _type = _AppImageType.network;
 
   const AppImage.file(
@@ -34,6 +37,8 @@ class AppImage extends StatelessWidget {
     this.shimmerBaseColor,
     this.shimmerHighlightColor,
     this.errorWidget,
+    this.viewerImages,
+    this.viewerIndex = 0,
   })  : _type = _AppImageType.file,
         _source = file;
 
@@ -48,16 +53,32 @@ class AppImage extends StatelessWidget {
   final Color? shimmerBaseColor;
   final Color? shimmerHighlightColor;
   final Widget? errorWidget;
+  final List<String>? viewerImages;
+  final int viewerIndex;
 
   static bool isSvg(String path) => path.toLowerCase().endsWith('.svg');
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    Widget child = SizedBox(
       width: width,
       height: height,
       child: _clipShape(_buildImage(context)),
     );
+
+    final gallery = viewerImages;
+    if (gallery != null && gallery.any((e) => e.trim().isNotEmpty)) {
+      child = GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => ImagesViewer.open(
+          images: gallery,
+          index: viewerIndex,
+        ),
+        child: child,
+      );
+    }
+
+    return child;
   }
 
   Widget _clipShape(Widget child) {

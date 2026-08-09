@@ -14,12 +14,6 @@ class SignInController extends BaseController {
   final passwordController = TextEditingController();
   final obscurePassword = true.obs;
 
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-  }
 
   void togglePasswordVisibility() {
     obscurePassword.value = !obscurePassword.value;

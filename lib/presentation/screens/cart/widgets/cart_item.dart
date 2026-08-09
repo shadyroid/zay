@@ -47,6 +47,7 @@ class CartItem extends StatelessWidget {
                       height: 72,
                       fit: BoxFit.cover,
                       errorWidget: _placeholder(),
+                      viewerImages: [item.imageUrl!],
                     )
                   : _placeholder(),
             ),

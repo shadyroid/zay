@@ -37,6 +37,8 @@ class ProductImageCarousel extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: double.infinity,
                 errorWidget: _placeholder(),
+                viewerImages: images,
+                viewerIndex: index,
               );
             },
           ),

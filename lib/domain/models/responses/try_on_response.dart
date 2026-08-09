@@ -17,7 +17,7 @@ class TryOnResponse extends BaseResponse {
       statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'],
       id: json['request_id'],
-      imageUrl: json['result_url'],
+      imageUrl: json['result_image_url'],
     );
   }
 }

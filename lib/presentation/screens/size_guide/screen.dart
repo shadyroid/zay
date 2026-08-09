@@ -47,6 +47,7 @@ class SizeGuideScreen extends StatelessWidget {
                         measurementsImage,
                         width: double.infinity,
                         fit: BoxFit.contain,
+                        viewerImages: [measurementsImage],
                       ),
                     ),
                   if (measurementsImage != null) const SizedBox(height: 12),

@@ -49,6 +49,7 @@ class TryOnScreen extends GetView<TryOnController> {
                                   url,
                                   fit: BoxFit.cover,
                                   errorWidget: _imagePlaceholder(),
+                                  viewerImages: [url],
                                 ),
                                 if (controller.isLoading.value)
                                   const ColoredBox(

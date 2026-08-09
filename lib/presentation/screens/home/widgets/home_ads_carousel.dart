@@ -30,10 +30,18 @@ class HomeAdsCarousel extends StatelessWidget {
             itemCount: ads.length,
             onPageChanged: onPageChanged,
             itemBuilder: (context, index) {
+              final image = ads[index].image ?? '';
+              final images = ads
+                  .map((ad) => ad.image ?? '')
+                  .where((url) => url.trim().isNotEmpty)
+                  .toList();
+              final viewerIndex = images.indexOf(image);
               return AppImage.network(
-                ads[index].image ?? '',
+                image,
                 width: double.infinity,
                 fit: BoxFit.cover,
+                viewerImages: image.trim().isEmpty ? null : images,
+                viewerIndex: viewerIndex < 0 ? 0 : viewerIndex,
               );
             },
           ),

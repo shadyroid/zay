@@ -25,7 +25,7 @@ class ServerErrorScreen extends GetView<ServerErrorController> {
             ).animateEntrance(delay: const Duration(milliseconds: 80)),
             const SizedBox(height: 8),
             Text(
-              'serverErrorSubtitle'.tr,
+              "${'serverErrorSubtitle'.tr}\n${Get.arguments["message"]}",
               textAlign: TextAlign.center,
             ).animateEntrance(delay: const Duration(milliseconds: 140)),
             const SizedBox(height: 32),

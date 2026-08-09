@@ -23,6 +23,7 @@ class ShopBannerHeader extends StatelessWidget {
                     shop.banner!,
                     fit: BoxFit.cover,
                     errorWidget: const ColoredBox(color: Color(0xFFE8E8E8)),
+                    viewerImages: [shop.banner!],
                   )
                 : const ColoredBox(color: Color(0xFFE8E8E8)),
           ),
@@ -48,6 +49,7 @@ class ShopBannerHeader extends StatelessWidget {
                       shop.logo!,
                       fit: BoxFit.cover,
                       errorWidget: _logoPlaceholder(),
+                      viewerImages: [shop.logo!],
                     )
                   : _logoPlaceholder(),
             ),

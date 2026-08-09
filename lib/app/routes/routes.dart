@@ -7,6 +7,7 @@ import 'package:zay/app/bindings/edit_profile_binding.dart';
 import 'package:zay/app/bindings/favorite_binding.dart';
 import 'package:zay/app/bindings/forget_password_binding.dart';
 import 'package:zay/app/bindings/home_binding.dart';
+import 'package:zay/app/bindings/images_viewer_binding.dart';
 import 'package:zay/app/bindings/no_internet_binding.dart';
 import 'package:zay/app/bindings/notifications_binding.dart';
 import 'package:zay/app/bindings/order_details_binding.dart';
@@ -39,6 +40,7 @@ import 'package:zay/presentation/screens/edit_profile/screen.dart';
 import 'package:zay/presentation/screens/favorite/screen.dart';
 import 'package:zay/presentation/screens/forget_password/screen.dart';
 import 'package:zay/presentation/screens/home/screen.dart';
+import 'package:zay/presentation/screens/images_viewer/screen.dart';
 import 'package:zay/presentation/screens/no_internet/screen.dart';
 import 'package:zay/presentation/screens/notifications/screen.dart';
 import 'package:zay/presentation/screens/order_details/screen.dart';
@@ -74,6 +76,7 @@ class Routes {
   static const String resetPassword = '/resetPassword';
   static const String home = '/home';
   static const String productDetails = '/productDetails';
+  static const String imagesViewer = '/imagesViewer';
   static const String sizeGuide = '/sizeGuide';
   static const String tryOn = '/tryOn';
   static const String products = '/products';
@@ -129,6 +132,11 @@ class Routes {
       name: productDetails,
       page: () => const ProductDetailsScreen(),
       binding: ProductDetailsBinding(),
+    ),
+    GetPage(
+      name: imagesViewer,
+      page: () => const ImagesViewerScreen(),
+      binding: ImagesViewerBinding(),
     ),
     GetPage(
       name: sizeGuide,
