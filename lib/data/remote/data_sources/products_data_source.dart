@@ -20,7 +20,11 @@ class ProductsDataSource {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
-  Future<Map<String, dynamic>> requestProducts(ProductsRequest request) async {
+  Future<Map<String, dynamic>> requestProducts(
+    ProductsRequest request, {
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
     final response = await _dioClient.post(
       Constants.productsPath,
       data: request.image != null
@@ -32,6 +36,8 @@ class ProductsDataSource {
               ...request.toJson(),
             })
           : request.toJson(),
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
@@ -67,8 +73,10 @@ class ProductsDataSource {
   }
 
   Future<Map<String, dynamic>> requestTryOn(
-    TryOnRequest request,
-  ) async {
+    TryOnRequest request, {
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
     final response = await _dioClient.post(
       Constants.tryOnPath,
       data: FormData.fromMap({
@@ -78,6 +86,8 @@ class ProductsDataSource {
           filename: request.image.name,
         ),
       }),
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
     return Map<String, dynamic>.from(response.data as Map);
   }

@@ -5,6 +5,7 @@ import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
 import 'package:zay/app/utils/product_sort_option.dart';
+import 'package:zay/app/utils/transfer_progress.dart';
 import 'package:zay/domain/models/beans/category_bean.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
@@ -22,6 +23,8 @@ class ProductsController extends BaseController {
   final selectedSort = Rxn<ProductSortOption>();
   final searchQuery = RxnString();
   final totalCount = 0.obs;
+  final sendProgress = 0.0.obs;
+  final receiveProgress = 0.0.obs;
 
   late final PagingController<int, ProductBean> pagingController;
 
@@ -75,13 +78,17 @@ class ProductsController extends BaseController {
   Future<void> requestCategories() async {
     final response = await _productsUseCase.requestCategories();
     if (!isSuccess(response)) return;
-    if(response.data?.isNotEmpty == true) {
+    if (response.data?.isNotEmpty == true) {
       categories.add(CategoryBean.fromJson({"name": "all_items".tr}));
       categories.addAll(response.data ?? []);
     }
   }
 
   Future<List<ProductBean>> requestProducts(int pageKey) async {
+    if (image != null && pageKey == 1) {
+      sendProgress.value = 0;
+      receiveProgress.value = 0;
+    }
     final response = await _productsUseCase.requestProducts(
       ProductsRequest(
         page: pageKey,
@@ -96,7 +103,26 @@ class ProductsController extends BaseController {
         image: image,
         type: type,
       ),
+      onSendProgress: image == null
+          ? null
+          : (count, total) {
+              final next = TransferProgress.portion(count, total);
+              if (next > sendProgress.value) sendProgress.value = next;
+            },
+      onReceiveProgress: image == null
+          ? null
+          : (count, total) {
+              sendProgress.value = 1;
+              final next = TransferProgress.portion(count, total);
+              if (next > receiveProgress.value) {
+                receiveProgress.value = next;
+              }
+            },
     );
+    if (image != null && pageKey == 1) {
+      sendProgress.value = 1;
+      receiveProgress.value = 1;
+    }
     if (!isSuccess(response)) {
       throw Exception(response.message ?? 'warning'.tr);
     }

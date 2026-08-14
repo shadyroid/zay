@@ -14,7 +14,11 @@ abstract class ProductsRepository {
 
   Future<SizesResponse> requestSizes();
 
-  Future<ProductsResponse> requestProducts(ProductsRequest request);
+  Future<ProductsResponse> requestProducts(
+    ProductsRequest request, {
+    void Function(int count, int total)? onSendProgress,
+    void Function(int count, int total)? onReceiveProgress,
+  });
 
   Future<ProductResponse> requestProductDetails(ProductDetailsRequest request);
 
@@ -24,5 +28,9 @@ abstract class ProductsRepository {
 
   Future<BaseResponse> requestUnFavorite(ProductIdRequest request);
 
-  Future<TryOnResponse> requestTryOn(TryOnRequest request);
+  Future<TryOnResponse> requestTryOn(
+    TryOnRequest request, {
+    void Function(int count, int total)? onSendProgress,
+    void Function(int count, int total)? onReceiveProgress,
+  });
 }

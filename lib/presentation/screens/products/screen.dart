@@ -73,7 +73,12 @@ class ProductsScreen extends GetView<ProductsController> {
                   onSubmitted: controller.onSearchSubmitted,
                 ),
           body: showImageSearchLoading
-              ? StagedLoadingView.imageSearch()
+              ? Obx(
+                  () => StagedLoadingView.imageSearch(
+                    sendProgress: controller.sendProgress.value,
+                    receiveProgress: controller.receiveProgress.value,
+                  ),
+                )
               : Stack(
                   children: [
                     Column(

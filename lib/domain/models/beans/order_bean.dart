@@ -1,6 +1,7 @@
 import 'package:zay/domain/models/beans/location_bean.dart';
 import 'package:zay/domain/models/beans/order_product_bean.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/domain/models/enums/order_status.dart';
 
 class OrderBean {
   final int? id;
@@ -9,21 +10,13 @@ class OrderBean {
   final String? subtotal;
   final String? shippingFee;
   final String? total;
-  final String? status;
+  final OrderStatus status;
   final String? paymentMethod;
   final String? paymentStatus;
   final LocationBean? location;
   final String? createdAt;
-  // final String productName;
-  // final String? productImageUrl;
-  // final String size;
-  // final int quantity;
   final String customerName;
-  // final String customerAddress;
   final String customerPhone;
-  // final String? customerImageUrl;
-  // final String? estimatedDelivery;
-  // final List<OrderTrackStepBean>? steps;
   final List<OrderProductBean>? items;
 
   const OrderBean({
@@ -45,17 +38,11 @@ class OrderBean {
 
   int get itemsCount => items?.length ?? 0;
 
-  bool get isActive {
-    final value = status?.toLowerCase();
-    return value == 'pending' ||
-        value == 'confirmed' ||
-        value == 'shipped' ||
-        value == 'processing';
-  }
+  bool get isActive => status.isActive;
 
-  bool get isCompleted => status?.toLowerCase() == 'delivered';
+  bool get isCompleted => status.isCompleted;
 
-  bool get isReturned => status?.toLowerCase() == 'returned';
+  bool get isReturned => status.isReturned;
 
   bool get isCardPayment => paymentMethod == 'card';
 
@@ -85,7 +72,6 @@ class OrderBean {
   }
 
   factory OrderBean.fromJson(Map<String, dynamic> json) {
-
     return OrderBean(
       id: json['id'],
       refNumber: json['order_number'],
@@ -93,8 +79,7 @@ class OrderBean {
       subtotal: json['subtotal'],
       shippingFee: json['shipping_fee'],
       total: json['total'],
-      status: json['status'],
-      //status_label
+      status: OrderStatus.fromApi(json['status']?.toString()),
       paymentMethod: json['payment_method'],
       paymentStatus: json['payment_status'] as String?,
       location: json['shipping_address'] != null
@@ -108,5 +93,4 @@ class OrderBean {
           .toList(),
     );
   }
-
 }

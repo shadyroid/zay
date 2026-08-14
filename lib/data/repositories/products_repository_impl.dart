@@ -44,8 +44,16 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<ProductsResponse> requestProducts(ProductsRequest request) async {
-    var json = await _productsDataSource.requestProducts(request);
+  Future<ProductsResponse> requestProducts(
+    ProductsRequest request, {
+    void Function(int count, int total)? onSendProgress,
+    void Function(int count, int total)? onReceiveProgress,
+  }) async {
+    var json = await _productsDataSource.requestProducts(
+      request,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
 
     json = {
       "statusCode": json['statusCode'],
@@ -137,9 +145,15 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<TryOnResponse> requestTryOn(
-    TryOnRequest request,
-  ) async {
-    final json = await _productsDataSource.requestTryOn(request);
+    TryOnRequest request, {
+    void Function(int count, int total)? onSendProgress,
+    void Function(int count, int total)? onReceiveProgress,
+  }) async {
+    final json = await _productsDataSource.requestTryOn(
+      request,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
     return TryOnResponse.fromJson(json);
   }
 }

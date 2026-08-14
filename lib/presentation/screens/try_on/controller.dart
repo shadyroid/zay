@@ -4,6 +4,7 @@ import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/use_cases/reviews_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
 import 'package:zay/app/utils/image_picker_helper.dart';
+import 'package:zay/app/utils/transfer_progress.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/requests/try_on_request.dart';
 import 'package:zay/domain/models/requests/try_on_review_request.dart';
@@ -19,6 +20,8 @@ class TryOnController extends BaseController {
   int? tryOnId;
   late ProductBean product;
   final selectedRating = 1.obs;
+  final sendProgress = 0.0.obs;
+  final receiveProgress = 0.0.obs;
 
   @override
   void onInit() {
@@ -35,20 +38,36 @@ class TryOnController extends BaseController {
   }
 
   Future<void> _submitFitRating(int rating) async {
-    await _reviewsUseCase.requestTryOnReview(TryOnReviewRequest(tryOnId: tryOnId, rate: rating));
+    await _reviewsUseCase.requestTryOnReview(
+      TryOnReviewRequest(tryOnId: tryOnId, rate: rating),
+    );
   }
 
   Future<void> onTryOnAgain() async {
-    final file = await ImagePickerHelper.pickFromBottomSheet();
-    if (file == null) return;
+    final picked = await ImagePickerHelper.pickFromBottomSheet();
+    if (picked == null) return;
+    file = picked;
     requestTryOn();
   }
 
   Future<void> requestTryOn() async {
     isLoading.value = true;
+    sendProgress.value = 0;
+    receiveProgress.value = 0;
     final response = await _productsUseCase.requestTryOn(
       TryOnRequest(productId: product.id, image: file),
+      onSendProgress: (count, total) {
+        final next = TransferProgress.portion(count, total);
+        if (next > sendProgress.value) sendProgress.value = next;
+      },
+      onReceiveProgress: (count, total) {
+        sendProgress.value = 1;
+        final next = TransferProgress.portion(count, total);
+        if (next > receiveProgress.value) receiveProgress.value = next;
+      },
     );
+    sendProgress.value = 1;
+    receiveProgress.value = 1;
     isLoading.value = false;
     if (!isSuccess(response)) return;
     tryOnId = response.id;

@@ -51,51 +51,66 @@ class SizeGuideScreen extends StatelessWidget {
                       ),
                     ),
                   if (measurementsImage != null) const SizedBox(height: 12),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Table(
-                        border: TableBorder.all(
-                          color: AppColors.border,
-                          width: 0.5,
-                        ),
-                        defaultColumnWidth: const IntrinsicColumnWidth(),
-                        children: [
-                          TableRow(
-                            decoration: BoxDecoration(
-                              color: AppColors.selectedCheck.withValues(
-                                alpha: 0.15,
-                              ),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final columnCount = sizes.length + 1;
+                      return SizedBox(
+                        width: constraints.maxWidth,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Table(
+                            border: TableBorder.all(
+                              color: AppColors.border,
+                              width: 0.5,
                             ),
+                            columnWidths: {
+                              0: const FlexColumnWidth(1.4),
+                              for (var i = 1; i < columnCount; i++)
+                                i: const FlexColumnWidth(1),
+                            },
+                            defaultVerticalAlignment:
+                                TableCellVerticalAlignment.middle,
                             children: [
-                              _headerCell('size'.tr),
-                              ...sizes.map((s) => _headerCell(s.label)),
-                            ],
-                          ),
-                          ..._buildMeasurementRows(sizes).asMap().entries.map(
-                            (entry) {
-                              final index = entry.key;
-                              final row = entry.value;
-                              return TableRow(
+                              TableRow(
                                 decoration: BoxDecoration(
-                                  color: index.isEven
-                                      ? Colors.white
-                                      : AppColors.screenBackground,
+                                  color: AppColors.selectedCheck.withValues(
+                                    alpha: 0.15,
+                                  ),
                                 ),
                                 children: [
-                                  _dataCell(row.label ?? '', bold: true),
-                                  ...sizes.map((size) {
-                                    final value = row.values[size.id] ?? '-';
-                                    return _dataCell(value);
-                                  }),
+                                  _headerCell('size'.tr),
+                                  ...sizes.map((s) => _headerCell(s.label)),
                                 ],
-                              );
-                            },
+                              ),
+                              ..._buildMeasurementRows(sizes)
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                (entry) {
+                                  final index = entry.key;
+                                  final row = entry.value;
+                                  return TableRow(
+                                    decoration: BoxDecoration(
+                                      color: index.isEven
+                                          ? Colors.white
+                                          : AppColors.screenBackground,
+                                    ),
+                                    children: [
+                                      _dataCell(row.label ?? '', bold: true),
+                                      ...sizes.map((size) {
+                                        final value =
+                                            row.values[size.id] ?? '-';
+                                        return _dataCell(value);
+                                      }),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -106,28 +121,30 @@ class SizeGuideScreen extends StatelessWidget {
   List<_MeasurementRow> _buildMeasurementRows(List<SizeBean> sizes) {
     if (sizes.isEmpty) return [];
 
-    final ordered = <int?, String?>{};
-    for (final m in sizes.first.measurements ?? []) {
-      ordered[m.id] = m.label;
-    }
+    final rowCount = sizes
+        .map((s) => s.measurements?.length ?? 0)
+        .fold<int>(0, (max, length) => length > max ? length : max);
 
-    return ordered.entries.map((entry) {
+    return List.generate(rowCount, (index) {
+      String? label;
       final values = <int?, String?>{};
       for (final size in sizes) {
-        final match = size.measurements
-            ?.where((m) => m.id == entry.key)
-            .firstOrNull;
-        values[size.id] = match?.value ?? '-';
+        final measurements = size.measurements ?? const [];
+        final measurement =
+            index < measurements.length ? measurements[index] : null;
+        label ??= measurement?.label;
+        values[size.id] = measurement?.displayValue ?? '-';
       }
-      return _MeasurementRow(label: entry.value, values: values);
-    }).toList();
+      return _MeasurementRow(label: label, values: values);
+    });
   }
 
   Widget _headerCell(String? text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Text(
         text ?? '',
+        textAlign: TextAlign.center,
         style: Get.theme.textTheme.bodySmall?.copyWith(
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
@@ -138,9 +155,10 @@ class SizeGuideScreen extends StatelessWidget {
 
   Widget _dataCell(String text, {bool bold = false}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Text(
         text,
+        textAlign: TextAlign.center,
         style: Get.theme.textTheme.bodySmall?.copyWith(
           fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
           color: AppColors.textPrimary,

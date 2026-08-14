@@ -27,7 +27,10 @@ class TryOnScreen extends GetView<TryOnController> {
                 onShare: controller.onShare,
               ),
         body: isLoading
-            ? StagedLoadingView.tryOn()
+            ? StagedLoadingView.tryOn(
+                sendProgress: controller.sendProgress.value,
+                receiveProgress: controller.receiveProgress.value,
+              )
             : _buildContent(),
       );
     });

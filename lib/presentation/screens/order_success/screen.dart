@@ -75,39 +75,65 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
                         ).animateEntrance(
                           delay: const Duration(milliseconds: 340),
                         ),
-                        if (controller.isCardPayment) ...[
-                          const SizedBox(height: 24),
+                        const SizedBox(height: 24),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFF4E5),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.info_outline,
+                                size: 22,
+                                color: Color(0xFFC47A00),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  'orderAwaitingShopConfirmation'.tr,
+                                  textAlign: TextAlign.start,
+                                  style:
+                                      Get.theme.textTheme.bodySmall?.copyWith(
+                                    color: const Color(0xFF8A5A00),
+                                    height: 1.45,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ).animateEntrance(
+                          delay: const Duration(milliseconds: 400),
+                        ),
+                        if (controller.isCardPayment &&
+                            controller.isPaymentPending) ...[
+                          const SizedBox(height: 12),
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: controller.isPaymentPending
-                                  ? const Color(0xFFFFF4E5)
-                                  : const Color(0xFFE8F6EF),
+                              color: const Color(0xFFFFF4E5),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  Icons.info_outline,
+                                const Icon(
+                                  Icons.payment_outlined,
                                   size: 22,
-                                  color: controller.isPaymentPending
-                                      ? const Color(0xFFC47A00)
-                                      : AppColors.orderSuccess,
+                                  color: Color(0xFFC47A00),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Text(
-                                    controller.isPaymentPending
-                                        ? 'orderCardPaymentPendingPay'.tr
-                                        : 'orderCardPaymentPendingApproval'.tr,
+                                    'orderCardPaymentPendingPay'.tr,
                                     textAlign: TextAlign.start,
                                     style: Get.theme.textTheme.bodySmall
                                         ?.copyWith(
-                                      color: controller.isPaymentPending
-                                          ? const Color(0xFF8A5A00)
-                                          : AppColors.orderSuccess,
+                                      color: const Color(0xFF8A5A00),
                                       height: 1.45,
                                     ),
                                   ),
@@ -115,7 +141,7 @@ class OrderSuccessScreen extends GetView<OrderSuccessController> {
                               ],
                             ),
                           ).animateEntrance(
-                            delay: const Duration(milliseconds: 420),
+                            delay: const Duration(milliseconds: 460),
                           ),
                         ],
                       ],

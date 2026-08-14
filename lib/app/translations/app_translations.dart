@@ -94,7 +94,8 @@ class AppTranslations extends Translations {
     'tryOnFitRating': 'Try-on fit rating',
     'tryOnFitRatingComment': 'Rating submitted from virtual try on',
     'waitingForTryOn': 'Waiting for Try-On',
-    'waitingForTryOnSubtitle': "We're preparing your virtual try-on...",
+    'waitingForTryOnSubtitle':
+        "We're preparing your virtual try-on. This may take a few seconds.",
     'tryOnStepPreparing': 'Preparing',
     'tryOnStepPreparingDesc': 'Getting your items ready',
     'tryOnStepProcessing': 'Processing',
@@ -104,7 +105,7 @@ class AppTranslations extends Translations {
     'tryOnStepDone': 'Done!',
     'tryOnStepDoneDesc': 'Your try-on is ready',
     'searchingImages': 'Searching Images',
-    'searchingImagesSubtitle': "We're finding the best matches for you...",
+    'searchingImagesSubtitle': 'Finding the best matches for you...',
     'imageSearchStepSearching': 'Searching',
     'imageSearchStepSearchingDesc': 'Looking for similar images',
     'imageSearchStepFiltering': 'Filtering',
@@ -147,6 +148,7 @@ class AppTranslations extends Translations {
     'clearFilter': 'Clear Filter',
     'apply': 'Apply',
     'size': 'Size',
+    'recommended': 'Recommended',
     'selectSizeRequired': 'Please select a size',
     'price': 'Price',
     'sortBy': 'Sort By',
@@ -235,8 +237,10 @@ class AppTranslations extends Translations {
     'recipientNameRequired': 'Recipient name is required',
     'orderNotesOptional': 'Order notes (optional)',
     'congratulations': 'Congratulations',
-    'orderConfirmedLine1': 'Your Order Has Been Confirmed',
+    'orderConfirmedLine1': 'Your Order Has Been Placed',
     'orderConfirmedLine2': 'Successfully',
+    'orderAwaitingShopConfirmation':
+        'Your order still needs confirmation from the shop and may be rejected.',
     'orderCardPaymentPendingApproval':
         'Please wait for the shop to approve your order. If the shop rejects it, your money will be refunded.',
     'orderCardPaymentPendingPay':
@@ -443,7 +447,8 @@ class AppTranslations extends Translations {
     'tryOnFitRating': 'تقييم ملاءمة التجربة',
     'tryOnFitRatingComment': 'تقييم مُرسل من التجربة الافتراضية',
     'waitingForTryOn': 'بانتظار التجربة',
-    'waitingForTryOnSubtitle': 'نجهّز تجربتك الافتراضية...',
+    'waitingForTryOnSubtitle':
+        'نجهّز تجربتك الافتراضية. قد يستغرق ذلك بضع ثوانٍ.',
     'tryOnStepPreparing': 'التحضير',
     'tryOnStepPreparingDesc': 'نجهّز منتجاتك',
     'tryOnStepProcessing': 'المعالجة',
@@ -496,6 +501,7 @@ class AppTranslations extends Translations {
     'clearFilter': 'مسح التصفية',
     'apply': 'تطبيق',
     'size': 'المقاس',
+    'recommended': 'موصى به',
     'selectSizeRequired': 'يرجى اختيار المقاس',
     'price': 'السعر',
     'sortBy': 'ترتيب',
@@ -581,8 +587,10 @@ class AppTranslations extends Translations {
     'recipientNameRequired': 'اسم المستلم مطلوب',
     'orderNotesOptional': 'ملاحظات الطلب (اختياري)',
     'congratulations': 'تهانينا',
-    'orderConfirmedLine1': 'تم تأكيد طلبك',
+    'orderConfirmedLine1': 'تم تقديم طلبك',
     'orderConfirmedLine2': 'بنجاح',
+    'orderAwaitingShopConfirmation':
+        'طلبك ما زال بحاجة إلى تأكيد من المتجر وقد يتم رفضه.',
     'orderCardPaymentPendingApproval':
         'يرجى انتظار موافقة المتجر على طلبك. في حال رفض المتجر للطلب، سيتم استرداد المبلغ.',
     'orderCardPaymentPendingPay':

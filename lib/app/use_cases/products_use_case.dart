@@ -22,7 +22,16 @@ class ProductsUseCase {
 
   Future<SizesResponse> requestSizes() => _productsRepository.requestSizes();
 
-  Future<ProductsResponse> requestProducts(ProductsRequest request) => _productsRepository.requestProducts(request);
+  Future<ProductsResponse> requestProducts(
+    ProductsRequest request, {
+    void Function(int count, int total)? onSendProgress,
+    void Function(int count, int total)? onReceiveProgress,
+  }) =>
+      _productsRepository.requestProducts(
+        request,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
 
   Future<ProductResponse> requestProductDetails(
     ProductDetailsRequest request,
@@ -37,6 +46,14 @@ class ProductsUseCase {
   Future<BaseResponse> requestUnFavorite(ProductIdRequest request) =>
       _productsRepository.requestUnFavorite(request);
 
-  Future<TryOnResponse> requestTryOn(TryOnRequest request) =>
-      _productsRepository.requestTryOn(request);
+  Future<TryOnResponse> requestTryOn(
+    TryOnRequest request, {
+    void Function(int count, int total)? onSendProgress,
+    void Function(int count, int total)? onReceiveProgress,
+  }) =>
+      _productsRepository.requestTryOn(
+        request,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
 }

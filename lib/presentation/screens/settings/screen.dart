@@ -16,11 +16,10 @@ class SettingsScreen extends GetView<SettingsController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const SettingsAppBar(),
-      body: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.screenBackground,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-        ),
+      body: Material(
+        color: AppColors.screenBackground,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        clipBehavior: Clip.antiAlias,
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(top: 24, bottom: 24),
           child: Obx(() {
@@ -112,10 +111,6 @@ class SettingsScreen extends GetView<SettingsController> {
                     ),
                   ],
                 ),
-                // if (loggedIn) ...[
-                //   const SizedBox(height: 24),
-                //   DeleteAccountButton(onPressed: controller.onDeleteAccount),
-                // ],
               ],
             );
           }),

@@ -22,14 +22,14 @@ class ReviewItem extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  review.title.isNotEmpty ? review.title : review.authorName,
+                  review.title??"",
                   style: Get.theme.textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                 ),
               ),
               Text(
-                review.createdAt,
+                review.createdAt??"",
                 style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                     ),
@@ -37,8 +37,8 @@ class ReviewItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          ReviewStarRating(rating: review.rating),
-          if (review.authorName.isNotEmpty && review.title.isNotEmpty) ...[
+          ReviewStarRating(rating: review.rating??0.0),
+          if (review.authorName?.isNotEmpty==true) ...[
             const SizedBox(height: 4),
             Text(
               '${'by'.tr} ${review.authorName}',
@@ -47,10 +47,10 @@ class ReviewItem extends StatelessWidget {
                   ),
             ),
           ],
-          if (review.comment.isNotEmpty) ...[
+          if (review.comment?.isNotEmpty == true ) ...[
             const SizedBox(height: 8),
             Text(
-              review.comment,
+              review.comment??"",
               style: Get.theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.45,

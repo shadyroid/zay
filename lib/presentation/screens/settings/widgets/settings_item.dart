@@ -24,25 +24,28 @@ class SettingsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget tile = Column(
       children: [
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          leading: SvgPicture.asset(
-            iconPath,
-            width: 22,
-            height: 22,
-          ),
-          title: Text(
-            title,
-            style: Get.theme.textTheme.bodyLarge?.copyWith(
-              color: AppColors.textPrimary,
+        Material(
+          type: MaterialType.transparency,
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            leading: SvgPicture.asset(
+              iconPath,
+              width: 22,
+              height: 22,
             ),
+            title: Text(
+              title,
+              style: Get.theme.textTheme.bodyLarge?.copyWith(
+                color: AppColors.textPrimary,
+              ),
+            ),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 20,
+              color: AppColors.textSecondary,
+            ),
+            onTap: onTap,
           ),
-          trailing: const Icon(
-            Icons.arrow_forward_ios,
-            size: 20,
-            color: AppColors.textSecondary,
-          ),
-          onTap: onTap,
         ),
         if (showDivider)
           const Divider(

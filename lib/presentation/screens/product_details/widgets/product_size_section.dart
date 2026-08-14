@@ -52,46 +52,103 @@ class ProductSizeSection extends StatelessWidget {
           Wrap(
             spacing: 10,
             runSpacing: 10,
+            crossAxisAlignment: WrapCrossAlignment.end,
             children: sizes!.map((size) {
               final isSelected = selectedSizeId == size.id;
-              final available = size.isAvailable == true;
+              final isOutOfStock = size.isOutOfStock == true;
+              final isRecommended =
+                  size.isRecommended == true && !isOutOfStock;
+
               return InkWell(
-                onTap: available ? () => onSizeSelected(size.id) : null,
+                onTap: isOutOfStock
+                    ? () => Get.rawSnackbar(message: 'outOfStock'.tr)
+                    : () => onSizeSelected(size.id),
                 borderRadius: BorderRadius.circular(10),
-                child: AnimatedScale(
-                  scale: isSelected ? 1.05 : 1.0,
-                  duration: AppMotion.fast,
-                  curve: AppMotion.standard,
-                  child: AnimatedContainer(
-                    duration: AppMotion.fast,
-                    curve: AppMotion.standard,
-                    width: 48,
-                    height: 48,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.primary
-                          : AppColors.screenBackground,
-                      borderRadius: BorderRadius.circular(10),
-                      border: available
-                          ? null
-                          : Border.all(color: AppColors.border),
-                    ),
-                    child: AnimatedDefaultTextStyle(
-                      duration: AppMotion.fast,
-                      curve: AppMotion.standard,
-                      style:
-                          (Get.theme.textTheme.titleSmall ?? const TextStyle())
-                              .copyWith(
-                        color: !available
-                            ? AppColors.textSecondary.withValues(alpha: 0.5)
-                            : isSelected
-                                ? Colors.white
-                                : AppColors.textPrimary,
-                        fontWeight: FontWeight.w600,
+                child: SizedBox(
+                  width: 48,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (isRecommended)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text(
+                            'recommended'.tr,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Get.theme.textTheme.labelSmall?.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 8,
+                              height: 1.1,
+                            ),
+                          ),
+                        )
+                      else
+                        const SizedBox(height: 13),
+                      AnimatedScale(
+                        scale: isSelected && !isOutOfStock ? 1.05 : 1.0,
+                        duration: AppMotion.fast,
+                        curve: AppMotion.standard,
+                        child: AnimatedContainer(
+                          duration: AppMotion.fast,
+                          curve: AppMotion.standard,
+                          width: 48,
+                          height: 48,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: isOutOfStock
+                                ? AppColors.screenBackground
+                                : isSelected
+                                    ? AppColors.primary
+                                    : AppColors.screenBackground,
+                            borderRadius: BorderRadius.circular(10),
+                            border: isOutOfStock
+                                ? Border.all(color: AppColors.border)
+                                : isRecommended
+                                    ? Border.all(
+                                        color: AppColors.primary,
+                                        width: 2,
+                                      )
+                                    : null,
+                            boxShadow: isRecommended && !isSelected
+                                ? [
+                                    BoxShadow(
+                                      color: AppColors.primary
+                                          .withValues(alpha: 0.18),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ]
+                                : null,
+                          ),
+                          child: AnimatedDefaultTextStyle(
+                            duration: AppMotion.fast,
+                            curve: AppMotion.standard,
+                            style: (Get.theme.textTheme.titleSmall ??
+                                    const TextStyle())
+                                .copyWith(
+                              color: isOutOfStock
+                                  ? AppColors.textSecondary
+                                      .withValues(alpha: 0.45)
+                                  : isSelected
+                                      ? Colors.white
+                                      : isRecommended
+                                          ? AppColors.primary
+                                          : AppColors.textPrimary,
+                              fontWeight: FontWeight.w600,
+                              decoration: isOutOfStock
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                              decorationColor: AppColors.textSecondary
+                                  .withValues(alpha: 0.45),
+                            ),
+                            child: Text(size.label ?? ''),
+                          ),
+                        ),
                       ),
-                      child: Text(size.label ?? ""),
-                    ),
+                    ],
                   ),
                 ),
               );

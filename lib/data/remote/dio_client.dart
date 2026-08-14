@@ -164,6 +164,8 @@ class DioClient extends GetxService {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     try {
       return await _dio.post(
@@ -171,6 +173,8 @@ class DioClient extends GetxService {
         data: data,
         queryParameters: queryParameters,
         options: options,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
       );
     } catch (e) {
       rethrow;

@@ -32,18 +32,21 @@ class MapPlaceSuggestions extends StatelessWidget {
         itemBuilder: (context, index) {
           final location = locations[index];
 
-          return ListTile(
-            dense: true,
-            title: Text(
-              location.address??"",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: Get.theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+          return Material(
+            type: MaterialType.transparency,
+            child: ListTile(
+              dense: true,
+              title: Text(
+                location.address ?? '',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Get.theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              onTap: () => onSelect(index),
             ),
-            onTap: () => onSelect(index),
           );
         },
       ),

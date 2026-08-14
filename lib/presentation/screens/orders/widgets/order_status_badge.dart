@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/order_status_style.dart';
+import 'package:zay/domain/models/enums/order_status.dart';
 
 class OrderStatusBadge extends StatelessWidget {
   const OrderStatusBadge({
@@ -9,7 +9,7 @@ class OrderStatusBadge extends StatelessWidget {
     required this.status,
   });
 
-  final String? status;
+  final OrderStatus status;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,9 @@ class OrderStatusBadge extends StatelessWidget {
       child: Text(
         style.labelKey.tr,
         style: Get.theme.textTheme.labelSmall?.copyWith(
-              color: style.textColor,
-              fontWeight: FontWeight.w600,
-            ),
+          color: style.textColor,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

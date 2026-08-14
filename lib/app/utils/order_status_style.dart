@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/domain/models/enums/order_status.dart';
 
 class OrderStatusStyle {
   const OrderStatusStyle({
@@ -13,47 +13,47 @@ class OrderStatusStyle {
   final Color backgroundColor;
   final Color textColor;
 
-  static OrderStatusStyle forStatus(String? status) {
-    switch (status?.toLowerCase()) {
-      case 'pending':
-        return const OrderStatusStyle(
-          labelKey: 'orderStatusPending',
-          backgroundColor: Color(0xFFFFF3CD),
-          textColor: Color(0xFFE67E22),
+  static OrderStatusStyle forStatus(OrderStatus status) {
+    switch (status) {
+      case OrderStatus.pending:
+        return OrderStatusStyle(
+          labelKey: status.labelKey,
+          backgroundColor: const Color(0xFFFFF3CD),
+          textColor: const Color(0xFFE67E22),
         );
-      case 'confirmed':
-        return const OrderStatusStyle(
-          labelKey: 'orderStatusConfirmed',
-          backgroundColor: Color(0xFFE8F5E9),
-          textColor: Color(0xFF2E7D32),
+      case OrderStatus.confirmed:
+        return OrderStatusStyle(
+          labelKey: status.labelKey,
+          backgroundColor: const Color(0xFFE8F5E9),
+          textColor: const Color(0xFF2E7D32),
         );
-      case 'shipped':
-        return const OrderStatusStyle(
-          labelKey: 'orderStatusShipped',
-          backgroundColor: Color(0xFFE3F2FD),
-          textColor: Color(0xFF1565C0),
+      case OrderStatus.shipped:
+        return OrderStatusStyle(
+          labelKey: status.labelKey,
+          backgroundColor: const Color(0xFFE3F2FD),
+          textColor: const Color(0xFF1565C0),
         );
-      case 'delivered':
-        return const OrderStatusStyle(
-          labelKey: 'orderStatusDelivered',
-          backgroundColor: Color(0xFFE8F5E9),
+      case OrderStatus.delivered:
+        return OrderStatusStyle(
+          labelKey: status.labelKey,
+          backgroundColor: const Color(0xFFE8F5E9),
           textColor: AppColors.orderSuccess,
         );
-      case 'returned':
-        return const OrderStatusStyle(
-          labelKey: 'orderStatusReturned',
-          backgroundColor: Color(0xFFF3E5F5),
-          textColor: Color(0xFF7B1FA2),
-        );
-      case 'processing':
-        return const OrderStatusStyle(
-          labelKey: 'orderStatusProcessing',
-          backgroundColor: Color(0xFFFFF3CD),
-          textColor: Color(0xFFE67E22),
-        );
-      default:
+      case OrderStatus.returned:
         return OrderStatusStyle(
-          labelKey: 'orderStatusUnknown',
+          labelKey: status.labelKey,
+          backgroundColor: const Color(0xFFF3E5F5),
+          textColor: const Color(0xFF7B1FA2),
+        );
+      case OrderStatus.processing:
+        return OrderStatusStyle(
+          labelKey: status.labelKey,
+          backgroundColor: const Color(0xFFFFF3CD),
+          textColor: const Color(0xFFE67E22),
+        );
+      case OrderStatus.unknown:
+        return OrderStatusStyle(
+          labelKey: status.labelKey,
           backgroundColor: AppColors.screenBackground,
           textColor: AppColors.textSecondary,
         );

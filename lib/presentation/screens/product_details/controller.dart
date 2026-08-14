@@ -127,6 +127,14 @@ class ProductDetailsController extends BaseController {
   }
 
   void selectSize(int? sizeId) {
+    if (sizeId != null) {
+      final matched = product.value?.sizes?.where((s) => s.id == sizeId);
+      if (matched != null &&
+          matched.isNotEmpty &&
+          matched.first.isOutOfStock == true) {
+        return;
+      }
+    }
     selectedSizeId.value = sizeId;
     quantity.value = selectedSizesQuantities[sizeId] ?? 1;
   }
@@ -176,6 +184,14 @@ class ProductDetailsController extends BaseController {
 
     if (p.sizes?.isNotEmpty == true && sizeId == null) {
       Get.rawSnackbar(message: 'selectSizeRequired'.tr);
+      return;
+    }
+
+    final selectedSize = p.sizes?.where((s) => s.id == sizeId);
+    if (selectedSize != null &&
+        selectedSize.isNotEmpty &&
+        selectedSize.first.isOutOfStock == true) {
+      Get.rawSnackbar(message: 'outOfStock'.tr);
       return;
     }
 

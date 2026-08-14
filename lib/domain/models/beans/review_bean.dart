@@ -1,10 +1,10 @@
 class ReviewBean {
-  final int id;
-  final String title;
-  final String comment;
-  final String authorName;
-  final double rating;
-  final String createdAt;
+  final int? id;
+  final String? title;
+  final String? comment;
+  final String? authorName;
+  final double? rating;
+  final String? createdAt;
 
   const ReviewBean({
     required this.id,

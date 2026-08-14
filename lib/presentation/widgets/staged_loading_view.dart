@@ -2,6 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zay/app/utils/transfer_progress.dart';
+
+enum StagedLoadingStyle { cards, compact }
 
 class LoadingStage {
   const LoadingStage({
@@ -22,14 +25,24 @@ class StagedLoadingView extends StatefulWidget {
     required this.titleKey,
     required this.subtitleKey,
     required this.stages,
+    required this.style,
+    required this.sendProgress,
+    required this.receiveProgress,
   });
 
-  factory StagedLoadingView.tryOn({Key? key}) {
+  factory StagedLoadingView.tryOn({
+    Key? key,
+    required double sendProgress,
+    required double receiveProgress,
+  }) {
     return StagedLoadingView(
       key: key,
       headerIcon: Icons.checkroom_outlined,
       titleKey: 'waitingForTryOn',
       subtitleKey: 'waitingForTryOnSubtitle',
+      style: StagedLoadingStyle.cards,
+      sendProgress: sendProgress,
+      receiveProgress: receiveProgress,
       stages: const [
         LoadingStage(
           icon: Icons.checkroom_outlined,
@@ -55,12 +68,19 @@ class StagedLoadingView extends StatefulWidget {
     );
   }
 
-  factory StagedLoadingView.imageSearch({Key? key}) {
+  factory StagedLoadingView.imageSearch({
+    Key? key,
+    required double sendProgress,
+    required double receiveProgress,
+  }) {
     return StagedLoadingView(
       key: key,
       headerIcon: Icons.search_rounded,
       titleKey: 'searchingImages',
       subtitleKey: 'searchingImagesSubtitle',
+      style: StagedLoadingStyle.compact,
+      sendProgress: sendProgress,
+      receiveProgress: receiveProgress,
       stages: const [
         LoadingStage(
           icon: Icons.search_rounded,
@@ -90,80 +110,77 @@ class StagedLoadingView extends StatefulWidget {
   final String titleKey;
   final String subtitleKey;
   final List<LoadingStage> stages;
+  final StagedLoadingStyle style;
+  final double sendProgress;
+  final double receiveProgress;
 
-  static const Color background = Color(0xFF0B1424);
-  static const Color accent = Color(0xFF3D9BFF);
-  static const Color muted = Color(0xFF8A9BB5);
-  static const Color track = Color(0xFF1E2A3D);
-  static const Color inactiveBorder = Color(0xFF2A3A52);
+  static const Color background = Color(0xFFF7F9FC);
+  static const Color title = Color(0xFF0B3A8C);
+  static const Color accent = Color(0xFF2F80ED);
+  static const Color muted = Color(0xFF8A94A6);
+  static const Color track = Color(0xFFE6EAF0);
+  static const Color inactiveBorder = Color(0xFFD5DBE5);
+  static const Color cardBackground = Colors.white;
 
   @override
   State<StagedLoadingView> createState() => _StagedLoadingViewState();
 }
 
 class _StagedLoadingViewState extends State<StagedLoadingView>
-    with TickerProviderStateMixin {
-  late final AnimationController _progressController;
+    with SingleTickerProviderStateMixin {
   late final AnimationController _stripeController;
-  late final Animation<double> _progress;
 
   @override
   void initState() {
     super.initState();
-    _progressController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 18),
-    );
-    _progress = CurvedAnimation(
-      parent: _progressController,
-      curve: Curves.easeOutCubic,
-    );
     _stripeController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
     )..repeat();
-    _progressController.animateTo(0.92);
   }
 
   @override
   void dispose() {
-    _progressController.dispose();
     _stripeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final stageProgresses = TransferProgress.stageProgresses(
+      sendProgress: widget.sendProgress,
+      receiveProgress: widget.receiveProgress,
+    );
+    final progress = TransferProgress.overall(
+      sendProgress: widget.sendProgress,
+      receiveProgress: widget.receiveProgress,
+    );
+    final activeIndex = stageProgresses.indexWhere((value) => value < 1);
+    final resolvedActiveIndex =
+        activeIndex == -1 ? stageProgresses.length - 1 : activeIndex;
+
     return ColoredBox(
       color: StagedLoadingView.background,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: AnimatedBuilder(
-            animation: Listenable.merge([_progress, _stripeController]),
+            animation: _stripeController,
             builder: (context, _) {
-              final progress = _progress.value;
-              final activeIndex = math.min(
-                widget.stages.length - 1,
-                (progress * widget.stages.length).floor(),
-              );
-              final stageProgress =
-                  (progress * widget.stages.length) - activeIndex;
-
               return Column(
                 children: [
                   const Spacer(flex: 2),
                   Icon(
                     widget.headerIcon,
-                    size: 44,
+                    size: 42,
                     color: StagedLoadingView.accent,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 14),
                   Text(
                     widget.titleKey.tr,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: StagedLoadingView.title,
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                       height: 1.2,
@@ -176,16 +193,23 @@ class _StagedLoadingViewState extends State<StagedLoadingView>
                     style: const TextStyle(
                       color: StagedLoadingView.muted,
                       fontSize: 14,
-                      height: 1.35,
+                      height: 1.4,
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  _StagesRow(
-                    stages: widget.stages,
-                    activeIndex: activeIndex,
-                    activeProgress: stageProgress.clamp(0.0, 1.0),
-                  ),
-                  const SizedBox(height: 36),
+                  const SizedBox(height: 32),
+                  if (widget.style == StagedLoadingStyle.cards)
+                    _CardStagesRow(
+                      stages: widget.stages,
+                      stageProgresses: stageProgresses,
+                      activeIndex: resolvedActiveIndex,
+                    )
+                  else
+                    _CompactStagesRow(
+                      stages: widget.stages,
+                      stageProgresses: stageProgresses,
+                      activeIndex: resolvedActiveIndex,
+                    ),
+                  const SizedBox(height: 28),
                   _StripedProgressBar(
                     progress: progress,
                     stripeOffset: _stripeController.value,
@@ -210,16 +234,130 @@ class _StagedLoadingViewState extends State<StagedLoadingView>
   }
 }
 
-class _StagesRow extends StatelessWidget {
-  const _StagesRow({
+class _CardStagesRow extends StatelessWidget {
+  const _CardStagesRow({
     required this.stages,
+    required this.stageProgresses,
     required this.activeIndex,
-    required this.activeProgress,
   });
 
   final List<LoadingStage> stages;
+  final List<double> stageProgresses;
   final int activeIndex;
-  final double activeProgress;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (var i = 0; i < stages.length; i++) ...[
+          if (i > 0)
+            Padding(
+              padding: const EdgeInsets.only(top: 36, left: 2, right: 2),
+              child: Icon(
+                Directionality.of(context) == TextDirection.rtl
+                    ? Icons.chevron_left_rounded
+                    : Icons.chevron_right_rounded,
+                size: 16,
+                color: StagedLoadingView.inactiveBorder,
+              ),
+            ),
+          Expanded(
+            child: _StageCard(
+              stage: stages[i],
+              isCompleted: stageProgresses[i] >= 1,
+              isActive: i == activeIndex,
+              progress: stageProgresses[i],
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _StageCard extends StatelessWidget {
+  const _StageCard({
+    required this.stage,
+    required this.isCompleted,
+    required this.isActive,
+    required this.progress,
+  });
+
+  final LoadingStage stage;
+  final bool isCompleted;
+  final bool isActive;
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    final highlight = isCompleted || isActive;
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(6, 14, 6, 12),
+      decoration: BoxDecoration(
+        color: StagedLoadingView.cardBackground,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          _StageRing(
+            icon: stage.icon,
+            progress: progress,
+            isActive: isActive || isCompleted,
+            isDashed: !highlight,
+            size: 44,
+            iconSize: 20,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            stage.titleKey.tr,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: highlight
+                  ? StagedLoadingView.accent
+                  : StagedLoadingView.title.withValues(alpha: 0.75),
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            stage.descriptionKey.tr,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: StagedLoadingView.muted,
+              fontSize: 9,
+              height: 1.25,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CompactStagesRow extends StatelessWidget {
+  const _CompactStagesRow({
+    required this.stages,
+    required this.stageProgresses,
+    required this.activeIndex,
+  });
+
+  final List<LoadingStage> stages;
+  final List<double> stageProgresses;
+  final int activeIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -231,20 +369,16 @@ class _StagesRow extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(top: 27),
-                child: _DottedConnector(isActive: i <= activeIndex),
+                child: _DottedConnector(isActive: stageProgresses[i] > 0 || i <= activeIndex),
               ),
             ),
           Expanded(
             flex: 2,
-            child: _StageItem(
+            child: _CompactStageItem(
               stage: stages[i],
-              isCompleted: i < activeIndex,
+              isCompleted: stageProgresses[i] >= 1,
               isActive: i == activeIndex,
-              progress: i == activeIndex
-                  ? activeProgress
-                  : i < activeIndex
-                      ? 1
-                      : 0,
+              progress: stageProgresses[i],
             ),
           ),
         ],
@@ -253,8 +387,8 @@ class _StagesRow extends StatelessWidget {
   }
 }
 
-class _StageItem extends StatelessWidget {
-  const _StageItem({
+class _CompactStageItem extends StatelessWidget {
+  const _CompactStageItem({
     required this.stage,
     required this.isCompleted,
     required this.isActive,
@@ -272,25 +406,13 @@ class _StageItem extends StatelessWidget {
 
     return Column(
       children: [
-        SizedBox(
-          width: 56,
-          height: 56,
-          child: CustomPaint(
-            painter: _StageRingPainter(
-              progress: progress,
-              isActive: isActive || isCompleted,
-              isDashed: !highlight,
-            ),
-            child: Center(
-              child: Icon(
-                stage.icon,
-                size: 22,
-                color: highlight
-                    ? Colors.white
-                    : StagedLoadingView.muted.withValues(alpha: 0.7),
-              ),
-            ),
-          ),
+        _StageRing(
+          icon: stage.icon,
+          progress: progress,
+          isActive: isActive || isCompleted,
+          isDashed: !highlight,
+          size: 56,
+          iconSize: 22,
         ),
         const SizedBox(height: 10),
         Text(
@@ -301,9 +423,9 @@ class _StageItem extends StatelessWidget {
           style: TextStyle(
             color: highlight
                 ? StagedLoadingView.accent
-                : StagedLoadingView.muted.withValues(alpha: 0.8),
+                : StagedLoadingView.title.withValues(alpha: 0.7),
             fontSize: 12,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
         const SizedBox(height: 4),
@@ -323,6 +445,48 @@ class _StageItem extends StatelessWidget {
   }
 }
 
+class _StageRing extends StatelessWidget {
+  const _StageRing({
+    required this.icon,
+    required this.progress,
+    required this.isActive,
+    required this.isDashed,
+    required this.size,
+    required this.iconSize,
+  });
+
+  final IconData icon;
+  final double progress;
+  final bool isActive;
+  final bool isDashed;
+  final double size;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: CustomPaint(
+        painter: _StageRingPainter(
+          progress: progress,
+          isActive: isActive,
+          isDashed: isDashed,
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            size: iconSize,
+            color: isActive
+                ? StagedLoadingView.accent
+                : StagedLoadingView.muted,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _DottedConnector extends StatelessWidget {
   const _DottedConnector({required this.isActive});
 
@@ -334,8 +498,9 @@ class _DottedConnector extends StatelessWidget {
       builder: (context, constraints) {
         const dashWidth = 3.0;
         const dashSpace = 3.0;
-        final count =
-            (constraints.maxWidth / (dashWidth + dashSpace)).floor().clamp(1, 40);
+        final count = (constraints.maxWidth / (dashWidth + dashSpace))
+            .floor()
+            .clamp(1, 40);
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(count, (index) {
@@ -405,11 +570,12 @@ class _StripedProgressBar extends StatelessWidget {
                     height: 20,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white.withValues(alpha: 0.95),
+                      color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: StagedLoadingView.accent.withValues(alpha: 0.85),
-                          blurRadius: 14,
+                          color:
+                              StagedLoadingView.accent.withValues(alpha: 0.7),
+                          blurRadius: 12,
                           spreadRadius: 1,
                         ),
                       ],
@@ -446,7 +612,7 @@ class _StageRingPainter extends CustomPainter {
       ..strokeWidth = 2
       ..color = isDashed
           ? StagedLoadingView.inactiveBorder
-          : StagedLoadingView.accent.withValues(alpha: 0.25);
+          : StagedLoadingView.accent.withValues(alpha: 0.2);
 
     if (isDashed) {
       const dashCount = 28;
@@ -506,7 +672,7 @@ class _StripedFillPainter extends CustomPainter {
     );
 
     final stripePaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.18)
+      ..color = Colors.white.withValues(alpha: 0.28)
       ..strokeWidth = 8;
 
     canvas.save();
@@ -519,7 +685,9 @@ class _StripedFillPainter extends CustomPainter {
 
     const spacing = 16.0;
     final shift = offset * spacing;
-    for (var x = -size.height - spacing; x < size.width + size.height; x += spacing) {
+    for (var x = -size.height - spacing;
+        x < size.width + size.height;
+        x += spacing) {
       final startX = x + shift;
       canvas.drawLine(
         Offset(startX, size.height + 4),
