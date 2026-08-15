@@ -5,7 +5,9 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/translations/app_translations.dart';
 import 'package:zay/app/utils/app_motion.dart';
@@ -13,7 +15,6 @@ import 'package:zay/app/utils/app_theme.dart';
 import 'package:zay/app/utils/deep_links_util.dart';
 import 'package:zay/app/utils/notifications_util.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
-import 'package:zay/data/remote/dio_client.dart';
 import 'package:zay/firebase_options.dart';
 
 Future<void> main() async {
@@ -27,6 +28,10 @@ Future<void> main() async {
     return true;
   };
   await PrefsManager.init();
+  await Future.wait([
+    initializeDateFormatting('ar'),
+    initializeDateFormatting('en'),
+  ]);
   await NotificationsUtil.init();
   await DeepLinksUtil.init();
   if (Platform.isAndroid) {
@@ -48,6 +53,15 @@ class MyApp extends StatelessWidget {
       translations: AppTranslations(),
       locale: Locale(PrefsManager.locale ?? 'ar'),
       fallbackLocale: const Locale('ar'),
+      supportedLocales: const [
+        Locale('ar'),
+        Locale('en'),
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       initialRoute: Routes.splash,
       getPages: Routes.pages,
       theme: AppTheme.light(),

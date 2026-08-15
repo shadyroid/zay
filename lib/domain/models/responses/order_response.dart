@@ -1,10 +1,11 @@
 import 'package:zay/domain/models/beans/order_bean.dart';
+import 'package:zay/domain/models/enums/payment_status.dart';
 import 'package:zay/domain/models/responses/base_response.dart';
 
 class OrderResponse extends BaseResponse {
   final OrderBean? data;
   final String? paymentUrl;
-  final String? paymentStatus;
+  final PaymentStatus? paymentStatus;
 
   const OrderResponse({
     required super.statusCode,
@@ -22,7 +23,9 @@ class OrderResponse extends BaseResponse {
           ? OrderBean.fromJson(json['data'] as Map<String, dynamic>)
           : null,
       paymentUrl: json['payment_url'] as String?,
-      paymentStatus: json['payment_status'] as String?,
+      paymentStatus: json['payment_status'] != null
+          ? PaymentStatus.fromApi(json['payment_status']?.toString())
+          : null,
     );
   }
 }

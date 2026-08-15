@@ -22,13 +22,15 @@ class OrdersController extends BaseController {
     requestOrders();
   }
 
-  Future<void> requestOrders() async {
-    isLoading.value = true;
+  Future<void> requestOrders({bool showLoader = true}) async {
+    if (showLoader) isLoading.value = true;
     final response = await _orderUseCase.requestOrders();
-    isLoading.value = false;
+    if (showLoader) isLoading.value = false;
     if (!isSuccess(response)) return;
     orders.assignAll(response.data ?? []);
   }
+
+  Future<void> onRefresh() => requestOrders(showLoader: false);
 
   void selectFilter(OrderListFilter filter) {
     selectedFilter.value = filter;
@@ -46,8 +48,6 @@ class OrdersController extends BaseController {
         return order.isReturned;
     }
   }
-
-  
 
   void navigateToOrderDetails(OrderBean order) {
     AppAuthGuard.toNamed(

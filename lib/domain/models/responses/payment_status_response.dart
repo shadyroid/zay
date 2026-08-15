@@ -1,9 +1,10 @@
+import 'package:zay/domain/models/enums/payment_status.dart';
 import 'package:zay/domain/models/responses/base_response.dart';
 
 class PaymentStatusResponse extends BaseResponse {
   final int? orderId;
   final String? orderNumber;
-  final String? paymentStatus;
+  final PaymentStatus paymentStatus;
   final String? paymentStatusLabel;
   final String? transactionId;
   final String? total;
@@ -15,7 +16,7 @@ class PaymentStatusResponse extends BaseResponse {
     super.message,
     this.orderId,
     this.orderNumber,
-    this.paymentStatus,
+    this.paymentStatus = PaymentStatus.pending,
     this.paymentStatusLabel,
     this.transactionId,
     this.total,
@@ -23,15 +24,9 @@ class PaymentStatusResponse extends BaseResponse {
     this.voidedAt,
   });
 
-  bool get isPending {
-    final value = paymentStatus?.toLowerCase();
-    return value == null || value == 'pending';
-  }
+  bool get isPending => paymentStatus.isPending;
 
-  bool get isPaid {
-    final value = paymentStatus?.toLowerCase();
-    return value == 'paid' || value == 'captured' || value == 'success';
-  }
+  bool get isPaid => paymentStatus.isPaid;
 
   factory PaymentStatusResponse.fromJson(Map<String, dynamic> json) {
     return PaymentStatusResponse(
@@ -39,7 +34,7 @@ class PaymentStatusResponse extends BaseResponse {
       message: json['message'] as String?,
       orderId: json['order_id'] as int?,
       orderNumber: json['order_number'] as String?,
-      paymentStatus: json['payment_status'] as String?,
+      paymentStatus: PaymentStatus.fromApi(json['payment_status']?.toString()),
       paymentStatusLabel: json['payment_status_label'] as String?,
       transactionId: json['transaction_id'] as String?,
       total: json['total']?.toString(),

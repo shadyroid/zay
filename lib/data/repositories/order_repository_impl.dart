@@ -1,4 +1,5 @@
-import 'package:zay/app/utils/payment_method.dart';
+import 'package:zay/domain/models/enums/payment_method.dart';
+import 'package:zay/domain/models/enums/payment_status.dart';
 import 'package:zay/data/remote/data_sources/order_data_source.dart';
 import 'package:zay/domain/models/responses/base_response.dart';
 import 'package:zay/domain/models/responses/order_response.dart';
@@ -23,7 +24,7 @@ class OrderRepositoryImpl implements OrderRepository {
     var json = await _orderDataSource.requestCreateOrder(request);
     final order = json['order'];
     String? paymentUrl;
-    String? paymentStatus;
+    PaymentStatus? paymentStatus;
 
     if (request.paymentMethod == PaymentMethod.card.apiValue &&
         order is Map &&
@@ -48,7 +49,7 @@ class OrderRepositoryImpl implements OrderRepository {
       "message": json['message'],
       "data": order,
       "payment_url": paymentUrl,
-      "payment_status": paymentStatus,
+      "payment_status": paymentStatus?.apiValue,
     };
     return OrderResponse.fromJson(json);
   }

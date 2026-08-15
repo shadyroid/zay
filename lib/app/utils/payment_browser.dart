@@ -1,49 +1,20 @@
-import 'dart:async';
+import 'package:get/get.dart';
+import 'package:zay/presentation/screens/payment_webview/screen.dart';
 
-import 'package:flutter/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-/// Opens [paymentUrl] externally and completes when the app returns to foreground.
+/// Opens [paymentUrl] in an in-app webview and completes when the screen is closed.
 class PaymentBrowser {
   PaymentBrowser._();
 
   static Future<bool> openAndWaitForReturn(String paymentUrl) async {
     final uri = Uri.tryParse(paymentUrl);
-    if (uri == null) return false;
-
-    final completer = Completer<bool>();
-    var sawBackground = false;
-
-    late final AppLifecycleListener listener;
-    listener = AppLifecycleListener(
-      onPause: () => sawBackground = true,
-      onInactive: () => sawBackground = true,
-      onResume: () {
-        if (!sawBackground || completer.isCompleted) return;
-        completer.complete(true);
-      },
-      onDetach: () {
-        if (!completer.isCompleted) completer.complete(true);
-      },
-    );
-
-    final launched = await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    );
-
-    if (!launched) {
-      listener.dispose();
+    if (uri == null || !(uri.isScheme('http') || uri.isScheme('https'))) {
       return false;
     }
 
-    try {
-      return await completer.future.timeout(
-        const Duration(minutes: 30),
-        onTimeout: () => true,
-      );
-    } finally {
-      listener.dispose();
-    }
+    final result = await Get.to<bool>(
+      () => PaymentWebViewScreen(url: paymentUrl),
+      fullscreenDialog: true,
+    );
+    return result ?? true;
   }
 }

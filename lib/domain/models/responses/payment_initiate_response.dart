@@ -1,10 +1,11 @@
+import 'package:zay/domain/models/enums/payment_status.dart';
 import 'package:zay/domain/models/responses/base_response.dart';
 
 class PaymentInitiateResponse extends BaseResponse {
   final int? orderId;
   final String? orderNumber;
   final String? paymentUrl;
-  final String? paymentStatus;
+  final PaymentStatus? paymentStatus;
   final String? transactionId;
 
   const PaymentInitiateResponse({
@@ -20,9 +21,10 @@ class PaymentInitiateResponse extends BaseResponse {
   factory PaymentInitiateResponse.fromJson(Map<String, dynamic> json) {
     final success = json['success'];
     final statusCode = json['statusCode'] as int? ?? 200;
-    final resolvedStatus = success == false && statusCode >= 200 && statusCode < 300
-        ? 400
-        : statusCode;
+    final resolvedStatus =
+        success == false && statusCode >= 200 && statusCode < 300
+            ? 400
+            : statusCode;
 
     return PaymentInitiateResponse(
       statusCode: resolvedStatus,
@@ -30,7 +32,9 @@ class PaymentInitiateResponse extends BaseResponse {
       orderId: json['order_id'] as int?,
       orderNumber: json['order_number'] as String?,
       paymentUrl: json['payment_url'] as String?,
-      paymentStatus: json['payment_status'] as String?,
+      paymentStatus: json['payment_status'] != null
+          ? PaymentStatus.fromApi(json['payment_status']?.toString())
+          : null,
       transactionId: json['transaction_id'] as String?,
     );
   }

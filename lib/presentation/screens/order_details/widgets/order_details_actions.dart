@@ -6,13 +6,13 @@ import 'package:zay/app/utils/app_colors.dart';
 class OrderDetailsActions extends StatelessWidget {
   const OrderDetailsActions({
     super.key,
-    required this.onReturn,
     required this.onTrack,
+    this.onReturn,
     this.onReview,
     this.onPay,
   });
 
-  final VoidCallback onReturn;
+  final VoidCallback? onReturn;
   final VoidCallback onTrack;
   final VoidCallback? onReview;
   final VoidCallback? onPay;
@@ -42,14 +42,16 @@ class OrderDetailsActions extends StatelessWidget {
             ],
             Row(
               children: [
-                Expanded(
-                  child: _OutlinedActionButton(
-                    icon: 'assets/icons/ic_retry.svg',
-                    label: 'returnProduct'.tr,
-                    onTap: onReturn,
+                if (onReturn != null) ...[
+                  Expanded(
+                    child: _OutlinedActionButton(
+                      icon: 'assets/icons/ic_retry.svg',
+                      label: 'returnProduct'.tr,
+                      onTap: onReturn!,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
+                  const SizedBox(width: 12),
+                ],
                 Expanded(
                   child: _FilledActionButton(
                     icon: 'assets/icons/ic_track.svg',
@@ -118,9 +120,9 @@ class _OutlinedActionButton extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Get.theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],
@@ -172,9 +174,9 @@ class _FilledActionButton extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Get.theme.textTheme.bodyMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],

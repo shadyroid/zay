@@ -69,7 +69,10 @@ class TryOnController extends BaseController {
     sendProgress.value = 1;
     receiveProgress.value = 1;
     isLoading.value = false;
+
+    if (!response.isSuccess) Get.back();
     if (!isSuccess(response)) return;
+
     tryOnId = response.id;
     final url = response.imageUrl;
     if (url != null && url.isNotEmpty) {

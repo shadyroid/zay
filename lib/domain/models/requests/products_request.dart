@@ -1,5 +1,5 @@
 import 'package:zay/app/utils/constants.dart';
-import 'package:zay/app/utils/product_sort_option.dart';
+import 'package:zay/domain/models/enums/product_sort_option.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductsRequest {

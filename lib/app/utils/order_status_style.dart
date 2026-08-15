@@ -21,11 +21,17 @@ class OrderStatusStyle {
           backgroundColor: const Color(0xFFFFF3CD),
           textColor: const Color(0xFFE67E22),
         );
-      case OrderStatus.confirmed:
+      case OrderStatus.accepted:
         return OrderStatusStyle(
           labelKey: status.labelKey,
-          backgroundColor: const Color(0xFFE8F5E9),
-          textColor: const Color(0xFF2E7D32),
+          backgroundColor: const Color(0xFFE3F2FD),
+          textColor: const Color(0xFF1565C0),
+        );
+      case OrderStatus.preparing:
+        return OrderStatusStyle(
+          labelKey: status.labelKey,
+          backgroundColor: const Color(0xFFFFF3E0),
+          textColor: const Color(0xFFEF6C00),
         );
       case OrderStatus.shipped:
         return OrderStatusStyle(
@@ -45,11 +51,17 @@ class OrderStatusStyle {
           backgroundColor: const Color(0xFFF3E5F5),
           textColor: const Color(0xFF7B1FA2),
         );
-      case OrderStatus.processing:
+      case OrderStatus.canceled:
         return OrderStatusStyle(
           labelKey: status.labelKey,
-          backgroundColor: const Color(0xFFFFF3CD),
-          textColor: const Color(0xFFE67E22),
+          backgroundColor: const Color(0xFFFFEBEE),
+          textColor: const Color(0xFFC62828),
+        );
+      case OrderStatus.rejected:
+        return OrderStatusStyle(
+          labelKey: status.labelKey,
+          backgroundColor: const Color(0xFFFFEBEE),
+          textColor: const Color(0xFFB71C1C),
         );
       case OrderStatus.unknown:
         return OrderStatusStyle(

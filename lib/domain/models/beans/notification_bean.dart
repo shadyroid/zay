@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:zay/app/utils/app_date_format.dart';
 
 class NotificationBean {
   final String? id;
@@ -55,23 +55,6 @@ class NotificationBean {
     );
   }
 
-  DateTime? get _createdAtDate => DateTime.tryParse(createdAt ?? '')?.toLocal();
-
   /// Header label used to group notifications by day.
-  String get dateGroupLabel {
-    final date = _createdAtDate;
-    if (date == null) return '';
-
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final yesterday = today.subtract(const Duration(days: 1));
-    final day = DateTime(date.year, date.month, date.day);
-
-    if (day == today) return 'today'.tr;
-    if (day == yesterday) return 'yesterday'.tr;
-
-    final month = date.month.toString().padLeft(2, '0');
-    final dayOfMonth = date.day.toString().padLeft(2, '0');
-    return '${date.year}-$month-$dayOfMonth';
-  }
+  String get dateGroupLabel => AppDateFormat.dayLabel(createdAt);
 }

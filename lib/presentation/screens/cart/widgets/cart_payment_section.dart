@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/app/utils/app_motion.dart';
-import 'package:zay/app/utils/payment_method.dart';
+import 'package:zay/domain/models/enums/payment_method.dart';
 
 class CartPaymentSection extends StatelessWidget {
   const CartPaymentSection({

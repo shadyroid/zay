@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_date_format.dart';
 import 'package:zay/domain/models/beans/order_bean.dart';
 import 'package:zay/presentation/screens/order_details/widgets/order_details_section_card.dart';
 
@@ -15,6 +15,7 @@ class OrderSummaryCard extends StatelessWidget {
     final itemLabel = order.itemsCount == 1
         ? '${'subtotal'.tr} (${order.itemsCount} ${'item'.tr})'
         : '${'subtotal'.tr} (${order.itemsCount} ${'items'.tr})';
+    final paymentMethod = order.paymentMethod.displayLabel();
 
     return OrderDetailsSectionCard(
       title: 'orderSummary'.tr,
@@ -34,12 +35,12 @@ class OrderSummaryCard extends StatelessWidget {
             const SizedBox(height: 10),
             _SummaryRow(
               label: 'orderDate'.tr,
-              value: order.createdAt ??"",
+              value: AppDateFormat.friendly(order.createdAt),
             ),
             const SizedBox(height: 10),
             _SummaryRow(
               label: 'paymentMethod'.tr,
-              value: order.paymentMethod??"",
+              value: paymentMethod,
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 14),

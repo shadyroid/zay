@@ -3,10 +3,8 @@ enum ProductSortOption {
   priceAsc,
   priceDesc,
   popularity,
-  rating,
-}
+  rating;
 
-extension ProductSortOptionX on ProductSortOption {
   String get labelKey => switch (this) {
         ProductSortOption.newest => 'sortNewest',
         ProductSortOption.priceAsc => 'sortPriceLowToHigh',

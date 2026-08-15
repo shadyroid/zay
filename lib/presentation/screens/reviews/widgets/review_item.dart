@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_date_format.dart';
 import 'package:zay/domain/models/beans/review_bean.dart';
 
 class ReviewItem extends StatelessWidget {
@@ -22,17 +22,17 @@ class ReviewItem extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  review.title??"",
+                  review.title ?? '',
                   style: Get.theme.textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
               Text(
-                review.createdAt??"",
+                AppDateFormat.friendly(review.createdAt),
                 style: Get.theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),

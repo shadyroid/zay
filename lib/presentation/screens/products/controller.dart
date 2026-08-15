@@ -4,7 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
-import 'package:zay/app/utils/product_sort_option.dart';
+import 'package:zay/domain/models/enums/product_sort_option.dart';
 import 'package:zay/app/utils/transfer_progress.dart';
 import 'package:zay/domain/models/beans/category_bean.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';

@@ -2,6 +2,8 @@ import 'package:zay/domain/models/beans/location_bean.dart';
 import 'package:zay/domain/models/beans/order_product_bean.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
 import 'package:zay/domain/models/enums/order_status.dart';
+import 'package:zay/domain/models/enums/payment_method.dart';
+import 'package:zay/domain/models/enums/payment_status.dart';
 
 class OrderBean {
   final int? id;
@@ -11,8 +13,8 @@ class OrderBean {
   final String? shippingFee;
   final String? total;
   final OrderStatus status;
-  final String? paymentMethod;
-  final String? paymentStatus;
+  final PaymentMethod paymentMethod;
+  final PaymentStatus paymentStatus;
   final LocationBean? location;
   final String? createdAt;
   final String customerName;
@@ -28,7 +30,7 @@ class OrderBean {
     required this.total,
     required this.status,
     required this.paymentMethod,
-    this.paymentStatus,
+    this.paymentStatus = PaymentStatus.pending,
     required this.location,
     required this.createdAt,
     required this.customerName,
@@ -44,15 +46,11 @@ class OrderBean {
 
   bool get isReturned => status.isReturned;
 
-  bool get isCardPayment => paymentMethod == 'card';
+  bool get isCardPayment => paymentMethod == PaymentMethod.card;
 
-  bool get needsPayment {
-    if (!isCardPayment) return false;
-    final value = paymentStatus?.toLowerCase();
-    return value != 'paid' && value != 'captured' && value != 'success';
-  }
+  bool get needsPayment => isActive&&isCardPayment && !paymentStatus.isPaid;
 
-  OrderBean copyWith({String? paymentStatus}) {
+  OrderBean copyWith({PaymentStatus? paymentStatus}) {
     return OrderBean(
       id: id,
       refNumber: refNumber,
@@ -80,8 +78,8 @@ class OrderBean {
       shippingFee: json['shipping_fee'],
       total: json['total'],
       status: OrderStatus.fromApi(json['status']?.toString()),
-      paymentMethod: json['payment_method'],
-      paymentStatus: json['payment_status'] as String?,
+      paymentMethod: PaymentMethod.fromApi(json['payment_method']?.toString()),
+      paymentStatus: PaymentStatus.fromApi(json['payment_status']?.toString()),
       location: json['shipping_address'] != null
           ? LocationBean.fromJson(json['shipping_address'])
           : null,

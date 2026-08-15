@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_date_format.dart';
 import 'package:zay/domain/models/beans/order_bean.dart';
 import 'package:zay/presentation/screens/orders/widgets/order_status_badge.dart';
 import 'package:zay/presentation/widgets/app_image.dart';
@@ -90,7 +91,7 @@ class OrderItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            order.createdAt??"",
+                            AppDateFormat.friendly(order.createdAt),
                             style: Get.theme
                                 .textTheme
                                 .bodySmall

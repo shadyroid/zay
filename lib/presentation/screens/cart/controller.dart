@@ -8,7 +8,7 @@ import 'package:zay/app/use_cases/order_use_case.dart';
 import 'package:zay/app/utils/address_city_area_parser.dart';
 import 'package:zay/app/utils/egyptian_phone_util.dart';
 import 'package:zay/app/utils/payment_browser.dart';
-import 'package:zay/app/utils/payment_method.dart';
+import 'package:zay/domain/models/enums/payment_method.dart';
 import 'package:zay/domain/models/beans/cart_item_bean.dart';
 import 'package:zay/domain/models/beans/city_bean.dart';
 import 'package:zay/domain/models/beans/location_bean.dart';

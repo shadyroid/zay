@@ -13,8 +13,6 @@ enum OrderTrackStepIcon {
 
   factory OrderTrackStepIcon.fromStatus(OrderStatus status) {
     switch (status) {
-      case OrderStatus.confirmed:
-        return OrderTrackStepIcon.confirmed;
       case OrderStatus.shipped:
         return OrderTrackStepIcon.shipped;
       case OrderStatus.delivered:
@@ -22,7 +20,10 @@ enum OrderTrackStepIcon {
       case OrderStatus.returned:
         return OrderTrackStepIcon.returned;
       case OrderStatus.pending:
-      case OrderStatus.processing:
+      case OrderStatus.accepted:
+      case OrderStatus.preparing:
+      case OrderStatus.canceled:
+      case OrderStatus.rejected:
       case OrderStatus.unknown:
         return OrderTrackStepIcon.pending;
     }
