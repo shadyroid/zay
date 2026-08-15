@@ -4,6 +4,7 @@ import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/ads_use_case.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
 import 'package:zay/app/use_cases/notifications_use_case.dart';
+import 'package:zay/app/use_cases/order_use_case.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/use_cases/shops_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
@@ -23,6 +24,7 @@ class HomeController extends BaseController {
   final ShopsUseCase _shopsUseCase = Get.put(ShopsUseCase());
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());
   final AdsUseCase _adsUseCase = Get.put(AdsUseCase());
+  final OrderUseCase _orderUseCase = Get.put(OrderUseCase());
   final NotificationsUseCase _notificationsUseCase =
       Get.put(NotificationsUseCase());
 
@@ -67,6 +69,23 @@ class HomeController extends BaseController {
       _requestTopStores(),
     ]);
     isLoading.value = false;
+    if (PrefsManager.isLoggedIn) {
+      await _requestLastReview();
+    }
+  }
+
+  Future<void> _requestLastReview() async {
+    final order = await _orderUseCase.requestLastReview();
+    if (order == null || order.id == null) return;
+
+    await Get.toNamed(
+      Routes.review,
+      arguments: {
+        'orderId': order.id,
+        'order': order,
+        if (order.items?.isNotEmpty == true) 'items': order.items,
+      },
+    );
   }
 
   Future<void> requestNotificationsCount() async {

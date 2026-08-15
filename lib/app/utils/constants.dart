@@ -3,6 +3,10 @@ class Constants {
   static const String tempTokenKey = 'tempToken';
   static const String isVerified = 'isVerified';
   static const String localeKey = 'locale';
+  static const String lastReviewPromptAtKey = 'lastReviewPromptAt';
+
+  /// Minimum time between prompting the user to review an order.
+  static const Duration lastReviewPromptInterval = Duration(days: 3);
 
   static const String baseUrl = 'https://zaymarketplace.online/api';
 

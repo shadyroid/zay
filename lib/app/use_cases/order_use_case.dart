@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:zay/data/repositories/order_repository_impl.dart';
+import 'package:zay/domain/models/beans/order_bean.dart';
 import 'package:zay/domain/models/responses/base_response.dart';
 import 'package:zay/domain/models/responses/order_response.dart';
 import 'package:zay/domain/models/responses/orders_response.dart';
@@ -41,4 +42,7 @@ class OrderUseCase {
 
   Future<ReturnReasonsResponse> requestReturnReasons() =>
       _orderRepository.requestReturnReasons();
+
+  Future<OrderBean?> requestLastReview() =>
+      _orderRepository.requestLastReview();
 }

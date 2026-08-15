@@ -1,3 +1,6 @@
+import 'package:zay/app/utils/constants.dart';
+import 'package:zay/data/preferences/prefs_manager.dart';
+import 'package:zay/domain/models/beans/order_bean.dart';
 import 'package:zay/domain/models/enums/payment_method.dart';
 import 'package:zay/domain/models/enums/payment_status.dart';
 import 'package:zay/data/remote/data_sources/order_data_source.dart';
@@ -115,5 +118,32 @@ class OrderRepositoryImpl implements OrderRepository {
       'returnWindowDays': json['return_window_days'] as int?,
     };
     return ReturnReasonsResponse.fromJson(json);
+  }
+
+  @override
+  Future<OrderBean?> requestLastReview() async {
+    if (!_shouldPromptForReview()) return null;
+
+    await PrefsManager.setLastReviewPromptAt(DateTime.now());
+
+    final ordersResponse = await requestOrders();
+    if (!ordersResponse.isSuccess) return null;
+
+    OrderBean? candidate;
+    for (final order in ordersResponse.data ?? const <OrderBean>[]) {
+      if (order.needsReview && order.id != null) {
+        candidate = order;
+        break;
+      }
+    }
+    if (candidate == null) return null;
+    return candidate;
+  }
+
+  bool _shouldPromptForReview() {
+    final lastPrompt = PrefsManager.lastReviewPromptAt;
+    if (lastPrompt == null) return true;
+    return DateTime.now().difference(lastPrompt) >=
+        Constants.lastReviewPromptInterval;
   }
 }

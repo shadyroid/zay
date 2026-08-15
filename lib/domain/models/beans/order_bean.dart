@@ -20,6 +20,7 @@ class OrderBean {
   final String customerName;
   final String customerPhone;
   final List<OrderProductBean>? items;
+  final bool isReviewed;
 
   const OrderBean({
     required this.id,
@@ -36,6 +37,7 @@ class OrderBean {
     required this.customerName,
     required this.customerPhone,
     required this.items,
+    this.isReviewed = false,
   });
 
   int get itemsCount => items?.length ?? 0;
@@ -48,9 +50,11 @@ class OrderBean {
 
   bool get isCardPayment => paymentMethod == PaymentMethod.card;
 
-  bool get needsPayment => isActive&&isCardPayment && !paymentStatus.isPaid;
+  bool get needsPayment => isActive && isCardPayment && !paymentStatus.isPaid;
 
-  OrderBean copyWith({PaymentStatus? paymentStatus}) {
+  bool get needsReview => isCompleted && !isReviewed;
+
+  OrderBean copyWith({PaymentStatus? paymentStatus, bool? isReviewed}) {
     return OrderBean(
       id: id,
       refNumber: refNumber,
@@ -66,6 +70,7 @@ class OrderBean {
       customerName: customerName,
       customerPhone: customerPhone,
       items: items,
+      isReviewed: isReviewed ?? this.isReviewed,
     );
   }
 
@@ -89,6 +94,7 @@ class OrderBean {
       items: (json['items'] as List?)
           ?.map((e) => OrderProductBean.fromJson(e))
           .toList(),
+      isReviewed: json['is_reviewed'] == true || json['is_reviewed'] == 1,
     );
   }
 }

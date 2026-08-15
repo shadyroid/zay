@@ -1,3 +1,4 @@
+import 'package:zay/domain/models/beans/order_bean.dart';
 import 'package:zay/domain/models/responses/base_response.dart';
 import 'package:zay/domain/models/responses/order_response.dart';
 import 'package:zay/domain/models/responses/orders_response.dart';
@@ -29,4 +30,7 @@ abstract class OrderRepository {
   Future<BaseResponse> requestOrderReturn(OrderReturnRequest request);
 
   Future<ReturnReasonsResponse> requestReturnReasons();
+
+  /// Returns a delivered, unreviewed order when the prompt interval allows.
+  Future<OrderBean?> requestLastReview();
 }

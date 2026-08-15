@@ -25,6 +25,19 @@ class PrefsManager {
     await _prefs?.setString(Constants.localeKey, value);
   }
 
+  static DateTime? get lastReviewPromptAt {
+    final millis = _prefs?.getInt(Constants.lastReviewPromptAtKey);
+    if (millis == null) return null;
+    return DateTime.fromMillisecondsSinceEpoch(millis);
+  }
+
+  static Future<void> setLastReviewPromptAt(DateTime value) async {
+    await _prefs?.setInt(
+      Constants.lastReviewPromptAtKey,
+      value.millisecondsSinceEpoch,
+    );
+  }
+
   static Future<void> clear() async {
     await _prefs?.clear();
   }
