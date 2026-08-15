@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 
 class TryOnFeeCard extends StatelessWidget {
-  const TryOnFeeCard({super.key});
+  const TryOnFeeCard({
+    super.key,
+    this.allowedTriesToday,
+  });
+
+  final int? allowedTriesToday;
 
   static const _cardBackground = Color(0xFFE8F4F0);
   static const _accentWidth = 4.0;
 
   @override
   Widget build(BuildContext context) {
+    final triesLabel = allowedTriesToday == null
+        ? 'tryItFree'.trParams({'count': '—'})
+        : 'tryItFree'.trParams({'count': '$allowedTriesToday'});
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
@@ -41,20 +49,14 @@ class TryOnFeeCard extends StatelessWidget {
                           children: [
                             Text(
                               'virtualTrialFee'.tr,
-                              style: Get.theme
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
+                              style: Get.theme.textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.w700,
                                   ),
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'tryItFree'.tr,
-                              style: Get.theme
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
+                              triesLabel,
+                              style: Get.theme.textTheme.bodySmall?.copyWith(
                                     color: AppColors.textSecondary,
                                   ),
                             ),

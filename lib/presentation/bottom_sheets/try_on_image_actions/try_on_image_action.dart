@@ -1,0 +1,1 @@
+enum TryOnImageAction { share, download }

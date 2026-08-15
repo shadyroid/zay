@@ -10,11 +10,13 @@ class TryOnBottomBar extends StatelessWidget {
     required this.price,
     required this.onTryOnAgain,
     required this.onAddToCart,
+    this.canTryOnAgain = true,
   });
 
   final double? price;
   final VoidCallback onTryOnAgain;
   final VoidCallback onAddToCart;
+  final bool canTryOnAgain;
 
   @override
   Widget build(BuildContext context) {
@@ -52,19 +54,22 @@ class TryOnBottomBar extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: onTryOnAgain,
+                    onPressed: canTryOnAgain ? onTryOnAgain : null,
                     icon: SvgPicture.asset(
                       'assets/icons/ic_retry.svg',
                       width: 20,
                       height: 20,
-                      colorFilter: const ColorFilter.mode(
-                        AppColors.primary,
+                      colorFilter: ColorFilter.mode(
+                        canTryOnAgain
+                            ? AppColors.primary
+                            : AppColors.textSecondary,
                         BlendMode.srcIn,
                       ),
                     ),
                     label: Text('tryOnAgain'.tr),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.primary,
+                      disabledForegroundColor: AppColors.textSecondary,
                       side: const BorderSide(color: AppColors.border),
                       backgroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 14),

@@ -77,7 +77,9 @@ class TryOnScreen extends GetView<TryOnController> {
                   onRatingSelected: controller.selectRating,
                 ),
                 const SizedBox(height: 20),
-                const TryOnFeeCard(),
+                TryOnFeeCard(
+                  allowedTriesToday: controller.allowedTriesToday.value,
+                ),
                 const SizedBox(height: 24),
               ],
             ),
@@ -85,6 +87,7 @@ class TryOnScreen extends GetView<TryOnController> {
         ),
         TryOnBottomBar(
           price: price,
+          canTryOnAgain: (controller.allowedTriesToday.value ?? 1) > 0,
           onTryOnAgain: controller.onTryOnAgain,
           onAddToCart: controller.onAddToCart,
         ),
