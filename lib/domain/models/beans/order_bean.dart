@@ -1,5 +1,6 @@
 import 'package:zay/domain/models/beans/location_bean.dart';
 import 'package:zay/domain/models/beans/order_product_bean.dart';
+import 'package:zay/domain/models/beans/order_track_step_bean.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
 import 'package:zay/domain/models/enums/order_status.dart';
 import 'package:zay/domain/models/enums/payment_method.dart';
@@ -21,6 +22,7 @@ class OrderBean {
   final String customerPhone;
   final List<OrderProductBean>? items;
   final bool isReviewed;
+  final List<OrderTrackStepBean> steps;
 
   const OrderBean({
     required this.id,
@@ -37,6 +39,7 @@ class OrderBean {
     required this.customerName,
     required this.customerPhone,
     required this.items,
+    this.steps = const [],
     this.isReviewed = false,
   });
 
@@ -70,11 +73,13 @@ class OrderBean {
       customerName: customerName,
       customerPhone: customerPhone,
       items: items,
+      steps: steps,
       isReviewed: isReviewed ?? this.isReviewed,
     );
   }
 
   factory OrderBean.fromJson(Map<String, dynamic> json) {
+    final status = OrderStatus.fromApi(json['status']?.toString());
     return OrderBean(
       id: json['id'],
       refNumber: json['order_number'],
@@ -82,7 +87,7 @@ class OrderBean {
       subtotal: json['subtotal'],
       shippingFee: json['shipping_fee'],
       total: json['total'],
-      status: OrderStatus.fromApi(json['status']?.toString()),
+      status: status,
       paymentMethod: PaymentMethod.fromApi(json['payment_method']?.toString()),
       paymentStatus: PaymentStatus.fromApi(json['payment_status']?.toString()),
       location: json['shipping_address'] != null
@@ -95,6 +100,10 @@ class OrderBean {
           ?.map((e) => OrderProductBean.fromJson(e))
           .toList(),
       isReviewed: json['is_reviewed'] == true || json['is_reviewed'] == 1,
+      steps: OrderTrackStepBean.parseList(
+        json['status_history'] as List?,
+        currentStatus: status,
+      ),
     );
   }
 }

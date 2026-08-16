@@ -18,8 +18,12 @@ class OrderTrackController extends BaseController {
   void onInit() {
     super.onInit();
     
-    orderId =  Get.arguments['orderId'];
-    order.value =  Get.arguments['order'];
+    orderId = Get.arguments['orderId'];
+    final passed = Get.arguments['order'];
+    if (passed is OrderBean) {
+      order.value = passed;
+      steps.assignAll(passed.steps);
+    }
     requestOrderDetails();
   }
 
@@ -36,7 +40,7 @@ class OrderTrackController extends BaseController {
 
     order.value = data;
     // estimatedDelivery.value = data.estimatedDelivery ?? '';
-    // steps.assignAll(data.steps ?? []);
+    steps.assignAll(data.steps);
   }
 
   

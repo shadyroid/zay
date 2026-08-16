@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/app/utils/app_date_format.dart';
 import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/domain/models/beans/order_track_step_bean.dart';
 import 'package:zay/domain/models/enums/order_track_step_icon.dart';
@@ -22,6 +23,9 @@ class OrderTrackTimelineItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final connectorColor =
         connectorIsActive ? AppColors.orderSuccess : AppColors.border;
+    final subtitle = step.trimmedNote ?? step.descriptionKey?.tr ?? '';
+    final changedBy = step.trimmedChangedBy;
+    final timestamp = AppDateFormat.friendly(step.createdAt);
 
     return IntrinsicHeight(
       child: Row(
@@ -57,20 +61,29 @@ class OrderTrackTimelineItem extends StatelessWidget {
                           color: AppColors.textPrimary,
                         ),
                   ),
-                  if (step.subtitleKey.isNotEmpty) ...[
+                  if (subtitle.isNotEmpty) ...[
                     const SizedBox(height: 4),
                     Text(
-                      step.subtitleKey.tr,
+                      subtitle,
                       style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                             height: 1.4,
                           ),
                     ),
                   ],
-                  if (step.timestamp.isNotEmpty) ...[
+                  if (changedBy != null) ...[
                     const SizedBox(height: 4),
                     Text(
-                      step.timestamp,
+                      'orderUpdatedBy'.trParams({'name': changedBy}),
+                      style: Get.theme.textTheme.bodySmall?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                    ),
+                  ],
+                  if (timestamp.isNotEmpty) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      timestamp,
                       style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
@@ -94,88 +107,34 @@ class _StepIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDone = step.isCompleted || step.isActive;
-
-    if (isDone) {
-      return _buildFilledIcon();
-    }
-    return _buildOutlinedIcon();
+    return isDone ? _buildFilledIcon() : _buildOutlinedIcon();
   }
 
   Widget _buildFilledIcon() {
-    Widget child;
-    switch (step.icon) {
-      case OrderTrackStepIcon.confirmed:
-        child = SvgPicture.asset(
-          'assets/icons/ic_check.svg',
-          width: 14,
-          height: 14,
-          colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-        );
-      case OrderTrackStepIcon.pending:
-        child = Container(
-          width: 8,
-          height: 8,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-          ),
-        );
-      default:
-        child = Container(
-          width: 8,
-          height: 8,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-          ),
-        );
-    }
-
     return Container(
       width: 28,
       height: 28,
-      decoration: const BoxDecoration(
-        color: AppColors.orderSuccess,
+      decoration: BoxDecoration(
+        color: _fillColor,
         shape: BoxShape.circle,
       ),
       alignment: Alignment.center,
-      child: child,
+      child: _statusIcon(color: Colors.white, size: 14),
     ).animateScaleIn(begin: 0.6);
   }
 
-  Widget _buildOutlinedIcon() {
-    Widget child;
+  Color get _fillColor {
     switch (step.icon) {
-      case OrderTrackStepIcon.shipped:
-        child = Icon(
-          Icons.local_shipping_outlined,
-          size: 16,
-          color: AppColors.textSecondary,
-        );
-      case OrderTrackStepIcon.delivered:
-        child = Icon(
-          Icons.home_outlined,
-          size: 16,
-          color: AppColors.textSecondary,
-        );
+      case OrderTrackStepIcon.canceled:
+        return const Color(0xFFC62828);
       case OrderTrackStepIcon.returned:
-        child = SvgPicture.asset(
-          'assets/icons/ic_retry.svg',
-          width: 16,
-          height: 16,
-          colorFilter: const ColorFilter.mode(
-            AppColors.textSecondary,
-            BlendMode.srcIn,
-          ),
-        );
+        return const Color(0xFF7B1FA2);
       default:
-        child = Icon(
-          Icons.circle_outlined,
-          size: 16,
-          color: AppColors.textSecondary,
-        );
+        return AppColors.orderSuccess;
     }
+  }
 
+  Widget _buildOutlinedIcon() {
     return Container(
       width: 28,
       height: 28,
@@ -185,7 +144,43 @@ class _StepIcon extends StatelessWidget {
         color: Colors.white,
       ),
       alignment: Alignment.center,
-      child: child,
+      child: _statusIcon(color: AppColors.textSecondary, size: 16),
     );
+  }
+
+  Widget _statusIcon({required Color color, required double size}) {
+    switch (step.icon) {
+      case OrderTrackStepIcon.confirmed:
+        return SvgPicture.asset(
+          'assets/icons/ic_check.svg',
+          width: size,
+          height: size,
+          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+        );
+      case OrderTrackStepIcon.preparing:
+        return Icon(Icons.schedule, size: size, color: color);
+      case OrderTrackStepIcon.shipped:
+        return Icon(Icons.local_shipping_outlined, size: size, color: color);
+      case OrderTrackStepIcon.delivered:
+        return Icon(Icons.home_outlined, size: size, color: color);
+      case OrderTrackStepIcon.returned:
+        return SvgPicture.asset(
+          'assets/icons/ic_retry.svg',
+          width: size,
+          height: size,
+          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+        );
+      case OrderTrackStepIcon.canceled:
+        return Icon(Icons.close, size: size, color: color);
+      case OrderTrackStepIcon.pending:
+        return Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+        );
+    }
   }
 }
