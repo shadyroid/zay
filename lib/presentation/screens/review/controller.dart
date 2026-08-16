@@ -42,7 +42,9 @@ class ReviewController extends BaseController {
 
   void _setItemReviews(List<OrderProductBean> items) {
     itemReviews.assignAll(
-      items.map((item) => OrderItemReviewDraft(item: item)),
+      items
+          .where((item) => !item.isReviewed)
+          .map((item) => OrderItemReviewDraft(item: item)),
     );
   }
 
@@ -55,11 +57,10 @@ class ReviewController extends BaseController {
     if (!isSuccess(response)) return;
 
     final items = response.data?.items ?? [];
-    if (items.isEmpty) {
-      Get.rawSnackbar(message: 'noItemsToReview'.tr);
-      return;
-    }
     _setItemReviews(items);
+    if (itemReviews.isEmpty) {
+      Get.rawSnackbar(message: 'noItemsToReview'.tr);
+    }
   }
 
   void selectSizeFit(int index, ReviewSizeFit fit) {

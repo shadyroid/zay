@@ -21,7 +21,6 @@ class OrderBean {
   final String customerName;
   final String customerPhone;
   final List<OrderProductBean>? items;
-  final bool isReviewed;
   final List<OrderTrackStepBean> steps;
 
   const OrderBean({
@@ -40,7 +39,6 @@ class OrderBean {
     required this.customerPhone,
     required this.items,
     this.steps = const [],
-    this.isReviewed = false,
   });
 
   int get itemsCount => items?.length ?? 0;
@@ -55,9 +53,15 @@ class OrderBean {
 
   bool get needsPayment => isActive && isCardPayment && !paymentStatus.isPaid;
 
+  bool get isReviewed {
+    final list = items ?? const <OrderProductBean>[];
+    if (list.isEmpty) return false;
+    return list.every((item) => item.isReviewed);
+  }
+
   bool get needsReview => isCompleted && !isReviewed;
 
-  OrderBean copyWith({PaymentStatus? paymentStatus, bool? isReviewed}) {
+  OrderBean copyWith({PaymentStatus? paymentStatus}) {
     return OrderBean(
       id: id,
       refNumber: refNumber,
@@ -74,7 +78,6 @@ class OrderBean {
       customerPhone: customerPhone,
       items: items,
       steps: steps,
-      isReviewed: isReviewed ?? this.isReviewed,
     );
   }
 
@@ -99,7 +102,6 @@ class OrderBean {
       items: (json['items'] as List?)
           ?.map((e) => OrderProductBean.fromJson(e))
           .toList(),
-      isReviewed: json['is_reviewed'] == true || json['is_reviewed'] == 1,
       steps: OrderTrackStepBean.parseList(
         json['status_history'] as List?,
         currentStatus: status,

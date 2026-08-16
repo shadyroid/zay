@@ -1,3 +1,5 @@
+import 'package:zay/app/utils/parser.dart';
+
 class OrderProductBean {
   final int? id;
   final int? productId;
@@ -8,6 +10,7 @@ class OrderProductBean {
   final int? quantity;
   final String? unitPrice;
   final String? total;
+  final bool isReviewed;
 
   OrderProductBean({
     this.id,
@@ -19,6 +22,7 @@ class OrderProductBean {
     this.quantity,
     this.unitPrice,
     this.total,
+    this.isReviewed = false,
   });
 
   factory OrderProductBean.fromJson(Map<String, dynamic> json) {
@@ -32,6 +36,7 @@ class OrderProductBean {
       quantity: json['quantity'],
       unitPrice: json['unit_price'],
       total: json['total'],
+      isReviewed: Parser.parseBoolean(json['has_review']),
     );
   }
 }
