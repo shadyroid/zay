@@ -19,17 +19,8 @@ class TryOnResponse extends BaseResponse {
       message: json['message'],
       id: json['request_id'],
       imageUrl: json['result_image_url'],
-      allowedTriesToday: _readAllowedTriesToday(json),
+      allowedTriesToday: json['remaining_attempts'],
     );
   }
 
-  static int? _readAllowedTriesToday(Map<String, dynamic> json) {
-    final value = json['allowed_tries_today'] ??
-        json['allowed_tries'] ??
-        json['remaining_tries_today'] ??
-        json['remaining_tries'];
-    if (value is int) return value;
-    if (value is num) return value.toInt();
-    return int.tryParse(value?.toString() ?? '');
-  }
 }
