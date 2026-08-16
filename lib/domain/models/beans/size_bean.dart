@@ -25,7 +25,7 @@ class SizeBean {
       label: json['label'],
       price: json['price'],
       isAvailable: json['is_available'],
-      isOutOfStock: (json['stock']??0) == 0,
+      isOutOfStock: json['out_of_stock'],
       measurements: (json['measurements'] as List?)?.map((e) => MeasurementBean.fromJson(e)).toList(),
       isRecommended: json['is_recommended'],
     );

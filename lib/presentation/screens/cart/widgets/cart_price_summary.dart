@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 
 class CartPriceSummary extends StatelessWidget {
@@ -8,12 +7,14 @@ class CartPriceSummary extends StatelessWidget {
     super.key,
     required this.itemCount,
     required this.subtotal,
+    this.discount = 0,
     required this.shipping,
     required this.total,
   });
 
   final int itemCount;
   final double subtotal;
+  final double discount;
   final double shipping;
   final double total;
 
@@ -30,6 +31,14 @@ class CartPriceSummary extends StatelessWidget {
             label: '${'subtotal'.tr} ($itemCount ${'items'.tr})',
             value: '£${subtotal.toStringAsFixed(0)}',
           ),
+          if (discount > 0) ...[
+            const SizedBox(height: 8),
+            _SummaryRow(
+              label: 'discount'.tr,
+              value: '-£${discount.toStringAsFixed(0)}',
+              valueColor: AppColors.orderSuccess,
+            ),
+          ],
           const SizedBox(height: 8),
           _SummaryRow(
             label: 'shipping'.tr,
@@ -52,11 +61,13 @@ class _SummaryRow extends StatelessWidget {
     required this.label,
     required this.value,
     this.isBold = false,
+    this.valueColor,
   });
 
   final String label;
   final String value;
   final bool isBold;
+  final Color? valueColor;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +80,10 @@ class _SummaryRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label, style: style),
-        Text(value, style: style),
+        Text(
+          value,
+          style: style?.copyWith(color: valueColor ?? AppColors.textPrimary),
+        ),
       ],
     );
   }

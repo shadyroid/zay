@@ -41,6 +41,7 @@ class Constants {
   static const String cartItemsPath = '/cart/items';
 
   static const String createOrderPath = '/orders';
+  static const String validateCouponPath = '/coupons/validate';
   static const String ordersPath = '/orders';
   static const String orderDetailsPath = '/orders';
   static const String orderReturnPath = '/returns/order';

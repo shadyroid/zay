@@ -8,18 +8,25 @@ import 'package:zay/domain/models/responses/payment_initiate_response.dart';
 import 'package:zay/domain/models/responses/payment_status_response.dart';
 import 'package:zay/domain/models/responses/return_reasons_response.dart';
 import 'package:zay/domain/models/responses/summary_response.dart';
+import 'package:zay/domain/models/responses/validate_coupon_response.dart';
 import 'package:zay/domain/repositories/order_repository.dart';
 import 'package:zay/domain/models/requests/create_order_request.dart';
 import 'package:zay/domain/models/requests/order_details_request.dart';
 import 'package:zay/domain/models/requests/order_return_request.dart';
 import 'package:zay/domain/models/requests/payment_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
+import 'package:zay/domain/models/requests/validate_coupon_request.dart';
 
 class OrderUseCase {
   final OrderRepository _orderRepository = Get.put(OrderRepositoryImpl());
 
   Future<OrderResponse> requestCreateOrder(CreateOrderRequest request) =>
       _orderRepository.requestCreateOrder(request);
+
+  Future<ValidateCouponResponse> requestValidateCoupon(
+    ValidateCouponRequest request,
+  ) =>
+      _orderRepository.requestValidateCoupon(request);
 
   Future<PaymentInitiateResponse> requestInitiatePayment(
     PaymentRequest request,

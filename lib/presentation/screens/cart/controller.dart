@@ -11,12 +11,14 @@ import 'package:zay/app/utils/payment_browser.dart';
 import 'package:zay/domain/models/enums/payment_method.dart';
 import 'package:zay/domain/models/beans/cart_item_bean.dart';
 import 'package:zay/domain/models/beans/city_bean.dart';
+import 'package:zay/domain/models/beans/coupon_bean.dart';
 import 'package:zay/domain/models/beans/location_bean.dart';
 import 'package:zay/domain/models/requests/create_order_request.dart';
 import 'package:zay/domain/models/requests/delete_cart_item_request.dart';
 import 'package:zay/domain/models/requests/payment_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
 import 'package:zay/domain/models/requests/update_cart_item_request.dart';
+import 'package:zay/domain/models/requests/validate_coupon_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/bottom_sheets/city_area/city_area_bottom_sheet.dart';
 
@@ -29,6 +31,7 @@ class CartController extends BaseController {
   final deliveryFormKey = GlobalKey<FormState>();
   final items = <CartItemBean>[].obs;
   final mobileController = TextEditingController();
+  final couponController = TextEditingController();
   String _recipientName = '';
   final deliveryAddress = RxnString();
   final deliveryLatitude = RxnDouble();
@@ -38,6 +41,8 @@ class CartController extends BaseController {
   final deliveryArea = RxnString();
   final paymentMethod = PaymentMethod.cash.obs;
   final shippingFee = 0.0.obs;
+  final appliedCoupon = Rxn<CouponBean>();
+  final isValidatingCoupon = false.obs;
 
   List<CityBean> _cities = [];
 
@@ -52,6 +57,7 @@ class CartController extends BaseController {
   @override
   void onClose() {
     mobileController.dispose();
+    couponController.dispose();
     super.onClose();
   }
 
@@ -81,7 +87,7 @@ class CartController extends BaseController {
     final response = await _cartUseCase.requestCart();
     isLoading.value = false;
     if (!isSuccess(response)) return;
-    items.assignAll(response.data ?? []);
+    await _setItems(response.data ?? []);
   }
 
   Future<void> removeItem(CartItemBean item) async {
@@ -91,7 +97,7 @@ class CartController extends BaseController {
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
-    items.assignAll(response.data ?? []);
+    await _setItems(response.data ?? []);
   }
 
   Future<void> incrementQuantity(CartItemBean item) async {
@@ -110,7 +116,7 @@ class CartController extends BaseController {
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
-    items.assignAll(response.data ?? []);
+    await _setItems(response.data ?? []);
   }
 
   void selectPaymentMethod(PaymentMethod method) {
@@ -208,11 +214,65 @@ class CartController extends BaseController {
     shippingFee.value = response.shippingFee ?? 0;
   }
 
+  Future<void> requestValidateCoupon() async {
+    final code = couponController.text.trim();
+    if (code.isEmpty) {
+      Get.rawSnackbar(message: 'couponRequired'.tr);
+      return;
+    }
+
+    isValidatingCoupon.value = true;
+    final response = await _orderUseCase.requestValidateCoupon(
+      ValidateCouponRequest(code: code),
+    );
+    isValidatingCoupon.value = false;
+    if (!isSuccess(response) || response.coupon == null) {
+      appliedCoupon.value = null;
+      return;
+    }
+    appliedCoupon.value = response.coupon;
+    couponController.text = response.coupon!.code;
+  }
+
+  void removeCoupon() {
+    appliedCoupon.value = null;
+    couponController.clear();
+  }
+
+  Future<void> _setItems(List<CartItemBean> updated) async {
+    items.assignAll(updated);
+    if (items.isEmpty) {
+      appliedCoupon.value = null;
+      couponController.clear();
+      return;
+    }
+    await _refreshAppliedCoupon();
+  }
+
+  Future<void> _refreshAppliedCoupon() async {
+    final coupon = appliedCoupon.value;
+    if (coupon == null) return;
+
+    final response = await _orderUseCase.requestValidateCoupon(
+      ValidateCouponRequest(code: coupon.code),
+    );
+    if (!isSuccess(response) || response.coupon == null) {
+      appliedCoupon.value = null;
+      return;
+    }
+    appliedCoupon.value = response.coupon;
+  }
+
   int get itemCount => items.fold(0, (sum, item) => sum + item.quantity);
 
   double get subtotal => items.fold(0, (sum, item) => sum + item.lineTotal);
 
-  double get total => subtotal + shippingFee.value;
+  double get discount => appliedCoupon.value?.discountAmount ?? 0;
+
+  double get total {
+    final afterDiscount = appliedCoupon.value?.subtotalAfterDiscount;
+    return (afterDiscount ?? subtotal) + shippingFee.value;
+  }
 
   Future<void> onPayNow() async {
     if (items.isEmpty) return;
@@ -269,6 +329,7 @@ class CartController extends BaseController {
         phone: phone,
         recipientName: _recipientName,
         paymentMethod: paymentMethod.value.apiValue,
+        couponCode: appliedCoupon.value?.code,
       ),
     );
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/screens/cart/controller.dart';
 import 'package:zay/presentation/screens/cart/widgets/cart_bottom_bar.dart';
+import 'package:zay/presentation/screens/cart/widgets/cart_coupon_section.dart';
 import 'package:zay/presentation/screens/cart/widgets/cart_delivery_section.dart';
 import 'package:zay/presentation/screens/cart/widgets/cart_item.dart';
 import 'package:zay/presentation/screens/cart/widgets/cart_payment_section.dart';
@@ -84,9 +85,19 @@ class CartScreen extends GetView<CartController> {
                       ).animateEntrance(
                         delay: const Duration(milliseconds: 120),
                       ),
+                      CartCouponSection(
+                        controller: controller.couponController,
+                        appliedCoupon: controller.appliedCoupon.value,
+                        isValidating: controller.isValidatingCoupon.value,
+                        onApply: controller.requestValidateCoupon,
+                        onRemove: controller.removeCoupon,
+                      ).animateEntrance(
+                        delay: const Duration(milliseconds: 140),
+                      ),
                       CartPriceSummary(
                         itemCount: itemCount,
                         subtotal: subtotal,
+                        discount: controller.discount,
                         shipping: shipping,
                         total: total,
                       ).animateEntrance(

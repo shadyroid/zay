@@ -9,6 +9,7 @@ class CreateOrderRequest {
     required this.recipientName,
     required this.paymentMethod,
     this.notes,
+    this.couponCode,
   });
 
   final double lat;
@@ -20,4 +21,5 @@ class CreateOrderRequest {
   final String recipientName;
   final String paymentMethod;
   final String? notes;
+  final String? couponCode;
 }

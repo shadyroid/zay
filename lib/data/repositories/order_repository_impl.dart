@@ -11,12 +11,14 @@ import 'package:zay/domain/models/responses/payment_initiate_response.dart';
 import 'package:zay/domain/models/responses/payment_status_response.dart';
 import 'package:zay/domain/models/responses/return_reasons_response.dart';
 import 'package:zay/domain/models/responses/summary_response.dart';
+import 'package:zay/domain/models/responses/validate_coupon_response.dart';
 import 'package:zay/domain/repositories/order_repository.dart';
 import 'package:zay/domain/models/requests/create_order_request.dart';
 import 'package:zay/domain/models/requests/order_details_request.dart';
 import 'package:zay/domain/models/requests/order_return_request.dart';
 import 'package:zay/domain/models/requests/payment_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
+import 'package:zay/domain/models/requests/validate_coupon_request.dart';
 import 'package:get/get.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -55,6 +57,14 @@ class OrderRepositoryImpl implements OrderRepository {
       "payment_status": paymentStatus?.apiValue,
     };
     return OrderResponse.fromJson(json);
+  }
+
+  @override
+  Future<ValidateCouponResponse> requestValidateCoupon(
+    ValidateCouponRequest request,
+  ) async {
+    final json = await _orderDataSource.requestValidateCoupon(request);
+    return ValidateCouponResponse.fromJson(json);
   }
 
   @override

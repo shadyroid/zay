@@ -11,9 +11,15 @@ import 'package:zay/domain/models/requests/order_details_request.dart';
 import 'package:zay/domain/models/requests/order_return_request.dart';
 import 'package:zay/domain/models/requests/payment_request.dart';
 import 'package:zay/domain/models/requests/summary_request.dart';
+import 'package:zay/domain/models/requests/validate_coupon_request.dart';
+import 'package:zay/domain/models/responses/validate_coupon_response.dart';
 
 abstract class OrderRepository {
   Future<OrderResponse> requestCreateOrder(CreateOrderRequest request);
+
+  Future<ValidateCouponResponse> requestValidateCoupon(
+    ValidateCouponRequest request,
+  );
 
   Future<PaymentInitiateResponse> requestInitiatePayment(
     PaymentRequest request,
