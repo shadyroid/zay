@@ -12,11 +12,14 @@ import 'package:zay/app/utils/image_picker_helper.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
 import 'package:zay/domain/models/beans/ad_bean.dart';
 import 'package:zay/domain/models/beans/category_bean.dart';
+import 'package:zay/domain/models/beans/order_product_bean.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/beans/shop_bean.dart';
+import 'package:zay/domain/models/requests/order_details_request.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
+import 'package:zay/presentation/bottom_sheets/review/review_bottom_sheet.dart';
 import 'package:zay/presentation/bottom_sheets/types/types_bottom_sheet.dart';
 
 class HomeController extends BaseController {
@@ -75,16 +78,30 @@ class HomeController extends BaseController {
   }
 
   Future<void> _requestLastReview() async {
-    final order = await _orderUseCase.requestLastReview();
+    var order = await _orderUseCase.requestLastReview();
     if (order == null || order.id == null) return;
 
-    await Get.toNamed(
-      Routes.review,
-      arguments: {
-        'orderId': order.id,
-        'order': order,
-        if (order.items?.isNotEmpty == true) 'items': order.items,
-      },
+    var items = order.items ?? const <OrderProductBean>[];
+    if (items.isEmpty) {
+      final response = await _orderUseCase.requestOrderDetails(
+        OrderDetailsRequest(orderId: order.id!),
+      );
+      if (!isSuccess(response)) return;
+      items = response.data?.items ?? const [];
+    }
+
+    OrderProductBean? item;
+    for (final product in items) {
+      if (!product.isReviewed) {
+        item = product;
+        break;
+      }
+    }
+    if (item == null) return;
+
+    await ReviewBottomSheet.show(
+      orderId: order.id!,
+      item: item,
     );
   }
 

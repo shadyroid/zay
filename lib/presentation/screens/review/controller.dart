@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:zay/app/use_cases/order_use_case.dart';
 import 'package:zay/app/use_cases/reviews_use_case.dart';
+import 'package:zay/domain/models/beans/order_bean.dart';
 import 'package:zay/domain/models/beans/order_product_bean.dart';
 import 'package:zay/domain/models/enums/review_size_fit.dart';
 import 'package:zay/domain/models/requests/add_review_request.dart';
@@ -9,6 +10,18 @@ import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/screens/review/models/order_item_review_draft.dart';
 
 class ReviewController extends BaseController {
+  ReviewController({
+    int? orderId,
+    OrderBean? order,
+    List<OrderProductBean>? items,
+  })  : _seedOrderId = orderId,
+        _seedOrder = order,
+        _seedItems = items;
+
+  final int? _seedOrderId;
+  final OrderBean? _seedOrder;
+  final List<OrderProductBean>? _seedItems;
+
   final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
   final OrderUseCase _orderUseCase = Get.put(OrderUseCase());
 
@@ -19,14 +32,15 @@ class ReviewController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    orderId = Get.arguments['orderId'];
-    final order = Get.arguments['order'];
-    final items = Get.arguments['items'];
+    final args = Get.arguments is Map ? Get.arguments as Map : const {};
+    orderId = _seedOrderId ?? args['orderId'];
+    final items = _seedItems ?? args['items'];
+    final order = _seedOrder ?? args['order'];
 
-    if (items != null && items.isNotEmpty) {
+    if (items is List<OrderProductBean> && items.isNotEmpty) {
       _setItemReviews(items);
-    } else if (order != null && order.items.isNotEmpty) {
-      _setItemReviews(order.items);
+    } else if (order is OrderBean && order.items?.isNotEmpty == true) {
+      _setItemReviews(order.items!);
     } else {
       requestOrderDetails();
     }
