@@ -6,7 +6,7 @@ class Constants {
   static const String lastReviewPromptAtKey = 'lastReviewPromptAt';
 
   /// Minimum time between prompting the user to review an order.
-  static const Duration lastReviewPromptInterval = Duration(days: 3);
+  static const Duration lastReviewPromptInterval = Duration(days: 2);
 
   static const String baseUrl = 'https://zaymarketplace.online/api';
 
