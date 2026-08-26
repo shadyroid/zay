@@ -3,7 +3,7 @@ import 'package:zay/domain/models/enums/product_sort_option.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductsRequest {
-  static const pageSizeDefault = 20;
+  static const pageSizeDefault = 10;
 
   const ProductsRequest({
     this.page,
@@ -43,7 +43,7 @@ class ProductsRequest {
     final params = <String, dynamic>{};
 
     if (page != null) params['page'] = page;
-    if (pageSize != null) params['page_size'] = pageSize;
+    if (pageSize != null) params['per_page'] = pageSize;
     if (bestSeller == true) params['best_seller'] = 1;
     if (recommended == true) params['recommended'] = 1;
     if (newArrival == true) params['new_arrival'] = 1;
