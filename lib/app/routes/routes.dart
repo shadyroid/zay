@@ -102,6 +102,16 @@ class Routes {
   static const String notifications = '/notifications';
   static const String noInternet = '/noInternet';
   static const String serverError = '/serverError';
+  static const String unknown = '/unknown';
+
+  /// Fallback when GetX cannot match a route (e.g. a platform deep link
+  /// leaked through as the Navigator initial route). Splash then runs the
+  /// normal auth + [DeepLinksUtil.handleInitialLink] flow.
+  static final GetPage<dynamic> unknownPage = GetPage(
+    name: unknown,
+    page: () => const SplashScreen(),
+    binding: SplashBinding(),
+  );
 
   static final List<GetPage<dynamic>> pages = [
     GetPage(name: splash, page: () => const SplashScreen(), binding: SplashBinding()),

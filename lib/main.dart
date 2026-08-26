@@ -64,6 +64,7 @@ class MyApp extends StatelessWidget {
       ],
       initialRoute: Routes.splash,
       getPages: Routes.pages,
+      unknownRoute: Routes.unknownPage,
       theme: AppTheme.light(),
       defaultTransition: AppMotion.pageTransition,
       transitionDuration: AppMotion.page,

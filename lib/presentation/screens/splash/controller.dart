@@ -21,13 +21,12 @@ class SplashController extends BaseController {
   }
 
   void _navigateNext() {
-    if (PrefsManager.token != null && PrefsManager.token!.isNotEmpty) {
+    if (PrefsManager.token?.isNotEmpty == true) {
       Get.offNamed(Routes.home);
       NotificationsUtil.handelInitialLink();
-      DeepLinksUtil.handleInitialLink();
-      return;
+    }else{
+      Get.offNamed(Routes.signIn);
     }
-    Get.offNamed(Routes.signIn);
     DeepLinksUtil.handleInitialLink();
   }
 }
