@@ -9,6 +9,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
   const ProductDetailsBottomBar({
     super.key,
     required this.price,
+    required this.isTryOnEnabled,
     required this.isTryOnLoading,
     required this.isOutOfStock,
     required this.onTryOn,
@@ -16,6 +17,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
   });
 
   final double? price;
+  final bool? isTryOnEnabled;
   final bool isTryOnLoading;
   final bool isOutOfStock;
   final VoidCallback onTryOn;
@@ -57,26 +59,30 @@ class ProductDetailsBottomBar extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: onTryOn,
-                    icon: isTryOnLoading?CupertinoActivityIndicator():SvgPicture.asset(
-                      'assets/icons/ic_person_2.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    label: Text('tryOn'.tr),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.textPrimary,
-                      side: const BorderSide(color: AppColors.textPrimary),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28),
+                if (isTryOnEnabled==true) ...[
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: onTryOn,
+                      icon: isTryOnLoading
+                          ? const CupertinoActivityIndicator()
+                          : SvgPicture.asset(
+                              'assets/icons/ic_person_2.svg',
+                              width: 20,
+                              height: 20,
+                            ),
+                      label: Text('tryOn'.tr),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textPrimary,
+                        side: const BorderSide(color: AppColors.textPrimary),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
+                  const SizedBox(width: 12),
+                ],
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: isOutOfStock ? null : onAddToCart,

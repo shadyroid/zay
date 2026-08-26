@@ -99,6 +99,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
             ProductDetailsBottomBar(
               price: product.price,
               onTryOn: controller.onTryOn,
+              isTryOnEnabled: product.category?.isTryOnEnabled,
               isTryOnLoading: controller.isTryOnLoading.value,
               isOutOfStock: product.isOutOfStock == true,
               onAddToCart: controller.addToCart,

@@ -64,7 +64,8 @@ class Constants {
   static const String deepLinkHost = 'zaymarketplace.online';
   static const String androidStoreUrl =
       'https://play.google.com/store/apps/details?id=com.zay.marketplace';
-  static const String iosStoreUrl = 'https://zaymarketplace.online';
+  static const String iosStoreUrl =
+      'https://apps.apple.com/app/id6805434746';
 
   static const int splashDelaySeconds = 2;
   static const double priceMinBound = 0;
