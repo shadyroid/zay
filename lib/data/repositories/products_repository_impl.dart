@@ -10,6 +10,7 @@ import 'package:zay/domain/models/responses/product_response.dart';
 import 'package:zay/domain/models/responses/products_response.dart';
 import 'package:zay/domain/models/responses/sizes_response.dart';
 import 'package:zay/domain/models/responses/try_on_response.dart';
+import 'package:zay/domain/models/responses/types_response.dart';
 import 'package:zay/domain/repositories/products_repository.dart';
 import 'package:zay/domain/models/requests/product_details_request.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
@@ -30,6 +31,17 @@ class ProductsRepositoryImpl implements ProductsRepository {
       "data": json['categories'],
     };
     return CategoriesResponse.fromJson(json);
+  }
+
+  @override
+  Future<TypesResponse> requestTryOnCategories() async {
+    var json = await _productsDataSource.requestTryOnCategories();
+    json = {
+      "statusCode": json['statusCode'],
+      "message": json['message'],
+      "data": json['categories'],
+    };
+    return TypesResponse.fromJson(json);
   }
 
   @override

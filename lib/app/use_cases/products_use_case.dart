@@ -6,6 +6,7 @@ import 'package:zay/domain/models/responses/product_response.dart';
 import 'package:zay/domain/models/responses/products_response.dart';
 import 'package:zay/domain/models/responses/sizes_response.dart';
 import 'package:zay/domain/models/responses/try_on_response.dart';
+import 'package:zay/domain/models/responses/types_response.dart';
 import 'package:zay/domain/repositories/products_repository.dart';
 import 'package:zay/domain/models/requests/product_details_request.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
@@ -19,6 +20,9 @@ class ProductsUseCase {
 
   Future<CategoriesResponse> requestCategories() =>
       _productsRepository.requestCategories();
+
+  Future<TypesResponse> requestTryOnCategories() =>
+      _productsRepository.requestTryOnCategories();
 
   Future<SizesResponse> requestSizes() => _productsRepository.requestSizes();
 

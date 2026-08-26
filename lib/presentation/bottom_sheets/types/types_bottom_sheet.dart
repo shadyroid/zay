@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/domain/models/beans/type_bean.dart';
+import 'package:zay/presentation/bottom_sheets/types/types_bottom_sheet_controller.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 
-class TypesBottomSheet extends StatelessWidget {
+class TypesBottomSheet extends GetView<TypesBottomSheetController> {
   const TypesBottomSheet({super.key});
 
-  static Future<TypeBean?> show() {
-    return Get.bottomSheet<TypeBean?>(
-      const TypesBottomSheet(),
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-    );
+  static Future<TypeBean?> show() async {
+    Get.put(TypesBottomSheetController());
+    try {
+      return await Get.bottomSheet<TypeBean?>(
+        const TypesBottomSheet(),
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+      );
+    } finally {
+      if (Get.isRegistered<TypesBottomSheetController>()) {
+        Get.delete<TypesBottomSheetController>();
+      }
+    }
   }
 
   @override
@@ -48,26 +57,40 @@ class TypesBottomSheet extends StatelessWidget {
                 ),
               ),
             ),
-            ...TypeBean.values.map(
-              (type) => InkWell(
-                onTap: () => Get.back(result: type),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 18,
-                  ),
-                  child: Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(
-                      type.name?.tr ?? "",
-                      style: Get.theme.textTheme.bodyLarge?.copyWith(
-                        color: AppColors.textPrimary,
+            Obx(() {
+              if (controller.isLoading.value) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 32),
+                  child: Center(child: AppProgressIndicator()),
+                );
+              }
+
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ...controller.types.map(
+                    (type) => InkWell(
+                      onTap: () => Get.back(result: type),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 18,
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(
+                            type.name ?? '',
+                            style: Get.theme.textTheme.bodyLarge?.copyWith(
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
+                ],
+              );
+            }),
             const SizedBox(height: 8),
           ],
         ),

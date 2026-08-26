@@ -1,4 +1,5 @@
-//Done Review Need BE Edits
+import 'package:zay/app/utils/parser.dart';
+
 class TypeBean {
   final String? id;
   final String? name;
@@ -6,13 +7,9 @@ class TypeBean {
   const TypeBean({required this.id, required this.name});
 
   factory TypeBean.fromJson(Map<String, dynamic> json) {
-    return TypeBean(id: json['id'], name: json['name']);
-  }
-
-  static List<TypeBean> get values {
-    return [
-      TypeBean.fromJson({"id": "tops", "name": "imageCategoryTop"}),
-      TypeBean.fromJson({"id": "bottoms", "name": "imageCategoryBottom"}),
-    ];
+    return TypeBean(
+      id: Parser.parseString(json['id']),
+      name: Parser.parseString(json['name']),
+    );
   }
 }

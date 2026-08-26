@@ -15,6 +15,11 @@ class ProductsDataSource {
     return Map<String, dynamic>.from(response.data as Map);
   }
 
+  Future<Map<String, dynamic>> requestTryOnCategories() async {
+    final response = await _dioClient.get(Constants.tryOnCategoriesPath);
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
   Future<Map<String, dynamic>> requestSizes() async {
     final response = await _dioClient.get(Constants.sizesPath);
     return Map<String, dynamic>.from(response.data as Map);

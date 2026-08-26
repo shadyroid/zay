@@ -35,6 +35,7 @@ class Constants {
   static const String wishlistPath = '/wishlist';
   static const String reviewsPath = '/products';
   static const String tryOnPath = '/try-on';
+  static const String tryOnCategoriesPath = '/try-on/categories';
   static const String tryOnReviewPath = '/requests';
 
   static const String cartPath = '/cart';
