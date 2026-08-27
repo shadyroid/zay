@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/presentation/screens/settings/controller.dart';
+import 'package:zay/presentation/screens/settings/widgets/delete_account_button.dart';
 import 'package:zay/presentation/screens/settings/widgets/settings_app_bar.dart';
 import 'package:zay/presentation/screens/settings/widgets/settings_item.dart';
 import 'package:zay/presentation/screens/settings/widgets/settings_menu_card.dart';
@@ -111,6 +112,10 @@ class SettingsScreen extends GetView<SettingsController> {
                     ),
                   ],
                 ),
+                if (loggedIn) ...[
+                  const SizedBox(height: 24),
+                  DeleteAccountButton(onPressed: controller.onDeleteAccount),
+                ],
               ],
             );
           }),
