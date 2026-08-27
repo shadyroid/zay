@@ -31,15 +31,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>We need camera access to take your profile photo.</string>
+	<string>ZAY uses the camera so you can take a photo for your profile, for virtual try-on, and to search for similar products. For example, you can photograph yourself to see how an item looks on you before you buy, or photograph an outfit to find matching products.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We need your location to show your position on the map and deliver your order.</string>
+	<string>ZAY uses your location only while the app is open to show your position on the map and set a delivery address. For example, when you tap Select Location at checkout, we place a pin at your current position so your order can be delivered. We do not use your location in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to show your position on the map and deliver your order.</string>
+	<string>ZAY uses your location while you use the app to show your position on the map and set a delivery address. For example, when you tap Select Location at checkout, we place a pin at your current position so your order can be delivered.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need permission to save your virtual try-on image to Photos.</string>
+	<string>ZAY saves images to Photos when you choose to download a virtual try-on result. For example, after you try on an item, you can keep a copy of how it looks on you.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need photo library access to choose your profile photo.</string>
+	<string>ZAY uses your photo library so you can choose an existing photo for your profile, virtual try-on, or visual search. For example, you can pick a full-body photo from Photos to see how clothes look on you before you buy.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
