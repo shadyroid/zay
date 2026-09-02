@@ -1,33 +1,35 @@
+import 'package:get/get.dart';
+import 'package:zay/app/utils/parser.dart';
+
 class CityBean {
   const CityBean({
-    required this.code,
-    required this.name,
+    required this.id,
     required this.nameAr,
     required this.nameEn,
   });
 
-  final String code;
-  final String name;
+  final int id;
   final String nameAr;
   final String nameEn;
 
   factory CityBean.fromJson(Map<String, dynamic> json) {
     return CityBean(
-      code: json['code']?.toString() ?? '',
-      name: json['name']?.toString() ?? '',
-      nameAr: json['name_ar']?.toString() ?? json['name']?.toString() ?? '',
-      nameEn: json['name_en']?.toString() ?? json['name']?.toString() ?? '',
+      id: Parser.parseInt(json['id']) ?? 0,
+      nameAr: json['name_ar']?.toString() ?? '',
+      nameEn: json['name_en']?.toString() ?? '',
     );
   }
 
   String get displayName {
-    // Prefer localized label when available via Get locale is handled by caller.
-    return name.isNotEmpty ? name : (nameEn.isNotEmpty ? nameEn : nameAr);
+    final isArabic = (Get.locale?.languageCode ?? 'ar') == 'ar';
+    if (isArabic) {
+      return nameAr.isNotEmpty ? nameAr : nameEn;
+    }
+    return nameEn.isNotEmpty ? nameEn : nameAr;
   }
 
   List<String> get matchLabels => [
         nameEn,
         nameAr,
-        name,
       ].where((e) => e.trim().isNotEmpty).toList();
 }

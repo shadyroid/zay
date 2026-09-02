@@ -15,7 +15,7 @@ abstract class BaseController extends GetxController {
   }
 
   void onApiError(BaseResponse response) {
-    if (response.statusCode == 401) {
+    if (PrefsManager.isLoggedIn&&response.statusCode == 401) {
       PrefsManager.clear();
       Get.offAllNamed(Routes.signIn);
       return;

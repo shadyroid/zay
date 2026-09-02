@@ -9,10 +9,19 @@ class CitiesRepositoryImpl implements CitiesRepository {
   @override
   Future<CitiesResponse> requestCities() async {
     var json = await _citiesDataSource.requestCities();
+    dynamic cities = json['cities'];
+    if (cities == null) {
+      final data = json['data'];
+      if (data is List) {
+        cities = data;
+      } else if (data is Map) {
+        cities = data['cities'];
+      }
+    }
     json = {
       "statusCode": json['statusCode'],
       "message": json['message'],
-      "data": json['cities'],
+      "data": cities,
     };
     return CitiesResponse.fromJson(json);
   }

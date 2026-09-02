@@ -5,7 +5,7 @@ import 'package:zay/app/use_cases/auth_use_case.dart';
 import 'package:zay/app/use_cases/cart_use_case.dart';
 import 'package:zay/app/use_cases/cities_use_case.dart';
 import 'package:zay/app/use_cases/order_use_case.dart';
-import 'package:zay/app/utils/address_city_area_parser.dart';
+import 'package:zay/app/utils/address_city_matcher.dart';
 import 'package:zay/app/utils/egyptian_phone_util.dart';
 import 'package:zay/app/utils/payment_browser.dart';
 import 'package:zay/domain/models/enums/payment_method.dart';
@@ -20,7 +20,6 @@ import 'package:zay/domain/models/requests/summary_request.dart';
 import 'package:zay/domain/models/requests/update_cart_item_request.dart';
 import 'package:zay/domain/models/requests/validate_coupon_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
-import 'package:zay/presentation/bottom_sheets/city_area/city_area_bottom_sheet.dart';
 
 class CartController extends BaseController {
   final CartUseCase _cartUseCase = Get.put(CartUseCase());
@@ -36,15 +35,13 @@ class CartController extends BaseController {
   final deliveryAddress = RxnString();
   final deliveryLatitude = RxnDouble();
   final deliveryLongitude = RxnDouble();
-  final deliveryCity = RxnString();
-  final deliveryCityName = RxnString();
-  final deliveryArea = RxnString();
+  final cities = <CityBean>[].obs;
+  final selectedCity = Rxn<CityBean>();
+  final showCityPicker = false.obs;
   final paymentMethod = PaymentMethod.cash.obs;
   final shippingFee = 0.0.obs;
   final appliedCoupon = Rxn<CouponBean>();
   final isValidatingCoupon = false.obs;
-
-  List<CityBean> _cities = [];
 
   @override
   void onInit() {
@@ -79,7 +76,24 @@ class CartController extends BaseController {
   Future<void> _loadCities() async {
     final response = await _citiesUseCase.requestCities();
     if (!isSuccess(response)) return;
-    _cities = response.data ?? [];
+    cities.assignAll(response.data ?? []);
+
+    final current = selectedCity.value;
+    if (current == null) return;
+    CityBean? matched;
+    for (final city in cities) {
+      if (city.id == current.id) {
+        matched = city;
+        break;
+      }
+    }
+    selectedCity.value = matched;
+    if (matched == null) {
+      shippingFee.value = 0;
+      if (deliveryAddress.value?.trim().isNotEmpty == true) {
+        showCityPicker.value = true;
+      }
+    }
   }
 
   Future<void> requestCart() async {
@@ -124,6 +138,15 @@ class CartController extends BaseController {
     requestSummary();
   }
 
+  void selectCity(CityBean? city) {
+    selectedCity.value = city;
+    if (city == null) {
+      shippingFee.value = 0;
+      return;
+    }
+    requestSummary();
+  }
+
   Future<void> onSelectLocation() async {
     final result = await Get.toNamed(Routes.map);
     if (result is! LocationBean) return;
@@ -132,83 +155,44 @@ class CartController extends BaseController {
     deliveryLatitude.value = result.lat;
     deliveryLongitude.value = result.lng;
 
-    if (_cities.isEmpty) {
+    if (cities.isEmpty) {
       await _loadCities();
     }
 
-    final resolved = AddressCityAreaParser.resolve(
+    final city = AddressCityMatcher.match(
       address: result.address,
-      cities: _cities,
+      cities: cities,
       addressComponents: result.addressComponents,
     );
 
-    CityBean? city = resolved.city;
-    String? area = resolved.area?.trim();
-
-    if (city == null || area == null || area.isEmpty) {
-      final manual = await CityAreaBottomSheet.show(
-        cities: _cities,
-        initialCity: city,
-        initialArea: area,
-      );
-      if (manual == null) {
-        _clearDeliveryLocation();
-        return;
-      }
-      city = manual.city;
-      area = manual.area;
-    }
-
-    _setDeliveryCity(city);
-    deliveryArea.value = area;
-    await requestSummary();
-  }
-
-  void _setDeliveryCity(CityBean city) {
-    deliveryCity.value = city.code;
-    deliveryCityName.value = city.name.isNotEmpty ? city.name : city.nameAr;
-  }
-
-  void _clearDeliveryLocation() {
-    deliveryAddress.value = null;
-    deliveryLatitude.value = null;
-    deliveryLongitude.value = null;
-    deliveryCity.value = null;
-    deliveryCityName.value = null;
-    deliveryArea.value = null;
-    shippingFee.value = 0;
-  }
-
-  Future<void> requestSummary() async {
-    final lat = deliveryLatitude.value;
-    final lng = deliveryLongitude.value;
-    final address = deliveryAddress.value?.trim();
-    final city = deliveryCityName.value?.trim();
-    final area = deliveryArea.value?.trim();
-
-    if (lat == null ||
-        lng == null ||
-        address == null ||
-        address.isEmpty ||
-        city == null ||
-        city.isEmpty ||
-        area == null ||
-        area.isEmpty) {
+    if (city == null) {
+      selectedCity.value = null;
+      showCityPicker.value = true;
+      shippingFee.value = 0;
       return;
     }
 
+    selectedCity.value = city;
+    showCityPicker.value = false;
+    await requestSummary();
+  }
+
+  Future<void> requestSummary() async {
+    final cityId = selectedCity.value?.id;
+    if (cityId == null || cityId <= 0) return;
+
     final response = await _orderUseCase.requestSummary(
       SummaryRequest(
-        lat: lat,
-        lng: lng,
-        address: address,
-        city: city,
-        area: area,
+        cityId: cityId,
         paymentMethod: paymentMethod.value.apiValue,
       ),
     );
     if (!isSuccess(response)) {
       shippingFee.value = 0;
+      if (response.statusCode == 422) {
+        showCityPicker.value = true;
+        await _loadCities();
+      }
       return;
     }
     shippingFee.value = response.shippingFee ?? 0;
@@ -277,37 +261,24 @@ class CartController extends BaseController {
   Future<void> onPayNow() async {
     if (items.isEmpty) return;
 
+    if (cities.isEmpty) {
+      await _loadCities();
+    }
+
+    if (deliveryFormKey.currentState?.validate() != true) return;
+
     final address = deliveryAddress.value?.trim();
     if (address == null || address.isEmpty) {
       Get.rawSnackbar(message: 'selectLocationRequired'.tr);
       return;
     }
 
-    var city = deliveryCity.value?.trim();
-    var area = deliveryArea.value?.trim();
-    if (city == null || city.isEmpty || area == null || area.isEmpty) {
-      if (_cities.isEmpty) await _loadCities();
-      CityBean? initialCity;
-      for (final c in _cities) {
-        if (c.code == city) {
-          initialCity = c;
-          break;
-        }
-      }
-      final manual = await CityAreaBottomSheet.show(
-        cities: _cities,
-        initialCity: initialCity,
-        initialArea: area,
-      );
-      if (manual == null) return;
-      _setDeliveryCity(manual.city);
-      city = manual.city.code;
-      area = manual.area;
-      deliveryArea.value = area;
-      await requestSummary();
+    final city = selectedCity.value;
+    if (city == null || city.id <= 0) {
+      showCityPicker.value = true;
+      Get.rawSnackbar(message: 'cityRequired'.tr);
+      return;
     }
-
-    if (deliveryFormKey.currentState?.validate() != true) return;
 
     final phone = EgyptianPhoneUtil.normalize(mobileController.text.trim())!;
 
@@ -324,8 +295,7 @@ class CartController extends BaseController {
         lat: lat,
         lng: lng,
         address: address,
-        city: city,
-        area: area,
+        cityId: city.id,
         phone: phone,
         recipientName: _recipientName,
         paymentMethod: paymentMethod.value.apiValue,
@@ -335,6 +305,10 @@ class CartController extends BaseController {
 
     if (!isSuccess(response)) {
       isLoading.value = false;
+      if (response.statusCode == 422) {
+        showCityPicker.value = true;
+        await _loadCities();
+      }
       return;
     }
 

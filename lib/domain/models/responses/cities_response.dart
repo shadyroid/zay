@@ -11,12 +11,15 @@ class CitiesResponse extends BaseResponse {
   });
 
   factory CitiesResponse.fromJson(Map<String, dynamic> json) {
-    final list = json['data'] as List<dynamic>?;
+    final raw = json['data'];
+    final list = raw is List ? raw : null;
     return CitiesResponse(
       statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'],
       data: list
-          ?.map((e) => CityBean.fromJson(e as Map<String, dynamic>))
+          ?.whereType<Map>()
+          .map((e) => CityBean.fromJson(Map<String, dynamic>.from(e)))
+          .where((city) => city.id > 0)
           .toList(),
     );
   }

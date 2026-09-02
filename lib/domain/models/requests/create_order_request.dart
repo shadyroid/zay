@@ -3,8 +3,7 @@ class CreateOrderRequest {
     required this.lat,
     required this.lng,
     required this.address,
-    required this.city,
-    required this.area,
+    required this.cityId,
     required this.phone,
     required this.recipientName,
     required this.paymentMethod,
@@ -15,8 +14,7 @@ class CreateOrderRequest {
   final double lat;
   final double lng;
   final String address;
-  final String city;
-  final String area;
+  final int cityId;
   final String phone;
   final String recipientName;
   final String paymentMethod;

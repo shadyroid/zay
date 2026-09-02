@@ -74,8 +74,12 @@ class CartScreen extends GetView<CartController> {
                       CartDeliverySection(
                         formKey: controller.deliveryFormKey,
                         locationText: deliveryAddress,
+                        cities: controller.cities.toList(),
+                        selectedCity: controller.selectedCity.value,
+                        showCityPicker: controller.showCityPicker.value,
                         mobileController: controller.mobileController,
                         onSelectLocation: controller.onSelectLocation,
+                        onCitySelected: controller.selectCity,
                       ).animateEntrance(
                         delay: const Duration(milliseconds: 80),
                       ),

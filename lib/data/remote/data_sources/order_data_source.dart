@@ -19,8 +19,7 @@ class OrderDataSource {
       'lat': request.lat,
       'lng': request.lng,
       'address': request.address,
-      'city': request.city,
-      'area': request.area,
+      'city_id': request.cityId,
       'phone': request.phone,
       'recipient_name': request.recipientName,
       'payment_method': request.paymentMethod,
@@ -68,16 +67,16 @@ class OrderDataSource {
   }
 
   Future<Map<String, dynamic>> requestSummary(SummaryRequest request) async {
+    final data = <String, dynamic>{
+      'city_id': request.cityId,
+    };
+    final paymentMethod = request.paymentMethod?.trim();
+    if (paymentMethod != null && paymentMethod.isNotEmpty) {
+      data['payment_method'] = paymentMethod;
+    }
     final response = await _dioClient.post(
       Constants.shippingCalculatePath,
-      data: {
-        'lat': request.lat.toString(),
-        'lng': request.lng.toString(),
-        'address': request.address,
-        'city': request.city,
-        'area': request.area,
-        'payment_method': request.paymentMethod,
-      },
+      data: data,
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
