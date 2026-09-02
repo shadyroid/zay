@@ -42,9 +42,9 @@ class OrderDataSource {
   ) async {
     final response = await _dioClient.post(
       Constants.validateCouponPath,
-      data: dio_multipart.FormData.fromMap({
+      data: {
         'code': request.code,
-      }),
+      },
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
@@ -70,14 +70,14 @@ class OrderDataSource {
   Future<Map<String, dynamic>> requestSummary(SummaryRequest request) async {
     final response = await _dioClient.post(
       Constants.shippingCalculatePath,
-      data: dio_multipart.FormData.fromMap({
+      data: {
         'lat': request.lat.toString(),
         'lng': request.lng.toString(),
         'address': request.address,
         'city': request.city,
         'area': request.area,
         'payment_method': request.paymentMethod,
-      }),
+      },
     );
     return Map<String, dynamic>.from(response.data as Map);
   }
