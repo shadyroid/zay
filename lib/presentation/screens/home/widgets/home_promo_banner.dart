@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intro/flutter_intro.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
@@ -31,20 +30,11 @@ class HomePromoBanner extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: IntroStepBuilder(
-                  group: 'tryOn',
-                  order: 2,
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  text:
-                      '${'tryOnGuideButtonTitle'.tr}\n${'tryOnGuideButtonDesc'.tr}',
-                  builder: (context, key) => _PromoTile(
-                    key: key,
-                    iconPath: 'assets/icons/ic_virtual_try_on.svg',
-                    title: 'virtualTryOn'.tr,
-                    subtitle: 'virtualTryOnSubtitle'.tr,
-                    onTap: onTryOnTap,
-                  ),
+                child: _PromoTile(
+                  iconPath: 'assets/icons/ic_virtual_try_on.svg',
+                  title: 'virtualTryOn'.tr,
+                  subtitle: 'virtualTryOnSubtitle'.tr,
+                  onTap: onTryOnTap,
                 ),
               ),
               Container(
@@ -70,7 +60,6 @@ class HomePromoBanner extends StatelessWidget {
 
 class _PromoTile extends StatelessWidget {
   const _PromoTile({
-    super.key,
     required this.iconPath,
     required this.title,
     required this.subtitle,

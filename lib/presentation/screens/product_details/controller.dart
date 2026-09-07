@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/cart_use_case.dart';
@@ -30,6 +32,8 @@ class ProductDetailsController extends BaseController {
   final imageIndex = 0.obs;
 
   late final int productId;
+  bool startTryOnIntro = false;
+  late final bool skipBottomBarAnimation;
 
   final RxBool isTryOnLoading = false.obs;
 
@@ -37,7 +41,21 @@ class ProductDetailsController extends BaseController {
   void onInit() {
     super.onInit();
     productId = Get.arguments['productId'];
+    startTryOnIntro = Get.arguments?['startTryOnIntro'] == true;
+    skipBottomBarAnimation = startTryOnIntro;
     _loadScreen();
+  }
+
+  Future<void> onTryOnIntroStepReady(BuildContext context) async {
+    if (!startTryOnIntro) return;
+    startTryOnIntro = false;
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    if (!context.mounted) return;
+    final intro = Intro.of(context);
+    intro.start(group: 'tryOnButton', reset: true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.mounted) intro.refresh();
+    });
   }
 
   Future<void> _loadScreen() async {

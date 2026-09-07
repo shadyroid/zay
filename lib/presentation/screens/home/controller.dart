@@ -36,6 +36,9 @@ class HomeController extends BaseController {
   final searchController = TextEditingController();
   final searchFocusNode = FocusNode();
   final scrollController = ScrollController();
+  final recommendedProductsScrollController = ScrollController();
+  final newArrivalProductsScrollController = ScrollController();
+  final tryOnProductKey = GlobalKey();
   final isSearchExpanded = false.obs;
   final userName = ''.obs;
   final profileImagePath = RxnString();
@@ -59,6 +62,8 @@ class HomeController extends BaseController {
     searchController.dispose();
     searchFocusNode.dispose();
     scrollController.dispose();
+    recommendedProductsScrollController.dispose();
+    newArrivalProductsScrollController.dispose();
     super.onClose();
   }
 
@@ -220,17 +225,49 @@ class HomeController extends BaseController {
   Future<void> startTryOnGuide(BuildContext context) async {
     final intro = Intro.of(context);
     if (intro.status.isOpen) return;
-    if (scrollController.hasClients) {
-      await scrollController.animateTo(
-        (scrollController.position.maxScrollExtent * 0.35)
-            .clamp(0, scrollController.position.maxScrollExtent)
-            .toDouble(),
+
+    final productsScroll = recommendedProducts.isNotEmpty
+        ? recommendedProductsScrollController
+        : newArrivalProductsScrollController;
+    if (productsScroll.hasClients) {
+      await productsScroll.animateTo(
+        0,
         duration: AppMotion.normal,
         curve: AppMotion.standard,
       );
     }
+
+    final productContext = tryOnProductKey.currentContext;
+    if (productContext != null) {
+      await Scrollable.ensureVisible(
+        productContext,
+        alignment: 0.15,
+        duration: AppMotion.normal,
+        curve: AppMotion.standard,
+      );
+    }
+
+    await Future<void>.delayed(AppMotion.fast);
     if (!context.mounted) return;
     intro.start(group: 'tryOn', reset: true);
+  }
+
+  ProductBean? get tryOnGuideProduct {
+    if (recommendedProducts.isNotEmpty) return recommendedProducts.first;
+    if (newArrivalProducts.isNotEmpty) return newArrivalProducts.first;
+    return null;
+  }
+
+  void openTryOnGuideProduct() {
+    final product = tryOnGuideProduct;
+    if (product?.id == null) return;
+    Get.toNamed(
+      Routes.productDetails,
+      arguments: {
+        'productId': product!.id,
+        'startTryOnIntro': true,
+      },
+    );
   }
 
   Future<void> startSearchByImageGuide(BuildContext context) async {

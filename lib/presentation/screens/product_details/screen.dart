@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_motion.dart';
+import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/presentation/screens/product_details/controller.dart';
 import 'package:zay/presentation/screens/product_details/widgets/product_description_section.dart';
 import 'package:zay/presentation/screens/product_details/widgets/product_details_app_bar.dart';
@@ -19,7 +21,16 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final intro = Intro.of(context);
+    return ValueListenableBuilder<IntroStatus>(
+      valueListenable: intro.statusNotifier,
+      builder: (context, status, _) {
+        return PopScope(
+          canPop: !status.isOpen,
+          onPopInvokedWithResult: (didPop, _) {
+            if (!didPop) intro.dispose();
+          },
+          child: Scaffold(
       backgroundColor: Colors.white,
       appBar: ProductDetailsAppBar(onShare: controller.onShare),
       body: Obx(() {
@@ -96,22 +107,35 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 ),
               ),
             ),
-            ProductDetailsBottomBar(
-              price: product.price,
-              onTryOn: controller.onTryOn,
-              isTryOnEnabled: product.category?.isTryOnEnabled,
-              isTryOnLoading: controller.isTryOnLoading.value,
-              isOutOfStock: product.isOutOfStock == true,
-              onAddToCart: controller.addToCart,
-            ).animate().slideY(
-                  begin: 0.3,
-                  end: 0,
-                  duration: AppMotion.normal,
-                  curve: AppMotion.standard,
-                ).fadeIn(duration: AppMotion.normal),
+            _bottomBar(product),
           ],
         );
       }),
+          ),
+        );
+      },
     );
+  }
+
+  Widget _bottomBar(ProductBean product) {
+    final bar = ProductDetailsBottomBar(
+      price: product.price,
+      onTryOn: controller.onTryOn,
+      isTryOnEnabled: product.category?.isTryOnEnabled,
+      isTryOnLoading: controller.isTryOnLoading.value,
+      isOutOfStock: product.isOutOfStock == true,
+      onAddToCart: controller.addToCart,
+      onTryOnIntroReady: controller.onTryOnIntroStepReady,
+    );
+    if (controller.skipBottomBarAnimation) return bar;
+    return bar
+        .animate()
+        .slideY(
+          begin: 0.3,
+          end: 0,
+          duration: AppMotion.normal,
+          curve: AppMotion.standard,
+        )
+        .fadeIn(duration: AppMotion.normal);
   }
 }

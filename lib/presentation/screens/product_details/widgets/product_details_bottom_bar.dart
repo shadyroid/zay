@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
@@ -14,6 +14,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
     required this.isOutOfStock,
     required this.onTryOn,
     required this.onAddToCart,
+    this.onTryOnIntroReady,
   });
 
   final double? price;
@@ -22,6 +23,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
   final bool isOutOfStock;
   final VoidCallback onTryOn;
   final VoidCallback onAddToCart;
+  final ValueChanged<BuildContext>? onTryOnIntroReady;
 
   @override
   Widget build(BuildContext context) {
@@ -61,22 +63,34 @@ class ProductDetailsBottomBar extends StatelessWidget {
               children: [
                 if (isTryOnEnabled==true) ...[
                   Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: onTryOn,
-                      icon: isTryOnLoading
-                          ? const CupertinoActivityIndicator()
-                          : SvgPicture.asset(
-                              'assets/icons/ic_person_2.svg',
-                              width: 20,
-                              height: 20,
-                            ),
-                      label: Text('tryOn'.tr),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.textPrimary,
-                        side: const BorderSide(color: AppColors.textPrimary),
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
+                    child: IntroStepBuilder(
+                      group: 'tryOnButton',
+                      order: 2,
+                      padding: EdgeInsets.zero,
+                      borderRadius: const BorderRadius.all(Radius.circular(28)),
+                      text:
+                          '${'tryOnGuideButtonTitle'.tr}\n${'tryOnGuideButtonDesc'.tr}',
+                      onWidgetLoad: onTryOnIntroReady == null
+                          ? null
+                          : () => onTryOnIntroReady!(context),
+                      builder: (context, key) => OutlinedButton.icon(
+                        key: key,
+                        onPressed: onTryOn,
+                        icon: isTryOnLoading
+                            ? const CupertinoActivityIndicator()
+                            : SvgPicture.asset(
+                                'assets/icons/ic_person_2.svg',
+                                width: 20,
+                                height: 20,
+                              ),
+                        label: Text('tryOn'.tr),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppColors.textPrimary,
+                          side: const BorderSide(color: AppColors.textPrimary),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
+                          ),
                         ),
                       ),
                     ),

@@ -22,33 +22,16 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Intro(
-      padding: const EdgeInsets.all(8),
-      borderRadius: const BorderRadius.all(Radius.circular(12)),
-      maskColor: const Color.fromRGBO(0, 0, 0, 0.6),
-      maskClosable: true,
-      buttonBuilder: (order) {
-        return IntroButtonConfig(
-          text: order >= 2 ? 'guideGotIt'.tr : 'guideNext'.tr,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            foregroundColor: Colors.white,
-            elevation: 0,
-          ),
-        );
-      },
-      child: Builder(
-        builder: (context) {
-          final intro = Intro.of(context);
-          return ValueListenableBuilder<IntroStatus>(
-            valueListenable: intro.statusNotifier,
-            builder: (context, status, _) {
-              return PopScope(
-                canPop: !status.isOpen,
-                onPopInvokedWithResult: (didPop, _) {
-                  if (!didPop) intro.dispose();
-                },
-                child: Scaffold(
+    final intro = Intro.of(context);
+    return ValueListenableBuilder<IntroStatus>(
+      valueListenable: intro.statusNotifier,
+      builder: (context, status, _) {
+        return PopScope(
+          canPop: !status.isOpen,
+          onPopInvokedWithResult: (didPop, _) {
+            if (!didPop) intro.dispose();
+          },
+          child: Scaffold(
                   backgroundColor: Colors.white,
                   body: SafeArea(
                     child: Obx(() {
@@ -119,6 +102,7 @@ class HomeScreen extends GetView<HomeController> {
                             ).animateEntrance(
                               delay: const Duration(milliseconds: 80),
                             ),
+                            if(controller.recommendedProducts.isNotEmpty)
                             HomeSectionHeader(
                               title: 'recommendedForYou'.tr,
                               onSeeAll: controller.onSeeAllRecommended,
@@ -126,6 +110,8 @@ class HomeScreen extends GetView<HomeController> {
                               delay: const Duration(milliseconds: 120),
                             ),
                             HorizontalListView.separated(
+                              controller: controller
+                                  .recommendedProductsScrollController,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               itemCount:
@@ -159,6 +145,8 @@ class HomeScreen extends GetView<HomeController> {
                                 delay: const Duration(milliseconds: 180),
                               ),
                               HorizontalListView.separated(
+                                controller: controller
+                                    .newArrivalProductsScrollController,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
                                 ),
@@ -208,11 +196,8 @@ class HomeScreen extends GetView<HomeController> {
                   bottomNavigationBar:
                       const MainBottomNav(currentIndex: 0),
                 ),
-              );
-            },
-          );
-        },
-      ),
+        );
+      },
     );
   }
 
@@ -235,14 +220,45 @@ class HomeScreen extends GetView<HomeController> {
 
     if (!includeTryOnStep) return card;
 
-    return IntroStepBuilder(
-      group: 'tryOn',
-      order: 1,
-      padding: EdgeInsets.zero,
-      borderRadius: const BorderRadius.all(Radius.circular(12)),
-      text:
-          '${'tryOnGuideProductTitle'.tr}\n${'tryOnGuideProductDesc'.tr}',
-      builder: (context, key) => KeyedSubtree(key: key, child: card),
+    return KeyedSubtree(
+      key: controller.tryOnProductKey,
+      child: IntroStepBuilder(
+        group: 'tryOn',
+        order: 1,
+        padding: EdgeInsets.zero,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        overlayBuilder: (params) => Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${'tryOnGuideProductTitle'.tr}\n${'tryOnGuideProductDesc'.tr}',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                height: 1.4,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 12),
+            IntroButton.fromConfig(
+              config: IntroButtonConfig(
+                text: 'guideNext'.tr,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                ),
+              ),
+              onPressed: () {
+                params.onFinish();
+                controller.openTryOnGuideProduct();
+              },
+            ),
+          ],
+        ),
+        builder: (context, key) => KeyedSubtree(key: key, child: card),
+      ),
     );
   }
 }
