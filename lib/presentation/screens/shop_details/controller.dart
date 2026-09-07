@@ -17,7 +17,7 @@ class ShopDetailsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
 
   final shop = Rxn<ShopBean>();
-  final bestSellerProducts = <ProductBean>[].obs;
+  final products = <ProductBean>[].obs;
   final selectedCategoryId = RxnInt();
   final isAboutExpanded = false.obs;
 
@@ -50,13 +50,12 @@ class ShopDetailsController extends BaseController {
       ProductsRequest(
         shopId: shopId,
         categoryId: selectedCategoryId.value,
-        bestSeller: true,
-        pageSize: 4,
+        pageSize: 50,
         page: 1,
       ),
     );
     if (!isSuccess(response)) return;
-    bestSellerProducts.assignAll(response.data ?? []);
+    products.assignAll(response.data ?? []);
   }
 
   void selectCategory(CategoryBean category) {

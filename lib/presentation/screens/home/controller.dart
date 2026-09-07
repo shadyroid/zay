@@ -45,8 +45,6 @@ class HomeController extends BaseController {
   final topStores = <ShopBean>[].obs;
   final selectedCategoryId = RxnInt();
 
-  final Map<int?, String?> _shopNames = {};
-
   @override
   void onInit() {
     super.onInit();
@@ -139,7 +137,7 @@ class HomeController extends BaseController {
 
   Future<void> _requestRecommended() async {
     final response = await _productsUseCase.requestProducts(
-      ProductsRequest(recommended: true, pageSize: 4),
+      ProductsRequest(recommended: true, pageSize: 50,page: 1),
     );
     if (!isSuccess(response)) return;
     recommendedProducts.assignAll(response.data ?? []);
@@ -147,7 +145,7 @@ class HomeController extends BaseController {
 
   Future<void> _requestNewArrivals() async {
     final response = await _productsUseCase.requestProducts(
-      ProductsRequest(newArrival: true, pageSize: 6),
+      ProductsRequest(newArrival: true, pageSize: 50,page: 1),
     );
     if (!isSuccess(response)) return;
     newArrivalProducts.assignAll(response.data ?? []);
@@ -157,10 +155,7 @@ class HomeController extends BaseController {
     final response = await _shopsUseCase.requestShops();
     if (!isSuccess(response)) return;
     final shops = response.data ?? [];
-    topStores.assignAll(shops.take(4));
-    _shopNames
-      ..clear()
-      ..addEntries(shops.map((s) => MapEntry(s.id, s.name)));
+    topStores.assignAll(shops);
   }
 
 

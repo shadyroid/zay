@@ -131,14 +131,14 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
             ),
           ],
 
-          if (controller.bestSellerProducts.isNotEmpty) ...[
+          if (controller.products.isNotEmpty) ...[
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
               sliver: SliverToBoxAdapter(
                 child: Row(
                   children: [
                     Text(
-                      'bestSeller'.tr,
+                      'products'.tr,
                       style: Get.theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
@@ -168,7 +168,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
                   childAspectRatio: 0.72,
                 ),
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  final product = controller.bestSellerProducts[index];
+                  final product = controller.products[index];
                   return ProductItem(
                     product: product,
                     isFavorite: product.isFavorite,
@@ -177,7 +177,7 @@ class ShopDetailsScreen extends GetView<ShopDetailsController> {
                       await controller.toggleFavorite(product);
                     },
                   );
-                }, childCount: controller.bestSellerProducts.length),
+                }, childCount: controller.products.length),
               ),
             ),
           ],
