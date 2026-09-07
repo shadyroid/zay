@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
@@ -11,12 +10,16 @@ class TryOnBottomBar extends StatelessWidget {
     required this.onTryOnAgain,
     required this.onAddToCart,
     this.canTryOnAgain = true,
+    this.isOutOfStock = false,
+    this.isAddingToCart = false,
   });
 
   final double? price;
   final VoidCallback onTryOnAgain;
   final VoidCallback onAddToCart;
   final bool canTryOnAgain;
+  final bool isOutOfStock;
+  final bool isAddingToCart;
 
   @override
   Widget build(BuildContext context) {
@@ -82,20 +85,26 @@ class TryOnBottomBar extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: onAddToCart,
+                    onPressed: isOutOfStock || isAddingToCart
+                        ? null
+                        : onAddToCart,
                     icon: SvgPicture.asset(
                       'assets/icons/ic_nav_cart.svg',
                       width: 20,
                       height: 20,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
+                      colorFilter: ColorFilter.mode(
+                        isOutOfStock ? AppColors.textSecondary : Colors.white,
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: Text('addToCart'.tr),
+                    label: Text(
+                      isOutOfStock ? 'outOfStock'.tr : 'addToCart'.tr,
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
+                      disabledBackgroundColor: AppColors.border,
+                      disabledForegroundColor: AppColors.textSecondary,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(

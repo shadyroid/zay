@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/screens/product_details/widgets/product_size_section.dart';
 import 'package:zay/presentation/screens/try_on/controller.dart';
 import 'package:zay/presentation/screens/try_on/widgets/try_on_app_bar.dart';
 import 'package:zay/presentation/screens/try_on/widgets/try_on_bottom_bar.dart';
@@ -71,6 +72,12 @@ class TryOnScreen extends GetView<TryOnController> {
                       child: _imagePlaceholder(),
                     ),
                   ),
+                ProductSizeSection(
+                  sizes: controller.product.sizes,
+                  selectedSizeId: controller.selectedSizeId.value,
+                  onSizeSelected: controller.selectSize,
+                  onSizeGuideTap: controller.openSizeGuide,
+                ),
                 const SizedBox(height: 8),
                 TryOnFeedbackSection(
                   selectedRating: controller.selectedRating.value,
@@ -88,6 +95,8 @@ class TryOnScreen extends GetView<TryOnController> {
         TryOnBottomBar(
           price: price,
           canTryOnAgain: (controller.allowedTriesToday.value ?? 1) > 0,
+          isOutOfStock: controller.product.isOutOfStock == true,
+          isAddingToCart: controller.isAddingToCart.value,
           onTryOnAgain: controller.onTryOnAgain,
           onAddToCart: controller.onAddToCart,
         ),

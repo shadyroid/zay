@@ -7,12 +7,14 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:zay/app/routes/routes.dart';
+import 'package:zay/app/use_cases/cart_use_case.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/use_cases/reviews_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
 import 'package:zay/app/utils/image_picker_helper.dart';
 import 'package:zay/app/utils/transfer_progress.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
+import 'package:zay/domain/models/requests/add_cart_item_request.dart';
 import 'package:zay/domain/models/requests/try_on_request.dart';
 import 'package:zay/domain/models/requests/try_on_review_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
@@ -22,16 +24,20 @@ import 'package:zay/presentation/bottom_sheets/try_on_image_actions/try_on_image
 class TryOnController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
   final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
+  final CartUseCase _cartUseCase = Get.put(CartUseCase());
 
   late XFile file;
   final imageUrl = RxnString();
   int? tryOnId;
   late ProductBean product;
+  final selectedSizeId = RxnInt();
+  int quantity = 1;
   final selectedRating = 1.obs;
   final sendProgress = 0.0.obs;
   final receiveProgress = 0.0.obs;
   final allowedTriesToday = RxnInt();
   final isImageActionLoading = false.obs;
+  final isAddingToCart = false.obs;
 
   @override
   void onInit() {
@@ -40,6 +46,31 @@ class TryOnController extends BaseController {
     file = Get.arguments['file'];
     product = Get.arguments['product'];
     requestTryOn();
+  }
+
+  void selectSize(int? sizeId) {
+    if (sizeId != null) {
+      final matched = product.sizes?.where((s) => s.id == sizeId);
+      if (matched != null &&
+          matched.isNotEmpty &&
+          matched.first.isOutOfStock == true) {
+        return;
+      }
+    }
+    selectedSizeId.value = sizeId;
+    quantity = product.selectedSizesQuantities?[sizeId] ?? 1;
+  }
+
+  void openSizeGuide() {
+    final sizes = product.sizes;
+    if (sizes == null || sizes.isEmpty) return;
+    Get.toNamed(
+      Routes.sizeGuide,
+      arguments: {
+        'sizes': sizes,
+        'measurementsImage': product.category?.measurementsImage,
+      },
+    );
   }
 
   void selectRating(int rating) {
@@ -93,7 +124,43 @@ class TryOnController extends BaseController {
   }
 
   Future<void> onAddToCart() async {
+    if (isAddingToCart.value) return;
     if (!await AppAuthGuard.ensureAuthenticated()) return;
+
+    final p = product;
+    final productId = p.id;
+    final sizeId = selectedSizeId.value;
+    if (productId == null) return;
+
+    if (p.isOutOfStock == true) {
+      Get.rawSnackbar(message: 'outOfStock'.tr);
+      return;
+    }
+
+    if (p.sizes?.isNotEmpty == true && sizeId == null) {
+      Get.rawSnackbar(message: 'selectSizeRequired'.tr);
+      return;
+    }
+
+    final selectedSize = p.sizes?.where((s) => s.id == sizeId);
+    if (selectedSize != null &&
+        selectedSize.isNotEmpty &&
+        selectedSize.first.isOutOfStock == true) {
+      Get.rawSnackbar(message: 'outOfStock'.tr);
+      return;
+    }
+
+    isAddingToCart.value = true;
+    final response = await _cartUseCase.requestAddCartItem(
+      AddCartItemRequest(
+        productId: productId,
+        productSizeId: sizeId,
+        quantity: quantity,
+      ),
+    );
+    isAddingToCart.value = false;
+    if (!isSuccess(response)) return;
+
     Get.rawSnackbar(message: 'addedToCart'.tr);
     await AppAuthGuard.toNamed(Routes.cart);
   }
