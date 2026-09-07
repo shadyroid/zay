@@ -101,6 +101,21 @@ class AppTranslations extends Translations {
     'imageSearchStepDoneDesc': 'Results are ready',
     'searchByImage': 'Search by image',
     'searchByImageSubtitle': 'Upload a photo and find similar products.',
+    'guideSkip': 'Skip',
+    'guideNext': 'Next',
+    'guideGotIt': 'Got it',
+    'tryOnGuideProductTitle': 'Choose a product',
+    'tryOnGuideProductDesc':
+        'Open any item you like. Virtual Try On is available on the product page.',
+    'tryOnGuideButtonTitle': 'Tap Try On',
+    'tryOnGuideButtonDesc':
+        'On the product page, tap Try On, upload your photo, and see how it looks on you before you buy.',
+    'searchImageGuideSearchTitle': 'Open search',
+    'searchImageGuideSearchDesc':
+        'Tap the search icon at the top to open the search bar.',
+    'searchImageGuideCameraTitle': 'Search by photo',
+    'searchImageGuideCameraDesc':
+        'Tap the camera, upload a picture, and we’ll find similar products.',
     'shops': 'Stores',
     'stores': 'Stores',
     'reviews': 'reviews',
@@ -398,6 +413,21 @@ class AppTranslations extends Translations {
     'imageSearchStepDoneDesc': 'النتائج جاهزة',
     'searchByImage': 'البحث بالصورة',
     'searchByImageSubtitle': 'ارفع صورة واعثر على منتجات مشابهة.',
+    'guideSkip': 'تخطي',
+    'guideNext': 'التالي',
+    'guideGotIt': 'فهمت',
+    'tryOnGuideProductTitle': 'اختر منتجاً',
+    'tryOnGuideProductDesc':
+        'افتح أي منتج يعجبك. التجربة الافتراضية متاحة في صفحة المنتج.',
+    'tryOnGuideButtonTitle': 'اضغط تجربة',
+    'tryOnGuideButtonDesc':
+        'في صفحة المنتج، اضغط تجربة، ارفع صورتك، وشاهد كيف يبدو عليك قبل الشراء.',
+    'searchImageGuideSearchTitle': 'افتح البحث',
+    'searchImageGuideSearchDesc':
+        'اضغط أيقونة البحث في الأعلى لفتح شريط البحث.',
+    'searchImageGuideCameraTitle': 'البحث بالصورة',
+    'searchImageGuideCameraDesc':
+        'اضغط الكاميرا، ارفع صورة، وسنجد منتجات مشابهة.',
     'shops': 'المتاجر',
     'stores': 'المتاجر',
     'reviews': 'تقييم',

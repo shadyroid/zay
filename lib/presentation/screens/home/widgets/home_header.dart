@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/presentation/widgets/profile_avatar.dart';
 
@@ -49,15 +50,24 @@ class HomeHeader extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            onPressed: onSearchTap,
-            icon: SvgPicture.asset(
-              'assets/icons/ic_search.svg',
-              width: 22,
-              height: 22,
-              colorFilter: const ColorFilter.mode(
-                AppColors.textPrimary,
-                BlendMode.srcIn,
+          IntroStepBuilder(
+            group: 'searchByImage',
+            order: 1,
+            padding: const EdgeInsets.all(4),
+            borderRadius: const BorderRadius.all(Radius.circular(24)),
+            text:
+                '${'searchImageGuideSearchTitle'.tr}\n${'searchImageGuideSearchDesc'.tr}',
+            builder: (context, key) => IconButton(
+              key: key,
+              onPressed: onSearchTap,
+              icon: SvgPicture.asset(
+                'assets/icons/ic_search.svg',
+                width: 22,
+                height: 22,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.textPrimary,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),

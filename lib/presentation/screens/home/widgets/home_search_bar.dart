@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
 
 class HomeSearchBar extends StatelessWidget {
@@ -61,15 +62,24 @@ class HomeSearchBar extends StatelessWidget {
                     ),
               ),
             ),
-            IconButton(
-              padding: const EdgeInsetsDirectional.only(end: 8),
-              constraints: const BoxConstraints(),
-              icon: SvgPicture.asset(
-                'assets/icons/ic_camera_outline.svg',
-                width: 22,
-                height: 22,
+            IntroStepBuilder(
+              group: 'searchByImage',
+              order: 2,
+              padding: const EdgeInsets.all(4),
+              borderRadius: const BorderRadius.all(Radius.circular(24)),
+              text:
+                  '${'searchImageGuideCameraTitle'.tr}\n${'searchImageGuideCameraDesc'.tr}',
+              builder: (context, key) => IconButton(
+                key: key,
+                padding: const EdgeInsetsDirectional.only(end: 8),
+                constraints: const BoxConstraints(),
+                icon: SvgPicture.asset(
+                  'assets/icons/ic_camera_outline.svg',
+                  width: 22,
+                  height: 22,
+                ),
+                onPressed: onCameraTap,
               ),
-              onPressed: onCameraTap,
             ),
           ],
         ),

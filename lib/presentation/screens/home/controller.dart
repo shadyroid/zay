@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/ads_use_case.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
@@ -8,6 +9,7 @@ import 'package:zay/app/use_cases/order_use_case.dart';
 import 'package:zay/app/use_cases/products_use_case.dart';
 import 'package:zay/app/use_cases/shops_use_case.dart';
 import 'package:zay/app/utils/app_auth_guard.dart';
+import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/app/utils/image_picker_helper.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
 import 'package:zay/domain/models/beans/ad_bean.dart';
@@ -33,6 +35,7 @@ class HomeController extends BaseController {
 
   final searchController = TextEditingController();
   final searchFocusNode = FocusNode();
+  final scrollController = ScrollController();
   final isSearchExpanded = false.obs;
   final userName = ''.obs;
   final profileImagePath = RxnString();
@@ -55,6 +58,7 @@ class HomeController extends BaseController {
   void onClose() {
     searchController.dispose();
     searchFocusNode.dispose();
+    scrollController.dispose();
     super.onClose();
   }
 
@@ -198,9 +202,10 @@ class HomeController extends BaseController {
     );
   }
 
-  void onSearchToggle() {
+  void onSearchToggle({bool focus = true}) {
     isSearchExpanded.toggle();
     if (isSearchExpanded.value) {
+      if (!focus) return;
       Future.delayed(const Duration(milliseconds: 200), () {
         if (isSearchExpanded.value) {
           searchFocusNode.requestFocus();
@@ -210,6 +215,40 @@ class HomeController extends BaseController {
       searchController.clear();
       searchFocusNode.unfocus();
     }
+  }
+
+  Future<void> startTryOnGuide(BuildContext context) async {
+    final intro = Intro.of(context);
+    if (intro.status.isOpen) return;
+    if (scrollController.hasClients) {
+      await scrollController.animateTo(
+        (scrollController.position.maxScrollExtent * 0.35)
+            .clamp(0, scrollController.position.maxScrollExtent)
+            .toDouble(),
+        duration: AppMotion.normal,
+        curve: AppMotion.standard,
+      );
+    }
+    if (!context.mounted) return;
+    intro.start(group: 'tryOn', reset: true);
+  }
+
+  Future<void> startSearchByImageGuide(BuildContext context) async {
+    final intro = Intro.of(context);
+    if (intro.status.isOpen) return;
+    if (scrollController.hasClients) {
+      await scrollController.animateTo(
+        0,
+        duration: AppMotion.normal,
+        curve: AppMotion.standard,
+      );
+    }
+    if (!isSearchExpanded.value) {
+      onSearchToggle(focus: false);
+      await Future<void>.delayed(AppMotion.normal);
+    }
+    if (!context.mounted) return;
+    intro.start(group: 'searchByImage', reset: true);
   }
 
   Future<void> onNotificationsTap() async {
