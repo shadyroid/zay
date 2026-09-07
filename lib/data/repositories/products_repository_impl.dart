@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:zay/app/utils/likes_util.dart';
+import 'package:zay/app/utils/transfer_progress.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
 import 'package:zay/data/remote/data_sources/cart_data_source.dart';
 import 'package:zay/data/remote/data_sources/products_data_source.dart';
@@ -61,10 +62,16 @@ class ProductsRepositoryImpl implements ProductsRepository {
     void Function(int count, int total)? onSendProgress,
     void Function(int count, int total)? onReceiveProgress,
   }) async {
-    var json = await _productsDataSource.requestProducts(
-      request,
+    var json = await _withFakeReceiveProgress(
+      duration: const Duration(seconds: 40),
+      enabled: request.image != null && onReceiveProgress != null,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
+      request: (onSend, onReceive) => _productsDataSource.requestProducts(
+        request,
+        onSendProgress: onSend,
+        onReceiveProgress: onReceive,
+      ),
     );
 
     json = {
@@ -161,11 +168,53 @@ class ProductsRepositoryImpl implements ProductsRepository {
     void Function(int count, int total)? onSendProgress,
     void Function(int count, int total)? onReceiveProgress,
   }) async {
-    final json = await _productsDataSource.requestTryOn(
-      request,
+    final json = await _withFakeReceiveProgress(
+      duration: const Duration(seconds: 50),
+      enabled: onReceiveProgress != null,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
+      request: (onSend, onReceive) => _productsDataSource.requestTryOn(
+        request,
+        onSendProgress: onSend,
+        onReceiveProgress: onReceive,
+      ),
     );
     return TryOnResponse.fromJson(json);
+  }
+
+  Future<T> _withFakeReceiveProgress<T>({
+    required Duration duration,
+    required bool enabled,
+    required Future<T> Function(
+      void Function(int count, int total)? onSendProgress,
+      void Function(int count, int total)? onReceiveProgress,
+    ) request,
+    void Function(int count, int total)? onSendProgress,
+    void Function(int count, int total)? onReceiveProgress,
+  }) async {
+    if (!enabled) {
+      return request(onSendProgress, onReceiveProgress);
+    }
+
+    const scale = 1000;
+    final fakeReceive = FakeReceiveProgress(duration: duration);
+    try {
+      return await request(
+        (count, total) {
+          onSendProgress?.call(count, total);
+          if (!TransferProgress.isSendComplete(
+            TransferProgress.portion(count, total),
+          )) {
+            return;
+          }
+          fakeReceive.start((value) {
+            onReceiveProgress?.call((value * scale).round(), scale);
+          });
+        },
+        null,
+      );
+    } finally {
+      fakeReceive.stop();
+    }
   }
 }

@@ -118,7 +118,7 @@ class NotificationsUtil {
   static Future<void> showNotificationForRemoteMessage(
     RemoteMessage message,
   ) async {
-    log('message $message');
+    log('message ${message.notification?.title} ${message.notification?.body}');
     final notification = message.notification;
     final title = notification?.title ?? message.data['title'] as String?;
     final body = notification?.body ?? message.data['body'] as String?;
