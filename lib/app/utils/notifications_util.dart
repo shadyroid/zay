@@ -106,7 +106,7 @@ class NotificationsUtil {
     // system notification tray entry created automatically by the OS
     // (only happens for messages that include a `notification` payload).
     FirebaseMessaging.onMessageOpenedApp.listen(
-      (message) => _navigateFromData(message.data),
+      (message) => navigateFromData(message.data),
     );
   }
 
@@ -157,13 +157,13 @@ class NotificationsUtil {
     if (payload == null || payload.isEmpty) return;
     try {
       final data = jsonDecode(payload) as Map<String, dynamic>;
-      _navigateFromData(data);
+      navigateFromData(data);
     } catch (e) {
       debugPrint('NotificationsUtil: failed to parse payload: $e');
     }
   }
 
-  static void _navigateFromData(Map<String, dynamic> data) {
+  static void navigateFromData(Map<String, dynamic> data) {
     final routeTarget = data['routeTarget']?.toString();
     switch (routeTarget) {
       case 'order-details':
@@ -181,6 +181,7 @@ class NotificationsUtil {
         break;
       case 'notifications':
       default:
+        if (Get.currentRoute == Routes.notifications) return;
         Get.toNamed(Routes.notifications);
         break;
     }
@@ -192,7 +193,7 @@ class NotificationsUtil {
   static Future<void> handelInitialLink() async {
     final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
-      _navigateFromData(initialMessage.data);
+      navigateFromData(initialMessage.data);
       return;
     }
 
