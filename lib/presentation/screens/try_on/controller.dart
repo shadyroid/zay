@@ -15,6 +15,8 @@ import 'package:zay/app/utils/image_picker_helper.dart';
 import 'package:zay/app/utils/transfer_progress.dart';
 import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/domain/models/requests/add_cart_item_request.dart';
+import 'package:zay/domain/models/requests/product_details_request.dart';
+import 'package:zay/domain/models/requests/try_on_details_request.dart';
 import 'package:zay/domain/models/requests/try_on_request.dart';
 import 'package:zay/domain/models/requests/try_on_review_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
@@ -26,15 +28,17 @@ class TryOnController extends BaseController {
   final ReviewsUseCase _reviewsUseCase = Get.put(ReviewsUseCase());
   final CartUseCase _cartUseCase = Get.put(CartUseCase());
 
-  late XFile file;
+  XFile? file;
   final imageUrl = RxnString();
   int? tryOnId;
+  int? productId;
   late ProductBean product;
   final selectedSizeId = RxnInt();
   int quantity = 1;
   final selectedRating = 1.obs;
   final sendProgress = 0.0.obs;
   final receiveProgress = 0.0.obs;
+  final isGenerating = false.obs;
   final allowedTriesToday = RxnInt();
   final isImageActionLoading = false.obs;
   final isAddingToCart = false.obs;
@@ -43,9 +47,25 @@ class TryOnController extends BaseController {
   void onInit() {
     super.onInit();
     isLoading.value = true;
-    file = Get.arguments['file'];
-    product = Get.arguments['product'];
-    requestTryOn();
+    file = Get.arguments?['file'] as XFile?;
+    final argProduct = Get.arguments?['product'];
+    if (argProduct is ProductBean) {
+      product = argProduct;
+      productId = argProduct.id;
+    }
+    tryOnId = _parseInt(Get.arguments?['tryOnId']);
+    productId = _parseInt(Get.arguments?['productId']) ?? productId;
+
+    if (tryOnId != null && file == null) {
+      requestTryOnDetails();
+    } else {
+      requestTryOn();
+    }
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value is int) return value;
+    return int.tryParse(value?.toString() ?? '');
   }
 
   void selectSize(int? sizeId) {
@@ -91,12 +111,60 @@ class TryOnController extends BaseController {
     requestTryOn();
   }
 
-  Future<void> requestTryOn() async {
+  Future<void> requestTryOnDetails() async {
     isLoading.value = true;
+    isGenerating.value = false;
+    final id = tryOnId;
+    final pid = productId;
+    if (id == null || pid == null) {
+      Get.back();
+      return;
+    }
+
+    final productResponse = await _productsUseCase.requestProductDetails(
+      ProductDetailsRequest(productId: pid),
+    );
+    if (!productResponse.isSuccess || productResponse.data == null) {
+      isLoading.value = false;
+      if (!isSuccess(productResponse)) {
+        Get.back();
+        return;
+      }
+      Get.back();
+      return;
+    }
+    product = productResponse.data!;
+
+    final response = await _productsUseCase.requestTryOnDetails(
+      TryOnDetailsRequest(tryOnId: id),
+    );
+    isLoading.value = false;
+    if (!response.isSuccess) {
+      Get.back();
+      isSuccess(response);
+      return;
+    }
+
+    tryOnId = response.id ?? id;
+    allowedTriesToday.value = response.allowedTriesToday;
+    final url = response.imageUrl;
+    if (url != null && url.isNotEmpty) {
+      imageUrl.value = url;
+    }
+  }
+
+  Future<void> requestTryOn() async {
+    final image = file;
+    if (image == null) {
+      Get.back();
+      return;
+    }
+    isLoading.value = true;
+    isGenerating.value = true;
     sendProgress.value = 0;
     receiveProgress.value = 0;
     final response = await _productsUseCase.requestTryOn(
-      TryOnRequest(productId: product.id, image: file),
+      TryOnRequest(productId: product.id ?? productId, image: image),
       onSendProgress: (count, total) {
         final next = TransferProgress.portion(count, total);
         if (next > sendProgress.value) sendProgress.value = next;
@@ -109,6 +177,7 @@ class TryOnController extends BaseController {
     );
     sendProgress.value = 1;
     receiveProgress.value = 1;
+    isGenerating.value = false;
     isLoading.value = false;
 
     // If first try fails, go back

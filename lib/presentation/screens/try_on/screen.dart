@@ -9,6 +9,7 @@ import 'package:zay/presentation/screens/try_on/widgets/try_on_bottom_bar.dart';
 import 'package:zay/presentation/screens/try_on/widgets/try_on_fee_card.dart';
 import 'package:zay/presentation/screens/try_on/widgets/try_on_feedback_section.dart';
 import 'package:zay/presentation/widgets/app_image.dart';
+import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/staged_loading_view.dart';
 
 class TryOnScreen extends GetView<TryOnController> {
@@ -18,20 +19,24 @@ class TryOnScreen extends GetView<TryOnController> {
   Widget build(BuildContext context) {
     return Obx(() {
       final isLoading = controller.isLoading.value;
+      final isGenerating = controller.isGenerating.value;
 
       return Scaffold(
-        backgroundColor:
-            isLoading ? StagedLoadingView.background : Colors.white,
+        backgroundColor: isLoading && isGenerating
+            ? StagedLoadingView.background
+            : Colors.white,
         appBar: isLoading
             ? null
             : TryOnAppBar(
                 onShare: controller.onShare,
               ),
         body: isLoading
-            ? StagedLoadingView.tryOn(
-                sendProgress: controller.sendProgress.value,
-                receiveProgress: controller.receiveProgress.value,
-              )
+            ? isGenerating
+                ? StagedLoadingView.tryOn(
+                    sendProgress: controller.sendProgress.value,
+                    receiveProgress: controller.receiveProgress.value,
+                  )
+                : const Center(child: AppProgressIndicator(radius: 16))
             : _buildContent(),
       );
     });

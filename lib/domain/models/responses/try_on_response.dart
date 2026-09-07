@@ -17,7 +17,7 @@ class TryOnResponse extends BaseResponse {
     return TryOnResponse(
       statusCode: json['statusCode'] as int? ?? 200,
       message: json['message'],
-      id: json['request_id'],
+      id: json['request_id']??json['id'],
       imageUrl: json['result_image_url'],
       allowedTriesToday: json['remaining_attempts'],
     );

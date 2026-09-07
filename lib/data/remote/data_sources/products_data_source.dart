@@ -5,6 +5,7 @@ import 'package:zay/data/remote/dio_client.dart';
 import 'package:zay/domain/models/requests/product_details_request.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/domain/models/requests/products_request.dart';
+import 'package:zay/domain/models/requests/try_on_details_request.dart';
 import 'package:zay/domain/models/requests/try_on_request.dart';
 
 class ProductsDataSource {
@@ -93,6 +94,15 @@ class ProductsDataSource {
       }),
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
+    );
+    return Map<String, dynamic>.from(response.data as Map);
+  }
+
+  Future<Map<String, dynamic>> requestTryOnDetails(
+    TryOnDetailsRequest request,
+  ) async {
+    final response = await _dioClient.get(
+      '${Constants.tryOnPath}/${request.tryOnId}',
     );
     return Map<String, dynamic>.from(response.data as Map);
   }

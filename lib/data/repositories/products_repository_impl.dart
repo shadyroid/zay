@@ -16,6 +16,7 @@ import 'package:zay/domain/repositories/products_repository.dart';
 import 'package:zay/domain/models/requests/product_details_request.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/domain/models/requests/products_request.dart';
+import 'package:zay/domain/models/requests/try_on_details_request.dart';
 import 'package:zay/domain/models/requests/try_on_request.dart';
 import 'package:get/get.dart';
 
@@ -180,6 +181,16 @@ class ProductsRepositoryImpl implements ProductsRepository {
       ),
     );
     return TryOnResponse.fromJson(json);
+  }
+
+  @override
+  Future<TryOnResponse> requestTryOnDetails(TryOnDetailsRequest request) async {
+    final json = await _productsDataSource.requestTryOnDetails(request);
+    final nested = json['try_on'];
+    final source = nested is Map
+        ? {...json, ...Map<String, dynamic>.from(nested)}
+        : json;
+    return TryOnResponse.fromJson(source);
   }
 
   Future<T> _withFakeReceiveProgress<T>({

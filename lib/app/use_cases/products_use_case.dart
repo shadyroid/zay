@@ -11,6 +11,7 @@ import 'package:zay/domain/repositories/products_repository.dart';
 import 'package:zay/domain/models/requests/product_details_request.dart';
 import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/domain/models/requests/products_request.dart';
+import 'package:zay/domain/models/requests/try_on_details_request.dart';
 import 'package:zay/domain/models/requests/try_on_request.dart';
 
 class ProductsUseCase {
@@ -60,4 +61,7 @@ class ProductsUseCase {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
+
+  Future<TryOnResponse> requestTryOnDetails(TryOnDetailsRequest request) =>
+      _productsRepository.requestTryOnDetails(request);
 }

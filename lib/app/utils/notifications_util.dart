@@ -179,6 +179,15 @@ class NotificationsUtil {
           arguments: {'productId': productId},
         );
         break;
+      case 'tryOn':
+        final tryOnId = int.tryParse(data['tryOnId']?.toString() ?? '');
+        final productId = int.tryParse(data['productId']?.toString() ?? '');
+        if (tryOnId == null || productId == null) return;
+        Get.toNamed(
+          Routes.tryOn,
+          arguments: {'tryOnId': tryOnId, 'productId': productId},
+        );
+        break;
       case 'notifications':
       default:
         if (Get.currentRoute == Routes.notifications) return;
