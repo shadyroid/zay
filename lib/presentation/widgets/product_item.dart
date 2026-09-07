@@ -26,13 +26,13 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rating = product.rating ?? '5.0';
     final bool isOutOfStock = product.isOutOfStock ?? false;
     final double currentPrice = product.price ?? 0.0;
     final double originalPrice = product.originalPrice ?? 0.0;
     final bool hasDiscount = product.originalPrice != null &&
         product.price != null &&
         originalPrice > currentPrice;
+    final shopIconUrl = product.shop?.logo ?? product.shop?.icon;
 
     final image = Stack(
       fit: StackFit.expand,
@@ -151,27 +151,39 @@ class ProductItem extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Get.theme.textTheme.bodyMedium?.copyWith(
-                        color: isOutOfStock ? Colors.grey : AppColors.textSecondary,
+                        color: isOutOfStock
+                            ? Colors.grey
+                            : AppColors.textSecondary,
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/ic_star.svg',
-                        width: 14,
-                        height: 14,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        rating,
+                  _ShopIcon(imageUrl: shopIconUrl),
+                ],
+              ),
+              const SizedBox(height: 2),
+              Row(
+                children: [
+                  Text(
+                    '£${currentPrice.toStringAsFixed(2)}',
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: isOutOfStock ? Colors.grey : AppColors.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  if (hasDiscount) ...[
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        '£${originalPrice.toStringAsFixed(2)}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: Get.theme.textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondary,
+                          decoration: TextDecoration.lineThrough,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ],
               ),
 
@@ -186,6 +198,50 @@ class ProductItem extends StatelessWidget {
     }
 
     return content;
+  }
+}
+
+class _ShopIcon extends StatelessWidget {
+  const _ShopIcon({this.imageUrl});
+
+  final String? imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 20,
+      height: 20,
+      decoration: BoxDecoration(
+        color: AppColors.screenBackground,
+        shape: BoxShape.circle,
+        border: Border.all(color: AppColors.border),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: imageUrl != null && imageUrl!.isNotEmpty
+          ? AppImage.network(
+              imageUrl!,
+              width: 20,
+              height: 20,
+              fit: BoxFit.cover,
+              shape: AppImageShape.circle,
+              errorWidget: _placeholder(),
+            )
+          : _placeholder(),
+    );
+  }
+
+  Widget _placeholder() {
+    return Center(
+      child: SvgPicture.asset(
+        'assets/icons/ic_nav_shops.svg',
+        width: 12,
+        height: 12,
+        colorFilter: const ColorFilter.mode(
+          AppColors.textSecondary,
+          BlendMode.srcIn,
+        ),
+      ),
+    );
   }
 }
 
