@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:zay/app/routes/routes.dart';
 import 'package:zay/app/use_cases/auth_use_case.dart';
 import 'package:zay/domain/models/requests/resend_verification_code_request.dart';
@@ -27,57 +26,24 @@ class VerificationController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    
+
     email = Get.arguments['email'] as String? ?? '';
     flow = Get.arguments['flow'] as String? ?? 'signup';
 
     otpTextController = TextEditingController();
-    otpTextController.addListener(_onOtpTextChanged);
-    otpFocusNode.addListener(_onFocusChanged);
-
     _startTimer();
   }
 
   @override
   void onClose() {
     _timer?.cancel();
-    otpTextController.removeListener(_onOtpTextChanged);
-    otpFocusNode.removeListener(_onFocusChanged);
     otpTextController.dispose();
     otpFocusNode.dispose();
     super.onClose();
   }
 
-  void _onFocusChanged() {
-    otpCode.refresh();
-  }
-
-  void _onOtpTextChanged() {
-    final digitsOnly = otpTextController.text.replaceAll(RegExp(r'\D'), '');
-    final clipped = digitsOnly.length > otpLength
-        ? digitsOnly.substring(0, otpLength)
-        : digitsOnly;
-
-    if (otpTextController.text != clipped) {
-      otpTextController.value = TextEditingValue(
-        text: clipped,
-        selection: TextSelection.collapsed(offset: clipped.length),
-      );
-      return;
-    }
-
-    if (otpCode.value != clipped) {
-      otpCode.value = clipped;
-    }
-  }
-
-  void _syncTextController() {
-    if (otpTextController.text == otpCode.value) return;
-
-    otpTextController.value = TextEditingValue(
-      text: otpCode.value,
-      selection: TextSelection.collapsed(offset: otpCode.value.length),
-    );
+  void onOtpChanged(String value) {
+    otpCode.value = value;
   }
 
   String get timerText {
@@ -88,18 +54,6 @@ class VerificationController extends BaseController {
   }
 
   bool get canResend => secondsRemaining.value == 0;
-
-  void appendDigit(String digit) {
-    if (otpCode.value.length >= otpLength) return;
-    otpCode.value = '${otpCode.value}$digit';
-    _syncTextController();
-  }
-
-  void removeDigit() {
-    if (otpCode.value.isEmpty) return;
-    otpCode.value = otpCode.value.substring(0, otpCode.value.length - 1);
-    _syncTextController();
-  }
 
   void _startTimer() {
     secondsRemaining.value = resendSeconds;
@@ -124,7 +78,7 @@ class VerificationController extends BaseController {
     if (!isSuccess(response)) return;
 
     otpCode.value = '';
-    _syncTextController();
+    otpTextController.clear();
     _startTimer();
     Get.rawSnackbar(message: 'otpResent'.tr);
   }
@@ -142,10 +96,6 @@ class VerificationController extends BaseController {
       );
       return;
     }
-    // if (flow == 'signin') {
-    //   Get.offNamed(Routes.signIn);
-    //   return;
-    // }
 
     isLoading.value = true;
     final response = await _authUseCase.requestVerification(
@@ -156,6 +106,4 @@ class VerificationController extends BaseController {
 
     Get.offAllNamed(Routes.home);
   }
-
-  
 }
