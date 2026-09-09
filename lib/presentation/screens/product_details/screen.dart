@@ -57,6 +57,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                     ProductDetailsHeader(
                       name: product.name ?? "",
                       price: product.price,
+                      originalPrice: product.originalPrice,
                       rating: product.rating ?? '5.0',
                       reviewCount: product.reviewCount ?? 0,
                       quantity: controller.quantity.value,

@@ -9,6 +9,7 @@ class ProductDetailsHeader extends StatelessWidget {
     super.key,
     required this.name,
     required this.price,
+    this.originalPrice,
     required this.rating,
     required this.reviewCount,
     required this.quantity,
@@ -18,6 +19,7 @@ class ProductDetailsHeader extends StatelessWidget {
 
   final String name;
   final double? price;
+  final double? originalPrice;
   final String rating;
   final int reviewCount;
   final int quantity;
@@ -26,6 +28,11 @@ class ProductDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double currentPrice = price ?? 0.0;
+    final double origPrice = originalPrice ?? 0.0;
+    final bool hasDiscount =
+        originalPrice != null && price != null && origPrice > currentPrice;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Row(
@@ -43,22 +50,56 @@ class ProductDetailsHeader extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: 8),
-                RichText(
-                  text: TextSpan(
-                    style: Get.theme.textTheme.bodyMedium?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                    children: [
-                      TextSpan(text: '${'price'.tr}: '),
-                      TextSpan(
-                        text: '£${price?.toStringAsFixed(2)}',
-                        style: Get.theme.textTheme.titleLarge?.copyWith(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w700,
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 8,
+                  runSpacing: 4,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        style: Get.theme.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.textSecondary,
                             ),
+                        children: [
+                          TextSpan(text: '${'price'.tr}: '),
+                          TextSpan(
+                            text: '£${currentPrice.toStringAsFixed(2)}',
+                            style: Get.theme.textTheme.titleLarge?.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (hasDiscount) ...[
+                      Text(
+                        '£${origPrice.toStringAsFixed(2)}',
+                        style: Get.theme.textTheme.bodySmall?.copyWith(
+                          color: AppColors.textSecondary,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          '${(((origPrice - currentPrice) / origPrice) * 100).toStringAsFixed(0)}% OFF',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
-                  ),
+                  ],
                 ),
                 const SizedBox(height: 8),
                 Row(
