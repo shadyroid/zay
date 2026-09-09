@@ -16,6 +16,8 @@ import 'package:zay/domain/models/requests/product_id_request.dart';
 import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/domain/models/requests/reviews_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
+import 'package:zay/presentation/screens/home/controller.dart';
+import 'package:zay/presentation/screens/home/home_sections_data.dart';
 
 class ProductDetailsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -34,6 +36,7 @@ class ProductDetailsController extends BaseController {
   late final int productId;
   bool startTryOnIntro = false;
   late final bool skipBottomBarAnimation;
+  late final HomeSectionsData homeSections;
 
   final RxBool isTryOnLoading = false.obs;
 
@@ -43,6 +46,10 @@ class ProductDetailsController extends BaseController {
     productId = Get.arguments['productId'];
     startTryOnIntro = Get.arguments?['startTryOnIntro'] == true;
     skipBottomBarAnimation = startTryOnIntro;
+    homeSections = HomeSectionsData.fromArguments(Get.arguments);
+    if (homeSections.isEmpty && Get.isRegistered<HomeController>()) {
+      homeSections = Get.find<HomeController>().homeSections;
+    }
     _loadScreen();
   }
 
@@ -236,7 +243,19 @@ class ProductDetailsController extends BaseController {
   }
 
   void navigateToProduct(ProductBean item) {
-    Get.offNamed(Routes.productDetails, arguments: {'productId': item.id},preventDuplicates: false);
+    Get.offNamed(
+      Routes.productDetails,
+      arguments: homeSections.mergeWith({'productId': item.id}),
+      preventDuplicates: false,
+    );
+  }
+
+  void onSeeAllRecommended() {
+    Get.toNamed(Routes.products, arguments: homeSections.toArguments());
+  }
+
+  void onSeeAllNewArrival() {
+    Get.toNamed(Routes.products, arguments: homeSections.toArguments());
   }
 
   Future<void> onShare() async {

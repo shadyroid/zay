@@ -10,6 +10,7 @@ import 'package:zay/presentation/screens/products/widgets/products_action_bar.da
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/category_item.dart';
 import 'package:zay/presentation/widgets/empty_state.dart';
+import 'package:zay/presentation/widgets/home_product_sections.dart';
 import 'package:zay/presentation/widgets/horizontal_list_view.dart';
 import 'package:zay/presentation/widgets/product_item.dart';
 import 'package:zay/presentation/widgets/staged_loading_view.dart';
@@ -120,53 +121,92 @@ class ProductsScreen extends GetView<ProductsController> {
                         Expanded(
                           child: RefreshIndicator(
                             onRefresh: controller.onPullToRefresh,
-                            child: PagedGridView<int, ProductBean>(
-                              state: state,
-                              fetchNextPage: fetchNextPage,
+                            child: CustomScrollView(
                               physics:
                                   const AlwaysScrollableScrollPhysics(),
-                              padding:
-                                  const EdgeInsets.fromLTRB(16, 0, 16, 100),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 12,
-                                crossAxisSpacing: 12,
-                                childAspectRatio: 0.72,
-                              ),
-                              showNewPageProgressIndicatorAsGridChild:
-                                  false,
-                              builderDelegate:
-                                  PagedChildBuilderDelegate<ProductBean>(
-                                itemBuilder: (context, product, index) =>
-                                    ProductItem(
-                                  product: product,
-                                  animationIndex: index,
-                                  isFavorite: product.isFavorite,
-                                  onTap: () => controller
-                                      .navigateToProductDetails(product),
-                                  onFavoriteTap: () async {
-                                    await controller.toggleFavorite(product);
-                                  },
-                                ),
-                                firstPageProgressIndicatorBuilder: (_) =>
-                                    const Center(
-                                  child: AppProgressIndicator(),
-                                ),
-                                newPageProgressIndicatorBuilder: (_) =>
-                                    const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 16,
+                              slivers: [
+                                SliverPadding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    16,
+                                    0,
+                                    16,
+                                    0,
                                   ),
-                                  child: Center(
-                                    child: AppProgressIndicator(),
+                                  sliver: PagedSliverGrid<int, ProductBean>(
+                                    state: state,
+                                    fetchNextPage: fetchNextPage,
+                                    shrinkWrapFirstPageIndicators: true,
+                                    showNewPageProgressIndicatorAsGridChild:
+                                        false,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 12,
+                                      crossAxisSpacing: 12,
+                                      childAspectRatio: 0.72,
+                                    ),
+                                    builderDelegate:
+                                        PagedChildBuilderDelegate<
+                                            ProductBean>(
+                                      itemBuilder:
+                                          (context, product, index) =>
+                                              ProductItem(
+                                        product: product,
+                                        animationIndex: index,
+                                        isFavorite: product.isFavorite,
+                                        onTap: () => controller
+                                            .navigateToProductDetails(
+                                          product,
+                                        ),
+                                        onFavoriteTap: () async {
+                                          await controller
+                                              .toggleFavorite(product);
+                                        },
+                                      ),
+                                      firstPageProgressIndicatorBuilder:
+                                          (_) => const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 48,
+                                        ),
+                                        child: Center(
+                                          child: AppProgressIndicator(),
+                                        ),
+                                      ),
+                                      newPageProgressIndicatorBuilder: (_) =>
+                                          const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 16,
+                                        ),
+                                        child: Center(
+                                          child: AppProgressIndicator(),
+                                        ),
+                                      ),
+                                      noItemsFoundIndicatorBuilder: (_) =>
+                                          EmptyState(
+                                        message: 'noProducts'.tr,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                noItemsFoundIndicatorBuilder: (_) =>
-                                    EmptyState(
-                                  message: 'noProducts'.tr,
+                                if (!(state.isLoading &&
+                                    (state.pages == null ||
+                                        state.pages!.isEmpty)))
+                                  SliverToBoxAdapter(
+                                    child: HomeProductSections(
+                                      recommendedProducts: controller
+                                          .homeSections.recommendedProducts,
+                                      newArrivalProducts: controller
+                                          .homeSections.newArrivalProducts,
+                                      onProductTap: controller
+                                          .navigateToProductDetails,
+                                      onFavoriteTap:
+                                          controller.toggleFavorite,
+                                    ),
+                                  ),
+                                const SliverToBoxAdapter(
+                                  child: SizedBox(height: 100),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ),

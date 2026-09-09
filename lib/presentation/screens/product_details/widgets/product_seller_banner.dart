@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zay/app/utils/app_colors.dart';
+import 'package:zay/presentation/widgets/app_image.dart';
 
 class ProductSellerBanner extends StatelessWidget {
   const ProductSellerBanner({
     super.key,
     required this.shopName,
     required this.slogan,
+    this.shopIconUrl,
     required this.onTap,
   });
 
   final String shopName;
   final String slogan;
+  final String? shopIconUrl;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     if (shopName.isEmpty) return const SizedBox.shrink();
-
-    final initials = shopName.isNotEmpty
-        ? shopName
-              .split(' ')
-              .where((w) => w.isNotEmpty)
-              .take(2)
-              .map((w) => w[0])
-              .join()
-              .toUpperCase()
-        : '?';
 
     return InkWell(
       onTap: onTap,
@@ -41,16 +35,7 @@ class ProductSellerBanner extends StatelessWidget {
         ),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 22,
-              backgroundColor: AppColors.screenBackground,
-              child: Text(
-                initials,
-                style: Get.theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            _ShopAvatar(imageUrl: shopIconUrl),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -79,6 +64,50 @@ class ProductSellerBanner extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ShopAvatar extends StatelessWidget {
+  const _ShopAvatar({this.imageUrl});
+
+  final String? imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 44,
+      height: 44,
+      decoration: BoxDecoration(
+        color: AppColors.screenBackground,
+        shape: BoxShape.circle,
+        border: Border.all(color: AppColors.border),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: imageUrl != null && imageUrl!.isNotEmpty
+          ? AppImage.network(
+              imageUrl!,
+              width: 44,
+              height: 44,
+              fit: BoxFit.cover,
+              shape: AppImageShape.circle,
+              errorWidget: _placeholder(),
+            )
+          : _placeholder(),
+    );
+  }
+
+  Widget _placeholder() {
+    return Center(
+      child: SvgPicture.asset(
+        'assets/icons/ic_nav_shops.svg',
+        width: 22,
+        height: 22,
+        colorFilter: const ColorFilter.mode(
+          AppColors.textSecondary,
+          BlendMode.srcIn,
         ),
       ),
     );

@@ -6,11 +6,11 @@ class HomeSectionHeader extends StatelessWidget {
   const HomeSectionHeader({
     super.key,
     required this.title,
-    required this.onSeeAll,
+    this.onSeeAll,
   });
 
   final String title;
-  final VoidCallback onSeeAll;
+  final VoidCallback? onSeeAll;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +27,17 @@ class HomeSectionHeader extends StatelessWidget {
                   ),
             ),
           ),
-          GestureDetector(
-            onTap: onSeeAll,
-            child: Text(
-              'seeAll'.tr,
-              style: Get.theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
+          if (onSeeAll != null)
+            GestureDetector(
+              onTap: onSeeAll,
+              child: Text(
+                'seeAll'.tr,
+                style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
             ),
-          ),
         ],
       ),
     );

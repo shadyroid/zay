@@ -13,6 +13,8 @@ import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/bottom_sheets/filter/filter_bottom_sheet.dart';
 import 'package:zay/presentation/bottom_sheets/sort/sort_bottom_sheet.dart';
+import 'package:zay/presentation/screens/home/controller.dart';
+import 'package:zay/presentation/screens/home/home_sections_data.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductsController extends BaseController {
@@ -34,6 +36,7 @@ class ProductsController extends BaseController {
   double? priceMax;
   XFile? image;
   String? type;
+  late final HomeSectionsData homeSections;
 
   final isSearchMode = ValueNotifier<bool>(false);
   final searchText = ValueNotifier<String>('');
@@ -52,6 +55,10 @@ class ProductsController extends BaseController {
     shopId = Get.arguments?['shopId'];
     image = Get.arguments?['image'];
     type = Get.arguments?['type'];
+    homeSections = HomeSectionsData.fromArguments(Get.arguments);
+    if (homeSections.isEmpty && Get.isRegistered<HomeController>()) {
+      homeSections = Get.find<HomeController>().homeSections;
+    }
     pagingController = PagingController<int, ProductBean>(
       getNextPageKey: (state) {
         if (state.lastPageIsEmpty) return null;
@@ -164,7 +171,10 @@ class ProductsController extends BaseController {
   }
 
   void navigateToProductDetails(ProductBean product) {
-    Get.toNamed(Routes.productDetails, arguments: {'productId': product.id});
+    Get.toNamed(
+      Routes.productDetails,
+      arguments: homeSections.mergeWith({'productId': product.id}),
+    );
   }
 
   void onSearchSubmitted(String text) {

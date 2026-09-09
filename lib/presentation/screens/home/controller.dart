@@ -23,6 +23,7 @@ import 'package:zay/domain/models/requests/products_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/bottom_sheets/review/review_bottom_sheet.dart';
 import 'package:zay/presentation/bottom_sheets/types/types_bottom_sheet.dart';
+import 'package:zay/presentation/screens/home/home_sections_data.dart';
 
 class HomeController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -183,10 +184,19 @@ class HomeController extends BaseController {
 
   void onAdPageChanged(int index) => currentAdIndex.value = index;
 
+  HomeSectionsData get homeSections => HomeSectionsData(
+        recommendedProducts: recommendedProducts.toList(),
+        newArrivalProducts: newArrivalProducts.toList(),
+      );
+
+  Map<String, dynamic> _withHomeSections([Map<String, dynamic>? extra]) {
+    return homeSections.mergeWith(extra ?? <String, dynamic>{});
+  }
+
   void onSearchSubmit() {
     final query = searchController.text.trim();
     var search = query.isEmpty ? null : query;
-    Get.toNamed(Routes.products, arguments: {'search': search});
+    Get.toNamed(Routes.products, arguments: _withHomeSections({'search': search}));
   }
 
   void onSearchIconTap() => onSearchSubmit();
@@ -200,10 +210,10 @@ class HomeController extends BaseController {
 
     Get.toNamed(
       Routes.products,
-      arguments: {
+      arguments: _withHomeSections({
         'image': file,
         'type': type.id,
-      },
+      }),
     );
   }
 
@@ -263,10 +273,10 @@ class HomeController extends BaseController {
     if (product?.id == null) return;
     Get.toNamed(
       Routes.productDetails,
-      arguments: {
+      arguments: _withHomeSections({
         'productId': product!.id,
         'startTryOnIntro': true,
-      },
+      }),
     );
   }
 
@@ -294,16 +304,24 @@ class HomeController extends BaseController {
   }
 
   void onCategoryTap(CategoryBean category) {
-    Get.toNamed(Routes.products, arguments: {'categoryId': category.id});
+    Get.toNamed(
+      Routes.products,
+      arguments: _withHomeSections({'categoryId': category.id}),
+    );
   }
 
   void navigateToProductDetails(ProductBean product) {
-    Get.toNamed(Routes.productDetails, arguments: {'productId': product.id});
+    Get.toNamed(
+      Routes.productDetails,
+      arguments: _withHomeSections({'productId': product.id}),
+    );
   }
 
-  void onSeeAllRecommended() => Get.toNamed(Routes.products);
+  void onSeeAllRecommended() =>
+      Get.toNamed(Routes.products, arguments: _withHomeSections());
 
-  void onSeeAllNewArrival() => Get.toNamed(Routes.products);
+  void onSeeAllNewArrival() =>
+      Get.toNamed(Routes.products, arguments: _withHomeSections());
 
   void onSeeAllStores() => Get.toNamed(Routes.shops);
 

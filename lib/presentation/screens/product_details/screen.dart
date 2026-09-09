@@ -15,6 +15,7 @@ import 'package:zay/presentation/screens/product_details/widgets/product_seller_
 import 'package:zay/presentation/screens/product_details/widgets/product_size_section.dart';
 import 'package:zay/presentation/screens/product_details/widgets/similar_products_section.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
+import 'package:zay/presentation/widgets/home_product_sections.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
   const ProductDetailsScreen({super.key});
@@ -84,6 +85,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                     ProductSellerBanner(
                       shopName: product.shop?.name ?? '',
                       slogan: product.shop?.slogan ?? "",
+                      shopIconUrl: product.shop?.logo ?? product.shop?.icon,
                       onTap: controller.navigateToShop,
                     ).animateEntrance(
                       delay: const Duration(milliseconds: 180),
@@ -103,6 +105,19 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       ).animateEntrance(
                         delay: const Duration(milliseconds: 260),
                       ),
+                    HomeProductSections(
+                      recommendedProducts:
+                          controller.homeSections.recommendedProducts,
+                      newArrivalProducts:
+                          controller.homeSections.newArrivalProducts,
+                      excludeProductId: product.id,
+                      onProductTap: controller.navigateToProduct,
+                      onFavoriteTap: controller.toggleFavoriteFor,
+                      onSeeAllRecommended: controller.onSeeAllRecommended,
+                      onSeeAllNewArrival: controller.onSeeAllNewArrival,
+                    ).animateEntrance(
+                      delay: const Duration(milliseconds: 300),
+                    ),
                     const SizedBox(height: 24),
                   ],
                 ),
