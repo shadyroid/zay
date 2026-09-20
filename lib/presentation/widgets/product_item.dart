@@ -7,6 +7,9 @@ import 'package:zay/domain/models/beans/product_bean.dart';
 import 'package:zay/presentation/widgets/app_image.dart';
 
 class ProductItem extends StatelessWidget {
+  static const double cardWidth = 150;
+  static const double cardHeight = cardWidth / 0.78 + 78;
+
   const ProductItem({
     super.key,
     required this.product,

@@ -24,6 +24,7 @@ import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/bottom_sheets/review/review_bottom_sheet.dart';
 import 'package:zay/presentation/bottom_sheets/types/types_bottom_sheet.dart';
 import 'package:zay/presentation/screens/home/home_sections_data.dart';
+import 'package:zay/presentation/widgets/product_item.dart';
 
 class HomeController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -51,11 +52,30 @@ class HomeController extends BaseController {
   final newArrivalProducts = <ProductBean>[].obs;
   final topStores = <ShopBean>[].obs;
   final selectedCategoryId = RxnInt();
+  final isLoadingAds = false.obs;
+  final isLoadingCategories = false.obs;
+  final isLoadingRecommended = false.obs;
+  final isLoadingNewArrivals = false.obs;
+  final isLoadingStores = false.obs;
+
+  static const _homeRowLimit = 10;
+
+  String _loadedAuthToken = '';
+  bool _isLoadInProgress = false;
 
   @override
   void onInit() {
     super.onInit();
     _loadScreen();
+  }
+
+  void onTabResumed() {
+    if (_isLoadInProgress) return;
+    if (_loadedAuthToken != (PrefsManager.token ?? '')) {
+      _loadScreen();
+      return;
+    }
+    if (PrefsManager.isLoggedIn) requestNotificationsCount();
   }
 
   @override
@@ -69,19 +89,39 @@ class HomeController extends BaseController {
   }
 
   Future<void> _loadScreen() async {
-    isLoading.value = true;
-    await Future.wait([
-      if (PrefsManager.isLoggedIn) _requestProfile(),
-      if (PrefsManager.isLoggedIn) requestNotificationsCount(),
-      _requestAds(),
-      _requestCategories(),
-      _requestRecommended(),
-      _requestNewArrivals(),
-      _requestTopStores(),
-    ]);
-    isLoading.value = false;
-    if (PrefsManager.isLoggedIn) {
-      await _requestLastReview();
+    if (_isLoadInProgress) return;
+    _isLoadInProgress = true;
+    isLoadingAds.value = true;
+    isLoadingCategories.value = true;
+    isLoadingRecommended.value = true;
+    isLoadingNewArrivals.value = true;
+    isLoadingStores.value = true;
+    if (!PrefsManager.isLoggedIn) {
+      userName.value = '';
+      profileImagePath.value = null;
+      unreadNotificationsCount.value = 0;
+    }
+    try {
+      await Future.wait([
+        if (PrefsManager.isLoggedIn) _requestProfile(),
+        if (PrefsManager.isLoggedIn) requestNotificationsCount(),
+        _requestAds(),
+        _requestCategories(),
+        _requestRecommended(),
+        _requestNewArrivals(),
+        _requestTopStores(),
+      ]);
+      _loadedAuthToken = PrefsManager.token ?? '';
+      if (PrefsManager.isLoggedIn) {
+        await _requestLastReview();
+      }
+    } finally {
+      isLoadingAds.value = false;
+      isLoadingCategories.value = false;
+      isLoadingRecommended.value = false;
+      isLoadingNewArrivals.value = false;
+      isLoadingStores.value = false;
+      _isLoadInProgress = false;
     }
   }
 
@@ -131,41 +171,73 @@ class HomeController extends BaseController {
   }
 
   Future<void> _requestAds() async {
-    final response = await _adsUseCase.requestAds();
-    if (!isSuccess(response)) return;
-    ads.assignAll(response.data ?? []);
+    try {
+      final response = await _adsUseCase.requestAds();
+      if (!isSuccess(response)) return;
+      ads.assignAll(response.data ?? []);
+    } finally {
+      isLoadingAds.value = false;
+    }
   }
 
   Future<void> _requestCategories() async {
-    final response = await _productsUseCase.requestCategories();
-    if (!isSuccess(response)) return;
-    if(response.data?.isNotEmpty == true) {
-      categories.add(CategoryBean.fromJson({"name": "all_items".tr}));
-      categories.addAll(response.data ?? []);
+    try {
+      final response = await _productsUseCase.requestCategories();
+      if (!isSuccess(response)) return;
+      if (response.data?.isNotEmpty == true) {
+        categories.assignAll([
+          CategoryBean.fromJson({"name": "all_items".tr}),
+          ...response.data!,
+        ]);
+      } else {
+        categories.clear();
+      }
+    } finally {
+      isLoadingCategories.value = false;
     }
   }
 
   Future<void> _requestRecommended() async {
-    final response = await _productsUseCase.requestProducts(
-      ProductsRequest(recommended: true, pageSize: 50,page: 1),
-    );
-    if (!isSuccess(response)) return;
-    recommendedProducts.assignAll(response.data ?? []);
+    try {
+      final response = await _productsUseCase.requestProducts(
+        ProductsRequest(
+          recommended: true,
+          pageSize: ProductsRequest.pageSizeDefault,
+          page: 1,
+        ),
+      );
+      if (!isSuccess(response)) return;
+      recommendedProducts.assignAll(response.data ?? []);
+    } finally {
+      isLoadingRecommended.value = false;
+    }
   }
 
   Future<void> _requestNewArrivals() async {
-    final response = await _productsUseCase.requestProducts(
-      ProductsRequest(newArrival: true, pageSize: 50,page: 1),
-    );
-    if (!isSuccess(response)) return;
-    newArrivalProducts.assignAll(response.data ?? []);
+    try {
+      final response = await _productsUseCase.requestProducts(
+        ProductsRequest(
+          newArrival: true,
+          pageSize: ProductsRequest.pageSizeDefault,
+          page: 1,
+        ),
+      );
+      if (!isSuccess(response)) return;
+      newArrivalProducts.assignAll(response.data ?? []);
+    } finally {
+      isLoadingNewArrivals.value = false;
+    }
   }
 
   Future<void> _requestTopStores() async {
-    final response = await _shopsUseCase.requestShops();
-    if (!isSuccess(response)) return;
-    final shops = response.data ?? [];
-    topStores.assignAll(shops);
+    try {
+      final response = await _shopsUseCase.requestShops();
+      if (!isSuccess(response)) return;
+      final shops = response.data ?? [];
+      topStores.assignAll(shops.take(_homeRowLimit).toList());
+    } finally {
+      isLoadingStores.value = false;
+    }
   }
 
 
@@ -236,16 +308,31 @@ class HomeController extends BaseController {
     final intro = Intro.of(context);
     if (intro.status.isOpen) return;
 
-    final productsScroll = recommendedProducts.isNotEmpty
+    final product = tryOnGuideProduct;
+    if (product == null) return;
+
+    final fromRecommended = isTryOnGuideInRecommended;
+    final productsScroll = fromRecommended
         ? recommendedProductsScrollController
         : newArrivalProductsScrollController;
-    if (productsScroll.hasClients) {
+    final list = fromRecommended ? recommendedProducts : newArrivalProducts;
+    final index = list.indexWhere((item) => item.id == product.id);
+
+    if (productsScroll.hasClients && index >= 0) {
+      const itemExtent = ProductItem.cardWidth + 12;
+      final target = (index * itemExtent).clamp(
+        0.0,
+        productsScroll.position.maxScrollExtent,
+      );
       await productsScroll.animateTo(
-        0,
+        target,
         duration: AppMotion.normal,
         curve: AppMotion.standard,
       );
     }
+
+    await Future<void>.delayed(AppMotion.fast);
+    if (!context.mounted) return;
 
     final productContext = tryOnProductKey.currentContext;
     if (productContext != null) {
@@ -263,8 +350,26 @@ class HomeController extends BaseController {
   }
 
   ProductBean? get tryOnGuideProduct {
-    if (recommendedProducts.isNotEmpty) return recommendedProducts.first;
-    if (newArrivalProducts.isNotEmpty) return newArrivalProducts.first;
+    return _firstTryOnProduct(recommendedProducts) ??
+        _firstTryOnProduct(newArrivalProducts);
+  }
+
+  bool get isTryOnGuideInRecommended {
+    final product = tryOnGuideProduct;
+    if (product?.id == null) return false;
+    return recommendedProducts.any((item) => item.id == product!.id);
+  }
+
+  bool isTryOnGuideTarget(ProductBean product, {required bool fromRecommended}) {
+    final target = tryOnGuideProduct;
+    if (target?.id == null || product.id != target!.id) return false;
+    return fromRecommended == isTryOnGuideInRecommended;
+  }
+
+  ProductBean? _firstTryOnProduct(List<ProductBean> products) {
+    for (final product in products) {
+      if (product.category?.isTryOnEnabled == true) return product;
+    }
     return null;
   }
 

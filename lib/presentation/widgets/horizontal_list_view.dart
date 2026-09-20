@@ -9,6 +9,7 @@ class HorizontalListView extends StatelessWidget {
     this.padding,
     this.physics,
     this.controller,
+    this.height,
     this.reverse = false,
   });
 
@@ -19,6 +20,7 @@ class HorizontalListView extends StatelessWidget {
     EdgeInsetsGeometry? padding,
     ScrollPhysics? physics,
     ScrollController? controller,
+    double? height,
     bool reverse = false,
   }) {
     return HorizontalListView._(
@@ -28,6 +30,7 @@ class HorizontalListView extends StatelessWidget {
       padding: padding,
       physics: physics,
       controller: controller,
+      height: height,
       reverse: reverse,
     );
   }
@@ -40,6 +43,7 @@ class HorizontalListView extends StatelessWidget {
     this.padding,
     this.physics,
     this.controller,
+    this.height,
     this.reverse = false,
   }) : separatorBuilder = null;
 
@@ -52,6 +56,7 @@ class HorizontalListView extends StatelessWidget {
     this.padding,
     this.physics,
     this.controller,
+    this.height,
     this.reverse = false,
   });
 
@@ -62,10 +67,39 @@ class HorizontalListView extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
   final ScrollController? controller;
+  final double? height;
   final bool reverse;
 
   @override
   Widget build(BuildContext context) {
+    if (height != null) {
+      final list = separatorBuilder == null
+          ? ListView.builder(
+              controller: controller,
+              scrollDirection: Axis.horizontal,
+              reverse: reverse,
+              physics: physics,
+              padding: padding,
+              itemCount: itemCount,
+              cacheExtent: 400,
+              addAutomaticKeepAlives: false,
+              itemBuilder: itemBuilder,
+            )
+          : ListView.separated(
+              controller: controller,
+              scrollDirection: Axis.horizontal,
+              reverse: reverse,
+              physics: physics,
+              padding: padding,
+              itemCount: itemCount,
+              cacheExtent: 400,
+              addAutomaticKeepAlives: false,
+              itemBuilder: itemBuilder,
+              separatorBuilder: separatorBuilder!,
+            );
+      return SizedBox(height: height, child: list);
+    }
+
     final children = <Widget>[];
 
     for (int i = 0; i < itemCount; i++) {

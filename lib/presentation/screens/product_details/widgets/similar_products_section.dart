@@ -33,12 +33,14 @@ class SimilarProductsSection extends StatelessWidget {
           ),
         ),
         HorizontalListView.separated(
+          height: ProductItem.cardHeight,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           itemCount: products.length,
           itemBuilder: (context, index) {
             final product = products[index];
             return SizedBox(
-              width: 150,
+              width: ProductItem.cardWidth,
+              height: ProductItem.cardHeight,
               child: ProductItem(
                 product: product,
                 isFavorite: product.isFavorite,

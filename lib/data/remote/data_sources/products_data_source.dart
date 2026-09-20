@@ -42,6 +42,12 @@ class ProductsDataSource {
               ...request.toJson(),
             })
           : request.toJson(),
+      options: request.image != null
+          ? Options(
+              sendTimeout: const Duration(seconds: 60),
+              receiveTimeout: const Duration(seconds: 90),
+            )
+          : null,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );
@@ -92,6 +98,10 @@ class ProductsDataSource {
           filename: request.image.name,
         ),
       }),
+      options: Options(
+        sendTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 90),
+      ),
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );

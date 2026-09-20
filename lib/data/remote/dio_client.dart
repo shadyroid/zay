@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart' hide FormData;
 import 'package:dio/dio.dart' as dio_multipart show FormData;
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response, FormData;
 import 'package:zay/app/utils/constants.dart';
 import 'package:zay/data/preferences/prefs_manager.dart';
@@ -20,6 +21,9 @@ class DioClient extends GetxService {
         baseUrl: Constants.baseUrl,
         validateStatus: (status) => true,
         receiveDataWhenStatusError: true,
+        connectTimeout: const Duration(seconds: 10),
+        sendTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 20),
       ),
     );
 
@@ -86,17 +90,19 @@ class DioClient extends GetxService {
       ),
     );
 
-    _dio.interceptors.add(
-      LogInterceptor(
-        request: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        requestHeader: true,
-        logPrint: (object) => log(object.toString()),
-      ),
-    );
+    if (kDebugMode) {
+      _dio.interceptors.add(
+        LogInterceptor(
+          request: true,
+          requestBody: true,
+          responseBody: false,
+          responseHeader: false,
+          error: true,
+          requestHeader: true,
+          logPrint: (object) => log(object.toString()),
+        ),
+      );
+    }
   }
 
   static Map<String, dynamic> _mapResponse(Response<dynamic> response) {

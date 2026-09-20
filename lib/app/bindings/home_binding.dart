@@ -4,6 +4,10 @@ import 'package:zay/presentation/screens/home/controller.dart';
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => HomeController());
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().onTabResumed();
+      return;
+    }
+    Get.put(HomeController(), permanent: true);
   }
 }

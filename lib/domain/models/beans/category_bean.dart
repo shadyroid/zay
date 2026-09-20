@@ -18,7 +18,9 @@ class CategoryBean {
       id: json['id'],
       name: json['name'],
       measurementsImage: json['measurements_image'],
-      isTryOnEnabled: json['is_try_on_enabled'],
+      isTryOnEnabled: json['is_try_on_enabled'] == null
+          ? null
+          : Parser.parseBoolean(json['is_try_on_enabled']),
     );
   }
 }
