@@ -131,8 +131,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
       "message": json['message'],
       "data": json['product'],
     };
-
-    LikesUtil.syncProductFromJson(json['data']);
+    if(json['data']!=null) LikesUtil.syncProductFromJson(json['data']);
     return ProductResponse.fromJson(json);
   }
 

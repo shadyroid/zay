@@ -21,9 +21,6 @@ class DioClient extends GetxService {
         baseUrl: Constants.baseUrl,
         validateStatus: (status) => true,
         receiveDataWhenStatusError: true,
-        connectTimeout: const Duration(seconds: 10),
-        sendTimeout: const Duration(seconds: 60),
-        receiveTimeout: const Duration(seconds: 20),
       ),
     );
 
