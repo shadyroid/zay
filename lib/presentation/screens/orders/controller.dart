@@ -44,8 +44,8 @@ class OrdersController extends BaseController {
         return order.isActive;
       case OrderListFilter.completed:
         return order.isCompleted;
-      case OrderListFilter.returned:
-        return order.isReturned;
+      // case OrderListFilter.returned:
+      //   return order.isReturned;
     }
   }
 
