@@ -14,7 +14,6 @@ class ProductDetailsBottomBar extends StatelessWidget {
     required this.isOutOfStock,
     required this.onTryOn,
     required this.onAddToCart,
-    this.showTryOnIntro = false,
     this.onTryOnIntroReady,
   });
 
@@ -24,7 +23,6 @@ class ProductDetailsBottomBar extends StatelessWidget {
   final bool isOutOfStock;
   final VoidCallback onTryOn;
   final VoidCallback onAddToCart;
-  final bool showTryOnIntro;
   final ValueChanged<BuildContext>? onTryOnIntroReady;
 
   @override
@@ -63,8 +61,40 @@ class ProductDetailsBottomBar extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                if (isTryOnEnabled == true) ...[
-                  Expanded(child: _tryOnButton(context)),
+                if (isTryOnEnabled==true) ...[
+                  Expanded(
+                    child: IntroStepBuilder(
+                      group: 'tryOnButton',
+                      order: 2,
+                      padding: EdgeInsets.zero,
+                      borderRadius: const BorderRadius.all(Radius.circular(28)),
+                      text:
+                          '${'tryOnGuideButtonTitle'.tr}\n${'tryOnGuideButtonDesc'.tr}',
+                      onWidgetLoad: onTryOnIntroReady == null
+                          ? null
+                          : () => onTryOnIntroReady!(context),
+                      builder: (context, key) => OutlinedButton.icon(
+                        key: key,
+                        onPressed: onTryOn,
+                        icon: isTryOnLoading
+                            ? const CupertinoActivityIndicator()
+                            : SvgPicture.asset(
+                                'assets/icons/ic_person_2.svg',
+                                width: 20,
+                                height: 20,
+                              ),
+                        label: Text('tryOn'.tr),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppColors.textPrimary,
+                          side: const BorderSide(color: AppColors.textPrimary),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(width: 12),
                 ],
                 Expanded(
@@ -100,42 +130,6 @@ class ProductDetailsBottomBar extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _tryOnButton(BuildContext context) {
-    final button = OutlinedButton.icon(
-      onPressed: onTryOn,
-      icon: isTryOnLoading
-          ? const CupertinoActivityIndicator()
-          : SvgPicture.asset(
-              'assets/icons/ic_person_2.svg',
-              width: 20,
-              height: 20,
-            ),
-      label: Text('tryOn'.tr),
-      style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.textPrimary,
-        side: const BorderSide(color: AppColors.textPrimary),
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
-        ),
-      ),
-    );
-
-    if (!showTryOnIntro) return button;
-
-    return IntroStepBuilder(
-      group: 'tryOnButton',
-      order: 2,
-      padding: EdgeInsets.zero,
-      borderRadius: const BorderRadius.all(Radius.circular(28)),
-      text: '${'tryOnGuideButtonTitle'.tr}\n${'tryOnGuideButtonDesc'.tr}',
-      onWidgetLoad: onTryOnIntroReady == null
-          ? null
-          : () => onTryOnIntroReady!(context),
-      builder: (context, key) => KeyedSubtree(key: key, child: button),
     );
   }
 }

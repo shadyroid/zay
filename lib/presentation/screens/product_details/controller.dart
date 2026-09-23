@@ -34,7 +34,6 @@ class ProductDetailsController extends BaseController {
   final imageIndex = 0.obs;
 
   int? productId;
-  bool showTryOnIntro = false;
   bool startTryOnIntro = false;
   bool? skipBottomBarAnimation;
   HomeSectionsData? homeSections;
@@ -45,8 +44,7 @@ class ProductDetailsController extends BaseController {
   void onInit() {
     super.onInit();
     productId = Get.arguments['productId'];
-    showTryOnIntro = Get.arguments?['startTryOnIntro'] == true;
-    startTryOnIntro = showTryOnIntro;
+    startTryOnIntro = Get.arguments?['startTryOnIntro'] == true;
     skipBottomBarAnimation = startTryOnIntro;
     homeSections = HomeSectionsData.fromArguments(Get.arguments);
     if (homeSections?.isEmpty != false && Get.isRegistered<HomeController>()) {

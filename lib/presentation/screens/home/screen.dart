@@ -226,7 +226,6 @@ class HomeScreen extends GetView<HomeController> {
               includeTryOnStep: controller.isTryOnGuideTarget(
                 product,
                 fromRecommended: fromRecommended,
-                index: index,
               ),
             );
           },

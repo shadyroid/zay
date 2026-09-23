@@ -41,8 +41,6 @@ class HomeController extends BaseController {
   final recommendedProductsScrollController = ScrollController();
   final newArrivalProductsScrollController = ScrollController();
   final tryOnProductKey = GlobalKey();
-  int? _pinnedTryOnProductId;
-  bool _pinnedTryOnFromRecommended = false;
   final isSearchExpanded = false.obs;
   final userName = ''.obs;
   final profileImagePath = RxnString();
@@ -93,8 +91,6 @@ class HomeController extends BaseController {
   Future<void> _loadScreen() async {
     if (_isLoadInProgress) return;
     _isLoadInProgress = true;
-    _pinnedTryOnProductId = null;
-    _pinnedTryOnFromRecommended = false;
     isLoadingAds.value = true;
     isLoadingCategories.value = true;
     isLoadingRecommended.value = true;
@@ -212,7 +208,6 @@ class HomeController extends BaseController {
       );
       if (!isSuccess(response)) return;
       recommendedProducts.assignAll(response.data ?? []);
-      _pinTryOnGuideTarget();
     } finally {
       isLoadingRecommended.value = false;
     }
@@ -229,7 +224,6 @@ class HomeController extends BaseController {
       );
       if (!isSuccess(response)) return;
       newArrivalProducts.assignAll(response.data ?? []);
-      _pinTryOnGuideTarget();
     } finally {
       isLoadingNewArrivals.value = false;
     }
@@ -356,49 +350,20 @@ class HomeController extends BaseController {
   }
 
   ProductBean? get tryOnGuideProduct {
-    if (_pinnedTryOnProductId != null) {
-      final list = _pinnedTryOnFromRecommended
-          ? recommendedProducts
-          : newArrivalProducts;
-      for (final product in list) {
-        if (product.id == _pinnedTryOnProductId) return product;
-      }
-    }
     return _firstTryOnProduct(recommendedProducts) ??
         _firstTryOnProduct(newArrivalProducts);
   }
 
   bool get isTryOnGuideInRecommended {
-    if (_pinnedTryOnProductId != null) return _pinnedTryOnFromRecommended;
-    final product = _firstTryOnProduct(recommendedProducts);
-    return product?.id != null;
+    final product = tryOnGuideProduct;
+    if (product?.id == null) return false;
+    return recommendedProducts.any((item) => item.id == product!.id);
   }
 
-  bool isTryOnGuideTarget(
-    ProductBean product, {
-    required bool fromRecommended,
-    required int index,
-  }) {
-    if (_pinnedTryOnProductId == null || product.id != _pinnedTryOnProductId) {
-      return false;
-    }
-    if (fromRecommended != _pinnedTryOnFromRecommended) return false;
-    final list = fromRecommended ? recommendedProducts : newArrivalProducts;
-    return list.indexWhere((item) => item.id == product.id) == index;
-  }
-
-  void _pinTryOnGuideTarget() {
-    if (_pinnedTryOnProductId != null) return;
-    final recommended = _firstTryOnProduct(recommendedProducts);
-    if (recommended?.id != null) {
-      _pinnedTryOnProductId = recommended!.id;
-      _pinnedTryOnFromRecommended = true;
-      return;
-    }
-    final arrival = _firstTryOnProduct(newArrivalProducts);
-    if (arrival?.id == null) return;
-    _pinnedTryOnProductId = arrival!.id;
-    _pinnedTryOnFromRecommended = false;
+  bool isTryOnGuideTarget(ProductBean product, {required bool fromRecommended}) {
+    final target = tryOnGuideProduct;
+    if (target?.id == null || product.id != target!.id) return false;
+    return fromRecommended == isTryOnGuideInRecommended;
   }
 
   ProductBean? _firstTryOnProduct(List<ProductBean> products) {

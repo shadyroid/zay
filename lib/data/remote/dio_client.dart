@@ -92,8 +92,8 @@ class DioClient extends GetxService {
         LogInterceptor(
           request: true,
           requestBody: true,
-          responseBody: false,
-          responseHeader: false,
+          responseBody: true,
+          responseHeader: true,
           error: true,
           requestHeader: true,
           logPrint: (object) => log(object.toString()),

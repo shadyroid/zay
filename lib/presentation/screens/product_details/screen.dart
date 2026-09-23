@@ -141,7 +141,6 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
       isTryOnLoading: controller.isTryOnLoading.value,
       isOutOfStock: product.isOutOfStock == true,
       onAddToCart: controller.addToCart,
-      showTryOnIntro: controller.showTryOnIntro,
       onTryOnIntroReady: controller.onTryOnIntroStepReady,
     );
     if (controller.skipBottomBarAnimation == true) return bar;
