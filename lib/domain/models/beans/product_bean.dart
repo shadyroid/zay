@@ -49,7 +49,7 @@ class ProductBean {
       originalPrice: Parser.parseDouble(json['original_price']),
       image: json['primary_image'],
       images: (json['images'] as List?)?.map((e) => e.toString()).toList(),
-      rating: json['avg_rating'],
+      rating: Parser.parseString(json['avg_rating']),
       reviewCount: json['reviews_count'],
       shop: json['shop'] != null
           ? ShopBean.fromJson(json['shop'] as Map<String, dynamic>)

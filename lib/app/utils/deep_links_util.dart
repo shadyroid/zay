@@ -49,14 +49,14 @@ class DeepLinksUtil {
     if (uri != null) _navigateFromUri(uri);
   }
 
-  static String productLink(int productId) =>
+  static String productLink(int? productId) =>
       'https://${Constants.deepLinkHost}/product/$productId';
 
   static String shopLink(int shopId) =>
       'https://${Constants.deepLinkHost}/shop/$shopId';
 
   static Future<void> shareProduct({
-    required int productId,
+    required int? productId,
     String? productName,
   }) {
     final url = productLink(productId);

@@ -33,10 +33,11 @@ class ProductDetailsController extends BaseController {
   final isDescriptionExpanded = false.obs;
   final imageIndex = 0.obs;
 
-  late final int productId;
+  int? productId;
+  bool showTryOnIntro = false;
   bool startTryOnIntro = false;
-  late final bool skipBottomBarAnimation;
-  late final HomeSectionsData homeSections;
+  bool? skipBottomBarAnimation;
+  HomeSectionsData? homeSections;
 
   final RxBool isTryOnLoading = false.obs;
 
@@ -44,10 +45,11 @@ class ProductDetailsController extends BaseController {
   void onInit() {
     super.onInit();
     productId = Get.arguments['productId'];
-    startTryOnIntro = Get.arguments?['startTryOnIntro'] == true;
+    showTryOnIntro = Get.arguments?['startTryOnIntro'] == true;
+    startTryOnIntro = showTryOnIntro;
     skipBottomBarAnimation = startTryOnIntro;
     homeSections = HomeSectionsData.fromArguments(Get.arguments);
-    if (homeSections.isEmpty && Get.isRegistered<HomeController>()) {
+    if (homeSections?.isEmpty != false && Get.isRegistered<HomeController>()) {
       homeSections = Get.find<HomeController>().homeSections;
     }
     _loadScreen();
@@ -245,17 +247,17 @@ class ProductDetailsController extends BaseController {
   void navigateToProduct(ProductBean item) {
     Get.offNamed(
       Routes.productDetails,
-      arguments: homeSections.mergeWith({'productId': item.id}),
+      arguments: homeSections?.mergeWith({'productId': item.id}),
       preventDuplicates: false,
     );
   }
 
   void onSeeAllRecommended() {
-    Get.toNamed(Routes.products, arguments: homeSections.toArguments());
+    Get.toNamed(Routes.products, arguments: homeSections?.toArguments());
   }
 
   void onSeeAllNewArrival() {
-    Get.toNamed(Routes.products, arguments: homeSections.toArguments());
+    Get.toNamed(Routes.products, arguments: homeSections?.toArguments());
   }
 
   Future<void> onShare() async {

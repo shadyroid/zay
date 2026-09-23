@@ -107,9 +107,9 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                       ),
                     HomeProductSections(
                       recommendedProducts:
-                          controller.homeSections.recommendedProducts,
+                          controller.homeSections?.recommendedProducts,
                       newArrivalProducts:
-                          controller.homeSections.newArrivalProducts,
+                          controller.homeSections?.newArrivalProducts,
                       excludeProductId: product.id,
                       onProductTap: controller.navigateToProduct,
                       onFavoriteTap: controller.toggleFavoriteFor,
@@ -141,9 +141,10 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
       isTryOnLoading: controller.isTryOnLoading.value,
       isOutOfStock: product.isOutOfStock == true,
       onAddToCart: controller.addToCart,
+      showTryOnIntro: controller.showTryOnIntro,
       onTryOnIntroReady: controller.onTryOnIntroStepReady,
     );
-    if (controller.skipBottomBarAnimation) return bar;
+    if (controller.skipBottomBarAnimation == true) return bar;
     return bar
         .animate()
         .slideY(

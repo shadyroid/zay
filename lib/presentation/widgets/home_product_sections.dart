@@ -17,31 +17,31 @@ class HomeProductSections extends StatelessWidget {
     this.excludeProductId,
   });
 
-  final List<ProductBean> recommendedProducts;
-  final List<ProductBean> newArrivalProducts;
+  final List<ProductBean>? recommendedProducts;
+  final List<ProductBean>? newArrivalProducts;
   final ValueChanged<ProductBean> onProductTap;
   final ValueChanged<ProductBean> onFavoriteTap;
   final VoidCallback? onSeeAllRecommended;
   final VoidCallback? onSeeAllNewArrival;
   final int? excludeProductId;
 
-  List<ProductBean> _filtered(List<ProductBean> products) {
+  List<ProductBean>? _filtered(List<ProductBean>? products) {
     if (excludeProductId == null) return products;
-    return products.where((p) => p.id != excludeProductId).toList();
+    return products?.where((p) => p.id != excludeProductId).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     final recommended = _filtered(recommendedProducts);
     final newArrivals = _filtered(newArrivalProducts);
-    if (recommended.isEmpty && newArrivals.isEmpty) {
+    if (recommended?.isEmpty != false && newArrivals?.isEmpty != false) {
       return const SizedBox.shrink();
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (recommended.isNotEmpty)
+        if (recommended!.isNotEmpty)
           _HomeProductsRow(
             title: 'recommendedForYou'.tr,
             products: recommended,
@@ -49,7 +49,7 @@ class HomeProductSections extends StatelessWidget {
             onProductTap: onProductTap,
             onFavoriteTap: onFavoriteTap,
           ),
-        if (newArrivals.isNotEmpty)
+        if (newArrivals!.isNotEmpty)
           _HomeProductsRow(
             title: 'newArrival'.tr,
             products: newArrivals,
