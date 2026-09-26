@@ -46,10 +46,9 @@ class CartController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    //Call it from main cart each time he tabs it
-    // requestCart();
-    _loadProfile();
-    _loadCities();
+    requestCart();
+    requestProfile();
+    requestCities();
   }
 
   @override
@@ -59,22 +58,14 @@ class CartController extends BaseController {
     super.onClose();
   }
 
-  Future<void> _loadProfile() async {
+  Future<void> requestProfile() async {
     final response = await _authUseCase.requestProfile();
     if (!response.isSuccess) return;
-
-    final phone = response.data?.phone?.trim();
-    if (phone != null && phone.isNotEmpty) {
-      mobileController.text = phone;
-    }
-
-    final name = response.data?.name?.trim();
-    if (name != null && name.isNotEmpty) {
-      _recipientName = name;
-    }
+    mobileController.text = response.data?.phone ?? "";
+    _recipientName = response.data?.name ?? "";
   }
 
-  Future<void> _loadCities() async {
+  Future<void> requestCities() async {
     final response = await _citiesUseCase.requestCities();
     if (!isSuccess(response)) return;
     cities.assignAll(response.data ?? []);
@@ -157,7 +148,7 @@ class CartController extends BaseController {
     deliveryLongitude.value = result.lng;
 
     if (cities.isEmpty) {
-      await _loadCities();
+      await requestCities();
     }
 
     final city = AddressCityMatcher.match(
@@ -192,7 +183,7 @@ class CartController extends BaseController {
       shippingFee.value = 0;
       if (response.statusCode == 422) {
         showCityPicker.value = true;
-        await _loadCities();
+        await requestCities();
       }
       return;
     }
@@ -263,7 +254,7 @@ class CartController extends BaseController {
     if (items.isEmpty) return;
 
     if (cities.isEmpty) {
-      await _loadCities();
+      await requestCities();
     }
 
     if (deliveryFormKey.currentState?.validate() != true) return;
@@ -308,7 +299,7 @@ class CartController extends BaseController {
       isLoading.value = false;
       if (response.statusCode == 422) {
         showCityPicker.value = true;
-        await _loadCities();
+        await requestCities();
       }
       return;
     }

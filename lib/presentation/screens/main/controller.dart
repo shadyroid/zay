@@ -33,10 +33,10 @@ class MainController extends BaseController {
 
   Future<void> openCart() async {
     if (!await AppAuthGuard.ensureAuthenticated()) return;
-    builtTabs[2] = true;
-    currentIndex.value = 2;
-    if (Get.isRegistered<CartController>(tag: "main_cart")){
+    if(builtTabs[2]==true) {
       Get.find<CartController>(tag: "main_cart").requestCart();
     }
+    builtTabs[2] = true;
+    currentIndex.value = 2;
   }
 }
