@@ -32,8 +32,9 @@ class HomeController extends BaseController {
   final AuthUseCase _authUseCase = Get.put(AuthUseCase());
   final AdsUseCase _adsUseCase = Get.put(AdsUseCase());
   final OrderUseCase _orderUseCase = Get.put(OrderUseCase());
-  final NotificationsUseCase _notificationsUseCase =
-      Get.put(NotificationsUseCase());
+  final NotificationsUseCase _notificationsUseCase = Get.put(
+    NotificationsUseCase(),
+  );
 
   final searchController = TextEditingController();
   final searchFocusNode = FocusNode();
@@ -58,9 +59,6 @@ class HomeController extends BaseController {
   final isLoadingNewArrivals = false.obs;
   final isLoadingStores = false.obs;
 
-  static const _homeRowLimit = 10;
-
-  String _loadedAuthToken = '';
   bool _isLoadInProgress = false;
 
   @override
@@ -71,7 +69,7 @@ class HomeController extends BaseController {
 
   void onTabResumed() {
     if (_isLoadInProgress) return;
-    if (_loadedAuthToken != (PrefsManager.token ?? '')) {
+    if (PrefsManager.isLoggedIn) {
       _loadScreen();
       return;
     }
@@ -91,38 +89,21 @@ class HomeController extends BaseController {
   Future<void> _loadScreen() async {
     if (_isLoadInProgress) return;
     _isLoadInProgress = true;
-    isLoadingAds.value = true;
-    isLoadingCategories.value = true;
-    isLoadingRecommended.value = true;
-    isLoadingNewArrivals.value = true;
-    isLoadingStores.value = true;
+
     if (!PrefsManager.isLoggedIn) {
       userName.value = '';
       profileImagePath.value = null;
       unreadNotificationsCount.value = 0;
+    } else {
+      _requestProfile();
+      requestNotificationsCount();
+      _requestLastReview();
     }
-    try {
-      await Future.wait([
-        if (PrefsManager.isLoggedIn) _requestProfile(),
-        if (PrefsManager.isLoggedIn) requestNotificationsCount(),
-        _requestAds(),
-        _requestCategories(),
-        _requestRecommended(),
-        _requestNewArrivals(),
-        _requestTopStores(),
-      ]);
-      _loadedAuthToken = PrefsManager.token ?? '';
-      if (PrefsManager.isLoggedIn) {
-        await _requestLastReview();
-      }
-    } finally {
-      isLoadingAds.value = false;
-      isLoadingCategories.value = false;
-      isLoadingRecommended.value = false;
-      isLoadingNewArrivals.value = false;
-      isLoadingStores.value = false;
-      _isLoadInProgress = false;
-    }
+    _requestAds();
+    _requestCategories();
+    _requestRecommended();
+    _requestNewArrivals();
+    requestShops();
   }
 
   Future<void> _requestLastReview() async {
@@ -147,10 +128,7 @@ class HomeController extends BaseController {
     }
     if (item == null) return;
 
-    await ReviewBottomSheet.show(
-      orderId: order.id!,
-      item: item,
-    );
+    await ReviewBottomSheet.show(orderId: order.id!, item: item);
   }
 
   Future<void> requestNotificationsCount() async {
@@ -171,75 +149,64 @@ class HomeController extends BaseController {
   }
 
   Future<void> _requestAds() async {
-    try {
-      final response = await _adsUseCase.requestAds();
-      if (!isSuccess(response)) return;
-      ads.assignAll(response.data ?? []);
-    } finally {
-      isLoadingAds.value = false;
-    }
+    isLoadingAds.value = true;
+    final response = await _adsUseCase.requestAds();
+    isLoadingAds.value = false;
+    if (!isSuccess(response)) return;
+    ads.assignAll(response.data ?? []);
   }
 
   Future<void> _requestCategories() async {
-    try {
-      final response = await _productsUseCase.requestCategories();
-      if (!isSuccess(response)) return;
-      if (response.data?.isNotEmpty == true) {
-        categories.assignAll([
-          CategoryBean.fromJson({"name": "all_items".tr}),
-          ...response.data!,
-        ]);
-      } else {
-        categories.clear();
-      }
-    } finally {
-      isLoadingCategories.value = false;
+    isLoadingCategories.value = true;
+    final response = await _productsUseCase.requestCategories();
+    isLoadingCategories.value = false;
+    if (!isSuccess(response)) return;
+    if (response.data?.isNotEmpty == true) {
+      categories.assignAll([
+        CategoryBean.fromJson({"name": "all_items".tr}),
+        ...response.data!,
+      ]);
+    } else {
+      categories.clear();
     }
   }
 
   Future<void> _requestRecommended() async {
-    try {
-      final response = await _productsUseCase.requestProducts(
-        ProductsRequest(
-          recommended: true,
-          pageSize: ProductsRequest.pageSizeDefault,
-          page: 1,
-        ),
-      );
-      if (!isSuccess(response)) return;
-      recommendedProducts.assignAll(response.data ?? []);
-    } finally {
-      isLoadingRecommended.value = false;
-    }
+    isLoadingRecommended.value = true;
+    final response = await _productsUseCase.requestProducts(
+      ProductsRequest(
+        recommended: true,
+        pageSize: ProductsRequest.pageSizeDefault,
+        page: 1,
+      ),
+    );
+    isLoadingRecommended.value = false;
+    if (!isSuccess(response)) return;
+    recommendedProducts.assignAll(response.data ?? []);
   }
 
   Future<void> _requestNewArrivals() async {
-    try {
-      final response = await _productsUseCase.requestProducts(
-        ProductsRequest(
-          newArrival: true,
-          pageSize: ProductsRequest.pageSizeDefault,
-          page: 1,
-        ),
-      );
-      if (!isSuccess(response)) return;
-      newArrivalProducts.assignAll(response.data ?? []);
-    } finally {
-      isLoadingNewArrivals.value = false;
-    }
+    isLoadingNewArrivals.value = true;
+    final response = await _productsUseCase.requestProducts(
+      ProductsRequest(
+        newArrival: true,
+        pageSize: ProductsRequest.pageSizeDefault,
+        page: 1,
+      ),
+    );
+    isLoadingNewArrivals.value = false;
+    if (!isSuccess(response)) return;
+    newArrivalProducts.assignAll(response.data ?? []);
   }
 
-  Future<void> _requestTopStores() async {
-    try {
-      final response = await _shopsUseCase.requestShops();
-      if (!isSuccess(response)) return;
-      final shops = response.data ?? [];
-      topStores.assignAll(shops.take(_homeRowLimit).toList());
-    } finally {
-      isLoadingStores.value = false;
-    }
+  Future<void> requestShops() async {
+    isLoadingStores.value = true;
+    final response = await _shopsUseCase.requestShops();
+    isLoadingStores.value = false;
+    if (!isSuccess(response)) return;
+    final shops = response.data ?? [];
+    topStores.assignAll(shops);
   }
-
 
   Future<void> toggleFavorite(ProductBean product) async {
     if (!await AppAuthGuard.ensureAuthenticated()) return;
@@ -257,9 +224,9 @@ class HomeController extends BaseController {
   void onAdPageChanged(int index) => currentAdIndex.value = index;
 
   HomeSectionsData get homeSections => HomeSectionsData(
-        recommendedProducts: recommendedProducts.toList(),
-        newArrivalProducts: newArrivalProducts.toList(),
-      );
+    recommendedProducts: recommendedProducts.toList(),
+    newArrivalProducts: newArrivalProducts.toList(),
+  );
 
   Map<String, dynamic> _withHomeSections([Map<String, dynamic>? extra]) {
     return homeSections.mergeWith(extra ?? <String, dynamic>{});
@@ -268,7 +235,10 @@ class HomeController extends BaseController {
   void onSearchSubmit() {
     final query = searchController.text.trim();
     var search = query.isEmpty ? null : query;
-    Get.toNamed(Routes.products, arguments: _withHomeSections({'search': search}));
+    Get.toNamed(
+      Routes.products,
+      arguments: _withHomeSections({'search': search}),
+    );
   }
 
   void onSearchIconTap() => onSearchSubmit();
@@ -282,10 +252,7 @@ class HomeController extends BaseController {
 
     Get.toNamed(
       Routes.products,
-      arguments: _withHomeSections({
-        'image': file,
-        'type': type.id,
-      }),
+      arguments: _withHomeSections({'image': file, 'type': type.id}),
     );
   }
 
@@ -360,7 +327,10 @@ class HomeController extends BaseController {
     return recommendedProducts.any((item) => item.id == product!.id);
   }
 
-  bool isTryOnGuideTarget(ProductBean product, {required bool fromRecommended}) {
+  bool isTryOnGuideTarget(
+    ProductBean product, {
+    required bool fromRecommended,
+  }) {
     final target = tryOnGuideProduct;
     if (target?.id == null || product.id != target!.id) return false;
     return fromRecommended == isTryOnGuideInRecommended;
