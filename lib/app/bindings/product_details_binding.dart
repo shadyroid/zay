@@ -4,6 +4,6 @@ import 'package:zay/presentation/screens/product_details/controller.dart';
 class ProductDetailsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ProductDetailsController());
+    Get.lazyPut(() => ProductDetailsController(),tag: Get.arguments["productId"].toString());
   }
 }

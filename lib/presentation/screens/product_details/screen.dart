@@ -21,6 +21,9 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
   const ProductDetailsScreen({super.key});
 
   @override
+  String? get tag => Get.arguments["productId"].toString();
+
+  @override
   Widget build(BuildContext context) {
     final intro = Intro.of(context);
     return ValueListenableBuilder<IntroStatus>(

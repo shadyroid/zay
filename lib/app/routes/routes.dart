@@ -136,6 +136,7 @@ class Routes {
       name: productDetails,
       page: () => const ProductDetailsScreen(),
       binding: ProductDetailsBinding(),
+      preventDuplicates: false
     ),
     GetPage(
       name: imagesViewer,
