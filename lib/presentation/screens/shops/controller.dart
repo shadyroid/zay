@@ -29,8 +29,6 @@ class ShopsController extends BaseController {
     Get.toNamed(Routes.shopDetails, arguments: {'shopId': shop.id});
   }
 
-  void goBack() => Get.offNamed(Routes.home);
-
   void onSearch(String text) {
     shops.value = allShops
         .where((shop) =>

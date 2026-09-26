@@ -25,5 +25,5 @@ class OrderSuccessController extends BaseController {
     isPaymentPending = isCardPayment && !paymentStatus.isPaid;
   }
 
-  void goHome() => Get.offAllNamed(Routes.home);
+  void goHome() => Get.offAllNamed(Routes.main);
 }

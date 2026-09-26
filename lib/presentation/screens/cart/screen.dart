@@ -11,10 +11,14 @@ import 'package:zay/presentation/screens/cart/widgets/cart_price_summary.dart';
 import 'package:zay/presentation/widgets/app_back_app_bar.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/empty_state.dart';
-import 'package:zay/presentation/widgets/main_bottom_nav.dart';
 
 class CartScreen extends GetView<CartController> {
-  const CartScreen({super.key});
+  final String controllerTag;
+
+  const CartScreen({super.key, required this.controllerTag});
+
+  @override
+  String? get tag => controllerTag;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +127,6 @@ class CartScreen extends GetView<CartController> {
 
         return AnimatedStateSwitcher(child: child);
       }),
-      bottomNavigationBar: const MainBottomNav(currentIndex: 2),
     );
   }
 }

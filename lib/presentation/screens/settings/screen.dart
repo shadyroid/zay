@@ -7,7 +7,6 @@ import 'package:zay/presentation/screens/settings/widgets/settings_app_bar.dart'
 import 'package:zay/presentation/screens/settings/widgets/settings_item.dart';
 import 'package:zay/presentation/screens/settings/widgets/settings_menu_card.dart';
 import 'package:zay/presentation/screens/settings/widgets/settings_profile_header.dart';
-import 'package:zay/presentation/widgets/main_bottom_nav.dart';
 
 class SettingsScreen extends GetView<SettingsController> {
   const SettingsScreen({super.key});
@@ -121,7 +120,6 @@ class SettingsScreen extends GetView<SettingsController> {
           }),
         ),
       ),
-      bottomNavigationBar: const MainBottomNav(currentIndex: 3),
     );
   }
 }

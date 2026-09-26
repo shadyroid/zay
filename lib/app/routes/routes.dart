@@ -6,11 +6,11 @@ import 'package:zay/app/bindings/contact_us_binding.dart';
 import 'package:zay/app/bindings/edit_profile_binding.dart';
 import 'package:zay/app/bindings/favorite_binding.dart';
 import 'package:zay/app/bindings/forget_password_binding.dart';
-import 'package:zay/app/bindings/home_binding.dart';
 import 'package:zay/app/bindings/images_viewer_binding.dart';
 import 'package:zay/app/bindings/no_internet_binding.dart';
 import 'package:zay/app/bindings/notifications_binding.dart';
 import 'package:zay/app/bindings/order_details_binding.dart';
+import 'package:zay/app/bindings/main_binding.dart';
 import 'package:zay/app/bindings/map_binding.dart';
 import 'package:zay/app/bindings/order_return_binding.dart';
 import 'package:zay/app/bindings/order_success_binding.dart';
@@ -22,9 +22,7 @@ import 'package:zay/app/bindings/review_binding.dart';
 import 'package:zay/app/bindings/reviews_binding.dart';
 import 'package:zay/app/bindings/reset_password_binding.dart';
 import 'package:zay/app/bindings/server_error_binding.dart';
-import 'package:zay/app/bindings/settings_binding.dart';
 import 'package:zay/app/bindings/shop_details_binding.dart';
-import 'package:zay/app/bindings/shops_binding.dart';
 import 'package:zay/app/bindings/sign_in_binding.dart';
 import 'package:zay/app/bindings/sign_up_binding.dart';
 import 'package:zay/app/bindings/splash_binding.dart';
@@ -39,11 +37,11 @@ import 'package:zay/presentation/screens/contact_us/screen.dart';
 import 'package:zay/presentation/screens/edit_profile/screen.dart';
 import 'package:zay/presentation/screens/favorite/screen.dart';
 import 'package:zay/presentation/screens/forget_password/screen.dart';
-import 'package:zay/presentation/screens/home/screen.dart';
 import 'package:zay/presentation/screens/images_viewer/screen.dart';
 import 'package:zay/presentation/screens/no_internet/screen.dart';
 import 'package:zay/presentation/screens/notifications/screen.dart';
 import 'package:zay/presentation/screens/order_details/screen.dart';
+import 'package:zay/presentation/screens/main/screen.dart';
 import 'package:zay/presentation/screens/map/screen.dart';
 import 'package:zay/presentation/screens/order_return/screen.dart';
 import 'package:zay/presentation/screens/order_success/screen.dart';
@@ -55,9 +53,7 @@ import 'package:zay/presentation/screens/review/screen.dart';
 import 'package:zay/presentation/screens/reviews/screen.dart';
 import 'package:zay/presentation/screens/reset_password/screen.dart';
 import 'package:zay/presentation/screens/server_error/screen.dart';
-import 'package:zay/presentation/screens/settings/screen.dart';
 import 'package:zay/presentation/screens/shop_details/screen.dart';
-import 'package:zay/presentation/screens/shops/screen.dart';
 import 'package:zay/presentation/screens/sign_in/screen.dart';
 import 'package:zay/presentation/screens/sign_up/screen.dart';
 import 'package:zay/presentation/screens/size_guide/screen.dart';
@@ -74,18 +70,16 @@ class Routes {
   static const String forgetPassword = '/forgetPassword';
   static const String verification = '/verification';
   static const String resetPassword = '/resetPassword';
-  static const String home = '/home';
+  static const String main = '/main';
   static const String productDetails = '/productDetails';
   static const String imagesViewer = '/imagesViewer';
   static const String sizeGuide = '/sizeGuide';
   static const String tryOn = '/tryOn';
   static const String products = '/products';
-  static const String shops = '/shops';
   static const String shopDetails = '/shopDetails';
   static const String cart = '/cart';
   static const String map = '/map';
   static const String orderSuccess = '/orderSuccess';
-  static const String settings = '/settings';
   static const String editProfile = '/editProfile';
   static const String changePassword = '/changePassword';
   static const String favorite = '/favorite';
@@ -133,9 +127,9 @@ class Routes {
       binding: ResetPasswordBinding(),
     ),
     GetPage(
-      name: home,
-      page: () => const HomeScreen(),
-      binding: HomeBinding(),
+      name: main,
+      page: () => const MainScreen(),
+      binding: MainBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(
@@ -159,19 +153,13 @@ class Routes {
     ),
     GetPage(name: products, page: () => const ProductsScreen(), binding: ProductsBinding()),
     GetPage(
-      name: shops,
-      page: () => const ShopsScreen(),
-      binding: ShopsBinding(),
-      transition: Transition.noTransition,
-    ),
-    GetPage(
       name: shopDetails,
       page: () => const ShopDetailsScreen(),
       binding: ShopDetailsBinding(),
     ),
     GetPage(
       name: cart,
-      page: () => const CartScreen(),
+      page: () => const CartScreen(controllerTag: "another_cart"),
       binding: CartBinding(),
       transition: Transition.noTransition,
     ),
@@ -182,12 +170,6 @@ class Routes {
       binding: OrderSuccessBinding(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
-    ),
-    GetPage(
-      name: settings,
-      page: () => const SettingsScreen(),
-      binding: SettingsBinding(),
-      transition: Transition.noTransition,
     ),
     GetPage(
       name: editProfile,

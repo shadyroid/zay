@@ -47,14 +47,6 @@ class SettingsController extends BaseController {
     profileImagePath.value = response.data?.avatarUrl;
   }
 
-  void goBack() {
-    if (Get.key.currentState?.canPop() ?? false) {
-      Get.back();
-      return;
-    }
-    Get.offNamed(Routes.home);
-  }
-
   Future<void> navigateToEditProfile() async {
     await Get.toNamed(Routes.editProfile);
     requestProfile();

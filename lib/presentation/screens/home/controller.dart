@@ -24,6 +24,7 @@ import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/bottom_sheets/review/review_bottom_sheet.dart';
 import 'package:zay/presentation/bottom_sheets/types/types_bottom_sheet.dart';
 import 'package:zay/presentation/screens/home/home_sections_data.dart';
+import 'package:zay/presentation/screens/main/controller.dart';
 import 'package:zay/presentation/widgets/product_item.dart';
 
 class HomeController extends BaseController {
@@ -59,42 +60,11 @@ class HomeController extends BaseController {
   final isLoadingNewArrivals = false.obs;
   final isLoadingStores = false.obs;
 
-  bool _isLoadInProgress = false;
 
   @override
   void onInit() {
     super.onInit();
-    _loadScreen();
-  }
-
-  void onTabResumed() {
-    if (_isLoadInProgress) return;
     if (PrefsManager.isLoggedIn) {
-      _loadScreen();
-      return;
-    }
-    if (PrefsManager.isLoggedIn) requestNotificationsCount();
-  }
-
-  @override
-  void onClose() {
-    searchController.dispose();
-    searchFocusNode.dispose();
-    scrollController.dispose();
-    recommendedProductsScrollController.dispose();
-    newArrivalProductsScrollController.dispose();
-    super.onClose();
-  }
-
-  Future<void> _loadScreen() async {
-    if (_isLoadInProgress) return;
-    _isLoadInProgress = true;
-
-    if (!PrefsManager.isLoggedIn) {
-      userName.value = '';
-      profileImagePath.value = null;
-      unreadNotificationsCount.value = 0;
-    } else {
       _requestProfile();
       requestNotificationsCount();
       _requestLastReview();
@@ -104,6 +74,17 @@ class HomeController extends BaseController {
     _requestRecommended();
     _requestNewArrivals();
     requestShops();
+  }
+
+
+  @override
+  void onClose() {
+    searchController.dispose();
+    searchFocusNode.dispose();
+    scrollController.dispose();
+    recommendedProductsScrollController.dispose();
+    newArrivalProductsScrollController.dispose();
+    super.onClose();
   }
 
   Future<void> _requestLastReview() async {
@@ -398,7 +379,9 @@ class HomeController extends BaseController {
   void onSeeAllNewArrival() =>
       Get.toNamed(Routes.products, arguments: _withHomeSections());
 
-  void onSeeAllStores() => Get.toNamed(Routes.shops);
+  void onSeeAllStores() {
+    Get.find<MainController>().openShops();
+  }
 
   void onStoreTap(ShopBean shop) {
     Get.toNamed(Routes.shopDetails, arguments: {'shopId': shop.id});

@@ -39,7 +39,7 @@ class SignInController extends BaseController {
     } else if (!isSuccess(response)) {
       return;
     } else {
-      Get.offNamed(Routes.home);
+      Get.offNamed(Routes.main);
     }
   }
 
@@ -47,5 +47,5 @@ class SignInController extends BaseController {
 
   void navigateToForgetPassword() => Get.toNamed(Routes.forgetPassword);
 
-  void continueAsGuest() => Get.offNamed(Routes.home);
+  void continueAsGuest() => Get.offNamed(Routes.main);
 }

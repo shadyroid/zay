@@ -7,7 +7,6 @@ import 'package:zay/app/utils/app_motion.dart';
 import 'package:zay/presentation/screens/shops/controller.dart';
 import 'package:zay/presentation/screens/shops/widgets/shop_item.dart';
 import 'package:zay/presentation/widgets/app_progress_indicator.dart';
-import 'package:zay/presentation/widgets/main_bottom_nav.dart';
 
 class ShopsScreen extends GetView<ShopsController> {
   const ShopsScreen({super.key});
@@ -80,7 +79,6 @@ class ShopsScreen extends GetView<ShopsController> {
           ),
         );
       }),
-      bottomNavigationBar: const MainBottomNav(currentIndex: 1),
     );
   }
 }

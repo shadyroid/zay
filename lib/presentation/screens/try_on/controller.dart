@@ -22,6 +22,7 @@ import 'package:zay/domain/models/requests/try_on_review_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/bottom_sheets/try_on_image_actions/try_on_image_action.dart';
 import 'package:zay/presentation/bottom_sheets/try_on_image_actions/try_on_image_actions_bottom_sheet.dart';
+import 'package:zay/presentation/screens/main/controller.dart';
 
 class TryOnController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -231,7 +232,7 @@ class TryOnController extends BaseController {
     if (!isSuccess(response)) return;
 
     Get.rawSnackbar(message: 'addedToCart'.tr);
-    await AppAuthGuard.toNamed(Routes.cart);
+    Get.toNamed(Routes.cart);
   }
 
   Future<void> onShare() async {

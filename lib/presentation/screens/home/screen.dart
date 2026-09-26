@@ -14,7 +14,6 @@ import 'package:zay/presentation/screens/home/widgets/home_skeleton.dart';
 import 'package:zay/presentation/screens/home/widgets/shop_item.dart';
 import 'package:zay/presentation/widgets/category_item.dart';
 import 'package:zay/presentation/widgets/horizontal_list_view.dart';
-import 'package:zay/presentation/widgets/main_bottom_nav.dart';
 import 'package:zay/presentation/widgets/product_item.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -176,7 +175,6 @@ class HomeScreen extends GetView<HomeController> {
                 ],
               ),
             ),
-            bottomNavigationBar: const MainBottomNav(currentIndex: 0),
           ),
         );
       },

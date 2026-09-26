@@ -104,6 +104,6 @@ class VerificationController extends BaseController {
     isLoading.value = false;
     if (!isSuccess(response)) return;
 
-    Get.offAllNamed(Routes.home);
+    Get.offAllNamed(Routes.main);
   }
 }

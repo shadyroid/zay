@@ -18,6 +18,7 @@ import 'package:zay/domain/models/requests/reviews_request.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 import 'package:zay/presentation/screens/home/controller.dart';
 import 'package:zay/presentation/screens/home/home_sections_data.dart';
+import 'package:zay/presentation/screens/main/controller.dart';
 
 class ProductDetailsController extends BaseController {
   final ProductsUseCase _productsUseCase = Get.put(ProductsUseCase());
@@ -230,9 +231,8 @@ class ProductDetailsController extends BaseController {
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
-
     Get.rawSnackbar(message: 'addedToCart'.tr);
-    await AppAuthGuard.toNamed(Routes.cart);
+    Get.toNamed(Routes.cart);
     requestProductDetails(isLoading: false);
   }
 

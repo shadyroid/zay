@@ -46,7 +46,8 @@ class CartController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    requestCart();
+    //Call it from main cart each time he tabs it
+    // requestCart();
     _loadProfile();
     _loadCities();
   }

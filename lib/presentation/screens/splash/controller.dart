@@ -22,7 +22,7 @@ class SplashController extends BaseController {
 
   void _navigateNext() {
     if (PrefsManager.token?.isNotEmpty == true) {
-      Get.offNamed(Routes.home);
+      Get.offNamed(Routes.main);
       NotificationsUtil.handelInitialLink();
     }else{
       Get.offNamed(Routes.signIn);
