@@ -134,7 +134,9 @@ class Routes {
     ),
     GetPage(
       name: productDetails,
-      page: () => const ProductDetailsScreen(),
+      page: () => ProductDetailsScreen(
+        controllerTag: Get.arguments['productId'].toString(),
+      ),
       binding: ProductDetailsBinding(),
       preventDuplicates: false
     ),

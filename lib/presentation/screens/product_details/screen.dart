@@ -18,10 +18,12 @@ import 'package:zay/presentation/widgets/app_progress_indicator.dart';
 import 'package:zay/presentation/widgets/home_product_sections.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
-  const ProductDetailsScreen({super.key});
+  const ProductDetailsScreen({super.key, required this.controllerTag});
+
+  final String controllerTag;
 
   @override
-  String? get tag => Get.arguments["productId"].toString();
+  String? get tag => controllerTag;
 
   @override
   Widget build(BuildContext context) {

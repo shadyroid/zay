@@ -1,3 +1,5 @@
+import 'package:zay/app/utils/parser.dart';
+
 class CartItemBean {
   final int id;
   final String name;
@@ -22,9 +24,7 @@ class CartItemBean {
     return CartItemBean(
       id: json['id'] ?? product?['id'],
       name: product?['name'] as String? ?? json['name'],
-      price: json['unit_price'] ??
-          json['price'] ??
-          '0',
+      price: Parser.parseString(json['unit_price'] ?? json['price']) ?? '0',
       imageUrl: product?['image'] as String? ??
           product?['imageUrl'] as String? ??
           json['imageUrl'] as String?,
@@ -65,5 +65,8 @@ class CartItemBean {
     );
   }
 
-  double get lineTotal => (double.tryParse(price) ?? 0) * quantity;
+  double get lineTotal {
+    final normalized = price.replaceAll(',', '');
+    return (double.tryParse(normalized) ?? 0) * quantity;
+  }
 }

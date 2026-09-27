@@ -231,8 +231,7 @@ class ProductDetailsController extends BaseController {
     );
     isLoading.value = false;
     if (!isSuccess(response)) return;
-    Get.rawSnackbar(message: 'addedToCart'.tr);
-    Get.toNamed(Routes.cart);
+    await Get.toNamed(Routes.cart);
     requestProductDetails(isLoading: false);
   }
 
