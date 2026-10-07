@@ -245,10 +245,7 @@ class CartController extends BaseController {
 
   double get discount => appliedCoupon.value?.discountAmount ?? 0;
 
-  double get total {
-    final afterDiscount = appliedCoupon.value?.subtotalAfterDiscount;
-    return (afterDiscount ?? subtotal) + shippingFee.value;
-  }
+  double get total => (subtotal-(appliedCoupon.value?.discountAmount??0)) + shippingFee.value;
 
   Future<void> onPayNow() async {
     if (items.isEmpty) return;
