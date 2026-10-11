@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:zay/app/use_cases/locations_use_case.dart';
 import 'package:zay/domain/models/beans/location_bean.dart';
 import 'package:zay/presentation/base/base_controller.dart';
 
-class MapController extends BaseController {
+class MapController extends BaseController with WidgetsBindingObserver {
   static const LatLng _defaultCenter = LatLng(30.0444, 31.2357);
 
   final LocationsUseCase _locationsUseCase = LocationsUseCase();
@@ -19,11 +20,13 @@ class MapController extends BaseController {
   final locations = <LocationBean>[].obs;
   final showSuggestions = false.obs;
   final isResolvingAddress = false.obs;
+  final locationSettingsMessage = RxnString();
   List<dynamic>? _addressComponents;
 
   GoogleMapController? _mapController;
   Timer? _searchDebounce;
   bool _skipNextCameraIdle = false;
+  bool _resumeLocationRequest = false;
 
   CameraPosition get initialCameraPosition =>
       CameraPosition(target: LatLng(latitude.value, longitude.value), zoom: 16);
@@ -31,23 +34,40 @@ class MapController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    WidgetsBinding.instance.addObserver(this);
     searchController.addListener(_onSearchChanged);
     requestCurrentLocation();
   }
 
   @override
   void onClose() {
+    WidgetsBinding.instance.removeObserver(this);
     _searchDebounce?.cancel();
     searchController.dispose();
     _mapController?.dispose();
     super.onClose();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed || !_resumeLocationRequest) return;
+    _resumeLocationRequest = false;
+    requestCurrentLocation();
+  }
+
   Future<void> requestCurrentLocation() async {
     isLoading.value = true;
     try {
       final response = await _locationsUseCase.requestCurrentLocation();
+      if (response.message == 'locationUnavailable' ||
+          response.message == 'locationPermissionDenied') {
+        locationSettingsMessage.value = response.message;
+        await requestLocation();
+        return;
+      }
+
       if (!isSuccess(response)) {
+        locationSettingsMessage.value = null;
         if (response.message != null) {
           Get.rawSnackbar(message: response.message!.tr);
         }
@@ -57,15 +77,44 @@ class MapController extends BaseController {
 
       final location = response.data;
       if (location == null) {
-        Get.rawSnackbar(message: 'locationUnavailable'.tr);
+        locationSettingsMessage.value = 'locationUnavailable';
         await requestLocation();
         return;
       }
 
+      locationSettingsMessage.value = null;
       await _applyLocation(location, animate: false);
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> openDeviceSettings() async {
+    _resumeLocationRequest = true;
+    if (locationSettingsMessage.value == 'locationPermissionDenied') {
+      await Geolocator.openAppSettings();
+      return;
+    }
+
+    final opened = await _openSettingsForUnavailableLocation();
+    if (!opened) {
+      await Geolocator.openLocationSettings();
+    }
+  }
+
+  Future<bool> _openSettingsForUnavailableLocation() async {
+    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Geolocator.openLocationSettings();
+    }
+
+    final permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      return Geolocator.openAppSettings();
+    }
+
+    return false;
   }
 
   Future<void> requestLocations(String input) async {

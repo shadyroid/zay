@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:zay/app/utils/app_colors.dart';
 import 'package:zay/presentation/screens/map/controller.dart';
@@ -89,14 +88,72 @@ class MapScreen extends GetView<MapController> {
               right: 0,
               bottom: 0,
               child: Obx(
-                () => MapLocationBottomCard(
-                  address: controller.address.value,
-                  isLoading: controller.isResolvingAddress.value,
-                  onPickLocation: controller.pickLocation,
+                () => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (controller.locationSettingsMessage.value != null)
+                      _LocationSettingsBanner(
+                        message: controller.locationSettingsMessage.value!.tr,
+                        onOpenSettings: controller.openDeviceSettings,
+                      ),
+                    MapLocationBottomCard(
+                      address: controller.address.value,
+                      isLoading: controller.isResolvingAddress.value,
+                      onPickLocation: controller.pickLocation,
+                    ),
+                  ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LocationSettingsBanner extends StatelessWidget {
+  const _LocationSettingsBanner({
+    required this.message,
+    required this.onOpenSettings,
+  });
+
+  final String message;
+  final VoidCallback onOpenSettings;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: Material(
+        color: Colors.white,
+        elevation: 2,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  message,
+                  style: Get.theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: onOpenSettings,
+                child: Text(
+                  'openSettings'.tr,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

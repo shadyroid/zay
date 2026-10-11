@@ -8,7 +8,6 @@ class ProductsRequest {
   const ProductsRequest({
     this.page,
     this.pageSize,
-    this.bestSeller,
     this.recommended,
     this.newArrival,
     this.image,
@@ -25,7 +24,6 @@ class ProductsRequest {
 
   final int? page;
   final int? pageSize;
-  final bool? bestSeller;
   final bool? recommended;
   final bool? newArrival;
   final XFile? image;
@@ -44,7 +42,6 @@ class ProductsRequest {
 
     if (page != null) params['page'] = page;
     if (pageSize != null) params['per_page'] = pageSize;
-    if (bestSeller == true) params['best_seller'] = 1;
     if (recommended == true) params['recommended'] = 1;
     if (newArrival == true) params['new_arrival'] = 1;
     if (similarToId != null) {
